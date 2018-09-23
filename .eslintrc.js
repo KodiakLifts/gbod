@@ -35,7 +35,7 @@ module.exports = {
           "no-alert": 0,
           "no-lone-blocks": 0,
           "jsx-quotes": 1,
-          "react/display-name": [ 1, {"ignoreTranspilerName": false }],
+          "react/display-name": [ 0, {"ignoreTranspilerName": false }],
           "react/forbid-prop-types": [1, {"forbid": ["any"]}],
           "react/jsx-boolean-value": 1,
           "react/jsx-closing-bracket-location": 0,
@@ -62,10 +62,8 @@ module.exports = {
           "react/prefer-es6-class": 1,
           "react/prop-types": 1,
           "react/react-in-jsx-scope": 1,
-          "react/require-extension": 1,
           "react/self-closing-comp": 1,
           "react/sort-comp": 1,
-          "react/wrap-multilines": 1
         }
       
 };
