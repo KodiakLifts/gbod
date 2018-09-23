@@ -1,12 +1,18 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import Home from './home/Home';
+import Workout from './workout/Workout';
+import ProgramsExercises from './programs_exercises/ProgramsExercises';
+import StatsLogs from './stats_logs/StatsLogs';
 
 const COLORS = require('../styles/Colors');
 
 const MainTabs = createBottomTabNavigator({
-    Home: Home
+    Home,
+    Workout,
+    ProgramsExercises,
+    StatsLogs
     },
     {
         navigationOptions: ({ navigation }) => ({
@@ -15,6 +21,12 @@ const MainTabs = createBottomTabNavigator({
                 let iconName;
                 if (routeName === 'Home') {
                     iconName = 'home';
+                } else if (routeName === 'Workout'){
+                    iconName = 'skull';
+                } else if (routeName === 'ProgramsExercises'){
+                    iconName = 'dumbbell';
+                } else if (routeName === 'StatsLogs'){
+                    iconName = 'book';
                 }
                 return <Icon name={iconName} size={25} color={tintColor} />;
             },
