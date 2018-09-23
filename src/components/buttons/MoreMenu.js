@@ -13,7 +13,7 @@ class MoreMenu extends Component {
 
     this.state = {
       showMenu: false,
-      options: []
+      options: [],
     };
 
     this.showMenu = this.showMenu.bind(this);
@@ -25,11 +25,11 @@ class MoreMenu extends Component {
 
   mapOptions = (options) => {
     this.setState({
-      options: options.map(item => {
+      options: options.map(option => {
         return (
-          <TouchableOpacity key={item}>
+          <TouchableOpacity key={option}>
             <Text style={{ color: 'white' }}>
-              {item.name}
+              {option.name}
             </Text>
           </TouchableOpacity>
         );
@@ -78,9 +78,9 @@ class MoreMenu extends Component {
 
 MoreMenu.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-
-  }))
+    name: PropTypes.string
+  })),
+  iconName: PropTypes.string
 };
 
 

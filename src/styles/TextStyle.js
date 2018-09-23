@@ -8,22 +8,35 @@ module.exports = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlignVertical: 'center',
-    includeFontPadding: false,
-    textShadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    textShadowColor: COLORS.SHADOWCOLOR,
-    textShadowRadius: 2
+    includeFontPadding: false
   },
   icon: {
     elevation: 1,
-    textShadowOffset: {
-      width: 1,
-      height: 1,
-    },
-    textShadowColor: COLORS.SHADOWCOLOR,
-    textShadowRadius: 2,
     paddingLeft: 6
+  },
+  listHeader: {
+    color: COLORS.TEXTCOLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    margin: 10
+  },
+  listItem: {
+    color: COLORS.SECONDARYCOLOR,
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    margin: 12
+  },
+  listItemDetails: {
+    color: COLORS.ACTIVECOLOR,
+    fontSize: 18,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    marginHorizontal: 12,
+    marginBottom: 12
   }
+
 });

@@ -10,7 +10,7 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.BACKCOLOR,
     borderBottomColor: COLORS.BORDERCOLOR,
     borderBottomWidth: 2,
-    elevation: 5,
+    elevation: 3,
     shadowColor: COLORS.SHADOWCOLOR,
     shadowOpacity: 100
   },
@@ -29,9 +29,22 @@ module.exports = StyleSheet.create({
     padding: 12,
     paddingHorizontal: 15,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: COLORS.BORDERCOLOR,
-    elevation: 4
+    elevation: 2
+  },
+  listCard: {
+    flexDirection: 'column',
+    width: (Dimensions.get('window').width - 24),
+    alignSelf: 'flex-start',
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    borderRadius: 5,
+    elevation: 2
+  },
+  listItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomColor: COLORS.BACKCOLOR,
+    borderBottomWidth: 1
   },
   moreMenu: {
     flexDirection: 'column',
@@ -39,8 +52,6 @@ module.exports = StyleSheet.create({
     padding: 12,
     paddingHorizontal: 15,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: COLORS.BORDERCOLOR,
     elevation: 4
   }
 });

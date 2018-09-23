@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
+import ListCard from '../../components/cards/ListCard';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
+const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+
 const menuItems = [{ name: "option 1" }, { name: "option 2" }];
 
 class Workout extends Component {
@@ -35,11 +38,14 @@ class Workout extends Component {
                         <Text style={TEXTSTYLE.headerText}>
                             GreySkull LP
                         </Text>
-                        <MoreMenu options={menuItems} />
+                        <MoreMenu options={menuItems} iconName="ellipsis-v" />
                     </View>
                 }
                 scrollContent={
-                    <Text>Scroll Area</Text>
+                    <ListCard headerTitle="A" items={[
+                        { name: 'Exercise 1', details: '125x5, 125x5, 125x5+', options: menuItems },
+                        { name: 'Exercise 2', details: '125x5, 125x5, 125x5+', options: menuItems }
+                    ]} />
                 }
             />
         );
