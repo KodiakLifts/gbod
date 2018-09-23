@@ -10,9 +10,11 @@ class StatsLogs extends Component {
         return (
             <ScreenTemplate
                 headerContent={
-                    <Text style={TEXTSTYLE.headerText}>
-                        Stats and Logs
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
+                        <Text style={TEXTSTYLE.headerText}>
+                            Stats and Logs
+                        </Text>
+                    </View>
                 }
                 scrollContent={
                     <Text>Scroll Area</Text>

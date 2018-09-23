@@ -10,9 +10,11 @@ class ProgramsExercises extends Component {
         return (
             <ScreenTemplate
                 headerContent={
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
                     <Text style={TEXTSTYLE.headerText}>
                         Programs and Exercises
                     </Text>
+                </View>
                 }
                 scrollContent={
                     <Text>Scroll Area</Text>

@@ -1,19 +1,41 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
+import MoreMenu from '../../components/buttons/MoreMenu';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 
 class Workout extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            showMenu: false
+        };
+
+        this.showMenu = this.showMenu.bind(this);
+    }
+
+    showMenu(event) {
+        event.preventDefault();
+
+        this.setState({
+            showMenu: true,
+        });
+    }
+
     render() {
         return (
             <ScreenTemplate
                 headerContent={
-                    <Text style={TEXTSTYLE.headerText}>
-                        GreySkull LP
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
+                        <Text style={TEXTSTYLE.headerText}>
+                            GreySkull LP
+                        </Text>
+                        <MoreMenu/>
+                    </View>
                 }
                 scrollContent={
                     <Text>Scroll Area</Text>
@@ -23,7 +45,7 @@ class Workout extends Component {
     }
 }
 
-Workout.propTypes ={
+Workout.propTypes = {
     programName: PropTypes.string
 }
 
