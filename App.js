@@ -8,15 +8,19 @@
 
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { View, Text } from 'react-native';
+import MainTabs from './src/screens/MainTabs';
 
+const RootStack = createStackNavigator({
+  MainTabs
+},
+{
+  initialRouteName: 'MainTabs',
+  mode: 'modal',
+  headerMode: 'none'
+});
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View>
-        <Text>Hello</Text>
-      </View>
-    );
+    return <RootStack/>;
   }
 }
