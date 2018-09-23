@@ -6,6 +6,7 @@ import MoreMenu from '../../components/buttons/MoreMenu';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
+const menuItems = [{ name: "option 1" }, { name: "option 2" }];
 
 class Workout extends Component {
     constructor() {
@@ -34,7 +35,7 @@ class Workout extends Component {
                         <Text style={TEXTSTYLE.headerText}>
                             GreySkull LP
                         </Text>
-                        <MoreMenu/>
+                        <MoreMenu options={menuItems} />
                     </View>
                 }
                 scrollContent={

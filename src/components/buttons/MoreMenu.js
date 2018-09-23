@@ -1,73 +1,88 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import PropTypes from 'prop-types';
 
 const COLORS = require("../../styles/Colors");
 const TEXTSTYLE = require("../../styles/TextStyle");
+const CONTAINERSTYLE = require("../../styles/ContainerStyle");
 
 class MoreMenu extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.state = {
-            showMenu: false
-        };
+    this.state = {
+      showMenu: false,
+      options: []
+    };
 
-        this.showMenu = this.showMenu.bind(this);
-    }
+    this.showMenu = this.showMenu.bind(this);
+  }
 
-    showMenu = (visible) => (e) => {
-        e.preventDefault();
+  componentDidMount() {
+    this.mapOptions(this.props.options);
+  }
 
-        this.setState({ showMenu: visible });
-    }
-
-    render() {
+  mapOptions = (options) => {
+    this.setState({
+      options: options.map(item => {
         return (
-            <View>
-            <TouchableWithoutFeedback onPress={this.showMenu(false)}>
-                <View>
-                <Modal
-                    transparent={true}
-                    visible={this.state.showMenu}
-                    onRequestClose={this.showMenu(false)}
-                >
-                    <View style={{
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
-                        <View style={{
-                            position: 'absolute',
-                            top: 20,
-                            right: 20,
-                            flexDirection: 'column',
-                            width: 200,
-                            alignSelf: 'flex-start',
-                            padding: 10,
-                            backgroundColor: COLORS.PRIMARYCOLOR,
-                            elevation: 4
-
-                        }}>
-                            <Text>
-                                Hello World
-                            </Text>
-
-                        </View>
-                        <TouchableOpacity onPress={this.showMenu(false)}>
-                        </TouchableOpacity>
-                    </View>
-
-                </Modal>
-                <TouchableOpacity onPress={this.showMenu(true)}>
-                    <Icon style={TEXTSTYLE.icon} name="ellipsis-v" size={28} color={COLORS.SECONDARYCOLOR} />
-                </TouchableOpacity>
-                </View>
-            </TouchableWithoutFeedback>
-            </View>
+          <TouchableOpacity key={item}>
+            <Text style={{ color: 'white' }}>
+              {item.name}
+            </Text>
+          </TouchableOpacity>
         );
-    }
+      })
+    });
+  }
+
+  showMenu = (visible) => (e) => {
+    e.preventDefault();
+
+    this.setState({ showMenu: visible });
+  }
+
+  render() {
+    return (
+      <View>
+        <View>
+          <Modal
+            transparent
+            visible={this.state.showMenu}
+            onRequestClose={this.showMenu(false)}
+          >
+            <TouchableWithoutFeedback onPress={this.showMenu(false)}>
+              <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: COLORS.TRANSPARENTOVERLAY
+              }}>
+                <View style={CONTAINERSTYLE.moreMenu}>
+                  {this.state.options}
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+          <TouchableOpacity onPress={this.showMenu(true)}>
+            <Icon style={TEXTSTYLE.icon} name="ellipsis-v" size={28} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+        </View>
+
+      </View>
+    );
+  }
 }
+
+MoreMenu.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+
+  }))
+};
+
+
 
 export default MoreMenu;
