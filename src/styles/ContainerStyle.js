@@ -5,14 +5,17 @@ const COLORS = require('./Colors');
 module.exports = StyleSheet.create({
   header: {
     width: Dimensions.get('window').width,
-    paddingTop: 35,
+    paddingTop: 15,
     paddingBottom: 12,
     backgroundColor: COLORS.BACKCOLOR,
-    borderBottomColor: COLORS.BORDERCOLOR,
-    borderBottomWidth: 2,
-    elevation: 3,
-    shadowColor: COLORS.SHADOWCOLOR,
-    shadowOpacity: 100
+    elevation: 4,
+  },
+  subHeader: {
+    width: Dimensions.get('window').width,
+    paddingTop: 15,
+    paddingBottom: 12,
+    backgroundColor: COLORS.BACKCOLOR,
+    elevation: 0,
   },
   scrollArea: {
     flexGrow: 1,

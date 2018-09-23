@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-class ScreenTemplate extends Component {
+class SubScreenTemplate extends Component {
   render() {
     return (
       <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-        <View style={CONTAINERSTYLE.header}>
+        <View style={CONTAINERSTYLE.subHeader}>
           {this.props.headerContent}
         </View>
         <ScrollView contentContainerStyle={CONTAINERSTYLE.scrollArea}>
@@ -19,9 +19,9 @@ class ScreenTemplate extends Component {
   }
 }
 
-ScreenTemplate.propTypes = {
+SubScreenTemplate.propTypes = {
   headerContent: PropTypes.object,
   scrollContent: PropTypes.object
 };
 
-export default ScreenTemplate;
+export default SubScreenTemplate;
