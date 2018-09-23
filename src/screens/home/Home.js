@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, StyleSheet, Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
 
 const COLORS = require('../../styles/Colors.js');
 
@@ -9,7 +10,7 @@ class Home extends Component {
             <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
                 <View style={Style.header}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
-                        <Text style={Style.headerText}>Home</Text>
+                        <Text style={Style.headerText}>{this.props.headerText}</Text>
                     </View>
                 </View>
                 <ScrollView>
@@ -19,6 +20,10 @@ class Home extends Component {
         );
     }
 }
+
+Home.propTypes ={
+    headerText: PropTypes.string
+};
 
 const Style = StyleSheet.create({
     header: {
@@ -45,6 +50,6 @@ const Style = StyleSheet.create({
         textShadowColor: COLORS.SHADOWCOLOR,
         textShadowRadius: 2
     }
-})
+});
 
 export default Home;

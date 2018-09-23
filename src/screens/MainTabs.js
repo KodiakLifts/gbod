@@ -5,13 +5,12 @@ import Home from './home/Home';
 
 const COLORS = require('../styles/Colors');
 
-
 const MainTabs = createBottomTabNavigator({
     Home: Home
     },
     {
         navigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ tintColor }) => {
+            tabBarIcon: ({ tintColor }) => { // eslint-disable-line react/prop-types
                 const { routeName } = navigation.state;
                 let iconName;
                 if (routeName === 'Home') {
@@ -37,7 +36,6 @@ const MainTabs = createBottomTabNavigator({
             }
         }
 });
-
 
 
 export default MainTabs;
