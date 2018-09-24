@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
 import SetButton from '../../components/buttons/SetButton';
@@ -44,7 +44,11 @@ class WorkoutCard extends Component {
       <View>
         <View style={CONTAINERSTYLE.card}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Text style={TEXTSTYLE.listItem}>{this.props.name}</Text>
+            <TouchableOpacity>
+              <Text style={TEXTSTYLE.listItem}>
+                {this.props.name}
+              </Text>
+            </TouchableOpacity>
             <View style={{ marginRight: 12 }}>
               <MoreMenu options={menuItems} />
             </View>
