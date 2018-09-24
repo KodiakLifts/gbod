@@ -3,7 +3,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
 import Main from './src/Main';
-import rootReducer from './src/reducers/rootReducer';
+import rootReducer from './src/redux/reducers/rootReducer';
 
 const store = createStore(rootReducer);
 

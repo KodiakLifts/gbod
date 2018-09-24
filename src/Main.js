@@ -8,7 +8,6 @@ const RootStack = createStackNavigator({
 },
   {
     initialRouteName: 'MainTabs',
-    mode: 'modal',
     headerMode: 'none'
   });
 
