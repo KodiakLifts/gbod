@@ -26,12 +26,12 @@ const MainTabs = createBottomTabNavigator({
         } else if (routeName === 'ProgramsExercises') {
           iconName = 'dumbbell';
         } else if (routeName === 'StatsLogs') {
-          iconName = 'book';
+          iconName = 'chart-line';
         }
         return <Icon name={iconName} size={25} color={tintColor} />;
       },
     }),
-    initialRouteName: 'ProgramsExercises',
+    initialRouteName: 'Workout',
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,

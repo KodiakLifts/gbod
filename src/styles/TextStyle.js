@@ -37,6 +37,18 @@ module.exports = StyleSheet.create({
     includeFontPadding: false,
     marginHorizontal: 12,
     marginBottom: 12
+  },
+  activeSetButtonText: {
+    fontSize: 18,
+    color: 'black',
+    textAlignVertical: 'center',
+    includeFontPadding: false
+  },
+  inactiveSetButtonText: {
+    fontSize: 18,
+    color: 'white',
+    textAlignVertical: 'center',
+    includeFontPadding: false
   }
 
 });

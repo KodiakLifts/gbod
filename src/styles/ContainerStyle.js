@@ -28,11 +28,10 @@ module.exports = StyleSheet.create({
     width: (Dimensions.get('window').width - 24),
     alignSelf: 'flex-start',
     backgroundColor: COLORS.PRIMARYCOLOR,
-    margin: 12,
-    padding: 12,
-    paddingHorizontal: 15,
     borderRadius: 5,
-    elevation: 2
+    elevation: 2,
+    marginTop: 15,
+    marginHorizontal: 12
   },
   listCard: {
     flexDirection: 'column',
@@ -56,5 +55,27 @@ module.exports = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 5,
     elevation: 4
+  },
+  activeSetButton: {
+    padding: 12,
+    marginHorizontal: 6,
+    marginBottom: 12,
+    width: 112,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.SECONDARYCOLOR,
+    borderRadius: 5
+  },
+  inactiveSetButton: {
+    padding: 12,
+    marginHorizontal: 6,
+    marginBottom: 12,
+    width: 112,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.INACTIVECOLOR,
+    borderRadius: 5
   }
 });
