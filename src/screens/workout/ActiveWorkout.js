@@ -2,62 +2,56 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
-import MoreMenu from '../../components/buttons/MoreMenu';
 import WorkoutCard from '../../components/cards/WorkoutCard';
+import { connect } from 'react-redux';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const menuItems = [{ name: "option 1" }, { name: "option 2" }];
-
-const benchPressSets =
-  [
-    { weight: 125, reps: 5, type: 'N' },
-    { weight: 125, reps: 5, type: 'N' },
-    { weight: 125, reps: 5, type: 'F' }
-  ];
-
-
-class ActiveWorkout extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      showMenu: false
-    };
-
-    this.showMenu = this.showMenu.bind(this);
-  }
-
-  showMenu(event) {
-    event.preventDefault();
-
-    this.setState({
-      showMenu: true,
-    });
-  }
-
-  render() {
-    return (
-      <ScreenTemplate
-        headerContent={
-          <View style={CONTAINERSTYLE.headerContent}>
-            <Text style={TEXTSTYLE.headerText}>
-              ACTIVE - GreySkull LP
-            </Text>
-            <MoreMenu options={menuItems} />
-          </View>
-        }
-        scrollContent={
-          <WorkoutCard name="Bench Press" sets={benchPressSets} />
-        }
-      />
-    );
-  }
-}
-
-ActiveWorkout.propTypes = {
-  programName: PropTypes.string
+const ActiveWorkout = (props) => {
+  const exercises = props.activeWorkout.exercises;
+  return (
+    <ScreenTemplate
+      headerContent={
+        <View style={CONTAINERSTYLE.headerContent}>
+          <Text style={TEXTSTYLE.headerText}>
+            {props.activeWorkout.title}
+          </Text>
+        </View>
+      }
+      scrollContent={
+        <WorkoutCard
+          id={exercises[0].id}
+          name={exercises[0].name}
+          sets={exercises[0].sets} />
+      }
+    />
+  );
 };
 
-export default ActiveWorkout;
+ActiveWorkout.propTypes = {
+  activeWorkout: PropTypes.shape({
+    id: PropTypes.string,
+    day: PropTypes.string,
+    title: PropTypes.string,
+    exercises: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      supersetNext: PropTypes.bool,
+      restTime: PropTypes.string,
+      sets: PropTypes.arrayOf(PropTypes.shape({
+        weight: PropTypes.number,
+        reps: PropTypes.number,
+        type: PropTypes.string
+      }))
+    }))
+  })
+};
+
+const mapStateToProps = (state) => {
+  return {
+    activeWorkout: state.activeWorkout,
+  };
+};
+
+export default connect(mapStateToProps)(ActiveWorkout);
