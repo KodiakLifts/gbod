@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
 import SetButton from '../../components/buttons/SetButton';
 
-const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
@@ -18,13 +17,12 @@ class WorkoutCard extends Component {
       sets: this.createSetButtons(props.sets),
       setIndex: 0
     };
-
   }
 
   createSetButtons = (sets) => {
     const setButtons = sets.map(set => {
       return (
-        <SetButton key={set} content={set.weight + "x" + set.reps + this.checkSetType(set)} />
+        <SetButton key={set} ref={React.createRef()} content={set.weight + "x" + set.reps + this.checkSetType(set)} />
       );
     });
     return (
@@ -40,12 +38,6 @@ class WorkoutCard extends Component {
     }
     return "";
   };
-
-  setOnPress = () => {
-
-  }
-
-
 
   render() {
     return (
