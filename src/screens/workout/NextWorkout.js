@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
-import ListCard from '../../components/cards/ListCard';
+import WorkoutCard from '../../components/cards/WorkoutCard';
 
-const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 const menuItems = [{ name: "option 1" }, { name: "option 2" }];
+
+const benchPressSets =
+  [
+    { weight: 125, reps: 5, type: 'N' },
+    { weight: 125, reps: 5, type: 'N' },
+    { weight: 125, reps: 5, type: 'F' }
+  ];
+
 
 class NextWorkout extends Component {
   constructor() {
@@ -34,18 +41,15 @@ class NextWorkout extends Component {
     return (
       <ScreenTemplate
         headerContent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
+          <View style={CONTAINERSTYLE.headerContent}>
             <Text style={TEXTSTYLE.headerText}>
               NEXT - GreySkull LP
-                        </Text>
-            <MoreMenu options={menuItems} iconName="ellipsis-v" />
+            </Text>
+            <MoreMenu options={menuItems} />
           </View>
         }
         scrollContent={
-          <ListCard headerTitle="A" items={[
-            { name: 'Exercise 1', details: '125x5, 125x5, 125x5+', options: menuItems },
-            { name: 'Exercise 2', details: '125x5, 125x5, 125x5+', options: menuItems }
-          ]} />
+          <WorkoutCard name="Bench Press" sets={benchPressSets} />
         }
       />
     );
@@ -54,6 +58,6 @@ class NextWorkout extends Component {
 
 NextWorkout.propTypes = {
   programName: PropTypes.string
-}
+};
 
 export default NextWorkout;

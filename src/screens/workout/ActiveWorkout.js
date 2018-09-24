@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Picker, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 
-const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
@@ -42,7 +41,7 @@ class ActiveWorkout extends Component {
     return (
       <ScreenTemplate
         headerContent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
+          <View style={CONTAINERSTYLE.headerContent}>
             <Text style={TEXTSTYLE.headerText}>
               ACTIVE - GreySkull LP
             </Text>
@@ -59,6 +58,6 @@ class ActiveWorkout extends Component {
 
 ActiveWorkout.propTypes = {
   programName: PropTypes.string
-}
+};
 
 export default ActiveWorkout;

@@ -10,6 +10,12 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.BACKCOLOR,
     elevation: 4,
   },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15
+  },
   subHeader: {
     width: Dimensions.get('window').width,
     paddingTop: 15,
