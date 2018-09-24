@@ -21,7 +21,7 @@ const ActiveWorkout = (props) => {
       }
       scrollContent={
         <WorkoutCard
-          id={exercises[0].id}
+          exerciseNum={0}
           name={exercises[0].name}
           sets={exercises[0].sets} />
       }

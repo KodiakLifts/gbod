@@ -7,24 +7,23 @@ const initState = {
       {
         id: "barbellBackSquat",
         name: "Barbell Back Squat",
-        active: false,
         supersetNext: false,
         restTime: "3:00",
         sets: [
           {
-            completed: false,
+            complete: false,
             weight: 125,
             reps: 5,
             type: "N"
           },
           {
-            completed: false,
+            complete: false,
             weight: 125,
             reps: 5,
             type: "N"
           },
           {
-            completed: false,
+            complete: false,
             weight: 125,
             reps: 5,
             type: "F"

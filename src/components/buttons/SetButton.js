@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
@@ -14,30 +16,28 @@ class SetButton extends Component {
     super(props);
 
     this.state = {
-      active: false,
       buttonColor: inactiveButton,
       textColor: inactiveText,
-      behavior: this.enabledOnPress
     };
-
   }
 
-  activateButton = () => {
-    this.setState({ behavior: this.enabledOnPress });
-  }
-
-  disabledOnPress = () => {
-
-  }
-
-  enabledOnPress = () => {
-    this.state.active ? this.setState({ active: false, buttonColor: inactiveButton, textColor: inactiveText }) :
-      this.setState({ active: true, buttonColor: activeButton, textColor: activeText });
+  onPress = () => {
+    if (this.state.active) {
+      this.setState({
+        buttonColor: inactiveButton, textColor: inactiveText
+      });
+      this.props.setIncomplete(this.props.exerciseNum, this.props.setNum);
+    } else {
+      this.setState({
+        buttonColor: activeButton, textColor: activeText
+      });
+      this.props.setComplete(this.props.exerciseNum, this.props.setNum);
+    }
   }
 
   render() {
     return (
-      <TouchableOpacity onPress={this.state.behavior}>
+      <TouchableOpacity onPress={this.onPress}>
         <View style={this.state.buttonColor}>
           <Text style={this.state.textColor}>
             {this.props.content}</Text>
@@ -48,7 +48,22 @@ class SetButton extends Component {
 }
 
 SetButton.propTypes = {
-  content: PropTypes.string
+  exerciseNum: PropTypes.number,
+  setNum: PropTypes.number,
+  content: PropTypes.string,
+  setComplete: PropTypes.func,
+  setIncomplete: PropTypes.func
 };
 
-export default SetButton;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setComplete: (exerciseNum, setNum) => {
+      dispatch({ type: 'SET_COMPLETE', exerciseNum: exerciseNum, setNum: setNum });
+    },
+    setIncomplete: (exerciseNum, setNum) => {
+      dispatch({ type: 'SET_INCOMPLETE', exerciseNum: exerciseNum, setNum: setNum });
+    }
+  };
+};
+
+export default connect(mapDispatchToProps)(SetButton);

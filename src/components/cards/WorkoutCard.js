@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import SetButton from '../../components/buttons/SetButton';
@@ -7,7 +7,7 @@ const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 const WorkoutCard = (props) => {
-  const setButtons = createSetButtons(props.name, props.sets);
+  const setButtons = createSetButtons(props.exerciseNum, props.sets);
   return (
     <View>
       <View style={CONTAINERSTYLE.card}>
@@ -26,12 +26,13 @@ const WorkoutCard = (props) => {
   );
 };
 
-const createSetButtons = (name, sets) => {
-  const setButtons = sets.map(set => {
+const createSetButtons = (exerciseNum, sets) => {
+  const setButtons = sets.map((set, index) => {
     return (
       <SetButton
         key={set}
-        id={"" + name + set}
+        exerciseNum={exerciseNum}
+        setNum={index}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
     );
   });
@@ -50,7 +51,7 @@ const checkSetType = (set) => {
 };
 
 WorkoutCard.propTypes = {
-  id: PropTypes.string,
+  exerciseNum: PropTypes.number,
   name: PropTypes.string,
   sets: PropTypes.arrayOf(PropTypes.shape({
     weight: PropTypes.number,
