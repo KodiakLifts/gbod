@@ -49,7 +49,7 @@ class NextWorkout extends Component {
           </View>
         }
         scrollContent={
-          <WorkoutCard name="Bench Press" sets={benchPressSets} />
+          []
         }
       />
     );

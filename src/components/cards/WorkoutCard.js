@@ -30,7 +30,7 @@ const createSetButtons = (exerciseNum, sets) => {
   const setButtons = sets.map((set, index) => {
     return (
       <SetButton
-        key={set}
+        key={"" + set + exerciseNum}
         exerciseNum={exerciseNum}
         setNum={index}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
@@ -54,6 +54,7 @@ WorkoutCard.propTypes = {
   exerciseNum: PropTypes.number,
   name: PropTypes.string,
   sets: PropTypes.arrayOf(PropTypes.shape({
+    exercise: PropTypes.number,
     weight: PropTypes.number,
     reps: PropTypes.number,
     type: PropTypes.string

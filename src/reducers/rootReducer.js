@@ -3,35 +3,42 @@ const initState = {
     id: "greySkullLP",
     day: "A",
     title: "GreySkull LP - A",
+    activeExercise: 0,
+    completedSets: [],
     exercises: [
       {
         id: "barbellBackSquat",
         name: "Barbell Back Squat",
         supersetNext: false,
         restTime: "3:00",
-        sets: [
-          {
-            complete: false,
-            weight: 125,
-            reps: 5,
-            type: "N"
-          },
-          {
-            complete: false,
-            weight: 125,
-            reps: 5,
-            type: "N"
-          },
-          {
-            complete: false,
-            weight: 125,
-            reps: 5,
-            type: "F"
-          }
-        ],
-        setButtons: [
-
-        ]
+        sets: [0, 1, 2]
+      },
+      {
+        id: "barbellBenchPress",
+        name: "Barbell Bench Press",
+        supersetNext: false,
+        restTime: "3:00",
+        sets: [3, 4, 5]
+      }
+    ],
+    sets: [
+      {
+        exercise: 0, weight: 160, reps: 5, type: "N"
+      },
+      {
+        exercise: 0, weight: 160, reps: 5, type: "N"
+      },
+      {
+        exercise: 0, weight: 160, reps: 5, type: "F"
+      },
+      {
+        exercise: 1, weight: 125, reps: 5, type: "N"
+      },
+      {
+        exercise: 1, weight: 125, reps: 5, type: "N"
+      },
+      {
+        exercise: 1, weight: 125, reps: 5, type: "F"
       }
     ]
   },
@@ -80,6 +87,12 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    default: return state;
+    case 'SET_COMPLETE':
+      return state;
+    case 'SET_INCOMPLETE':
+      return state;
+
+    default:
+      return state;
   }
 };

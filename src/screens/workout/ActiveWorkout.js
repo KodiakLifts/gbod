@@ -8,8 +8,23 @@ import { connect } from 'react-redux';
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
+
 const ActiveWorkout = (props) => {
+  const workoutCards = [];
   const exercises = props.activeWorkout.exercises;
+  exercises.forEach((exercise, index) => {
+    let sets = props.activeWorkout.sets.filter(set => {
+      return set.exercise === index;
+    });
+    let card =
+      <WorkoutCard
+        key={"" + exercise.name + index}
+        exerciseNum={index}
+        name={exercise.name}
+        sets={sets} />;
+    workoutCards.push(card);
+  });
+
   return (
     <ScreenTemplate
       headerContent={
@@ -19,13 +34,7 @@ const ActiveWorkout = (props) => {
           </Text>
         </View>
       }
-      scrollContent={
-        <WorkoutCard
-          exerciseNum={0}
-          name={exercises[0].name}
-          sets={exercises[0].sets} />
-      }
-    />
+      scrollContent={workoutCards} />
   );
 };
 
@@ -39,11 +48,13 @@ ActiveWorkout.propTypes = {
       name: PropTypes.string,
       supersetNext: PropTypes.bool,
       restTime: PropTypes.string,
-      sets: PropTypes.arrayOf(PropTypes.shape({
-        weight: PropTypes.number,
-        reps: PropTypes.number,
-        type: PropTypes.string
-      }))
+      sets: PropTypes.arrayOf(PropTypes.number)
+    })),
+    sets: PropTypes.arrayOf(PropTypes.shape({
+      exercise: PropTypes.number,
+      weight: PropTypes.number,
+      reps: PropTypes.number,
+      type: PropTypes.string
     }))
   })
 };

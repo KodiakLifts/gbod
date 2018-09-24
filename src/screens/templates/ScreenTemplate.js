@@ -21,7 +21,7 @@ class ScreenTemplate extends Component {
 
 ScreenTemplate.propTypes = {
   headerContent: PropTypes.object,
-  scrollContent: PropTypes.object
+  scrollContent: PropTypes.array
 };
 
 export default ScreenTemplate;
