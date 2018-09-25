@@ -1,3 +1,5 @@
+//deprecated
+
 import { fk, many, attr, Model } from 'redux-orm';
 
 export class ActiveWorkout extends Model {

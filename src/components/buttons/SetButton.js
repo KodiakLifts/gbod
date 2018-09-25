@@ -28,12 +28,13 @@ class SetButton extends Component {
       this.setState({
         active: false, buttonColor: inactiveButton, textColor: inactiveText
       });
-      this.props.setIncomplete(this.props.setNum);
+      this.props.setIncomplete(this.props.setId);
+      console.log(this.props.setId)
     } else {
       this.setState({
         active: true, buttonColor: activeButton, textColor: activeText
       });
-      this.props.setComplete(this.props.setNum);
+      this.props.setComplete(this.props.setId);
     }
   }
 
@@ -51,8 +52,8 @@ class SetButton extends Component {
 }
 
 SetButton.propTypes = {
-  exerciseNum: PropTypes.number,
-  setNum: PropTypes.number,
+  exerciseId: PropTypes.number,
+  setId: PropTypes.number,
   content: PropTypes.string,
   setComplete: PropTypes.func,
   setIncomplete: PropTypes.func
@@ -60,11 +61,11 @@ SetButton.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setComplete: (setNum) => {
-      dispatch(setComplete(setNum));
+    setComplete: (setId) => {
+      dispatch(setComplete(setId));
     },
-    setIncomplete: (setNum) => {
-      dispatch(setIncomplete(setNum));
+    setIncomplete: (setId) => {
+      dispatch(setIncomplete(setId));
     }
   };
 };

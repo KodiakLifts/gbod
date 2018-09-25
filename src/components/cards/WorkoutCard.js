@@ -6,15 +6,15 @@ import SetButton from '../../components/buttons/SetButton';
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const WorkoutCard = (props) => {
-  const setButtons = createSetButtons(props.exerciseNum, props.sets);
+const WorkoutCard = ({ exerciseId, sets, name }) => {
+  const setButtons = createSetButtons(exerciseId, sets);
   return (
     <View>
       <View style={CONTAINERSTYLE.card}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
           <TouchableOpacity>
             <Text style={TEXTSTYLE.listItem}>
-              {props.name}
+              {name}
             </Text>
           </TouchableOpacity>
         </View>
@@ -26,13 +26,13 @@ const WorkoutCard = (props) => {
   );
 };
 
-const createSetButtons = (exerciseNum, sets) => {
+const createSetButtons = (exerciseId, sets) => {
   const setButtons = sets.map((set, index) => {
     return (
       <SetButton
-        key={"" + set + exerciseNum}
-        exerciseNum={exerciseNum}
-        setNum={index}
+        key={index}
+        exerciseId={exerciseId}
+        setId={set.id}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
     );
   });
@@ -51,7 +51,7 @@ const checkSetType = (set) => {
 };
 
 WorkoutCard.propTypes = {
-  exerciseNum: PropTypes.number,
+  exerciseId: PropTypes.number,
   name: PropTypes.string,
   sets: PropTypes.arrayOf(PropTypes.shape({
     exercise: PropTypes.number,
@@ -59,12 +59,6 @@ WorkoutCard.propTypes = {
     reps: PropTypes.number,
     type: PropTypes.string
   }))
-};
-
-const mapStateToProps = (state) => {
-  return {
-
-  };
 };
 
 export default WorkoutCard;

@@ -1,16 +1,16 @@
 export const SET_COMPLETE = 'SET_COMPLETE';
 export const SET_INCOMPLETE = 'SET_INCOMPLETE';
 
-export const setComplete = (setNum) => {
+export const setComplete = (setId) => {
   return {
     type: SET_COMPLETE,
-    setNum
+    setId: setId
   };
 };
 
-export const setIncomplete = (setNum) => {
+export const setIncomplete = (setId) => {
   return {
     type: SET_INCOMPLETE,
-    setNum
+    setId: setId
   };
 };

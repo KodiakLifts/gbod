@@ -1,3 +1,5 @@
+//deprecated
+
 import React from 'react';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 import { createSelector } from 'reselect';
