@@ -6,19 +6,29 @@ import SetButton from '../../components/buttons/SetButton';
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const WorkoutCard = ({ exerciseId, sets, name }) => {
+const WorkoutCard = ({ exerciseId, sets, name, borderStyle }) => {
   const setButtons = createSetButtons(exerciseId, sets);
   return (
     <View>
-      <View style={CONTAINERSTYLE.card}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+      <View style={borderStyle}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}>
           <TouchableOpacity>
             <Text style={TEXTSTYLE.listItem}>
               {name}
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginHorizontal: 6, 'flexWrap': 'wrap' }}>
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginHorizontal: 6,
+          'flexWrap': 'wrap'
+        }}>
           {setButtons}
         </View>
       </View>
@@ -32,7 +42,7 @@ const createSetButtons = (exerciseId, sets) => {
       <SetButton
         key={index}
         exerciseId={exerciseId}
-        setId={set.id}
+        setId={index}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
     );
   });
@@ -52,12 +62,14 @@ const checkSetType = (set) => {
 
 WorkoutCard.propTypes = {
   exerciseId: PropTypes.number,
+  borderStyle: PropTypes.object,
   name: PropTypes.string,
   sets: PropTypes.arrayOf(PropTypes.shape({
     exercise: PropTypes.number,
     weight: PropTypes.number,
     reps: PropTypes.number,
-    type: PropTypes.string
+    type: PropTypes.string,
+    complete: PropTypes.bool
   }))
 };
 

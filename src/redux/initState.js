@@ -1,6 +1,10 @@
 export const initState = {
   activeWorkout: {
-    programId: 0, dayId: 0, title: "GreySkullLP - A", currentExercise: 0, complete: false,
+    programId: 0,
+    dayId: 0,
+    title: "GreySkullLP - A",
+    currentExercise: 0,
+    complete: false,
     sets: [
       { id: 0, exercise: 0, weight: 125, reps: 5, type: "N", complete: false },
       { id: 1, exercise: 0, weight: 125, reps: 5, type: "N", complete: false },
@@ -11,12 +15,12 @@ export const initState = {
     ],
     exercises: [
       {
-        id: 0, exerciseId: 0, name: "Bench Press", day: 0,
+        id: 0, exerciseId: 0, name: "Bench Press", complete: false,
         supersetNext: true, restTime: "3:00", includeWarmup: false, increaseRule: "",
         barType: "", units: "", note: ""
       },
       {
-        id: 1, exerciseId: 1, name: "Barbell Row", day: 0,
+        id: 1, exerciseId: 1, name: "Barbell Row", complete: false,
         supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
         barType: "", units: "", note: ""
       },

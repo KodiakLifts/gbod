@@ -39,6 +39,18 @@ module.exports = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 12
   },
+  activeCard: {
+    flexDirection: 'column',
+    width: (Dimensions.get('window').width - 24),
+    alignSelf: 'flex-start',
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    borderRadius: 5,
+    borderColor: COLORS.SECONDARYCOLOR,
+    borderWidth: 1,
+    elevation: 2,
+    marginTop: 15,
+    marginHorizontal: 12
+  },
   listCard: {
     flexDirection: 'column',
     width: (Dimensions.get('window').width - 24),

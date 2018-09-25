@@ -30,7 +30,6 @@ ActiveWorkout.propTypes = {
 
 
 const mapStateToProps = (state) => {
-
   return {
     title: state.activeWorkout.title,
     cards: getActiveWorkoutCards(state)
