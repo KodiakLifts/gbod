@@ -1,16 +1,8 @@
-export const SET_COMPLETE = 'SET_COMPLETE';
-export const SET_INCOMPLETE = 'SET_INCOMPLETE';
+export const TOGGLE_SET_COMPLETE = 'TOGGLE_SET_COMPLETE';
 
-export const setComplete = (setId) => {
+export const toggleSetComplete = (setId) => {
   return {
-    type: SET_COMPLETE,
-    setId: setId
-  };
-};
-
-export const setIncomplete = (setId) => {
-  return {
-    type: SET_INCOMPLETE,
+    type: TOGGLE_SET_COMPLETE,
     setId: setId
   };
 };
