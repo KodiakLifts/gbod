@@ -1,4 +1,5 @@
 export const TOGGLE_SET_COMPLETE = 'TOGGLE_SET_COMPLETE';
+export const UPDATE_EXERCISE_COMPLETE = 'UPDATE_EXERCISE_COMPLETE';
 export const UPDATE_CURRENT_EXERCISE = 'UPDATE_CURRENT_EXERCISE';
 
 export const toggleSetComplete = (setId) => {
@@ -8,9 +9,16 @@ export const toggleSetComplete = (setId) => {
   };
 };
 
-export const updateCurrentExercise = (currentExercise) => {
+export const updateExerciseComplete = (exerciseId) => {
+  return {
+    type: UPDATE_EXERCISE_COMPLETE,
+    exerciseId: exerciseId
+  };
+};
+
+export const updateCurrentExercise = (exerciseId) => {
   return {
     type: UPDATE_CURRENT_EXERCISE,
-    currentExercise: currentExercise
+    exerciseId: exerciseId
   };
 };

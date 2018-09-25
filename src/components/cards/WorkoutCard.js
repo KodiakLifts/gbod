@@ -42,7 +42,7 @@ const createSetButtons = (exerciseId, sets) => {
       <SetButton
         key={index}
         exerciseId={exerciseId}
-        setId={index}
+        setId={set.id}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
     );
   });

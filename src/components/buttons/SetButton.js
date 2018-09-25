@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleSetComplete, updateCurrentExercise } from '../../redux/actions/setButtonActions';
+import { toggleSetComplete, updateExerciseComplete, updateCurrentExercise } from '../../redux/actions/setButtonActions';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
@@ -25,6 +25,7 @@ class SetButton extends Component {
 
   onPress = () => {
     this.props.toggleSetComplete(this.props.setId);
+    this.props.updateExerciseComplete(this.props.exerciseId);
     this.props.updateCurrentExercise(this.props.exerciseId);
     if (this.state.active) {
       this.setState({
@@ -55,6 +56,7 @@ SetButton.propTypes = {
   setId: PropTypes.number,
   content: PropTypes.string,
   toggleSetComplete: PropTypes.func,
+  updateExerciseComplete: PropTypes.func,
   updateCurrentExercise: PropTypes.func
 };
 
@@ -62,6 +64,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleSetComplete: (setId) => {
       dispatch(toggleSetComplete(setId));
+    },
+    updateExerciseComplete: (exerciseId) => {
+      dispatch(updateExerciseComplete(exerciseId));
     },
     updateCurrentExercise: (exerciseId) => {
       dispatch(updateCurrentExercise(exerciseId));
