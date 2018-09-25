@@ -1,20 +1,29 @@
-import { TOGGLE_SET_COMPLETE, UPDATE_EXERCISE_COMPLETE, UPDATE_CURRENT_EXERCISE } from '../actions/setButtonActions';
+import { UPDATE_ACTIVE_WORKOUT_DATA, TOGGLE_SET_COMPLETE, UPDATE_EXERCISE_COMPLETE, UPDATE_CURRENT_EXERCISE } from '../actions/setButtonActions';
 import { initState } from '../initState';
 
 export default (state = initState, action) => {
   switch (action.type) {
+    case UPDATE_ACTIVE_WORKOUT_DATA:
+      return updateActiveWorkoutData(state, action.setId, action.exerciseId);
     case TOGGLE_SET_COMPLETE:
-      return toggleSetCompleteReducer(state, action.setId);
+      return toggleSetComplete(state, action.setId);
     case UPDATE_EXERCISE_COMPLETE:
-      return updateExerciseCompleteReducer(state, action.exerciseId);
+      return updateExerciseComplete(state, action.exerciseId);
     case UPDATE_CURRENT_EXERCISE:
-      return updateCurrentExerciseReducer(state, action.exerciseId);
+      return updateCurrentExercise(state, action.exerciseId);
     default:
       return state;
   }
 };
 
-const toggleSetCompleteReducer = (state, setId) => {
+const updateActiveWorkoutData = (state, setId, exerciseId) => {
+  let setState = toggleSetComplete(state, setId);
+  let exerciseState = updateExerciseComplete(setState, exerciseId);
+  let currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
+  return currentExerciseState;
+}
+
+const toggleSetComplete = (state, setId) => {
   const setCompleteVal = state.activeWorkout.sets[setId].complete;
 
   const newState = {
@@ -33,7 +42,7 @@ const toggleSetCompleteReducer = (state, setId) => {
   return newState;
 };
 
-const updateExerciseCompleteReducer = (state, exerciseId) => {
+const updateExerciseComplete = (state, exerciseId) => {
   const sets = state.activeWorkout.sets;
 
   const currentSets = sets.filter(set => {
@@ -60,7 +69,7 @@ const updateExerciseCompleteReducer = (state, exerciseId) => {
   return newState;
 };
 
-const updateCurrentExerciseReducer = (state, currentExercise) => {
+const updateCurrentExercise = (state, currentExercise) => {
   const exercises = state.activeWorkout.exercises;
   const exerciseComplete = state.activeWorkout.exercises[currentExercise].complete;
 

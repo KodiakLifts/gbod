@@ -1,6 +1,15 @@
+export const UPDATE_ACTIVE_WORKOUT_DATA = 'UPDATE_ACTIVE_WORKOUT_DATA';
 export const TOGGLE_SET_COMPLETE = 'TOGGLE_SET_COMPLETE';
 export const UPDATE_EXERCISE_COMPLETE = 'UPDATE_EXERCISE_COMPLETE';
 export const UPDATE_CURRENT_EXERCISE = 'UPDATE_CURRENT_EXERCISE';
+
+export const updateActiveWorkoutData = (setId, exerciseId) => {
+  return {
+    type: UPDATE_ACTIVE_WORKOUT_DATA,
+    setId: setId,
+    exerciseId: exerciseId
+  };
+};
 
 export const toggleSetComplete = (setId) => {
   return {
