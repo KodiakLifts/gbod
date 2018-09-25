@@ -1,5 +1,3 @@
-//deprecated
-
 import React from 'react';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 import { createSelector } from 'reselect';
@@ -11,14 +9,13 @@ export const getActiveWorkoutCards = createSelector(
   [getActiveSets, getActiveExercises],
   (activeSets, activeExercises) => {
     const workoutCards = [];
-    const exercises = activeExercises;
-    exercises.forEach((exercise, index) => {
+    activeExercises.forEach((exercise, index) => {
       let sets = activeSets.filter(set => {
         return set.exercise === index;
       });
       let card =
         <WorkoutCard
-          key={"" + exercise.name + index}
+          key={index}
           exerciseNum={index}
           name={exercise.name}
           sets={sets} />;
