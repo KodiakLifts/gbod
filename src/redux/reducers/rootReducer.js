@@ -19,6 +19,7 @@ export default (state = initState, action) => {
 const toggleSetCompleteReducer = (state, setId) => {
   const setCompleteVal = state.activeWorkout.sets[setId].complete;
 
+  console.log("Set " + setId + " complete: " + setCompleteVal);
   const newState = {
     ...state,
     activeWorkout: {
@@ -46,6 +47,8 @@ const updateExerciseCompleteReducer = (state, exerciseId) => {
     return set.complete === true;
   });
 
+  console.log("Exercise Complete: " + exerciseComplete)
+
   const newState = {
     ...state,
     activeWorkout: {
@@ -72,12 +75,13 @@ const updateCurrentExerciseReducer = (state, currentExercise) => {
     const allExercisesComplete = exercises.every((exercise) => {
       return exercise.complete === true;
     });
-
+    console.log("AllExercisesComplete: " + allExercisesComplete)
     if (!allExercisesComplete) {
       let foundExercise = false;
       let i = (currentExercise === exercises.length - 1 ? 0 : currentExercise + 1);
-
+      console.log("Starting Index: " + i)
       while (!foundExercise) {
+        console.log("Current Index: " + i)
         if (i === currentExercise) {
           foundExercise = true;
         }

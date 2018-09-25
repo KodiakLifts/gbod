@@ -12,6 +12,9 @@ export const initState = {
       { id: 3, exercise: 1, weight: 150, reps: 5, type: "N", complete: false },
       { id: 4, exercise: 1, weight: 150, reps: 5, type: "N", complete: false },
       { id: 5, exercise: 1, weight: 150, reps: 5, type: "F", complete: false },
+      { id: 6, exercise: 2, weight: 180, reps: 5, type: "N", complete: false },
+      { id: 7, exercise: 2, weight: 180, reps: 5, type: "N", complete: false },
+      { id: 8, exercise: 2, weight: 180, reps: 5, type: "F", complete: false },
     ],
     exercises: [
       {
@@ -21,6 +24,11 @@ export const initState = {
       },
       {
         id: 1, exerciseId: 1, name: "Barbell Row", complete: false,
+        supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
+        barType: "", units: "", note: ""
+      },
+      {
+        id: 2, exerciseId: 2, name: "Squat", complete: false,
         supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
         barType: "", units: "", note: ""
       },
