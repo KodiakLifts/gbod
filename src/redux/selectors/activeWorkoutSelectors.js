@@ -2,8 +2,8 @@ import React from 'react';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 import { createSelector } from 'reselect';
 
-const getActiveSets = (state) => state.activeSets;
-const getActiveExercises = (state) => state.activeExercises;
+const getActiveSets = (state) => state.activeWorkout.sets;
+const getActiveExercises = (state) => state.activeWorkout.exercises;
 
 export const getActiveWorkoutCards = createSelector(
   [getActiveSets, getActiveExercises],
@@ -25,3 +25,5 @@ export const getActiveWorkoutCards = createSelector(
     return workoutCards;
   }
 );
+
+

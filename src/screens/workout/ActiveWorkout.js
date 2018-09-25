@@ -4,23 +4,23 @@ import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 import { connect } from 'react-redux';
-import { getActiveWorkoutCards } from '../../redux/selectors/getActiveWorkoutCards';
+import { getActiveWorkoutCards, getActiveWorkoutTitle } from '../../redux/selectors/activeWorkoutSelectors';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 
-const ActiveWorkout = (props) => {
+const ActiveWorkout = ({ title, cards }) => {
   return (
     <ScreenTemplate
       headerContent={
         <View style={CONTAINERSTYLE.headerContent}>
           <Text style={TEXTSTYLE.headerText}>
-            {props.title}
+            {title}
           </Text>
         </View>
       }
-      scrollContent={props.cards} />
+      scrollContent={cards} />
   );
 };
 
@@ -31,6 +31,7 @@ ActiveWorkout.propTypes = {
 
 
 const mapStateToProps = (state) => {
+
   return {
     title: state.activeWorkout.title,
     cards: getActiveWorkoutCards(state)
