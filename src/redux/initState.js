@@ -33,9 +33,5 @@ export const initState = {
         barType: "", units: "", note: ""
       },
     ]
-  },
-  allExercises: [],
-  allPrograms: [],
-  stats: [],
-  logs: []
+  }
 };
