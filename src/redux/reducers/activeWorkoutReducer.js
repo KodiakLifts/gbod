@@ -1,16 +1,10 @@
-import { UPDATE_ACTIVE_WORKOUT_DATA, TOGGLE_SET_COMPLETE, UPDATE_EXERCISE_COMPLETE, UPDATE_CURRENT_EXERCISE } from '../actions/setButtonActions';
+import { UPDATE_ACTIVE_WORKOUT_DATA } from '../actions/setButtonActions';
 import { initState } from '../initState';
 
 export default (state = initState, action) => {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT_DATA:
       return updateActiveWorkoutData(state, action.setId, action.exerciseId);
-    case TOGGLE_SET_COMPLETE:
-      return toggleSetComplete(state, action.setId);
-    case UPDATE_EXERCISE_COMPLETE:
-      return updateExerciseComplete(state, action.exerciseId);
-    case UPDATE_CURRENT_EXERCISE:
-      return updateCurrentExercise(state, action.exerciseId);
     default:
       return state;
   }
@@ -21,7 +15,7 @@ const updateActiveWorkoutData = (state, setId, exerciseId) => {
   let exerciseState = updateExerciseComplete(setState, exerciseId);
   let currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
   return currentExerciseState;
-}
+};
 
 const toggleSetComplete = (state, setId) => {
   const setCompleteVal = state.activeWorkout.sets[setId].complete;
@@ -82,21 +76,26 @@ const updateCurrentExercise = (state, currentExercise) => {
 
     if (!allExercisesComplete) {
       let foundExercise = false;
-      let i = (currentExercise === exercises.length - 1 ? 0 : currentExercise + 1);
+      let index = (currentExercise === exercises.length - 1 ? 0 : currentExercise + 1);
 
-      while (!foundExercise) {
-        if (i === currentExercise) {
-          foundExercise = true;
-        }
-        if (!exercises[i].complete && !foundExercise) {
+      for (let i = index; i < exercises.length; i++) {
+        if (!exercises[i].complete) {
           updatedActiveExercise = i;
           foundExercise = true;
+          break;
         }
-        if (exercises[i].complete) {
-          console.log("incrementing i")
-          i = (i === exercises.length - 1 ? 0 : i++);
+      }
+      if (!foundExercise) {
+        for (let i = 0; i < exercises.length; i++) {
+          if (!exercises[i].complete) {
+            updatedActiveExercise = i;
+            foundExercise = true;
+            break;
+          }
+          if (i === currentExercise) {
+            break;
+          }
         }
-        console.log("Found at " + i)
       }
     }
   }

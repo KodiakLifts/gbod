@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutData, toggleSetComplete, updateExerciseComplete, updateCurrentExercise } from '../../redux/actions/setButtonActions';
+import { updateActiveWorkoutData } from '../../redux/actions/setButtonActions';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
@@ -54,24 +54,12 @@ SetButton.propTypes = {
   setId: PropTypes.number,
   content: PropTypes.string,
   updateActiveWorkoutData: PropTypes.func,
-  toggleSetComplete: PropTypes.func,
-  updateExerciseComplete: PropTypes.func,
-  updateCurrentExercise: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveWorkoutData: (setId, exerciseId) => {
       dispatch(updateActiveWorkoutData(setId, exerciseId));
-    },
-    toggleSetComplete: (setId) => {
-      dispatch(toggleSetComplete(setId));
-    },
-    updateExerciseComplete: (exerciseId) => {
-      dispatch(updateExerciseComplete(exerciseId));
-    },
-    updateCurrentExercise: (exerciseId) => {
-      dispatch(updateCurrentExercise(exerciseId));
     }
   };
 };
