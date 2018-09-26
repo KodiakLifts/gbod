@@ -1,7 +1,7 @@
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import PreviousWorkout from './PreviousWorkout';
-import ActiveWorkout from './ActiveWorkout';
-import NextWorkout from './NextWorkout';
+import PreviousWorkout from './PreviousWorkoutScreen';
+import ActiveWorkout from './ActiveWorkoutScreen';
+import NextWorkout from './NextWorkoutScreen';
 
 
 const COLORS = require('../../styles/Colors');

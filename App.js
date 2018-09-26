@@ -3,11 +3,14 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import Main from './src/Main';
-import activeWorkoutReducer from './src/redux/reducers/activeWorkoutReducer';
-import rootReducer from './src/redux/reducers/rootReducer';
+import activeWorkout from './src/redux/reducers/activeWorkout';
 import { initState } from './src/redux/initState';
 
-const store = createStore(activeWorkoutReducer);
+const rootReducer = combineReducers({
+  activeWorkout
+});
+
+const store = createStore(rootReducer, initState);
 
 export default () => (
   <Provider store={store}>

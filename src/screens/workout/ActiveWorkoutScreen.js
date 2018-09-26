@@ -8,7 +8,6 @@ import { getActiveWorkoutCards } from '../../redux/selectors/activeWorkoutSelect
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-
 const ActiveWorkout = ({ title, cards }) => {
   return (
     <ScreenTemplate
@@ -28,13 +27,11 @@ ActiveWorkout.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object)
 };
 
-
 const mapStateToProps = (state) => {
   return {
     title: state.activeWorkout.title,
     cards: getActiveWorkoutCards(state)
   };
 };
-
 
 export default connect(mapStateToProps)(ActiveWorkout);

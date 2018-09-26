@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from 'react-navigation';
-import Stats from './Stats';
-import Logs from './Logs';
+import Stats from './StatsScreen';
+import Logs from './LogsScreen';
 
 
 const COLORS = require('../../styles/Colors');

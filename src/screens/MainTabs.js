@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Home from './home/Home';
+import Home from './home/HomeScreen';
 import Workout from './workout/WorkoutTabs';
 import ProgramsExercises from './programs_exercises/PETabs';
 import StatsLogs from './stats_logs/SLTabs';

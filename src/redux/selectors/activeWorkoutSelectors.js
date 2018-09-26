@@ -2,7 +2,6 @@ import React from 'react';
 import WorkoutCard from '../../components/cards/WorkoutCard';
 import { createSelector } from 'reselect';
 
-const COLORS = require('../../styles/Colors');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 const getActiveSets = (state) => state.activeWorkout.sets;
