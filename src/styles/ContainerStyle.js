@@ -10,6 +10,12 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.BACKCOLOR,
     elevation: 4,
   },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15
+  },
   subHeader: {
     width: Dimensions.get('window').width,
     paddingTop: 15,
@@ -28,11 +34,22 @@ module.exports = StyleSheet.create({
     width: (Dimensions.get('window').width - 24),
     alignSelf: 'flex-start',
     backgroundColor: COLORS.PRIMARYCOLOR,
-    margin: 12,
-    padding: 12,
-    paddingHorizontal: 15,
     borderRadius: 5,
-    elevation: 2
+    elevation: 2,
+    marginTop: 15,
+    marginHorizontal: 12
+  },
+  activeCard: {
+    flexDirection: 'column',
+    width: (Dimensions.get('window').width - 24),
+    alignSelf: 'flex-start',
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    borderRadius: 5,
+    borderColor: COLORS.SECONDARYCOLOR,
+    borderWidth: 1,
+    elevation: 2,
+    marginTop: 15,
+    marginHorizontal: 12
   },
   listCard: {
     flexDirection: 'column',
@@ -56,5 +73,27 @@ module.exports = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 5,
     elevation: 4
+  },
+  activeSetButton: {
+    padding: 12,
+    marginHorizontal: 6,
+    marginBottom: 12,
+    width: 112,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.SECONDARYCOLOR,
+    borderRadius: 5
+  },
+  inactiveSetButton: {
+    padding: 12,
+    marginHorizontal: 6,
+    marginBottom: 12,
+    width: 112,
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.INACTIVECOLOR,
+    borderRadius: 5
   }
 });

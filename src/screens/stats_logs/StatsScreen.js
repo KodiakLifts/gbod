@@ -4,12 +4,12 @@ import SubScreenTemplate from '../templates/SubScreenTemplate';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import ListCard from '../../components/cards/ListCard';
 
-const COLORS = require('../../styles/Colors.js');
+const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 
 const menuItems = [{ name: "option 1" }, { name: "option 2" }];
 
-class Exercises extends Component {
+class Stats extends Component {
   render() {
     return (
       <SubScreenTemplate
@@ -38,4 +38,4 @@ class Exercises extends Component {
   }
 }
 
-export default Exercises;
+export default Stats;

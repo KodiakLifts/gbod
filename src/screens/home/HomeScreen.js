@@ -5,6 +5,7 @@ import NavigateIconButton from '../../components/buttons/NavigateIconButton';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
+const scrollContent = [];
 
 class Home extends Component {
     render() {
@@ -15,13 +16,10 @@ class Home extends Component {
                         <Text style={TEXTSTYLE.headerText}>
                             Home
                         </Text>
-                        <NavigateIconButton iconName="cog" iconSize={28}/>
-                    </View>   
+                        <NavigateIconButton iconName="cog" iconSize={28} />
+                    </View>
                 }
-                scrollContent={
-                    <Text>Scroll Area</Text>
-                }
-            />
+                scrollContent={scrollContent} />
         );
     }
 }
