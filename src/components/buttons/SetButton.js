@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutData } from '../../redux/actions/setButtonActions';
+import { updateActiveWorkoutData, updateSetData } from '../../redux/actions/setButtonActions';
 
+const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
@@ -16,34 +17,78 @@ class SetButton extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      modalVisible: false
+    };
+
     this._onPress = this._onPress.bind(this);
+    this._onLongPress = this._onLongPress.bind(this);
+    this._checkSetType = this.checkSetType.bind(this);
   }
 
   _onPress() {
     this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseId);
   }
 
+  _onLongPress() {
+    this.setState({ modalVisible: true });
+  }
+
+  checkSetType(type) {
+    switch (type) {
+      case "N": return "";
+      case "D": return "-";
+      case "F": return "+";
+    }
+    return "";
+  }
+
+  closeModal = () => {
+    this.setState({ modalVisible: false });
+  }
+
+
+
+
   render() {
     return (
-      <TouchableOpacity onPress={this._onPress}>
-        <View style={this.props.complete ? activeButton : inactiveButton}>
-          <Text style={this.props.complete ? activeText : inactiveText}>
-            {this.props.weight + "x" + this.props.reps + checkSetType(this.props.type)}
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <View>
+        <Modal
+          transparent={true}
+          visible={this.state.modalVisible}
+          onRequestClose={this.closeModal}
+        >
+          <TouchableOpacity onPress={this.closeModal} style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: COLORS.TRANSPARENTOVERLAY
+          }}>
+            <TouchableOpacity>
+              <View style={CONTAINERSTYLE.activeSetButton}>
+                <Text>
+                  MODAL
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+
+          </TouchableOpacity>
+        </Modal>
+        <TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
+          <View style={this.props.complete ? activeButton : inactiveButton}>
+            <Text style={this.props.complete ? activeText : inactiveText}>
+              {this.props.weight + "x" + this.props.reps + this.checkSetType(this.props.type)}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   }
 }
 
-const checkSetType = (set) => {
-  switch (set.type) {
-    case "N": return "";
-    case "D": return "-";
-    case "F": return "+";
-  }
-  return "";
-};
+
 
 SetButton.propTypes = {
   exerciseId: PropTypes.number,
