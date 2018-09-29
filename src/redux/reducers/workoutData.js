@@ -20,26 +20,24 @@ const updateActiveWorkout = (state, setId, exerciseIndex) => {
   const setState = toggleSetComplete(state, setId);
   const exerciseState = updateExerciseComplete(setState, exerciseIndex);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseIndex);
+  console.log(currentExerciseState)
   return currentExerciseState;
 };
 
 const toggleSetComplete = (state, setId) => {
-  const program = state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
 
   const setCompleteVal =
-    state
-      .programs[state.activeWorkout.program]
-      .days[state.activeWorkout.day]
-      .sets[setId];
+    state.programs[state.activeWorkout.program].sets[setId].complete;
 
   const newState = {
     ...state,
-    programs: state.programs[program].map((program, index) => {
-      if (index === program) {
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
         return {
           ...program,
-          sets: state.programs[program].sets.map((set, index) => {
-            if (index === set) {
+          sets: state.programs[activeProgram].sets.map((set, index) => {
+            if (index === setId) {
               return {
                 ...set, ...{ complete: !setCompleteVal }
               };
@@ -57,7 +55,7 @@ const toggleSetComplete = (state, setId) => {
 
 
 const updateExerciseComplete = (state, exerciseIndex) => {
-  const program = state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
   const sets = state.programs[state.activeWorkout.program].sets;
 
   const currentSets = sets.filter(set => {
@@ -69,11 +67,12 @@ const updateExerciseComplete = (state, exerciseIndex) => {
   });
 
   const newState = {
-    programs: state.programs[program].map((program, index) => {
-      if (index === program) {
+    ...state,
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
         return {
           ...program,
-          exercises: state.programs[program].exercises.map((exercise, index) => {
+          exercises: state.programs[activeProgram].exercises.map((exercise, index) => {
             if (index === exerciseIndex) {
               return { ...exercise, ...{ complete: exerciseComplete } };
             }

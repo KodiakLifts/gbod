@@ -6,27 +6,20 @@ const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 
 const getActiveWorkoutName = (state) => {
-  console.log(state)
-  console.log("GETTING ACTIVE WORKOUT NAME")
   return (state.programs[state.activeWorkout.program].name);
 };
 const getActiveDayName = (state) => {
-  console.log("GETTINGS ACTIVE DAY NAME")
   return (state.programs[state.activeWorkout.program].days[state.activeWorkout.day].name);
 };
 
 export const getActiveWorkoutTitle = createSelector(
   [getActiveWorkoutName, getActiveDayName],
   (programName, dayName) => {
-    console.log("GETTING ACTIVE WORKOUT TITLE")
     return programName + " - " + dayName;
   }
 );
 
-
-
 const getActiveSets = (state) => {
-  console.log("GETTING ACTIVE SETS")
   return (
     state.programs[state.activeWorkout.program].sets.filter(set => {
       return set.day === state.activeWorkout.day;
@@ -35,11 +28,18 @@ const getActiveSets = (state) => {
 };
 
 const getActiveExercises = (state) => {
-  console.log("GETTING ACTIVE EXERCISES")
-  return (state.programs[state.activeWorkout.program].exercises.filter(exercise => {
+
+  let exercises = state.programs[state.activeWorkout.program].exercises.filter(exercise => {
     return exercise.day === state.activeWorkout.day;
-  }));
+  });
+
+  for (let i = 0; i < exercises.length; i++) {
+    exercises[i] = { ...exercises[i], name: state.exerciseLibrary[exercises[i].libraryId].name };
+  }
+
+  return exercises;
 };
+
 
 const getCurrentExercise = (state) => state.activeWorkout.currentExercise;
 
@@ -47,7 +47,6 @@ export const getActiveWorkoutCards = createSelector(
   [getActiveSets, getActiveExercises, getCurrentExercise],
   (activeSets, activeExercises, currentExercise) => {
 
-    console.log("GETTING ACTIVE WORKOUT CARDS")
     const workoutCards = [];
 
     activeExercises.forEach((exercise, index) => {

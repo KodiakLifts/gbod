@@ -15,13 +15,13 @@ const inactiveButton = CONTAINERSTYLE.inactiveSetButton;
 const activeText = TEXTSTYLE.activeSetButtonText;
 const inactiveText = TEXTSTYLE.inactiveSetButtonText;
 
-const ActiveWorkout = ({ name, day, cards }) => {
+const ActiveWorkout = ({ title, cards }) => {
   return (
     <ScreenTemplate
       headerContent={
         <View style={CONTAINERSTYLE.headerContent}>
           <Text style={TEXTSTYLE.headerText}>
-            {name + " - " + day}
+            {title}
           </Text>
           <TouchableOpacity>
             <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
@@ -50,8 +50,7 @@ const ActiveWorkout = ({ name, day, cards }) => {
 };
 
 ActiveWorkout.propTypes = {
-  name: PropTypes.string,
-  day: PropTypes.string,
+  title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
 };
 
