@@ -2,8 +2,10 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import SetButton from '../../components/buttons/SetButton';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
+const COLORS = require('../../styles/Colors');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 const WorkoutCard = ({ exerciseIndex, sets, name, borderStyle }) => {
@@ -20,6 +22,9 @@ const WorkoutCard = ({ exerciseIndex, sets, name, borderStyle }) => {
             <Text style={TEXTSTYLE.listItem}>
               {name}
             </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name={'ellipsis-v'} size={20} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
           </TouchableOpacity>
         </View>
         <View style={{

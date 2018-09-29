@@ -13,7 +13,7 @@ export default function programs(state = [], action) {
 }
 
 const updateActiveWorkout = (state, action) => {
-  const { programId, dayId, setId, exerciseIndex } = action;
+  const { programId, dayId, setId, exerciseIndex, } = action;
   const setState = toggleSetComplete(state, programId, dayId, setId);
   const exerciseState = updateExerciseComplete(setState, exerciseIndex);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseIndex);
@@ -37,7 +37,10 @@ const toggleSetComplete = (state, programId, dayId, setId) => {
             ...day,
             sets: state[programId].days[dayId].sets[setId].map((set, index) => {
               if (index === setId) {
-                return { ...set, ...{ complete: !setCompleteVal } };
+                return {
+                  ...set,
+                  ...{ complete: !setCompleteVal }
+                };
               }
               return set;
             }

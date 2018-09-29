@@ -23,7 +23,7 @@ class SetButton extends Component {
     };
   }
 
-  onPress = () => {
+  _onPress = () => {
     this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseIndex);
     if (this.state.active) {
       this.setState({
@@ -38,7 +38,7 @@ class SetButton extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this.onPress}>
+      <TouchableOpacity onPress={this._onPress}>
         <View style={this.state.buttonColor}>
           <Text style={this.state.textColor}>
             {this.props.weight + "x" + this.props.reps + checkSetType(this.props.type)}
@@ -64,7 +64,6 @@ SetButton.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
-  content: PropTypes.string,
   updateActiveWorkoutData: PropTypes.func,
 };
 

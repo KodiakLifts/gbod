@@ -1,13 +1,20 @@
 import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
+import { FINISH_WORKOUT } from '../actions/finishButtonActions';
 
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT:
       return updateActiveWorkout(state, action.setId, action.exerciseIndex);
+    case FINISH_WORKOUT:
+      return nextWorkout(state, action);
     default:
       return state;
   }
 }
+
+const nextWorkout = (state, action) => {
+
+};
 
 const updateActiveWorkout = (state, setId, exerciseIndex) => {
   const setState = toggleSetComplete(state, setId);
