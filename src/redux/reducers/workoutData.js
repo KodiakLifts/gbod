@@ -17,8 +17,19 @@ export default function workoutData(state = {}, action) {
 
 const resetWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
+  const activeDay = state.activeWorkout.day;
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === activeDay;
+  });
+
+  const currentExercise = exercises[0].id;
+
   const newState = {
     ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: currentExercise
+    },
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
         return {
