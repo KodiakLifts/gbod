@@ -17,20 +17,8 @@ export default function workoutData(state = {}, action) {
 
 const resetWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
-  const activeDay = state.activeWorkout.day;
-
-  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
-    return exercise.day === activeDay;
-  });
-
-  const currentExercise = exercises[0].id;
-
   const newState = {
     ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: currentExercise
-    },
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
         return {
@@ -42,7 +30,7 @@ const resetWorkout = (state) => {
       }
       return program;
     })
-  };
+  }
   return newState;
 };
 
@@ -83,13 +71,13 @@ const finishWorkout = (state) => {
 
 
 const updateActiveWorkout = (state, setId, exerciseId) => {
-  const setState = toggleSetComplete(state, setId);
+  const setState = toggleSetComplete(state, setId, exerciseId);
   const exerciseState = updateExerciseComplete(setState, exerciseId);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
   return currentExerciseState;
 };
 
-const toggleSetComplete = (state, setId) => {
+const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
   const setCompleteVal =
@@ -110,7 +98,7 @@ const toggleSetComplete = (state, setId) => {
             return set;
           }),
           exercises: state.programs[activeProgram].exercises.map(exercise => {
-            if (exercise.id === exercise.id) {
+            if (exerciseId === exercise.id) {
               return {
                 ...exercise, ...{ complete: false }
               };
@@ -207,5 +195,6 @@ const updateCurrentExercise = (state, currentExercise) => {
       currentExercise: updatedActiveExercise,
     }
   };
+  console.log(newState)
   return newState;
 };
