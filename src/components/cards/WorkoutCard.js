@@ -24,7 +24,7 @@ const WorkoutCard = ({ exerciseIndex, sets, name, borderStyle }) => {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Icon name={'ellipsis-v'} size={20} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
+            <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
           </TouchableOpacity>
         </View>
         <View style={{
