@@ -47,6 +47,7 @@ const finishWorkout = (state) => {
 
   const currentExercise = exercises[0].id;
 
+
   const newState = {
     ...state,
     activeWorkout: {
@@ -65,7 +66,8 @@ const finishWorkout = (state) => {
       }
       return program;
     })
-  }
+  };
+
   return newState;
 };
 
@@ -146,16 +148,20 @@ const updateExerciseComplete = (state, exerciseId) => {
   return newState;
 };
 
-const updateCurrentExercise = (state, currentExercise) => {
+const updateCurrentExercise = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {
     return exercise.day === state.activeWorkout.day;
   });
 
-  const exerciseComplete = state.programs[activeProgram]
-    .exercises[currentExercise].complete;
+  let currentExerciseIndex = exercises.findIndex(exercise => {
+    return exercise.id === exerciseId;
+  });
 
-  let updatedActiveExercise = currentExercise;
+  const exerciseComplete = state.programs[activeProgram]
+    .exercises[exerciseId].complete;
+
+  let updatedActiveExerciseId = exerciseId;
 
   if (exerciseComplete) {
     const allExercisesComplete = exercises.every((exercise) => {
@@ -164,11 +170,10 @@ const updateCurrentExercise = (state, currentExercise) => {
 
     if (!allExercisesComplete) {
       let foundExercise = false;
-      let index = (currentExercise === exercises[exercises.length - 1].id ? 0 : currentExercise + 1);
-
+      let index = (currentExerciseIndex === (exercises.length - 1) ? 0 : currentExerciseIndex++);
       for (let i = index; i < exercises.length; i++) {
         if (!exercises[i].complete) {
-          updatedActiveExercise = i;
+          updatedActiveExerciseId = exercises[i].id;
           foundExercise = true;
           break;
         }
@@ -176,11 +181,11 @@ const updateCurrentExercise = (state, currentExercise) => {
       if (!foundExercise) {
         for (let i = 0; i < exercises.length; i++) {
           if (!exercises[i].complete) {
-            updatedActiveExercise = i;
+            updatedActiveExerciseId = exercises[i].id;
             foundExercise = true;
             break;
           }
-          if (i === currentExercise) {
+          if (i === currentExerciseIndex) {
             break;
           }
         }
@@ -192,9 +197,8 @@ const updateCurrentExercise = (state, currentExercise) => {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      currentExercise: updatedActiveExercise,
+      currentExercise: updatedActiveExerciseId,
     }
   };
-  console.log(newState)
   return newState;
 };
