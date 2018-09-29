@@ -1,7 +1,7 @@
 import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
 import { FINISH_WORKOUT } from '../actions/finishButtonActions';
 
-export default function activeWorkout(state = {}, action) {
+export default function workoutData(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT:
       return updateActiveWorkout(state, action.setId, action.exerciseIndex);
@@ -13,7 +13,7 @@ export default function activeWorkout(state = {}, action) {
 }
 
 const nextWorkout = (state, action) => {
-
+  return state;
 };
 
 const updateActiveWorkout = (state, setId, exerciseIndex) => {
@@ -24,42 +24,74 @@ const updateActiveWorkout = (state, setId, exerciseIndex) => {
 };
 
 const toggleSetComplete = (state, setId) => {
-  const setCompleteVal = state.sets[setId].complete;
+  const program = state.activeWorkout.program;
+
+  const setCompleteVal =
+    state
+      .programs[state.activeWorkout.program]
+      .days[state.activeWorkout.day]
+      .sets[setId];
+
   const newState = {
     ...state,
-    sets: state.sets.map((set, index) => {
-      if (index === setId) {
-        return { ...set, ...{ complete: !setCompleteVal } };
+    programs: state.programs[program].map((program, index) => {
+      if (index === program) {
+        return {
+          ...program,
+          sets: state.programs[program].sets.map((set, index) => {
+            if (index === set) {
+              return {
+                ...set, ...{ complete: !setCompleteVal }
+              };
+            }
+            return set;
+          })
+        };
       }
-      return set;
-    }),
+      return program;
+    })
   };
   return newState;
 };
 
+
+
 const updateExerciseComplete = (state, exerciseIndex) => {
-  const sets = state.sets;
+  const program = state.activeWorkout.program;
+  const sets = state.programs[state.activeWorkout.program].sets;
+
   const currentSets = sets.filter(set => {
     return set.exercise === exerciseIndex;
   });
+
   const exerciseComplete = currentSets.every((set) => {
     return set.complete === true;
   });
+
   const newState = {
-    ...state,
-    exercises: state.exercises.map((exercise, index) => {
-      if (index === exerciseIndex) {
-        return { ...exercise, ...{ complete: exerciseComplete } };
+    programs: state.programs[program].map((program, index) => {
+      if (index === program) {
+        return {
+          ...program,
+          exercises: state.programs[program].exercises.map((exercise, index) => {
+            if (index === exerciseIndex) {
+              return { ...exercise, ...{ complete: exerciseComplete } };
+            }
+            return exercise;
+          })
+        };
       }
-      return exercise;
-    }),
+      return program;
+    })
   };
   return newState;
 };
 
 const updateCurrentExercise = (state, currentExercise) => {
-  const exercises = state.exercises;
-  const exerciseComplete = state.exercises[currentExercise].complete;
+  const program = state.activeWorkout.program;
+  const exercises = state.programs[program].exercises;
+  const exerciseComplete = state.programs[program]
+    .exercises[currentExercise].complete;
 
   let updatedActiveExercise = currentExercise;
 
@@ -93,9 +125,13 @@ const updateCurrentExercise = (state, currentExercise) => {
       }
     }
   }
+
   const newState = {
     ...state,
-    currentExercise: updatedActiveExercise,
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: updatedActiveExercise,
+    }
   };
   return newState;
 };

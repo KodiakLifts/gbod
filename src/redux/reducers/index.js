@@ -1,2 +1,2 @@
-export { default as activeWorkout } from './activeWorkout';
+export { default as workoutData } from './workoutData';
 export { default as programs } from './programs';
