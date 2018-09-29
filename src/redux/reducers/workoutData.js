@@ -1,18 +1,40 @@
 import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
 import { FINISH_WORKOUT } from '../actions/finishButtonActions';
+import { RESET_WORKOUT } from '../actions/resetButtonActions';
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT:
       return updateActiveWorkout(state, action.setId, action.exerciseId);
     case FINISH_WORKOUT:
-      return nextWorkout(state);
+      return finishWorkout(state);
+    case RESET_WORKOUT:
+      return resetWorkout(state);
     default:
       return state;
   }
 }
 
-const nextWorkout = (state) => {
+const resetWorkout = (state) => {
+  const activeProgram = state.activeWorkout.program;
+  const newState = {
+    ...state,
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          sets: state.programs[activeProgram].sets.map(set => {
+            return { ...set, ...{ complete: false } };
+          })
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
+};
+
+const finishWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
   const days = state.programs[activeProgram].days;
 
@@ -36,7 +58,7 @@ const nextWorkout = (state) => {
       if (index === activeProgram) {
         return {
           ...program,
-          sets: state.programs[activeProgram].sets.map((set, index) => {
+          sets: state.programs[activeProgram].sets.map(set => {
             return { ...set, ...{ complete: false } };
           })
         };

@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { getActiveWorkoutCards, getActiveWorkoutTitle } from '../../redux/selectors/activeWorkoutSelectors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { finishWorkout } from '../../redux/actions/finishButtonActions';
+import FinishButton from '../../components/buttons/FinishButton';
+import ResetButton from '../../components/buttons/ResetButton';
+import { resetWorkout } from '../../redux/actions/resetButtonActions';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -35,16 +38,8 @@ const ActiveWorkout = ({ title, cards, finish }) => {
           flexDirection: 'row',
           paddingVertical: 15
         }}>
-          <TouchableOpacity>
-            <View style={inactiveButton}>
-              <Text style={inactiveText}>RESET</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={finish}>
-            <View style={activeButton}>
-              <Text style={activeText}>FINISH</Text>
-            </View>
-          </TouchableOpacity>
+          <ResetButton />
+          <FinishButton />
         </View>
       } />
   );
