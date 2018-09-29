@@ -24,7 +24,7 @@ class SetButton extends Component {
   }
 
   onPress = () => {
-    this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseId);
+    this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseIndex);
     if (this.state.active) {
       this.setState({
         active: false, buttonColor: inactiveButton, textColor: inactiveText
@@ -50,7 +50,7 @@ class SetButton extends Component {
 }
 
 SetButton.propTypes = {
-  exerciseId: PropTypes.number,
+  exerciseIndex: PropTypes.number,
   setId: PropTypes.number,
   content: PropTypes.string,
   updateActiveWorkoutData: PropTypes.func,
@@ -58,8 +58,8 @@ SetButton.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateActiveWorkoutData: (setId, exerciseId) => {
-      dispatch(updateActiveWorkoutData(setId, exerciseId));
+    updateActiveWorkoutData: (setId, exerciseIndex) => {
+      dispatch(updateActiveWorkoutData(setId, exerciseIndex));
     }
   };
 };

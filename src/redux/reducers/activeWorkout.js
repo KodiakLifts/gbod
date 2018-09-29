@@ -3,16 +3,16 @@ import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT:
-      return updateActiveWorkout(state, action.setId, action.exerciseId);
+      return updateActiveWorkout(state, action.setId, action.exerciseIndex);
     default:
       return state;
   }
 }
 
-const updateActiveWorkout = (state, setId, exerciseId) => {
+const updateActiveWorkout = (state, setId, exerciseIndex) => {
   const setState = toggleSetComplete(state, setId);
-  const exerciseState = updateExerciseComplete(setState, exerciseId);
-  const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
+  const exerciseState = updateExerciseComplete(setState, exerciseIndex);
+  const currentExerciseState = updateCurrentExercise(exerciseState, exerciseIndex);
   return currentExerciseState;
 };
 
@@ -30,10 +30,10 @@ const toggleSetComplete = (state, setId) => {
   return newState;
 };
 
-const updateExerciseComplete = (state, exerciseId) => {
+const updateExerciseComplete = (state, exerciseIndex) => {
   const sets = state.sets;
   const currentSets = sets.filter(set => {
-    return set.exercise === exerciseId;
+    return set.exercise === exerciseIndex;
   });
   const exerciseComplete = currentSets.every((set) => {
     return set.complete === true;
@@ -41,7 +41,7 @@ const updateExerciseComplete = (state, exerciseId) => {
   const newState = {
     ...state,
     exercises: state.exercises.map((exercise, index) => {
-      if (index === exerciseId) {
+      if (index === exerciseIndex) {
         return { ...exercise, ...{ complete: exerciseComplete } };
       }
       return exercise;
@@ -51,6 +51,7 @@ const updateExerciseComplete = (state, exerciseId) => {
 };
 
 const updateCurrentExercise = (state, currentExercise) => {
+  console.log(state);
   const exercises = state.exercises;
   const exerciseComplete = state.exercises[currentExercise].complete;
 

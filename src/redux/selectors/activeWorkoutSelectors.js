@@ -26,7 +26,7 @@ export const getActiveWorkoutCards = createSelector(
       let card =
         <WorkoutCard
           key={index}
-          exerciseId={index}
+          exerciseIndex={index}
           borderStyle={style}
           name={exercise.name}
           sets={sets} />;

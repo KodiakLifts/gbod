@@ -6,8 +6,8 @@ import SetButton from '../../components/buttons/SetButton';
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const WorkoutCard = ({ exerciseId, sets, name, borderStyle }) => {
-  const setButtons = createSetButtons(exerciseId, sets);
+const WorkoutCard = ({ exerciseIndex, sets, name, borderStyle }) => {
+  const setButtons = createSetButtons(exerciseIndex, sets);
   return (
     <View>
       <View style={borderStyle}>
@@ -36,12 +36,12 @@ const WorkoutCard = ({ exerciseId, sets, name, borderStyle }) => {
   );
 };
 
-const createSetButtons = (exerciseId, sets) => {
+const createSetButtons = (exerciseIndex, sets) => {
   const setButtons = sets.map((set, index) => {
     return (
       <SetButton
         key={index}
-        exerciseId={exerciseId}
+        exerciseIndex={exerciseIndex}
         setId={set.id}
         content={set.weight + "x" + set.reps + checkSetType(set)} />
     );
@@ -61,7 +61,7 @@ const checkSetType = (set) => {
 };
 
 WorkoutCard.propTypes = {
-  exerciseId: PropTypes.number,
+  exerciseIndex: PropTypes.number,
   borderStyle: PropTypes.object,
   name: PropTypes.string,
   sets: PropTypes.arrayOf(PropTypes.shape({
