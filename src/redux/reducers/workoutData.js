@@ -15,14 +15,22 @@ export default function workoutData(state = {}, action) {
 const nextWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
   const days = state.programs[activeProgram].days;
+
   let activeDay = state.activeWorkout.day;
   activeDay === days.length - 1 ? activeDay = 0 : activeDay++;
+
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === activeDay;
+  });
+
+  const currentExercise = exercises[0].id;
 
   const newState = {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      day: activeDay
+      day: activeDay,
+      currentExercise: currentExercise
     },
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
@@ -31,7 +39,7 @@ const nextWorkout = (state) => {
           sets: state.programs[activeProgram].sets.map((set, index) => {
             return { ...set, ...{ complete: false } };
           })
-        }
+        };
       }
       return program;
     })
