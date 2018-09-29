@@ -17,8 +17,20 @@ export default function workoutData(state = {}, action) {
 
 const resetWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
+  const activeDay = state.activeWorkout.day;
+
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === activeDay;
+  });
+
+  const currentExercise = exercises[0].id;
+
   const newState = {
     ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: currentExercise
+    },
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
         return {
@@ -85,20 +97,20 @@ const toggleSetComplete = (state, setId) => {
 
   const newState = {
     ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
         return {
           ...program,
-          sets: state.programs[activeProgram].sets.map((set, index) => {
-            if (index === setId) {
+          sets: state.programs[activeProgram].sets.map(set => {
+            if (set.id === setId) {
               return {
                 ...set, ...{ complete: !setCompleteVal }
               };
             }
             return set;
           }),
-          exercises: state.programs[activeProgram].exercises.map((exercise, index) => {
-            if (index === exercise.id) {
+          exercises: state.programs[activeProgram].exercises.map(exercise => {
+            if (exercise.id === exercise.id) {
               return {
                 ...exercise, ...{ complete: false }
               };
@@ -128,12 +140,12 @@ const updateExerciseComplete = (state, exerciseId) => {
 
   const newState = {
     ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
         return {
           ...program,
-          exercises: state.programs[activeProgram].exercises.map((exercise, index) => {
-            if (index === exerciseId) {
+          exercises: state.programs[activeProgram].exercises.map(exercise => {
+            if (exercise.id === exerciseId) {
               return { ...exercise, ...{ complete: exerciseComplete } };
             }
             return exercise;
@@ -195,6 +207,5 @@ const updateCurrentExercise = (state, currentExercise) => {
       currentExercise: updatedActiveExercise,
     }
   };
-  console.log(newState)
   return newState;
 };
