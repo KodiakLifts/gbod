@@ -41,7 +41,7 @@ class SetButton extends Component {
       <TouchableOpacity onPress={this.onPress}>
         <View style={this.state.buttonColor}>
           <Text style={this.state.textColor}>
-            {this.props.content}
+            {this.props.weight + "x" + this.props.reps + checkSetType(this.props.type)}
           </Text>
         </View>
       </TouchableOpacity>
@@ -49,9 +49,21 @@ class SetButton extends Component {
   }
 }
 
+const checkSetType = (set) => {
+  switch (set.type) {
+    case "N": return "";
+    case "D": return "-";
+    case "F": return "+";
+  }
+  return "";
+};
+
 SetButton.propTypes = {
   exerciseIndex: PropTypes.number,
   setId: PropTypes.number,
+  reps: PropTypes.number,
+  weight: PropTypes.number,
+  type: PropTypes.string,
   content: PropTypes.string,
   updateActiveWorkoutData: PropTypes.func,
 };

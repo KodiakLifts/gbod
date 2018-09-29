@@ -43,21 +43,14 @@ const createSetButtons = (exerciseIndex, sets) => {
         key={index}
         exerciseIndex={exerciseIndex}
         setId={set.id}
-        content={set.weight + "x" + set.reps + checkSetType(set)} />
+        reps={set.reps}
+        weight={set.weight}
+        type={set.type} />
     );
   });
   return (
     setButtons
   );
-};
-
-const checkSetType = (set) => {
-  switch (set.type) {
-    case "N": return "";
-    case "D": return "-";
-    case "F": return "+";
-  }
-  return "";
 };
 
 WorkoutCard.propTypes = {

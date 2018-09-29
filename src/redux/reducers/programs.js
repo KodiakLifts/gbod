@@ -1,32 +1,59 @@
 import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
 
-export default function activeWorkout(state = {}, action) {
-  switch (action.type) {
-    case UPDATE_ACTIVE_WORKOUT:
-      return updateActiveWorkout(state, action.setId, action.exerciseIndex);
-    default:
-      return state;
-  }
+export default function programs(state = [], action) {
+  return state;
+  // switch (action.type) {
+  //   case UPDATE_ACTIVE_WORKOUT:
+  //     console.log(state);
+
+  //     return updateActiveWorkout(state, action);
+  //   default:
+  //     return state;
+  // }
 }
 
-const updateActiveWorkout = (state, setId, exerciseIndex) => {
-  const setState = toggleSetComplete(state, setId);
+const updateActiveWorkout = (state, action) => {
+  const { programId, dayId, setId, exerciseIndex } = action;
+  const setState = toggleSetComplete(state, programId, dayId, setId);
   const exerciseState = updateExerciseComplete(setState, exerciseIndex);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseIndex);
   return currentExerciseState;
 };
 
-const toggleSetComplete = (state, setId) => {
-  const setCompleteVal = state.sets[setId].complete;
-  const newState = {
-    ...state,
-    sets: state.sets.map((set, index) => {
-      if (index === setId) {
-        return { ...set, ...{ complete: !setCompleteVal } };
-      }
-      return set;
-    }),
-  };
+const toggleSetComplete = (state, programId, dayId, setId) => {
+  const setCompleteVal =
+    state[programId]
+      .days[dayId]
+      .sets[setId]
+      .complete;
+
+  const newState = [
+    ...state.slice(0, programId),
+    {
+      ...state[programId],
+      days: state[programId].days.map((day, index) => {
+        if (index === dayId) {
+          return {
+            ...day,
+            sets: state[programId].days[dayId].sets[setId].map((set, index) => {
+              if (index === setId) {
+                return { ...set, ...{ complete: !setCompleteVal } };
+              }
+              return set;
+            }
+            )
+          };
+        }
+        return day;
+      })
+    },
+    ...state.slice(programId + 1)
+  ];
+
+
+
+
+
   return newState;
 };
 
