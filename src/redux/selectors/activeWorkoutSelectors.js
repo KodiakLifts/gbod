@@ -4,7 +4,6 @@ import { createSelector } from 'reselect';
 
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
 };
@@ -51,7 +50,7 @@ export const getActiveWorkoutCards = createSelector(
 
     activeExercises.forEach((exercise, index) => {
       let sets = activeSets.filter(set => {
-        return set.exercise === index;
+        return set.exercise === exercise.id;
       });
 
       let style = (exercise.id === currentExercise ?
@@ -60,7 +59,7 @@ export const getActiveWorkoutCards = createSelector(
       let card =
         <WorkoutCard
           key={index}
-          exerciseIndex={index}
+          exerciseId={exercise.id}
           borderStyle={style}
           name={exercise.name}
           sets={sets} />;

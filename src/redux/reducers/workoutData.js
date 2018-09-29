@@ -4,23 +4,46 @@ import { FINISH_WORKOUT } from '../actions/finishButtonActions';
 export default function workoutData(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT:
-      return updateActiveWorkout(state, action.setId, action.exerciseIndex);
+      return updateActiveWorkout(state, action.setId, action.exerciseId);
     case FINISH_WORKOUT:
-      return nextWorkout(state, action);
+      return nextWorkout(state);
     default:
       return state;
   }
 }
 
-const nextWorkout = (state, action) => {
-  return state;
+const nextWorkout = (state) => {
+  const activeProgram = state.activeWorkout.program;
+  const days = state.programs[activeProgram].days;
+  let activeDay = state.activeWorkout.day;
+  activeDay === days.length - 1 ? activeDay = 0 : activeDay++;
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: activeDay
+    },
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          sets: state.programs[activeProgram].sets.map((set, index) => {
+            return { ...set, ...{ complete: false } };
+          })
+        }
+      }
+      return program;
+    })
+  }
+  return newState;
 };
 
-const updateActiveWorkout = (state, setId, exerciseIndex) => {
+
+const updateActiveWorkout = (state, setId, exerciseId) => {
   const setState = toggleSetComplete(state, setId);
-  const exerciseState = updateExerciseComplete(setState, exerciseIndex);
-  const currentExerciseState = updateCurrentExercise(exerciseState, exerciseIndex);
-  console.log(currentExerciseState)
+  const exerciseState = updateExerciseComplete(setState, exerciseId);
+  const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
   return currentExerciseState;
 };
 
@@ -43,23 +66,30 @@ const toggleSetComplete = (state, setId) => {
               };
             }
             return set;
+          }),
+          exercises: state.programs[activeProgram].exercises.map((exercise, index) => {
+            if (index === exercise.id) {
+              return {
+                ...exercise, ...{ complete: false }
+              };
+            }
+            return exercise;
           })
         };
       }
       return program;
     })
   };
+
   return newState;
 };
 
-
-
-const updateExerciseComplete = (state, exerciseIndex) => {
+const updateExerciseComplete = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
   const sets = state.programs[state.activeWorkout.program].sets;
 
   const currentSets = sets.filter(set => {
-    return set.exercise === exerciseIndex;
+    return set.exercise === exerciseId;
   });
 
   const exerciseComplete = currentSets.every((set) => {
@@ -73,7 +103,7 @@ const updateExerciseComplete = (state, exerciseIndex) => {
         return {
           ...program,
           exercises: state.programs[activeProgram].exercises.map((exercise, index) => {
-            if (index === exerciseIndex) {
+            if (index === exerciseId) {
               return { ...exercise, ...{ complete: exerciseComplete } };
             }
             return exercise;
@@ -87,9 +117,12 @@ const updateExerciseComplete = (state, exerciseIndex) => {
 };
 
 const updateCurrentExercise = (state, currentExercise) => {
-  const program = state.activeWorkout.program;
-  const exercises = state.programs[program].exercises;
-  const exerciseComplete = state.programs[program]
+  const activeProgram = state.activeWorkout.program;
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === state.activeWorkout.day;
+  });
+
+  const exerciseComplete = state.programs[activeProgram]
     .exercises[currentExercise].complete;
 
   let updatedActiveExercise = currentExercise;
@@ -101,7 +134,7 @@ const updateCurrentExercise = (state, currentExercise) => {
 
     if (!allExercisesComplete) {
       let foundExercise = false;
-      let index = (currentExercise === exercises.length - 1 ? 0 : currentExercise + 1);
+      let index = (currentExercise === exercises[exercises.length - 1].id ? 0 : currentExercise + 1);
 
       for (let i = index; i < exercises.length; i++) {
         if (!exercises[i].complete) {
@@ -132,5 +165,6 @@ const updateCurrentExercise = (state, currentExercise) => {
       currentExercise: updatedActiveExercise,
     }
   };
+  console.log(newState)
   return newState;
 };

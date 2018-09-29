@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getActiveWorkoutCards, getActiveWorkoutTitle } from '../../redux/selectors/activeWorkoutSelectors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { finishWorkout } from '../../redux/actions/finishButtonActions';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -15,7 +16,7 @@ const inactiveButton = CONTAINERSTYLE.inactiveSetButton;
 const activeText = TEXTSTYLE.activeSetButtonText;
 const inactiveText = TEXTSTYLE.inactiveSetButtonText;
 
-const ActiveWorkout = ({ title, cards }) => {
+const ActiveWorkout = ({ title, cards, finish }) => {
   return (
     <ScreenTemplate
       headerContent={
@@ -39,7 +40,7 @@ const ActiveWorkout = ({ title, cards }) => {
               <Text style={inactiveText}>RESET</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={finish}>
             <View style={activeButton}>
               <Text style={activeText}>FINISH</Text>
             </View>
@@ -52,6 +53,7 @@ const ActiveWorkout = ({ title, cards }) => {
 ActiveWorkout.propTypes = {
   title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
+  finish: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
@@ -61,4 +63,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(ActiveWorkout);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    finish: () => {
+      dispatch(finishWorkout());
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveWorkout);

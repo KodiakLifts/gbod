@@ -16,31 +16,18 @@ class SetButton extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      active: false,
-      buttonColor: inactiveButton,
-      textColor: inactiveText,
-    };
+    this._onPress = this._onPress.bind(this);
   }
 
-  _onPress = () => {
-    this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseIndex);
-    if (this.state.active) {
-      this.setState({
-        active: false, buttonColor: inactiveButton, textColor: inactiveText
-      });
-    } else {
-      this.setState({
-        active: true, buttonColor: activeButton, textColor: activeText
-      });
-    }
+  _onPress() {
+    this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseId);
   }
 
   render() {
     return (
       <TouchableOpacity onPress={this._onPress}>
-        <View style={this.state.buttonColor}>
-          <Text style={this.state.textColor}>
+        <View style={this.props.complete ? activeButton : inactiveButton}>
+          <Text style={this.props.complete ? activeText : inactiveText}>
             {this.props.weight + "x" + this.props.reps + checkSetType(this.props.type)}
           </Text>
         </View>
@@ -59,20 +46,31 @@ const checkSetType = (set) => {
 };
 
 SetButton.propTypes = {
-  exerciseIndex: PropTypes.number,
+  exerciseId: PropTypes.number,
   setId: PropTypes.number,
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
   updateActiveWorkoutData: PropTypes.func,
+  complete: PropTypes.bool
 };
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    complete:
+      state
+        .workoutData
+        .programs[state.workoutData.activeWorkout.program]
+        .sets[ownProps.setId].complete
+  };
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateActiveWorkoutData: (setId, exerciseIndex) => {
-      dispatch(updateActiveWorkoutData(setId, exerciseIndex));
+    updateActiveWorkoutData: (setId, exerciseId) => {
+      dispatch(updateActiveWorkoutData(setId, exerciseId));
     }
   };
 };
 
-export default connect(null, mapDispatchToProps)(SetButton);
+export default connect(mapStateToProps, mapDispatchToProps)(SetButton);
