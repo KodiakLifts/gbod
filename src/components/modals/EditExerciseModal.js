@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
+import { Modal, Text, CheckBox, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateSetData } from '../../redux/actions/activeWorkoutActions';
+import { updateExerciseData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const COLORS = require('../../styles/Colors');
@@ -11,6 +11,16 @@ const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 class EditExerciseModal extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      tmpSupersetNext: props.supersetNext
+    };
+
+    this.supersetNextToggle = (val) =>
+      props.updateExerciseData(
+        props.exerciseId,
+        val
+      );
   }
 
   render() {
@@ -29,12 +39,20 @@ class EditExerciseModal extends Component {
         }}>
           <TouchableWithoutFeedback>
             <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit Set</Text></View>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={TEXTSTYLE.modalHeader}>
+                  Edit Exercise
+                </Text>
+              </View>
               <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={TEXTSTYLE.modalText}>
-                    OPTIONS
-                    </Text>
+                    Superset:
+                  </Text>
+                  <CheckBox
+                    value={this.props.supersetNext}
+                    onValueChange={this.supersetNextToggle}
+                  />
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <TouchableOpacity onPress={this.props.closeModal}>
@@ -55,7 +73,18 @@ class EditExerciseModal extends Component {
 
 EditExerciseModal.propTypes = {
   visible: PropTypes.bool,
+  exerciseId: PropTypes.number,
+  supersetNext: PropTypes.bool,
   closeModal: PropTypes.func,
+  updateExerciseData: PropTypes.func
 };
 
-export default EditExerciseModal;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateExerciseData: (exerciseId, supersetNext) => {
+      dispatch(updateExerciseData(exerciseId, supersetNext));
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(EditExerciseModal);

@@ -62,7 +62,8 @@ export const getActiveWorkoutCards = createSelector(
           exerciseId={exercise.id}
           borderStyle={style}
           name={exercise.name}
-          sets={sets} />;
+          sets={sets}
+          supersetNext={exercise.supersetNext} />;
 
       workoutCards.push(card);
     });

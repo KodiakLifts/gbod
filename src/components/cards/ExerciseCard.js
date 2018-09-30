@@ -19,15 +19,17 @@ class ExerciseCard extends Component {
 
     };
 
-    this._onMenuPress = () =>
-      this.setState({ menuModalVisible: true });
-
-    this._onExercisePress = () => { };
-
-    this.closeMenuModal = () =>
-      this.setState({ menuModalVisible: false });
-
+    this._onMenuPress = this._onMenuPress.bind(this);
+    this.closeMenuModal = this.closeMenuModal.bind(this);
     this.createSetButtons = this.createSetButtons.bind(this);
+  }
+
+  _onMenuPress() {
+    this.setState({ menuModalVisible: true });
+  }
+
+  closeMenuModal() {
+    this.setState({ menuModalVisible: false });
   }
 
 
@@ -55,6 +57,8 @@ class ExerciseCard extends Component {
       <View >
         <EditExerciseModal
           visible={this.state.menuModalVisible}
+          exerciseId={this.props.exerciseId}
+          supersetNext={this.props.supersetNext}
           closeModal={this.closeMenuModal} />
         <View style={{ alignItems: 'center' }}>
           <View style={borderStyle}>
@@ -93,8 +97,6 @@ class ExerciseCard extends Component {
   }
 }
 
-
-
 ExerciseCard.propTypes = {
   exerciseId: PropTypes.number,
   borderStyle: PropTypes.object,
@@ -109,14 +111,4 @@ ExerciseCard.propTypes = {
   supersetNext: PropTypes.bool
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    supersetNext:
-      state
-        .workoutData
-        .programs[state.workoutData.activeWorkout.program]
-        .exercises[ownProps.exerciseId].supersetNext
-  };
-};
-
-export default connect(mapStateToProps)(ExerciseCard);
+export default ExerciseCard;

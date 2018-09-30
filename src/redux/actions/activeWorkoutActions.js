@@ -1,5 +1,6 @@
 export const UPDATE_ACTIVE_WORKOUT_UI = 'UPDATE_ACTIVE_WORKOUT_UI';
 export const UPDATE_SET_DATA = 'UPDATE_SET_DATA';
+export const UPDATE_EXERCISE_DATA = 'UPDATE_EXERCISE_DATA';
 export const FINISH_WORKOUT = 'FINISH_WORKOUT';
 export const RESET_WORKOUT = 'RESET_WORKOUT';
 
@@ -18,6 +19,14 @@ export const updateSetData = (setId, weight, reps, setType) => {
     weight,
     reps,
     setType
+  };
+};
+
+export const updateExerciseData = (exerciseId, supersetNext) => {
+  return {
+    type: UPDATE_EXERCISE_DATA,
+    exerciseId,
+    supersetNext
   };
 };
 

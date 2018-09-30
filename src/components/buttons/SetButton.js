@@ -22,14 +22,22 @@ class SetButton extends Component {
       editSetModalVisible: false,
     };
 
-    this._onPress = () =>
-      props.updateActiveWorkoutUI(props.setId, props.exerciseId);
-    this._onLongPress = () =>
-      this.setState({ editSetModalVisible: true });
-    this.closeModal = () =>
-      this.setState({ editSetModalVisible: false });
-
+    this._onPress = this._onPress.bind(this);
+    this._onLongPress = this._onLongPress.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.checkSetType = this.checkSetType.bind(this);
+  }
+
+  _onPress() {
+    this.props.updateActiveWorkoutUI(this.props.setId, this.props.exerciseId);
+  }
+
+  _onLongPress() {
+    this.setState({ editSetModalVisible: true });
+  }
+
+  closeModal() {
+    this.setState({ editSetModalVisible: false });
   }
 
   checkSetType(type) {

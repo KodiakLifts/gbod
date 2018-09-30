@@ -44,7 +44,6 @@ const updateSetData = (state, setId, weight, reps, setType) => {
       return program;
     })
   };
-  console.log(newState)
   return newState;
 };
 
@@ -92,7 +91,6 @@ const finishWorkout = (state) => {
 
   const currentExercise = exercises[0].id;
 
-
   const newState = {
     ...state,
     activeWorkout: {
@@ -100,8 +98,8 @@ const finishWorkout = (state) => {
       day: activeDay,
       currentExercise: currentExercise
     },
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
         return {
           ...program,
           sets: state.programs[activeProgram].sets.map(set => {
@@ -127,7 +125,7 @@ const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
   const setCompleteVal =
-    state.programs[state.activeWorkout.program].sets[setId].complete;
+    state.programs[activeProgram].sets[setId].complete;
 
   const newState = {
     ...state,
@@ -193,6 +191,7 @@ const updateExerciseComplete = (state, exerciseId) => {
 };
 
 const updateCurrentExercise = (state, exerciseId) => {
+
   const activeProgram = state.activeWorkout.program;
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {
     return exercise.day === state.activeWorkout.day;
