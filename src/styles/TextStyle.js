@@ -36,7 +36,7 @@ module.exports = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
     includeFontPadding: false,
-    padding: 0
+    padding: 0,
   },
   listHeader: {
     color: COLORS.TEXTCOLOR,
@@ -81,7 +81,6 @@ module.exports = StyleSheet.create({
     textAlignVertical: 'center',
     includeFontPadding: false,
     margin: 12,
-    elevation: 2
   },
   selectedTextButton: {
     fontSize: 18,
@@ -89,8 +88,7 @@ module.exports = StyleSheet.create({
     color: COLORS.SECONDARYCOLOR,
     textAlignVertical: 'center',
     includeFontPadding: false,
-    margin: 12,
-    elevation: 2
+    margin: 20,
   }
 
 });

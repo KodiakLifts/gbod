@@ -108,6 +108,6 @@ module.exports = StyleSheet.create({
     height: 30,
     backgroundColor: COLORS.backgroundColor,
     borderColor: 'black',
-    borderWidth: 1
+    borderWidth: 1,
   }
 });

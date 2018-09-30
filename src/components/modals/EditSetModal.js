@@ -52,13 +52,13 @@ class EditSetModal extends Component {
           <TouchableWithoutFeedback>
             <View style={CONTAINERSTYLE.modalCard}>
               <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit</Text></View>
-              <View style={{ alignItems: 'flex-end' }}>
+              <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={TEXTSTYLE.modalText}>
                     Weight:
                     </Text>
                   <View style={{
-                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12
+                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40
                   }}><TextInput
                       style={TEXTSTYLE.modalTextInput}
                       keyboardType="numeric"
@@ -72,9 +72,12 @@ class EditSetModal extends Component {
                     />
                   </View>
                 </View>
-                <View style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <TouchableOpacity onPress={this.props.closeModal}>
                     <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.props.closeModal}>
+                    <Text style={TEXTSTYLE.selectedTextButton}>SAVE</Text>
                   </TouchableOpacity>
                 </View>
               </View>
