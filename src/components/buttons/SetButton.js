@@ -90,7 +90,7 @@ const mapStateToProps = (state, ownProps) => {
         .programs[state.workoutData.activeWorkout.program]
         .sets[ownProps.setId].complete
   };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

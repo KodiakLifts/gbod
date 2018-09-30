@@ -3,12 +3,13 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import SetButton from '../../components/buttons/SetButton';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { connect } from 'react-redux';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const COLORS = require('../../styles/Colors');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const WorkoutCard = ({ exerciseId, sets, name, borderStyle }) => {
+const WorkoutCard = ({ exerciseId, sets, name, borderStyle, supersetNext }) => {
   const setButtons = createSetButtons(exerciseId, sets);
   return (
     <View>
@@ -68,7 +69,18 @@ WorkoutCard.propTypes = {
     reps: PropTypes.number,
     type: PropTypes.string,
     complete: PropTypes.bool
-  }))
+  })),
+  supersetNext: PropTypes.bool
 };
 
-export default WorkoutCard;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    supersetNext:
+      state
+        .workoutData
+        .programs[state.workoutData.activeWorkout.program]
+        .exercises[ownProps.exerciseId].supersetNext
+  };
+};
+
+export default connect(mapStateToProps)(WorkoutCard);
