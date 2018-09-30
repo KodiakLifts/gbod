@@ -30,7 +30,7 @@ module.exports = StyleSheet.create({
     marginBottom: 12
   },
   modalTextInput: {
-    color: COLORS.SECONDARYCOLOR,
+    color: COLORS.ACTIVECOLOR,
     fontSize: 18,
     textAlignVertical: 'center',
     textAlign: 'center',

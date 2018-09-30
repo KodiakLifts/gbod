@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutData, updateSetData } from '../../redux/actions/setButtonActions';
+import { updateActiveWorkoutData } from '../../redux/actions/setButtonActions';
+import EditSetModal from '../modals/EditSetModal';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -19,26 +20,12 @@ class SetButton extends Component {
 
     this.state = {
       modalVisible: false,
-      updateWeight: null,
-      updateReps: null,
-      updateType: null
     };
 
     this._onPress = this._onPress.bind(this);
     this._onLongPress = this._onLongPress.bind(this);
     this._checkSetType = this.checkSetType.bind(this);
-  }
-
-  componentDidMount() {
-    this.updateLocalSetOptions;
-  }
-
-  updateLocalSetOptions = () => {
-    this.setState({
-      updateWeight: this.props.weight,
-      updateReps: this.props.reps,
-      updateType: this.props.type
-    });
+    this.closeModal = this.closeModal.bind(this);
   }
 
   _onPress() {
@@ -62,74 +49,17 @@ class SetButton extends Component {
     this.setState({ modalVisible: false });
   }
 
-  onWeightChange = (weight) => {
-    this.setState({ updateWeight: weight });
-  }
-
-
-
-
   render() {
     return (
       <View>
-        <Modal
-          transparent
+        <EditSetModal
           visible={this.state.modalVisible}
-          onRequestClose={this.closeModal}
-        >
-          <TouchableOpacity onPress={this.closeModal} style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: COLORS.TRANSPARENTOVERLAY
-          }}>
-            <TouchableWithoutFeedback>
-              <View style={CONTAINERSTYLE.modalCard}>
-                <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit</Text></View>
-                <View style={{ alignItems: 'flex-end' }}>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={TEXTSTYLE.modalText}>
-                      Weight:
-                    </Text>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12
-                    }}><TextInput
-                        style={TEXTSTYLE.modalTextInput}
-                        keyboardType="numeric"
-                        keyboardAppearance="dark"
-                        placeholder={String(this.props.weight)}
-                        placeholderTextColor={COLORS.INACTIVECOLOR}
-                        onChangeText={this.onWeightChange}
-                        clearTextOnFocus
-                        maxLength={4}
-                        width={60}
-                      />
-                    </View>
-
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={TEXTSTYLE.modalText}>
-                      Reps:
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={TEXTSTYLE.modalText}>
-                      Type:
-                    </Text>
-                  </View>
-                  <View style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-                    <TouchableOpacity onPress={this.closeModal}>
-                      <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-
-
-          </TouchableOpacity>
-        </Modal>
+          setId={this.props.setId}
+          exerciseId={this.props.exerciseId}
+          weight={this.props.weight}
+          reps={this.props.reps}
+          type={this.props.type}
+          closeModal={this.closeModal} />
         <TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
           <View style={this.props.complete ? activeButton : inactiveButton}>
             <Text style={this.props.complete ? activeText : inactiveText}>

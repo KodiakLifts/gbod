@@ -1,34 +1,100 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class EditSetModal extends Component {
-  state = {
-    modalVisible: false,
+const COLORS = require('../../styles/Colors');
+const TEXTSTYLE = require('../../styles/TextStyle');
+const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+
+class EditSetModal extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalVisible: false,
+      updateWeight: null,
+      updateReps: null,
+      updateType: null
+    };
   }
-  toggleModal(visible) {
-    this.setState({ modalVisible: visible });
+
+  componentDidMount() {
+    this.updateLocalSetOptions;
+  }
+
+  updateLocalSetOptions = () => {
+    this.setState({
+      updateWeight: this.props.weight,
+      updateReps: this.props.reps,
+      updateType: this.props.type
+    });
+  }
+
+  closeModal = () => {
+    this.setState({ modalVisible: false });
   }
 
   render() {
     return (
-      <View>
-        <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
-          onRequestClose = {() => { console.log("modal closed") }}>
-          <View>
-            <Text>
-              MODAL OPEN
-            </Text>
-            <TouchableOpacity onPress={() => {
-              this.toggleModal(!this.state.modalVisible)
-            }}>
-              <Text>CLOSE MODAL</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-        <TouchableOpacity onPress={() => { this.toggleModal(true) }}>
-          <Text>OPEN MODAL</Text>
+      <Modal
+        transparent
+        visible={this.props.visible}
+        onRequestClose={this.props.closeModal}
+      >
+        <TouchableOpacity onPress={this.props.closeModal} style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: COLORS.TRANSPARENTOVERLAY
+        }}>
+          <TouchableWithoutFeedback>
+            <View style={CONTAINERSTYLE.modalCard}>
+              <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit</Text></View>
+              <View style={{ alignItems: 'flex-end' }}>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={TEXTSTYLE.modalText}>
+                    Weight:
+                    </Text>
+                  <View style={{
+                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12
+                  }}><TextInput
+                      style={TEXTSTYLE.modalTextInput}
+                      keyboardType="numeric"
+                      keyboardAppearance="dark"
+                      placeholder={String(this.props.weight)}
+                      placeholderTextColor={COLORS.INACTIVECOLOR}
+                      onChangeText={this.onWeightChange}
+                      clearTextOnFocus
+                      maxLength={4}
+                      width={60}
+                    />
+                  </View>
+                </View>
+                <View style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+                  <TouchableOpacity onPress={this.props.closeModal}>
+                    <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
         </TouchableOpacity>
-      </View>
+      </Modal>
     );
   }
 }
+
+EditSetModal.propTypes = {
+  visible: PropTypes.bool,
+  exerciseId: PropTypes.number,
+  setId: PropTypes.number,
+  reps: PropTypes.number,
+  weight: PropTypes.number,
+  type: PropTypes.string,
+  closeModal: PropTypes.func,
+  updateSetData: PropTypes.func,
+};
+
+export default EditSetModal;
