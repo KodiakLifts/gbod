@@ -13,9 +13,9 @@
   "dependencies": {
     "react": "16.5.0",
     "react-native": "0.57.1",
-    "react-native-firebase": "^5.0.0-rc4",
+    "react-native-firebase": "^5.0.0",
     "react-native-vector-icons": "^5.0.0",
-    "react-navigation": "^2.16.0",
+    "react-navigation": "^2.17.0",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
@@ -26,7 +26,7 @@
   "devDependencies": {
     "babel-eslint": "^9.0.0",
     "babel-jest": "23.6.0",
-    "eslint": "^5.6.0",
+    "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",

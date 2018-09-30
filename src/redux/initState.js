@@ -11,6 +11,7 @@ export const initState = {
       {
         id: 0,
         name: "GreySkull LP",
+        category: 0,
         sets: [
           { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false },
           { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false },
