@@ -1,6 +1,8 @@
-import { UPDATE_ACTIVE_WORKOUT_UI } from '../actions/activeWorkoutActions';
-import { FINISH_WORKOUT } from '../actions/finishButtonActions';
-import { RESET_WORKOUT } from '../actions/resetButtonActions';
+import {
+  UPDATE_ACTIVE_WORKOUT_UI,
+  FINISH_WORKOUT,
+  RESET_WORKOUT
+} from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {

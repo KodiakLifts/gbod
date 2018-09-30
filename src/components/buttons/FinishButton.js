@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { finishWorkout } from '../../redux/actions/finishButtonActions';
+import { finishWorkout } from '../../redux/actions/activeWorkoutActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
