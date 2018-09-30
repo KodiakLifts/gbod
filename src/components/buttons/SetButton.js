@@ -19,15 +19,15 @@ class SetButton extends Component {
     super(props);
 
     this.state = {
-      modalVisible: false,
+      editSetModalVisible: false,
     };
 
     this._onPress = () =>
       props.updateActiveWorkoutUI(props.setId, props.exerciseId);
     this._onLongPress = () =>
-      this.setState({ modalVisible: true });
+      this.setState({ editSetModalVisible: true });
     this.closeModal = () =>
-      this.setState({ modalVisible: false });
+      this.setState({ editSetModalVisible: false });
 
     this.checkSetType = this.checkSetType.bind(this);
   }
@@ -45,7 +45,7 @@ class SetButton extends Component {
     return (
       <View>
         <EditSetModal
-          visible={this.state.modalVisible}
+          visible={this.state.editSetModalVisible}
           setId={this.props.setId}
           exerciseId={this.props.exerciseId}
           weight={this.props.weight}

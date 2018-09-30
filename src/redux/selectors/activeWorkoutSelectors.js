@@ -1,5 +1,5 @@
 import React from 'react';
-import WorkoutCard from '../../components/cards/WorkoutCard';
+import ExerciseCard from '../../components/cards/ExerciseCard';
 import { createSelector } from 'reselect';
 
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
@@ -57,7 +57,7 @@ export const getActiveWorkoutCards = createSelector(
         CONTAINERSTYLE.activeCard : CONTAINERSTYLE.card);
 
       let card =
-        <WorkoutCard
+        <ExerciseCard
           key={index}
           exerciseId={exercise.id}
           borderStyle={style}

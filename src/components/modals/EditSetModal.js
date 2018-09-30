@@ -132,7 +132,6 @@ class EditSetModal extends Component {
                   <Text style={TEXTSTYLE.modalText}>
                     Type:
                   </Text>
-
                   <Picker
                     style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 20, marginLeft: 5 }}
                     selectedValue={this.state.typeName}
@@ -141,7 +140,6 @@ class EditSetModal extends Component {
                     <Picker.Item label="Failure" value="Failure" />
                     <Picker.Item label="Drop" value="Drop" />
                   </Picker>
-
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <TouchableOpacity onPress={this.props.closeModal}>
