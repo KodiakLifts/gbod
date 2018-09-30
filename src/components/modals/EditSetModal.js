@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
 import PropTypes from 'prop-types';
 import { updateSetData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
@@ -11,13 +11,25 @@ const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 class EditSetModal extends Component {
   state = {
     modalVisible: false,
+    typeName: "",
     tmpWeight: this.props.weight,
     tmpReps: this.props.reps,
     tmpType: this.props.type,
   }
 
-  closeModal = () => {
-    this.setState({ modalVisible: false });
+  componentDidMount() {
+    this.mountTypeName(this.props.type);
+  }
+
+  mountTypeName = (type) => {
+    let name;
+    switch (type) {
+      case "N": name = "Normal"; break;
+      case "F": name = "Failure"; break;
+      case "D": name = "Drop"; break;
+      default: name = ""; break;
+    }
+    this.setState({ typeName: name });
   }
 
   updateTmpWeight = (tmpWeight) => {
@@ -36,8 +48,16 @@ class EditSetModal extends Component {
     }
   }
 
-  updateTmpType = (tmpType) => {
-    this.setState({ tmpType });
+  updateTmpType = (name) => {
+    let type;
+    switch (name) {
+      case "Normal": type = "N"; break;
+      case "Failure": type = "F"; break;
+      case "Drop": type = "D"; break;
+      default: type = "N"; break;
+    }
+    this.setState({ typeName: name });
+    this.setState({ tmpType: type });
   }
 
   save = () => {
@@ -103,6 +123,21 @@ class EditSetModal extends Component {
                       width={60}
                     />
                   </View>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={TEXTSTYLE.modalText}>
+                    Type:
+                  </Text>
+
+                  <Picker
+                    style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 20, marginRight: 12 }}
+                    selectedValue={this.state.typeName}
+                    onValueChange={this.updateTmpType}>
+                    <Picker.Item label="Normal" value="Normal" />
+                    <Picker.Item label="Failure" value="Failure" />
+                    <Picker.Item label="Drop" value="Drop" />
+                  </Picker>
+
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <TouchableOpacity onPress={this.props.closeModal}>
