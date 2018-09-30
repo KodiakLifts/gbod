@@ -12,31 +12,38 @@ const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 const WorkoutCard = ({ exerciseId, sets, name, borderStyle, supersetNext }) => {
   const setButtons = createSetButtons(exerciseId, sets);
   return (
-    <View>
-      <View style={borderStyle}>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <TouchableOpacity>
-            <Text style={TEXTSTYLE.listItem}>
-              {name}
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
-          </TouchableOpacity>
+    <View >
+      <View style={{ alignItems: 'center' }}>
+        <View style={borderStyle}>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <TouchableOpacity>
+              <Text style={TEXTSTYLE.listItem}>
+                {name}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
+            </TouchableOpacity>
+          </View>
+          <View style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginHorizontal: 6,
+            'flexWrap': 'wrap'
+          }}>
+            {setButtons}
+          </View>
         </View>
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginHorizontal: 6,
-          'flexWrap': 'wrap'
-        }}>
-          {setButtons}
-        </View>
+        <Icon
+          name={'link'}
+          size={15}
+          color={supersetNext ? COLORS.SECONDARYCOLOR : COLORS.BACKCOLOR}
+          style={{ transform: [{ rotateZ: '135deg' }] }} />
       </View>
     </View>
   );

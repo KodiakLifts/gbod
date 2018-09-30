@@ -29,7 +29,7 @@ const ActiveWorkout = ({ title, cards }) => {
       endOfScrollContent={
         <View style={{
           flexDirection: 'row',
-          paddingVertical: 15
+
         }}>
           <ResetButton />
           <FinishButton />
