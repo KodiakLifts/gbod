@@ -37,7 +37,6 @@ class EditSetModal extends Component {
   }
 
   save = () => {
-    console.log(this.state)
     this.props.updateSetData(
       this.props.setId,
       this.props.exerciseId,
