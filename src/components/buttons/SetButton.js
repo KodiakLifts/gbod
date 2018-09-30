@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TouchableOpacity } from 'react-native';
+import { Modal, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateActiveWorkoutData, updateSetData } from '../../redux/actions/setButtonActions';
@@ -18,12 +18,27 @@ class SetButton extends Component {
     super(props);
 
     this.state = {
-      modalVisible: false
+      modalVisible: false,
+      updateWeight: null,
+      updateReps: null,
+      updateType: null
     };
 
     this._onPress = this._onPress.bind(this);
     this._onLongPress = this._onLongPress.bind(this);
     this._checkSetType = this.checkSetType.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateLocalSetOptions;
+  }
+
+  updateLocalSetOptions = () => {
+    this.setState({
+      updateWeight: this.props.weight,
+      updateReps: this.props.reps,
+      updateType: this.props.type
+    });
   }
 
   _onPress() {
@@ -47,6 +62,10 @@ class SetButton extends Component {
     this.setState({ modalVisible: false });
   }
 
+  onWeightChange = (weight) => {
+    this.setState({ updateWeight: weight });
+  }
+
 
 
 
@@ -54,7 +73,7 @@ class SetButton extends Component {
     return (
       <View>
         <Modal
-          transparent={true}
+          transparent
           visible={this.state.modalVisible}
           onRequestClose={this.closeModal}
         >
@@ -65,13 +84,46 @@ class SetButton extends Component {
             alignItems: 'center',
             backgroundColor: COLORS.TRANSPARENTOVERLAY
           }}>
-            <TouchableOpacity>
-              <View style={CONTAINERSTYLE.activeSetButton}>
-                <Text>
-                  MODAL
-                </Text>
+            <TouchableWithoutFeedback>
+              <View style={CONTAINERSTYLE.modalCard}>
+                <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit</Text></View>
+                <View style={{ alignItems: 'flex-end' }}>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Weight:
+                    </Text>
+                    <View style={{
+                      borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12
+                    }}><TextInput
+                        style={TEXTSTYLE.modalTextInput}
+                        keyboardType="numeric"
+                        keyboardAppearance="dark"
+                        placeholder={String(this.props.weight)}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.onWeightChange}
+                        clearTextOnFocus
+                        maxLength={4}
+                        width={50}
+                      />
+                    </View>
+
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Reps:
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Type:
+                    </Text>
+                  </View>
+                  <View style={{ alignItems: 'center', justifyContent: 'space-between' }}>
+
+                  </View>
+                </View>
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
 
 
           </TouchableOpacity>

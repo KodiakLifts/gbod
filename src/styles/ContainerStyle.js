@@ -51,6 +51,13 @@ module.exports = StyleSheet.create({
     marginTop: 15,
     marginHorizontal: 12
   },
+  modalCard: {
+    flexDirection: 'column',
+    padding: 12,
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    borderRadius: 5,
+    elevation: 5,
+  },
   listCard: {
     flexDirection: 'column',
     width: (Dimensions.get('window').width - 24),
@@ -95,5 +102,12 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.INACTIVECOLOR,
     borderRadius: 5
+  },
+  textInputArea: {
+    width: 50,
+    height: 30,
+    backgroundColor: COLORS.backgroundColor,
+    borderColor: 'black',
+    borderWidth: 1
   }
 });

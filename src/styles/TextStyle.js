@@ -14,6 +14,30 @@ module.exports = StyleSheet.create({
     elevation: 1,
     paddingLeft: 6
   },
+  modalHeader: {
+    color: COLORS.TEXTCOLOR,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    marginBottom: 15
+  },
+  modalText: {
+    color: COLORS.ACTIVECOLOR,
+    fontSize: 16,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    marginBottom: 12
+  },
+  modalTextInput: {
+    color: COLORS.SECONDARYCOLOR,
+    fontSize: 16,
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    alignItems: 'center',
+    includeFontPadding: false,
+    padding: 0
+  },
   listHeader: {
     color: COLORS.TEXTCOLOR,
     fontSize: 22,
