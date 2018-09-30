@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import SetButton from '../../components/buttons/SetButton';
+import SetButton from '../buttons/SetButton';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
+import EditExerciseModal from '../modals/EditExerciseModal';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const COLORS = require('../../styles/Colors');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-class WorkoutCard extends Component {
+class ExerciseCard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      menuModalVisible: false,
+
+    };
+
+    this._onMenuPress = () =>
+      this.setState({ menuModalVisible: true });
+
+    this._onExercisePress = () => { };
+
+    this.closeMenuModal = () =>
+      this.setState({ menuModalVisible: false });
 
     this.createSetButtons = this.createSetButtons.bind(this);
   }
@@ -39,6 +53,9 @@ class WorkoutCard extends Component {
     const setButtons = this.createSetButtons(exerciseId, sets);
     return (
       <View >
+        <EditExerciseModal
+          visible={this.state.menuModalVisible}
+          closeModal={this.closeMenuModal} />
         <View style={{ alignItems: 'center' }}>
           <View style={borderStyle}>
             <View style={{
@@ -51,7 +68,7 @@ class WorkoutCard extends Component {
                   {name}
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this._onMenuPress}>
                 <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
               </TouchableOpacity>
             </View>
@@ -78,7 +95,7 @@ class WorkoutCard extends Component {
 
 
 
-WorkoutCard.propTypes = {
+ExerciseCard.propTypes = {
   exerciseId: PropTypes.number,
   borderStyle: PropTypes.object,
   name: PropTypes.string,
@@ -102,4 +119,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(WorkoutCard);
+export default connect(mapStateToProps)(ExerciseCard);

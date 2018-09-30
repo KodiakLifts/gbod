@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import MoreMenu from '../../components/buttons/MoreMenu';
-import WorkoutCard from '../../components/cards/WorkoutCard';
+
 
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');

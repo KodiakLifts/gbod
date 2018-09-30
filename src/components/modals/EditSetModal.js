@@ -13,7 +13,6 @@ class EditSetModal extends Component {
     super(props);
 
     this.state = {
-      modalVisible: false,
       typeName: "",
       tmpWeight: props.weight,
       tmpReps: props.reps,
