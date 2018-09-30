@@ -1,5 +1,6 @@
 import {
   UPDATE_ACTIVE_WORKOUT_UI,
+  UPDATE_SET_DATA,
   FINISH_WORKOUT,
   RESET_WORKOUT
 } from '../actions/activeWorkoutActions';
@@ -7,7 +8,9 @@ import {
 export default function workoutData(state = {}, action) {
   switch (action.type) {
     case UPDATE_ACTIVE_WORKOUT_UI:
-      return updateActiveWorkout(state, action.setId, action.exerciseId);
+      return updateActiveWorkoutUI(state, action.setId, action.exerciseId);
+    case UPDATE_SET_DATA:
+      return state;
     case FINISH_WORKOUT:
       return finishWorkout(state);
     case RESET_WORKOUT:
@@ -16,6 +19,11 @@ export default function workoutData(state = {}, action) {
       return state;
   }
 }
+
+const updateSetData = (state) => {
+
+};
+
 
 const resetWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;
@@ -84,8 +92,7 @@ const finishWorkout = (state) => {
   return newState;
 };
 
-
-const updateActiveWorkout = (state, setId, exerciseId) => {
+const updateActiveWorkoutUI = (state, setId, exerciseId) => {
   const setState = toggleSetComplete(state, setId, exerciseId);
   const exerciseState = updateExerciseComplete(setState, exerciseId);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);

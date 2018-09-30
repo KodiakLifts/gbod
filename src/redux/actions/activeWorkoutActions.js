@@ -11,8 +11,15 @@ export const updateActiveWorkoutUI = (setId, exerciseId) => {
   };
 };
 
-export const updateSetData = (setId, exerciseId, weight, reps, type) => {
-
+export const updateSetData = (setId, exerciseId, weight, reps, setType) => {
+  return {
+    type: UPDATE_SET_DATA,
+    setId,
+    exerciseId,
+    weight,
+    reps,
+    setType
+  };
 };
 
 export const finishWorkout = () => {

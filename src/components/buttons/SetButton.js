@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateActiveWorkoutUI } from '../../redux/actions/activeWorkoutActions';
@@ -71,8 +71,6 @@ class SetButton extends Component {
     );
   }
 }
-
-
 
 SetButton.propTypes = {
   exerciseId: PropTypes.number,

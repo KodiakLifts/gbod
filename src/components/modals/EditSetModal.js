@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import PropTypes from 'prop-types';
+import { updateSetData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const COLORS = require('../../styles/Colors');
@@ -8,31 +9,43 @@ const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 class EditSetModal extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      modalVisible: false,
-      updateWeight: null,
-      updateReps: null,
-      updateType: null
-    };
-  }
-
-  componentDidMount() {
-    this.updateLocalSetOptions;
-  }
-
-  updateLocalSetOptions = () => {
-    this.setState({
-      updateWeight: this.props.weight,
-      updateReps: this.props.reps,
-      updateType: this.props.type
-    });
+  state = {
+    modalVisible: false,
+    tmpWeight: this.props.weight,
+    tmpReps: this.props.reps,
+    tmpType: this.props.type,
   }
 
   closeModal = () => {
     this.setState({ modalVisible: false });
+  }
+
+  updateTmpWeight = (tmpWeight) => {
+    if (tmpWeight == null) {
+      this.setState({ tmpWeight: this.props.weight });
+    } else {
+      this.setState({ tmpWeight: parseInt(tmpWeight) });
+    }
+  }
+
+  updateTmpReps = (tmpReps) => {
+    this.setState({ tmpReps: parseInt(tmpReps) });
+  }
+
+  updateTmpType = (tmpType) => {
+    this.setState({ tmpType });
+  }
+
+  save = () => {
+    console.log(this.state)
+    this.props.updateSetData(
+      this.props.setId,
+      this.props.exerciseId,
+      this.state.tmpWeight,
+      this.state.tmpReps,
+      this.state.tmpType
+    );
+    this.props.closeModal();
   }
 
   render() {
@@ -65,8 +78,8 @@ class EditSetModal extends Component {
                       keyboardAppearance="dark"
                       placeholder={String(this.props.weight)}
                       placeholderTextColor={COLORS.INACTIVECOLOR}
-                      onChangeText={this.onWeightChange}
-                      clearTextOnFocus
+                      onChangeText={this.updateTmpWeight}
+
                       maxLength={4}
                       width={60}
                     />
@@ -76,7 +89,7 @@ class EditSetModal extends Component {
                   <TouchableOpacity onPress={this.props.closeModal}>
                     <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={this.props.closeModal}>
+                  <TouchableOpacity onPress={this.save}>
                     <Text style={TEXTSTYLE.selectedTextButton}>SAVE</Text>
                   </TouchableOpacity>
                 </View>
@@ -101,7 +114,11 @@ EditSetModal.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSetData: (setId, exerciseId, weight, reps, setType) => {
+      dispatch(updateSetData(setId, exerciseId, weight, reps, setType));
+    }
+  };
+};
 
-}
-
-export default EditSetModal;
+export default connect(null, mapDispatchToProps)(EditSetModal);
