@@ -32,7 +32,7 @@ module.exports = StyleSheet.create({
   card: {
     flexDirection: 'column',
     width: (Dimensions.get('window').width - 24),
-
+    alignSelf: 'flex-start',
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     elevation: 2,
@@ -42,7 +42,7 @@ module.exports = StyleSheet.create({
   activeCard: {
     flexDirection: 'column',
     width: (Dimensions.get('window').width - 24),
-
+    alignSelf: 'flex-start',
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     borderColor: COLORS.SECONDARYCOLOR,

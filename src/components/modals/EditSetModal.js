@@ -9,12 +9,16 @@ const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
 class EditSetModal extends Component {
-  state = {
-    modalVisible: false,
-    typeName: "",
-    tmpWeight: this.props.weight,
-    tmpReps: this.props.reps,
-    tmpType: this.props.type,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalVisible: false,
+      typeName: "",
+      tmpWeight: props.weight,
+      tmpReps: props.reps,
+      tmpType: props.type,
+    };
   }
 
   componentDidMount() {

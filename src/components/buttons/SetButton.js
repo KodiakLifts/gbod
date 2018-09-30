@@ -22,18 +22,14 @@ class SetButton extends Component {
       modalVisible: false,
     };
 
-    this._onPress = this._onPress.bind(this);
-    this._onLongPress = this._onLongPress.bind(this);
-    this._checkSetType = this.checkSetType.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-  }
+    this._onPress = () =>
+      props.updateActiveWorkoutUI(props.setId, props.exerciseId);
+    this._onLongPress = () =>
+      this.setState({ modalVisible: true });
+    this.closeModal = () =>
+      this.setState({ modalVisible: false });
 
-  _onPress() {
-    this.props.updateActiveWorkoutUI(this.props.setId, this.props.exerciseId);
-  }
-
-  _onLongPress() {
-    this.setState({ modalVisible: true });
+    this.checkSetType = this.checkSetType.bind(this);
   }
 
   checkSetType(type) {
@@ -43,10 +39,6 @@ class SetButton extends Component {
       case "F": return "+";
     }
     return "";
-  }
-
-  closeModal = () => {
-    this.setState({ modalVisible: false });
   }
 
   render() {
