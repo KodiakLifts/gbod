@@ -86,14 +86,14 @@ class EditSetModal extends Component {
         }}>
           <TouchableWithoutFeedback>
             <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit</Text></View>
+              <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit Set</Text></View>
               <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={TEXTSTYLE.modalText}>
                     Weight:
                     </Text>
                   <View style={{
-                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40
+                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40, marginLeft: 6
                   }}><TextInput
                       style={TEXTSTYLE.modalTextInput}
                       keyboardType="numeric"
@@ -111,7 +111,7 @@ class EditSetModal extends Component {
                     Reps:
                     </Text>
                   <View style={{
-                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40
+                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40, marginLeft: 6
                   }}><TextInput
                       style={TEXTSTYLE.modalTextInput}
                       keyboardType="numeric"
@@ -130,7 +130,7 @@ class EditSetModal extends Component {
                   </Text>
 
                   <Picker
-                    style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 20, marginRight: 12 }}
+                    style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 20, marginLeft: 5 }}
                     selectedValue={this.state.typeName}
                     onValueChange={this.updateTmpType}>
                     <Picker.Item label="Normal" value="Normal" />
