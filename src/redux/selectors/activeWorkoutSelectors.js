@@ -56,6 +56,11 @@ export const getActiveWorkoutCards = createSelector(
       let style = (exercise.id === currentExercise ?
         CONTAINERSTYLE.activeCard : CONTAINERSTYLE.card);
 
+      let lastExercise = false;
+      if (index === (activeExercises.length - 1)) {
+        lastExercise = true;
+      }
+
       let card =
         <ExerciseCard
           key={index}
@@ -63,7 +68,10 @@ export const getActiveWorkoutCards = createSelector(
           borderStyle={style}
           name={exercise.name}
           sets={sets}
-          supersetNext={exercise.supersetNext} />;
+          supersetNext={exercise.supersetNext}
+          includeWarmup={exercise.includeWarmup}
+          lastExercise={lastExercise}
+        />;
 
       workoutCards.push(card);
     });

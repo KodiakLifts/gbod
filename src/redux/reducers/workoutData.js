@@ -2,7 +2,8 @@ import {
   UPDATE_ACTIVE_WORKOUT_UI,
   UPDATE_SET_DATA,
   FINISH_WORKOUT,
-  RESET_WORKOUT
+  RESET_WORKOUT,
+  UPDATE_EXERCISE_DATA
 } from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
@@ -11,6 +12,8 @@ export default function workoutData(state = {}, action) {
       return updateActiveWorkoutUI(state, action.setId, action.exerciseId);
     case UPDATE_SET_DATA:
       return updateSetData(state, action.setId, action.weight, action.reps, action.setType);
+    case UPDATE_EXERCISE_DATA:
+      return updateExerciseData(state, action.exerciseId, action.supersetNext, action.includeWarmup);
     case FINISH_WORKOUT:
       return finishWorkout(state);
     case RESET_WORKOUT:
@@ -19,6 +22,33 @@ export default function workoutData(state = {}, action) {
       return state;
   }
 }
+
+const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
+  const activeProgram = state.activeWorkout.program;
+  const newState = {
+    ...state,
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          exercises: state.programs[activeProgram].exercises.map(exercise => {
+            if (exercise.id === exerciseId) {
+              return {
+                ...exercise,
+                ...{ supersetNext: supersetNext },
+                ...{ includeWarmup: includeWarmup }
+              };
+            }
+            return exercise;
+          })
+        };
+      }
+      return program;
+    })
+  };
+  console.log(newState)
+  return newState;
+};
 
 const updateSetData = (state, setId, weight, reps, setType) => {
   const activeProgram = state.activeWorkout.program;

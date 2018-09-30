@@ -13,49 +13,98 @@ class EditExerciseModal extends Component {
     super(props);
 
     this.state = {
-      tmpSupersetNext: props.supersetNext
+      tmpSupersetNext: props.supersetNext,
+      tmpIncludeWarmup: props.includeWarmup
     };
 
-    this.supersetNextToggle = (val) =>
-      props.updateExerciseData(
-        props.exerciseId,
-        val
-      );
+  }
+
+  supersetNextToggle = (checked) => {
+    this.setState({
+      tmpSupersetNext: checked
+    });
+  }
+
+  includeWarmupToggle = (checked) => {
+    this.setState({
+      tmpIncludeWarmup: checked
+    });
+  }
+
+  save = () => {
+    this.props.updateExerciseData(
+      this.props.exerciseId,
+      this.state.tmpSupersetNext,
+      this.state.tmpIncludeWarmup
+    );
+    this.props.closeModal();
+  }
+
+  cancel = () => {
+    this.setState({
+      tmpSupersetNext: this.props.supersetNext,
+      tmpIncludeWarmup: this.props.includeWarmup
+    });
+    this.props.closeModal();
   }
 
   render() {
     return (
-      <Modal
-        transparent
-        visible={this.props.visible}
-        onRequestClose={this.props.closeModal}
-      >
-        <TouchableOpacity onPress={this.props.closeModal} style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: COLORS.TRANSPARENTOVERLAY
-        }}>
-          <TouchableWithoutFeedback>
-            <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={TEXTSTYLE.modalHeader}>
-                  Edit Exercise
-                </Text>
-              </View>
-              <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+      <View>
+        <Modal
+          transparent
+          visible={this.props.visible}
+          onRequestClose={this.props.closeModal}
+        >
+          <TouchableOpacity onPress={this.cancel} style={{
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: COLORS.TRANSPARENTOVERLAY
+          }}>
+            <TouchableWithoutFeedback>
+              <View style={CONTAINERSTYLE.modalCard}>
                 <View style={{ flexDirection: 'row' }}>
-                  <Text style={TEXTSTYLE.modalText}>
-                    Superset:
-                  </Text>
-                  <CheckBox
-                    value={this.props.supersetNext}
-                    onValueChange={this.supersetNextToggle}
-                  />
+                  <Text style={TEXTSTYLE.modalHeader}>
+                    Edit Exercise
+                </Text>
                 </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+
+                  <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                      <Text style={TEXTSTYLE.modalText}>
+                        Superset:
+                      </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                      <Text style={TEXTSTYLE.modalText}>
+                        Include Warmup Sets:
+                      </Text>
+                    </View>
+
+                  </View>
+
+                  <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 2 }}>
+                      <CheckBox
+                        disabled={this.props.lastExercise}
+                        value={this.state.tmpSupersetNext}
+                        onValueChange={this.supersetNextToggle}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10 }}>
+                      <CheckBox
+                        value={this.state.tmpIncludeWarmup}
+                        onValueChange={this.includeWarmupToggle}
+                      />
+                    </View>
+                  </View>
+                </View>
+
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <TouchableOpacity onPress={this.props.closeModal}>
+                  <TouchableOpacity onPress={this.cancel}>
                     <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={this.save}>
@@ -63,10 +112,10 @@ class EditExerciseModal extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
-          </TouchableWithoutFeedback>
-        </TouchableOpacity>
-      </Modal>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
+        </Modal>
+      </View>
     );
   }
 }
@@ -74,15 +123,17 @@ class EditExerciseModal extends Component {
 EditExerciseModal.propTypes = {
   visible: PropTypes.bool,
   exerciseId: PropTypes.number,
+  lastExercise: PropTypes.bool,
   supersetNext: PropTypes.bool,
+  includeWarmup: PropTypes.bool,
   closeModal: PropTypes.func,
   updateExerciseData: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateExerciseData: (exerciseId, supersetNext) => {
-      dispatch(updateExerciseData(exerciseId, supersetNext));
+    updateExerciseData: (exerciseId, supersetNext, includeWarmup) => {
+      dispatch(updateExerciseData(exerciseId, supersetNext, includeWarmup));
     }
   };
 };

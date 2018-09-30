@@ -22,11 +22,12 @@ export const updateSetData = (setId, weight, reps, setType) => {
   };
 };
 
-export const updateExerciseData = (exerciseId, supersetNext) => {
+export const updateExerciseData = (exerciseId, supersetNext, includeWarmup) => {
   return {
     type: UPDATE_EXERCISE_DATA,
     exerciseId,
-    supersetNext
+    supersetNext,
+    includeWarmup
   };
 };
 

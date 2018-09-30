@@ -89,66 +89,93 @@ class EditSetModal extends Component {
         }}>
           <TouchableWithoutFeedback>
             <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}><Text style={TEXTSTYLE.modalHeader}>Edit Set</Text></View>
-              <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={TEXTSTYLE.modalText}>
-                    Weight:
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={TEXTSTYLE.modalHeader}>
+                  Edit Set
+                </Text>
+              </View>
+              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+
+                <View style={{ flexDirection: 'column', justifyContent: 'center', marginLeft: 25 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Weight:
                     </Text>
-                  <View style={{
-                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40, marginLeft: 6
-                  }}><TextInput
-                      style={TEXTSTYLE.modalTextInput}
-                      keyboardType="numeric"
-                      keyboardAppearance="dark"
-                      placeholder={String(this.props.weight)}
-                      placeholderTextColor={COLORS.INACTIVECOLOR}
-                      onChangeText={this.updateTmpWeight}
-                      maxLength={4}
-                      width={60}
-                    />
+                  </View>
+
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Reps:
+                    </Text>
+                  </View>
+
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Text style={TEXTSTYLE.modalText}>
+                      Type:
+                    </Text>
                   </View>
                 </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={TEXTSTYLE.modalText}>
-                    Reps:
-                    </Text>
-                  <View style={{
-                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40, marginLeft: 6
-                  }}><TextInput
-                      style={TEXTSTYLE.modalTextInput}
-                      keyboardType="numeric"
-                      keyboardAppearance="dark"
-                      placeholder={String(this.props.reps)}
-                      placeholderTextColor={COLORS.INACTIVECOLOR}
-                      onChangeText={this.updateTmpReps}
-                      maxLength={4}
-                      width={60}
-                    />
+
+                <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <View style={{
+                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
+                    }}>
+                      <TextInput
+                        style={TEXTSTYLE.modalTextInput}
+                        keyboardType="numeric"
+                        keyboardAppearance="dark"
+                        placeholder={String(this.props.weight)}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpWeight}
+                        maxLength={4}
+                        width={60}
+                      />
+                    </View>
                   </View>
-                </View>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={TEXTSTYLE.modalText}>
-                    Type:
-                  </Text>
-                  <Picker
-                    style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 20, marginLeft: 5 }}
-                    selectedValue={this.state.typeName}
-                    onValueChange={this.updateTmpType}>
-                    <Picker.Item label="Normal" value="Normal" />
-                    <Picker.Item label="Failure" value="Failure" />
-                    <Picker.Item label="Drop" value="Drop" />
-                  </Picker>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <TouchableOpacity onPress={this.props.closeModal}>
-                    <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.save}>
-                    <Text style={TEXTSTYLE.selectedTextButton}>SAVE</Text>
-                  </TouchableOpacity>
+
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <View style={{
+                      borderBottomColor: 'black', borderBottomWidth: 1, marginTop: 6, marginLeft: 6
+                    }}><TextInput
+                        style={TEXTSTYLE.modalTextInput}
+                        keyboardType="numeric"
+                        keyboardAppearance="dark"
+                        placeholder={String(this.props.reps)}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpReps}
+                        maxLength={4}
+                        width={60}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Picker
+                      style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 50, marginLeft: 5 }}
+                      selectedValue={this.state.typeName}
+                      onValueChange={this.updateTmpType}>
+                      <Picker.Item label="Normal" value="Normal" />
+                      <Picker.Item label="Failure" value="Failure" />
+                      <Picker.Item label="Drop" value="Drop" />
+                    </Picker>
+                  </View>
                 </View>
               </View>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <TouchableOpacity onPress={this.props.closeModal}>
+                  <Text style={TEXTSTYLE.selectedTextButton}>
+                    CANCEL
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.save}>
+                  <Text style={TEXTSTYLE.selectedTextButton}>
+                    SAVE
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
             </View>
           </TouchableWithoutFeedback>
         </TouchableOpacity>

@@ -59,6 +59,8 @@ class ExerciseCard extends Component {
           visible={this.state.menuModalVisible}
           exerciseId={this.props.exerciseId}
           supersetNext={this.props.supersetNext}
+          includeWarmup={this.props.includeWarmup}
+          lastExercise={this.props.lastExercise}
           closeModal={this.closeMenuModal} />
         <View style={{ alignItems: 'center' }}>
           <View style={borderStyle}>
@@ -108,7 +110,9 @@ ExerciseCard.propTypes = {
     type: PropTypes.string,
     complete: PropTypes.bool
   })),
-  supersetNext: PropTypes.bool
+  supersetNext: PropTypes.bool,
+  includeWarmup: PropTypes.bool,
+  lastExercise: PropTypes.bool
 };
 
 export default ExerciseCard;
