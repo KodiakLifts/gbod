@@ -100,4 +100,8 @@ EditSetModal.propTypes = {
   updateSetData: PropTypes.func,
 };
 
+const mapDispatchToProps = (dispatch) => {
+
+}
+
 export default EditSetModal;

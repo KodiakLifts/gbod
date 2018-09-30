@@ -1,9 +1,9 @@
-export const UPDATE_ACTIVE_WORKOUT = 'UPDATE_ACTIVE_WORKOUT_DATA';
+export const UPDATE_ACTIVE_WORKOUT_UI = 'UPDATE_ACTIVE_WORKOUT_UI';
 export const UPDATE_SET_DATA = 'UPDATE_SET_DATA';
 
-export const updateActiveWorkoutData = (setId, exerciseId) => {
+export const updateActiveWorkoutUI = (setId, exerciseId) => {
   return {
-    type: UPDATE_ACTIVE_WORKOUT,
+    type: UPDATE_ACTIVE_WORKOUT_UI,
     setId,
     exerciseId
   };

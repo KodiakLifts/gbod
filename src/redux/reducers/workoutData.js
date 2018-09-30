@@ -1,10 +1,10 @@
-import { UPDATE_ACTIVE_WORKOUT } from '../actions/setButtonActions';
+import { UPDATE_ACTIVE_WORKOUT_UI } from '../actions/activeWorkoutActions';
 import { FINISH_WORKOUT } from '../actions/finishButtonActions';
 import { RESET_WORKOUT } from '../actions/resetButtonActions';
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {
-    case UPDATE_ACTIVE_WORKOUT:
+    case UPDATE_ACTIVE_WORKOUT_UI:
       return updateActiveWorkout(state, action.setId, action.exerciseId);
     case FINISH_WORKOUT:
       return finishWorkout(state);

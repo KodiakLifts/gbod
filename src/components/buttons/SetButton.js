@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutData } from '../../redux/actions/setButtonActions';
+import { updateActiveWorkoutUI } from '../../redux/actions/activeWorkoutActions';
 import EditSetModal from '../modals/EditSetModal';
 
 const COLORS = require('../../styles/Colors');
@@ -29,7 +29,7 @@ class SetButton extends Component {
   }
 
   _onPress() {
-    this.props.updateActiveWorkoutData(this.props.setId, this.props.exerciseId);
+    this.props.updateActiveWorkoutUI(this.props.setId, this.props.exerciseId);
   }
 
   _onLongPress() {
@@ -80,7 +80,7 @@ SetButton.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
-  updateActiveWorkoutData: PropTypes.func,
+  updateActiveWorkoutUI: PropTypes.func,
   complete: PropTypes.bool
 };
 
@@ -96,8 +96,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateActiveWorkoutData: (setId, exerciseId) => {
-      dispatch(updateActiveWorkoutData(setId, exerciseId));
+    updateActiveWorkoutUI: (setId, exerciseId) => {
+      dispatch(updateActiveWorkoutUI(setId, exerciseId));
     }
   };
 };
