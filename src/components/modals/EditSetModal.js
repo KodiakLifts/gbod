@@ -29,7 +29,11 @@ class EditSetModal extends Component {
   }
 
   updateTmpReps = (tmpReps) => {
-    this.setState({ tmpReps: parseInt(tmpReps) });
+    if (tmpReps == null) {
+      this.setState({ tmpReps: this.props.reps });
+    } else {
+      this.setState({ tmpReps: parseInt(tmpReps) });
+    }
   }
 
   updateTmpType = (tmpType) => {
@@ -39,7 +43,6 @@ class EditSetModal extends Component {
   save = () => {
     this.props.updateSetData(
       this.props.setId,
-      this.props.exerciseId,
       this.state.tmpWeight,
       this.state.tmpReps,
       this.state.tmpType
@@ -78,7 +81,24 @@ class EditSetModal extends Component {
                       placeholder={String(this.props.weight)}
                       placeholderTextColor={COLORS.INACTIVECOLOR}
                       onChangeText={this.updateTmpWeight}
-
+                      maxLength={4}
+                      width={60}
+                    />
+                  </View>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                  <Text style={TEXTSTYLE.modalText}>
+                    Reps:
+                    </Text>
+                  <View style={{
+                    borderBottomColor: 'black', borderBottomWidth: 1, marginBottom: 12, marginRight: 40
+                  }}><TextInput
+                      style={TEXTSTYLE.modalTextInput}
+                      keyboardType="numeric"
+                      keyboardAppearance="dark"
+                      placeholder={String(this.props.reps)}
+                      placeholderTextColor={COLORS.INACTIVECOLOR}
+                      onChangeText={this.updateTmpReps}
                       maxLength={4}
                       width={60}
                     />
@@ -103,7 +123,6 @@ class EditSetModal extends Component {
 
 EditSetModal.propTypes = {
   visible: PropTypes.bool,
-  exerciseId: PropTypes.number,
   setId: PropTypes.number,
   reps: PropTypes.number,
   weight: PropTypes.number,
@@ -114,8 +133,8 @@ EditSetModal.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSetData: (setId, exerciseId, weight, reps, setType) => {
-      dispatch(updateSetData(setId, exerciseId, weight, reps, setType));
+    updateSetData: (setId, weight, reps, setType) => {
+      dispatch(updateSetData(setId, weight, reps, setType));
     }
   };
 };
