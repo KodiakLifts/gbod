@@ -24,14 +24,14 @@ module.exports = StyleSheet.create({
   },
   modalText: {
     color: COLORS.ACTIVECOLOR,
-    fontSize: 16,
+    fontSize: 18,
     textAlignVertical: 'center',
     includeFontPadding: false,
     marginBottom: 12
   },
   modalTextInput: {
     color: COLORS.SECONDARYCOLOR,
-    fontSize: 16,
+    fontSize: 18,
     textAlignVertical: 'center',
     textAlign: 'center',
     alignItems: 'center',
@@ -73,6 +73,24 @@ module.exports = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
     includeFontPadding: false
+  },
+  unselectedTextButton: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.INACTIVECOLOR,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    margin: 12,
+    elevation: 2
+  },
+  selectedTextButton: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: COLORS.SECONDARYCOLOR,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    margin: 12,
+    elevation: 2
   }
 
 });

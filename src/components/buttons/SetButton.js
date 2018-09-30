@@ -103,7 +103,7 @@ class SetButton extends Component {
                         onChangeText={this.onWeightChange}
                         clearTextOnFocus
                         maxLength={4}
-                        width={50}
+                        width={60}
                       />
                     </View>
 
@@ -119,7 +119,9 @@ class SetButton extends Component {
                     </Text>
                   </View>
                   <View style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-
+                    <TouchableOpacity onPress={this.closeModal}>
+                      <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>
