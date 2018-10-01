@@ -20,7 +20,7 @@ class SetTimer extends Component {
   }
 
   _onPress() {
-
+    this.props.handleTimer(!this.props.started);
   }
 
   render() {
@@ -41,19 +41,23 @@ class SetTimer extends Component {
 SetTimer.propTypes = {
   minutes: PropTypes.number,
   seconds: PropTypes.number,
-  handleTimer: PropTypes.func
+  handleTimer: PropTypes.func,
+  started: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
   return {
     minutes: state.workoutData.timer.minutes,
     seconds: state.workoutData.timer.seconds,
+    started: state.workoutData.timer.started
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    handleTimer: (setComplete) => {
+      dispatch(handleTimer(setComplete));
+    }
   };
 };
 
