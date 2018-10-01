@@ -18,13 +18,10 @@ class SetTimer extends Component {
     this.state = {
       started: false,
     };
-
-
     this.toggleTimer = this.toggleTimer.bind(this);
   }
 
   toggleTimer() {
-
     if (!this.state.started) {
       this.setState({ started: true });
       this.timer = setInterval(() => {
@@ -33,6 +30,7 @@ class SetTimer extends Component {
           clearInterval(this.timer);
         }
         decrementTimer;
+        console.log(this.props.seconds);
       }, INTERVAL);
     } else {
       this.setState({ started: false });
