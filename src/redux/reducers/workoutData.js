@@ -46,7 +46,6 @@ const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
       return program;
     })
   };
-  console.log(newState)
   return newState;
 };
 
