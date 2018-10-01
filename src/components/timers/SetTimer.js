@@ -28,7 +28,7 @@ class SetTimer extends Component {
       <TouchableOpacity onPress={this._onPress}>
         <View style={{ flexDirection: 'row', borderColor: COLORS.SECONDARYCOLOR, }}>
           <Text style={{
-            fontSize: 24, color: COLORS.SECONDARYCOLOR, textAlignVertical: 'center', includeFontPadding: false
+            fontSize: 24, color: COLORS.ACTIVECOLOR, textAlignVertical: 'center', includeFontPadding: false
           }}>
             {moment().minute(this.props.minutes).second(this.props.seconds).format('mm:ss')}
           </Text>
