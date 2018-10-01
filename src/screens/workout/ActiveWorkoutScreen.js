@@ -7,6 +7,7 @@ import { getActiveWorkoutCards, getActiveWorkoutTitle } from '../../redux/select
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import FinishButton from '../../components/buttons/FinishButton';
 import ResetButton from '../../components/buttons/ResetButton';
+import SetTimer from '../../components/timers/SetTimer';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -20,19 +21,22 @@ const ActiveWorkout = ({ title, cards }) => {
           <Text style={TEXTSTYLE.headerText}>
             {title}
           </Text>
-          <TouchableOpacity>
-            <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
-          </TouchableOpacity>
+          <View style={{ width: 115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+            <SetTimer />
+            <TouchableOpacity>
+              <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
+            </TouchableOpacity>
+          </View>
         </View>
       }
       scrollContent={cards}
       endOfScrollContent={
         <View style={{
           flexDirection: 'row',
-
         }}>
           <ResetButton />
           <FinishButton />
+          <View style={{ backgroundColor: COLORS.SECONDARYCOLOR, height: 500 }} />
         </View>
       } />
   );

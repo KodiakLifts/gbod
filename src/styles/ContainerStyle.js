@@ -24,6 +24,7 @@ module.exports = StyleSheet.create({
     elevation: 0,
   },
   scrollArea: {
+    elevation: 0,
     flexGrow: 1,
     alignItems: 'center',
     width: Dimensions.get('window').width,

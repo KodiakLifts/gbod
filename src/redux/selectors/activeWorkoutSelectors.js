@@ -3,6 +3,9 @@ import ExerciseCard from '../../components/cards/ExerciseCard';
 import { createSelector } from 'reselect';
 
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const PROGRAMNAMELENGTH = 12;
+const DAYNAMELENGTH = 5;
+
 
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
@@ -14,7 +17,16 @@ const getActiveDayName = (state) => {
 export const getActiveWorkoutTitle = createSelector(
   [getActiveWorkoutName, getActiveDayName],
   (programName, dayName) => {
-    return programName + " - " + dayName;
+    let program = programName;
+    let day = dayName;
+    if (program.length > PROGRAMNAMELENGTH) {
+      program = program.substring(0, PROGRAMNAMELENGTH) + "..";
+    }
+    if (day.length > DAYNAMELENGTH) {
+      day = day.substring(0, DAYNAMELENGTH) + "..";
+    }
+    let title = program + " - " + day;
+    return title;
   }
 );
 

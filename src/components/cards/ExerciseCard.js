@@ -16,7 +16,6 @@ class ExerciseCard extends Component {
 
     this.state = {
       menuModalVisible: false,
-
     };
 
     this._onMenuPress = this._onMenuPress.bind(this);
@@ -42,7 +41,8 @@ class ExerciseCard extends Component {
           setId={set.id}
           reps={set.reps}
           weight={set.weight}
-          type={set.type} />
+          type={set.type}
+          restTime={set.restTime} />
       );
     });
     return (
@@ -87,6 +87,12 @@ class ExerciseCard extends Component {
             }}>
               {setButtons}
             </View>
+
+            <View>
+
+            </View>
+
+
           </View>
           <Icon
             name={'link'}
@@ -108,11 +114,12 @@ ExerciseCard.propTypes = {
     weight: PropTypes.number,
     reps: PropTypes.number,
     type: PropTypes.string,
-    complete: PropTypes.bool
+    complete: PropTypes.bool,
+    restTime: PropTypes.number
   })),
   supersetNext: PropTypes.bool,
   includeWarmup: PropTypes.bool,
-  lastExercise: PropTypes.bool
+  lastExercise: PropTypes.bool,
 };
 
 export default ExerciseCard;

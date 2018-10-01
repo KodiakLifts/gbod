@@ -79,7 +79,8 @@ SetButton.propTypes = {
   weight: PropTypes.number,
   type: PropTypes.string,
   updateActiveWorkoutUI: PropTypes.func,
-  complete: PropTypes.bool
+  complete: PropTypes.bool,
+  restTime: PropTypes.number
 };
 
 const mapStateToProps = (state, ownProps) => {

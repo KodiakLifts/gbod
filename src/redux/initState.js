@@ -13,54 +13,54 @@ export const initState = {
         name: "GreySkull LP",
         category: 0,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false },
-          { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false },
-          { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: "F", complete: false },
-          { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false },
-          { id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false },
-          { id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: "F", complete: false },
-          { id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false },
-          { id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false },
-          { id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: "F", complete: false },
-          { id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false },
-          { id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false },
-          { id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: "F", complete: false },
-          { id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false },
-          { id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false },
-          { id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: "F", complete: false },
-          { id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false },
-          { id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false },
-          { id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: "F", complete: false },
+          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restTime: 300000 },
+          { id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: "F", complete: false, restTime: 300000 },
         ],
         exercises: [
           {
             id: 0, libraryId: 0, day: 0, complete: false,
-            supersetNext: true, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: true, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
             id: 1, libraryId: 1, day: 0, complete: false,
-            supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
             id: 2, libraryId: 2, day: 0, complete: false,
-            supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
             id: 3, libraryId: 3, day: 1, complete: false,
-            supersetNext: true, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: true, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
             id: 4, libraryId: 4, day: 1, complete: false,
-            supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
             id: 5, libraryId: 5, day: 1, complete: false,
-            supersetNext: false, restTime: "3:00", includeWarmup: false, increaseRule: "",
+            supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
         ],
