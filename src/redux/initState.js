@@ -5,6 +5,7 @@ export const initState = {
       started: false,
       minutes: 0,
       seconds: 0,
+      set: 0
     },
     activeWorkout: {
       program: 0,
@@ -17,7 +18,7 @@ export const initState = {
         name: "GreySkull LP",
         category: 0,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "W", complete: false, restMinutes: 3, restSeconds: 0 },
           { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restMinutes: 4, restSeconds: 0 },
           { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: "F", complete: false, restMinutes: 5, restSeconds: 0 },
           { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
@@ -39,7 +40,7 @@ export const initState = {
         exercises: [
           {
             id: 0, libraryId: 0, day: 0, complete: false,
-            supersetNext: true, includeWarmup: false, increaseRule: "",
+            supersetNext: true, includeWarmup: true, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {

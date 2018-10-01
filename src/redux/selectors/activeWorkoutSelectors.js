@@ -60,8 +60,14 @@ export const getActiveWorkoutCards = createSelector(
     const workoutCards = [];
 
     activeExercises.forEach((exercise, index) => {
+
+      let includeWarmup = exercise.includeWarmup;
+
       let sets = activeSets.filter(set => {
-        return set.exercise === exercise.id;
+        if (!includeWarmup) {
+          return (set.exercise === exercise.id && set.type !== 'W');
+        }
+        return (set.exercise === exercise.id);
       });
 
       let style = (exercise.id === currentExercise ?

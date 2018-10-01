@@ -44,6 +44,7 @@ class SetButton extends Component {
       case "N": return "";
       case "D": return "-";
       case "F": return "+";
+      case "W": return "w";
     }
     return "";
   }
