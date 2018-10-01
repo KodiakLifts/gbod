@@ -2,16 +2,15 @@ export const initState = {
   workoutData:
   {
     timer: {
-      minutes: 0,
-      seconds: 0
+      started: false,
+      minutes: 3,
+      seconds: 0,
+      setComplete: false
     },
     activeWorkout: {
       program: 0,
       day: 0,
       currentExercise: 0,
-      setComplete: false,
-      restMinutes: 0,
-      restSeconds: 0
     },
     programs: [
       {

@@ -3,7 +3,9 @@ import {
   UPDATE_SET_DATA,
   FINISH_WORKOUT,
   RESET_WORKOUT,
-  UPDATE_EXERCISE_DATA
+  UPDATE_EXERCISE_DATA,
+  SET_TIMER,
+  DECREMENT_TIMER
 } from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
@@ -18,10 +20,40 @@ export default function workoutData(state = {}, action) {
       return finishWorkout(state);
     case RESET_WORKOUT:
       return resetWorkout(state);
+    case SET_TIMER:
+      return state;
+    case DECREMENT_TIMER:
+      return decrementTimer(state);
     default:
       return state;
   }
 }
+
+const decrementTimer = (state) => {
+  const prevMin = state.timer.minutes;
+  const prevSec = state.timer.seconds;
+  let newMin = prevMin;
+  let newSec = prevSec;
+
+  if (newSec === 0) {
+    if (newMin !== 0) {
+      newSec = 59;
+      newMin--;
+    }
+  } else {
+    newSec--;
+  }
+
+  const newState = {
+    ...state,
+    timer: {
+      ...state.timer,
+      ...{ minutes: newMin },
+      ...{ seconds: newSec }
+    }
+  };
+  return newState;
+};
 
 const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
   const activeProgram = state.activeWorkout.program;
@@ -153,6 +185,8 @@ const updateActiveWorkoutUI = (state, setId, exerciseId) => {
 const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
+  const timerStarted = state.timer.started;
+
   const setCompleteVal =
     state.programs[activeProgram].sets[setId].complete;
 
@@ -163,11 +197,12 @@ const toggleSetComplete = (state, setId, exerciseId) => {
 
   const newState = {
     ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
+    timer: {
+      ...state.timer,
+      ...{ started: !timerStarted },
+      ...{ minutes: setRestMinutes },
+      ...{ seconds: setRestSeconds },
       ...{ setComplete: !setCompleteVal },
-      ...{ restMinutes: setRestMinutes },
-      ...{ restSeconds: setRestSeconds }
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
