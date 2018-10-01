@@ -31,6 +31,8 @@ export default function workoutData(state = {}, action) {
       return state;
   }
 }
+
+
 const startTimer = (state) => {
   const newState = {
     ...state,
