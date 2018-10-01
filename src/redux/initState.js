@@ -4,7 +4,7 @@ export const initState = {
     timer: {
       started: false,
       minutes: 0,
-      seconds: 3,
+      seconds: 0,
     },
     activeWorkout: {
       program: 0,

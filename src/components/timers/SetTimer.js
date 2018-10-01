@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { startTimer, stopTimer } from '../../redux/actions/activeWorkoutActions';
-import { toggleTimer } from './toggleTimer';
+import { handleTimer } from '../../redux/actions/activeWorkoutActions';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
-
-const INTERVAL = 1000;
 
 class SetTimer extends Component {
 
@@ -23,14 +20,7 @@ class SetTimer extends Component {
   }
 
   _onPress() {
-    toggleTimer(
-      this.props.started,
-      this.props.minutes,
-      this.props.seconds,
-      this.props.stopTimer,
-      this.props.startTimer,
-      true
-    );
+
   }
 
   render() {
@@ -48,36 +38,22 @@ class SetTimer extends Component {
   }
 }
 
-
-
-
-
 SetTimer.propTypes = {
-  started: PropTypes.bool,
   minutes: PropTypes.number,
   seconds: PropTypes.number,
-  setComplete: PropTypes.bool,
-  startTimer: PropTypes.func,
-  stopTimer: PropTypes.func
+  handleTimer: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
   return {
-    started: state.workoutData.timer.started,
-    setComplete: state.workoutData.timer.setComplete,
     minutes: state.workoutData.timer.minutes,
-    seconds: state.workoutData.timer.seconds
+    seconds: state.workoutData.timer.seconds,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    startTimer: () => {
-      dispatch(startTimer());
-    },
-    stopTimer: () => {
-      dispatch(stopTimer());
-    }
+
   };
 };
 

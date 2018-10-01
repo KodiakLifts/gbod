@@ -5,7 +5,8 @@ import {
   RESET_WORKOUT,
   UPDATE_EXERCISE_DATA,
   STOP_TIMER,
-  START_TIMER
+  START_TIMER,
+  DECREMENT_TIMER
 } from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
@@ -24,10 +25,22 @@ export default function workoutData(state = {}, action) {
       return stopTimer(state);
     case START_TIMER:
       return startTimer(state);
+    case DECREMENT_TIMER:
+      return decrementTimer(state);
     default:
       return state;
   }
 }
+const startTimer = (state) => {
+  const newState = {
+    ...state,
+    timer: {
+      ...state.timer,
+      ...{ started: true }
+    }
+  };
+  return newState;
+};
 
 const stopTimer = (state) => {
   const newState = {
@@ -40,24 +53,23 @@ const stopTimer = (state) => {
   return newState;
 };
 
-const startTimer = (state) => {
-  const prevMin = state.timer.minutes;
-  const prevSec = state.timer.seconds;
-  let newMin = prevMin;
-  let newSec = prevSec;
-  let started = true;
+const decrementTimer = (state) => {
+  let newMin = state.timer.minutes;
+  let newSec = state.timer.seconds;
+  let started = state.timer.started;
+  started = true;
 
-  if (newSec === 0) {
-    if (newMin !== 0) {
-      newSec = 59;
-      newMin--;
-    }
-  } else {
-    newSec--;
-  }
   if (newMin === 0 && newSec === 0) {
     started = false;
+  } else if (newMin === 0 && newSec !== 0) {
+    newSec--;
+  } else if (newMin !== 0 && newSec !== 0) {
+    newSec--;
+  } else if (newMin !== 0 && newSec === 0) {
+    newMin--;
+    newSec = 59;
   }
+
 
   const newState = {
     ...state,
@@ -68,6 +80,7 @@ const startTimer = (state) => {
       ...{ seconds: newSec }
     }
   };
+
   return newState;
 };
 
@@ -201,8 +214,6 @@ const updateActiveWorkoutUI = (state, setId, exerciseId) => {
 const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
-  const timerStarted = state.timer.started;
-
   const setCompleteVal =
     state.programs[activeProgram].sets[setId].complete;
 
@@ -215,6 +226,7 @@ const toggleSetComplete = (state, setId, exerciseId) => {
     ...state,
     timer: {
       ...state.timer,
+      ...{ set: setId },
       ...{ minutes: setRestMinutes },
       ...{ seconds: setRestSeconds },
     },
