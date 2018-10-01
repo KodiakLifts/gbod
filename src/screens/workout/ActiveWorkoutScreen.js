@@ -13,7 +13,7 @@ const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 
-const ActiveWorkout = ({ title, cards }) => {
+const ActiveWorkout = ({ title, cards, minutes, seconds, setComplete }) => {
   return (
     <ScreenTemplate
       headerContent={
@@ -22,7 +22,7 @@ const ActiveWorkout = ({ title, cards }) => {
             {title}
           </Text>
           <View style={{ width: 115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <SetTimer />
+            <SetTimer minutes={minutes} seconds={seconds} setComplete={setComplete} />
             <TouchableOpacity>
               <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
             </TouchableOpacity>
@@ -45,12 +45,18 @@ const ActiveWorkout = ({ title, cards }) => {
 ActiveWorkout.propTypes = {
   title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
+  minutes: PropTypes.number,
+  seconds: PropTypes.number,
+  setComplete: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {
   return {
     title: getActiveWorkoutTitle(state.workoutData),
     cards: getActiveWorkoutCards(state.workoutData),
+    setComplete: state.workoutData.activeWorkout.setComplete,
+    minutes: state.workoutData.activeWorkout.restMinutes,
+    seconds: state.workoutData.activeWorkout.restSeconds
   };
 };
 

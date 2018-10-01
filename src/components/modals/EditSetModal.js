@@ -190,7 +190,6 @@ EditSetModal.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
-  restTime: PropTypes.string,
   closeModal: PropTypes.func,
   updateSetData: PropTypes.func,
 };

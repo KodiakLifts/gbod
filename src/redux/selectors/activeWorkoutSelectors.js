@@ -6,7 +6,6 @@ const CONTAINERSTYLE = require('../../styles/ContainerStyle');
 const PROGRAMNAMELENGTH = 12;
 const DAYNAMELENGTH = 5;
 
-
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
 };

@@ -1,11 +1,17 @@
 export const initState = {
   workoutData:
   {
+    timer: {
+      minutes: 0,
+      seconds: 0
+    },
     activeWorkout: {
       program: 0,
       day: 0,
       currentExercise: 0,
-      complete: false,
+      setComplete: false,
+      restMinutes: 0,
+      restSeconds: 0
     },
     programs: [
       {
@@ -13,24 +19,24 @@ export const initState = {
         name: "GreySkull LP",
         category: 0,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: "F", complete: false, restTime: 300000 },
-          { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: "F", complete: false, restTime: 300000 },
-          { id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: "F", complete: false, restTime: 300000 },
-          { id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: "F", complete: false, restTime: 300000 },
-          { id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: "F", complete: false, restTime: 300000 },
-          { id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restTime: 300000 },
-          { id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: "F", complete: false, restTime: 300000 },
+          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: "N", complete: false, restMinutes: 4, restSeconds: 0 },
+          { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: "F", complete: false, restMinutes: 5, restSeconds: 0 },
+          { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: "F", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: "F", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: "F", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: "F", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: "N", complete: false, restMinutes: 3, restSeconds: 0 },
+          { id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: "F", complete: false, restMinutes: 3, restSeconds: 0 },
         ],
         exercises: [
           {

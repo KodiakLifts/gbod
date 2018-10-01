@@ -156,8 +156,19 @@ const toggleSetComplete = (state, setId, exerciseId) => {
   const setCompleteVal =
     state.programs[activeProgram].sets[setId].complete;
 
+  const setRestMinutes =
+    state.programs[activeProgram].sets[setId].restMinutes;
+  const setRestSeconds =
+    state.programs[activeProgram].sets[setId].restSeconds;
+
   const newState = {
     ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      ...{ setComplete: !setCompleteVal },
+      ...{ restMinutes: setRestMinutes },
+      ...{ restSeconds: setRestSeconds }
+    },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {
@@ -272,5 +283,6 @@ const updateCurrentExercise = (state, exerciseId) => {
       currentExercise: updatedActiveExerciseId,
     }
   };
+  console.log(newState)
   return newState;
 };
