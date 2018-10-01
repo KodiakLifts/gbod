@@ -3,9 +3,8 @@ export const initState = {
   {
     timer: {
       started: false,
-      minutes: 3,
-      seconds: 0,
-      setComplete: false
+      minutes: 0,
+      seconds: 3,
     },
     activeWorkout: {
       program: 0,

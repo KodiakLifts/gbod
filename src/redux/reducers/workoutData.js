@@ -4,8 +4,8 @@ import {
   FINISH_WORKOUT,
   RESET_WORKOUT,
   UPDATE_EXERCISE_DATA,
-  SET_TIMER,
-  DECREMENT_TIMER
+  STOP_TIMER,
+  START_TIMER
 } from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
@@ -20,20 +20,32 @@ export default function workoutData(state = {}, action) {
       return finishWorkout(state);
     case RESET_WORKOUT:
       return resetWorkout(state);
-    case SET_TIMER:
-      return state;
-    case DECREMENT_TIMER:
-      return decrementTimer(state);
+    case STOP_TIMER:
+      return stopTimer(state);
+    case START_TIMER:
+      return startTimer(state);
     default:
       return state;
   }
 }
 
-const decrementTimer = (state) => {
+const stopTimer = (state) => {
+  const newState = {
+    ...state,
+    timer: {
+      ...state.timer,
+      ...{ started: false }
+    }
+  };
+  return newState;
+};
+
+const startTimer = (state) => {
   const prevMin = state.timer.minutes;
   const prevSec = state.timer.seconds;
   let newMin = prevMin;
   let newSec = prevSec;
+  let started = true;
 
   if (newSec === 0) {
     if (newMin !== 0) {
@@ -43,11 +55,15 @@ const decrementTimer = (state) => {
   } else {
     newSec--;
   }
+  if (newMin === 0 && newSec === 0) {
+    started = false;
+  }
 
   const newState = {
     ...state,
     timer: {
       ...state.timer,
+      ...{ started: started },
       ...{ minutes: newMin },
       ...{ seconds: newSec }
     }
@@ -199,10 +215,8 @@ const toggleSetComplete = (state, setId, exerciseId) => {
     ...state,
     timer: {
       ...state.timer,
-      ...{ started: !timerStarted },
       ...{ minutes: setRestMinutes },
       ...{ seconds: setRestSeconds },
-      ...{ setComplete: !setCompleteVal },
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
@@ -318,6 +332,5 @@ const updateCurrentExercise = (state, exerciseId) => {
       currentExercise: updatedActiveExerciseId,
     }
   };
-  console.log(newState)
   return newState;
 };

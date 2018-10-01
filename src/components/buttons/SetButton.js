@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutUI } from '../../redux/actions/activeWorkoutActions';
+import { updateActiveWorkoutUI, startTimer, stopTimer } from '../../redux/actions/activeWorkoutActions';
 import EditSetModal from '../modals/EditSetModal';
+import { toggleTimer } from '../timers/toggleTimer';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -13,6 +14,8 @@ const activeButton = CONTAINERSTYLE.activeSetButton;
 const inactiveButton = CONTAINERSTYLE.inactiveSetButton;
 const activeText = TEXTSTYLE.activeSetButtonText;
 const inactiveText = TEXTSTYLE.inactiveSetButtonText;
+
+const INTERVAL = 1000;
 
 class SetButton extends Component {
   constructor(props) {
@@ -26,10 +29,25 @@ class SetButton extends Component {
     this._onLongPress = this._onLongPress.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.checkSetType = this.checkSetType.bind(this);
+
   }
 
   _onPress() {
     this.props.updateActiveWorkoutUI(this.props.setId, this.props.exerciseId);
+
+    let special = false;
+    if (!this.props.complete && this.props.started) {
+      special = true;
+    }
+    toggleTimer(
+      this.props.started,
+      this.props.minutes,
+      this.props.seconds,
+      this.props.stopTimer,
+      this.props.startTimer,
+      !this.props.complete,
+      special
+    );
   }
 
   _onLongPress() {
@@ -78,8 +96,15 @@ SetButton.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
+  buttonPress: PropTypes.func,
   updateActiveWorkoutUI: PropTypes.func,
-  complete: PropTypes.bool
+  startTimer: PropTypes.func,
+  stopTimer: PropTypes.func,
+
+  complete: PropTypes.bool,
+  started: PropTypes.bool,
+  minutes: PropTypes.number,
+  seconds: PropTypes.number,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -88,7 +113,10 @@ const mapStateToProps = (state, ownProps) => {
       state
         .workoutData
         .programs[state.workoutData.activeWorkout.program]
-        .sets[ownProps.setId].complete
+        .sets[ownProps.setId].complete,
+    started: state.workoutData.timer.started,
+    minutes: state.workoutData.timer.minutes,
+    seconds: state.workoutData.timer.seconds
   };
 };
 
@@ -96,7 +124,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveWorkoutUI: (setId, exerciseId) => {
       dispatch(updateActiveWorkoutUI(setId, exerciseId));
-    }
+    },
+    startTimer: () => {
+      dispatch(startTimer());
+    },
+    stopTimer: () => {
+      dispatch(stopTimer());
+    },
   };
 };
 

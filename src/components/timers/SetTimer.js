@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { decrementTimer, stopTimer } from '../../redux/actions/activeWorkoutActions';
+import { startTimer, stopTimer } from '../../redux/actions/activeWorkoutActions';
+import { toggleTimer } from './toggleTimer';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -18,29 +19,23 @@ class SetTimer extends Component {
     this.state = {
       started: false,
     };
-    this.toggleTimer = this.toggleTimer.bind(this);
+    this._onPress = this._onPress.bind(this);
   }
 
-  toggleTimer() {
-    if (!this.state.started) {
-      this.setState({ started: true });
-      this.timer = setInterval(() => {
-        if (this.props.minutes === 0) {
-          this.setState({ started: false });
-          clearInterval(this.timer);
-        }
-        decrementTimer;
-        console.log(this.props.seconds);
-      }, INTERVAL);
-    } else {
-      this.setState({ started: false });
-      clearInterval(this.timer);
-    }
+  _onPress() {
+    toggleTimer(
+      this.props.started,
+      this.props.minutes,
+      this.props.seconds,
+      this.props.stopTimer,
+      this.props.startTimer,
+      true
+    );
   }
 
   render() {
     return (
-      <TouchableOpacity onPress={this.toggleTimer}>
+      <TouchableOpacity onPress={this._onPress}>
         <View style={{ flexDirection: 'row', borderColor: COLORS.SECONDARYCOLOR, }}>
           <Text style={{
             fontSize: 24, color: COLORS.SECONDARYCOLOR, textAlignVertical: 'center', includeFontPadding: false
@@ -62,7 +57,7 @@ SetTimer.propTypes = {
   minutes: PropTypes.number,
   seconds: PropTypes.number,
   setComplete: PropTypes.bool,
-  decrementTimer: PropTypes.func,
+  startTimer: PropTypes.func,
   stopTimer: PropTypes.func
 };
 
@@ -77,8 +72,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    decrementTimer: () => {
-      dispatch(decrementTimer());
+    startTimer: () => {
+      dispatch(startTimer());
     },
     stopTimer: () => {
       dispatch(stopTimer());

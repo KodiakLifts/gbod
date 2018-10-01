@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   workoutData
 });
 
-const store = createStore(rootReducer, initState);
+const store = createStore(rootReducer, initState, applyMiddleware(thunk));
 export default () => (
   <Provider store={store}>
     <Main />

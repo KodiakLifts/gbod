@@ -45,9 +45,6 @@ const ActiveWorkout = ({ title, cards }) => {
 ActiveWorkout.propTypes = {
   title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
-  minutes: PropTypes.number,
-  seconds: PropTypes.number,
-  setComplete: PropTypes.bool
 };
 
 const mapStateToProps = (state) => {

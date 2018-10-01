@@ -1,10 +1,12 @@
+import moment from 'moment';
+
+
 export const UPDATE_ACTIVE_WORKOUT_UI = 'UPDATE_ACTIVE_WORKOUT_UI';
 export const UPDATE_SET_DATA = 'UPDATE_SET_DATA';
 export const UPDATE_EXERCISE_DATA = 'UPDATE_EXERCISE_DATA';
 export const FINISH_WORKOUT = 'FINISH_WORKOUT';
 export const RESET_WORKOUT = 'RESET_WORKOUT';
-export const SET_TIMER = 'SET_TIMER';
-export const DECREMENT_TIMER = 'DECREMENT_TIMER';
+export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 
 export const stopTimer = () => {
@@ -13,9 +15,9 @@ export const stopTimer = () => {
   };
 };
 
-export const decrementTimer = () => {
+export const startTimer = () => {
   return {
-    type: DECREMENT_TIMER
+    type: START_TIMER
   };
 };
 
@@ -57,4 +59,3 @@ export const resetWorkout = () => {
     type: RESET_WORKOUT
   };
 };
-
