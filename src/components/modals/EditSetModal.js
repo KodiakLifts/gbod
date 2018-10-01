@@ -17,6 +17,8 @@ class EditSetModal extends Component {
       tmpWeight: props.weight,
       tmpReps: props.reps,
       tmpType: props.type,
+      tmpMin: props.min,
+      tmpSec: props.sec
     };
   }
 
@@ -27,6 +29,7 @@ class EditSetModal extends Component {
   mountTypeName = (type) => {
     let name;
     switch (type) {
+      case "W": name = "Warmup"; break;
       case "N": name = "Normal"; break;
       case "F": name = "Failure"; break;
       case "D": name = "Drop"; break;
@@ -54,6 +57,7 @@ class EditSetModal extends Component {
   updateTmpType = (name) => {
     let type;
     switch (name) {
+      case "Warmup": type = "W"; break;
       case "Normal": type = "N"; break;
       case "Failure": type = "F"; break;
       case "Drop": type = "D"; break;
@@ -155,6 +159,7 @@ class EditSetModal extends Component {
                       style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 50, marginLeft: 5 }}
                       selectedValue={this.state.typeName}
                       onValueChange={this.updateTmpType}>
+                      <Picker.Item label="Warmup" value="Warmup" />
                       <Picker.Item label="Normal" value="Normal" />
                       <Picker.Item label="Failure" value="Failure" />
                       <Picker.Item label="Drop" value="Drop" />
@@ -190,6 +195,8 @@ EditSetModal.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
+  min: PropTypes.number,
+  sec: PropTypes.number,
   closeModal: PropTypes.func,
   updateSetData: PropTypes.func,
 };

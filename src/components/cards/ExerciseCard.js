@@ -41,7 +41,9 @@ class ExerciseCard extends Component {
           setId={set.id}
           reps={set.reps}
           weight={set.weight}
-          type={set.type} />
+          type={set.type}
+          min={set.restMinutes}
+          sec={set.restSeconds} />
       );
     });
     return (

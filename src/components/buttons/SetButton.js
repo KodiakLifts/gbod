@@ -59,6 +59,8 @@ class SetButton extends Component {
           weight={this.props.weight}
           reps={this.props.reps}
           type={this.props.type}
+          min={this.props.min}
+          sec={this.props.sec}
           closeModal={this.closeModal} />
         <TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
           <View style={this.props.complete ? activeButton : inactiveButton}>
@@ -78,11 +80,9 @@ SetButton.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.string,
-  buttonPress: PropTypes.func,
+  min: PropTypes.number,
+  sec: PropTypes.number,
   updateActiveWorkoutUI: PropTypes.func,
-  startTimer: PropTypes.func,
-  stopTimer: PropTypes.func,
-  handleTimer: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
 
   complete: PropTypes.bool,
