@@ -10,7 +10,6 @@ import {
   SET_TIMER,
   UPDATE_DAY_DATA
 } from '../actions/activeWorkoutActions';
-import SetTimer from '../../components/timers/SetTimer';
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {
@@ -41,12 +40,9 @@ export default function workoutData(state = {}, action) {
 
 const updateDayData = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  const days = state.programs[activeProgram].days;
-
-  let activeDay = dayId;
 
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {
-    return exercise.day === activeDay;
+    return exercise.day === dayId;
   });
 
   const currentExercise = exercises[0].id;
@@ -59,7 +55,7 @@ const updateDayData = (state, dayId) => {
     },
     activeWorkout: {
       ...state.activeWorkout,
-      day: activeDay,
+      day: dayId,
       currentExercise: currentExercise
     },
     programs: state.programs.map(program => {

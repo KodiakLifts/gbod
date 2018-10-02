@@ -65,7 +65,7 @@ export const getActiveWorkoutCards = createSelector(
 
       let sets = activeSets.filter(set => {
         if (!includeWarmup) {
-          return (set.exercise === exercise.id && set.type !== 'W');
+          return (set.exercise === exercise.id && set.type !== 0);
         }
         return (set.exercise === exercise.id);
       });

@@ -41,10 +41,10 @@ class SetButton extends Component {
 
   checkSetType(type) {
     switch (type) {
-      case "N": return "";
-      case "D": return "-";
-      case "F": return "+";
-      case "W": return "w";
+      case 0: return "w";
+      case 1: return "";
+      case 2: return "+";
+      case 3: return "-";
     }
     return "";
   }
@@ -79,7 +79,7 @@ SetButton.propTypes = {
   setId: PropTypes.number,
   reps: PropTypes.number,
   weight: PropTypes.number,
-  type: PropTypes.string,
+  type: PropTypes.number,
   min: PropTypes.number,
   sec: PropTypes.number,
   updateActiveWorkoutUI: PropTypes.func,

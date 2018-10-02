@@ -114,7 +114,7 @@ ExerciseCard.propTypes = {
     exercise: PropTypes.number,
     weight: PropTypes.number,
     reps: PropTypes.number,
-    type: PropTypes.string,
+    type: PropTypes.number,
     complete: PropTypes.bool,
     restTime: PropTypes.number
   })),

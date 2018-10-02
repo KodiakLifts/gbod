@@ -98,6 +98,10 @@ class EditSetModal extends Component {
     this.props.closeModal();
   }
 
+  cancel = () => {
+    const setType = this.props.setId;
+  }
+
   render() {
     return (
       <Modal
@@ -252,11 +256,18 @@ EditSetModal.propTypes = {
   setId: PropTypes.number,
   reps: PropTypes.number,
   weight: PropTypes.number,
-  type: PropTypes.string,
+  type: PropTypes.number,
+  typeName: PropTypes.arrayOf(PropTypes.object),
   min: PropTypes.number,
   sec: PropTypes.number,
   closeModal: PropTypes.func,
   updateSetData: PropTypes.func,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    types: state.workoutData.setTypes
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

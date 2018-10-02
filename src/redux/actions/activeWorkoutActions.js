@@ -10,9 +10,10 @@ export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_DAY_DATA = 'UPDATE_DAY_DATA';
 
 export const updateDayData = (dayId) => {
-  return {
-    type: UPDATE_DAY_DATA,
-    dayId
+  return (dispatch) => {
+    clearInterval(this.timer);
+    dispatch({ type: UPDATE_DAY_DATA, dayId });
+    dispatch(setTimer(0, 0));
   };
 };
 
