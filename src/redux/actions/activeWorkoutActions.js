@@ -7,6 +7,14 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 export const SET_TIMER = 'SET_TIMER';
+export const UPDATE_DAY_DATA = 'UPDATE_DAY_DATA';
+
+export const updateDayData = (dayId) => {
+  return {
+    type: UPDATE_DAY_DATA,
+    dayId
+  };
+};
 
 export const updateWorkoutAndTimer = (setId, exerciseId) => {
   return (dispatch, getState) => {

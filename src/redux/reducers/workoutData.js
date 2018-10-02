@@ -7,7 +7,8 @@ import {
   STOP_TIMER,
   START_TIMER,
   DECREMENT_TIMER,
-  SET_TIMER
+  SET_TIMER,
+  UPDATE_DAY_DATA
 } from '../actions/activeWorkoutActions';
 import SetTimer from '../../components/timers/SetTimer';
 
@@ -31,10 +32,51 @@ export default function workoutData(state = {}, action) {
       return decrementTimer(state, action.setId);
     case SET_TIMER:
       return setTimer(state, action.minutes, action.seconds);
+    case UPDATE_DAY_DATA:
+      return updateDayData(state, action.dayId);
     default:
       return state;
   }
 }
+
+const updateDayData = (state, dayId) => {
+  const activeProgram = state.activeWorkout.program;
+  const days = state.programs[activeProgram].days;
+
+  let activeDay = dayId;
+
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === activeDay;
+  });
+
+  const currentExercise = exercises[0].id;
+
+  const newState = {
+    ...state,
+    timer: {
+      ...state.timer,
+      started: false
+    },
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: activeDay,
+      currentExercise: currentExercise
+    },
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          sets: state.programs[activeProgram].sets.map(set => {
+            return { ...set, ...{ complete: false } };
+          })
+        };
+      }
+      return program;
+    })
+  };
+
+  return newState;
+};
 
 const setTimer = (state, minutes, seconds) => {
   const newState = {
