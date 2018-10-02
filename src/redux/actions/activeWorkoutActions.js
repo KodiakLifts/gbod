@@ -6,6 +6,7 @@ export const RESET_WORKOUT = 'RESET_WORKOUT';
 export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const DECREMENT_TIMER = 'DECREMENT_TIMER';
+export const SET_TIMER = 'SET_TIMER';
 
 export const updateWorkoutAndTimer = (setId, exerciseId) => {
   return (dispatch, getState) => {
@@ -51,6 +52,7 @@ export const decrementTimer = (setId) => {
 };
 
 export const stopTimer = () => {
+  clearInterval(this.timer);
   return {
     type: STOP_TIMER
   };
@@ -92,13 +94,25 @@ export const updateExerciseData = (exerciseId, supersetNext, includeWarmup) => {
 };
 
 export const finishWorkout = () => {
-  return {
-    type: FINISH_WORKOUT
+  return (dispatch) => {
+    clearInterval(this.timer);
+    dispatch({ type: FINISH_WORKOUT });
+    dispatch(setTimer(0, 0));
   };
 };
 
 export const resetWorkout = () => {
+  return (dispatch) => {
+    clearInterval(this.timer);
+    dispatch({ type: RESET_WORKOUT });
+    dispatch(setTimer(0, 0));
+  };
+};
+
+export const setTimer = (minutes, seconds) => {
   return {
-    type: RESET_WORKOUT
+    type: SET_TIMER,
+    minutes,
+    seconds
   };
 };

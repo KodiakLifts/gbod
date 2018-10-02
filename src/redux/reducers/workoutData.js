@@ -6,8 +6,10 @@ import {
   UPDATE_EXERCISE_DATA,
   STOP_TIMER,
   START_TIMER,
-  DECREMENT_TIMER
+  DECREMENT_TIMER,
+  SET_TIMER
 } from '../actions/activeWorkoutActions';
+import SetTimer from '../../components/timers/SetTimer';
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {
@@ -27,11 +29,24 @@ export default function workoutData(state = {}, action) {
       return startTimer(state);
     case DECREMENT_TIMER:
       return decrementTimer(state, action.setId);
+    case SET_TIMER:
+      return setTimer(state, action.minutes, action.seconds);
     default:
       return state;
   }
 }
 
+const setTimer = (state, minutes, seconds) => {
+  const newState = {
+    ...state,
+    timer: {
+      ...state.timer,
+      minutes,
+      seconds
+    }
+  };
+  return newState;
+};
 
 const startTimer = (state) => {
   const newState = {
@@ -140,7 +155,6 @@ const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
       return program;
     })
   };
-  console.log(newState);
   return newState;
 };
 
@@ -156,6 +170,10 @@ const resetWorkout = (state) => {
 
   const newState = {
     ...state,
+    timer: {
+      ...state.timer,
+      started: false
+    },
     activeWorkout: {
       ...state.activeWorkout,
       currentExercise: currentExercise
@@ -190,6 +208,10 @@ const finishWorkout = (state) => {
 
   const newState = {
     ...state,
+    timer: {
+      ...state.timer,
+      started: false
+    },
     activeWorkout: {
       ...state.activeWorkout,
       day: activeDay,

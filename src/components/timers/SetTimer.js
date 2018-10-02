@@ -13,9 +13,7 @@ class SetTimer extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      started: false,
-    };
+
     this._onPress = this._onPress.bind(this);
   }
 
