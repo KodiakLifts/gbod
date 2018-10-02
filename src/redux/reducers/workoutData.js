@@ -191,10 +191,8 @@ const updateSetReps = (state, setId, reps) => {
       return program;
     })
   };
-  console.log(newState.programs[0].sets);
   return newState;
 };
-
 
 const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
   const activeProgram = state.activeWorkout.program;
@@ -223,7 +221,6 @@ const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
       return program;
     })
   };
-  console.log(newState.programs[0].sets[setId])
   return newState;
 };
 
@@ -306,7 +303,6 @@ const updateActiveWorkoutUI = (state, setId, exerciseId) => {
   const setState = toggleSetComplete(state, setId, exerciseId);
   const exerciseState = updateExerciseComplete(setState, exerciseId);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
-  console.log(currentExerciseState.programs[0].sets)
   return currentExerciseState;
 };
 

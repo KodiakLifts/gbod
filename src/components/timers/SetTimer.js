@@ -12,12 +12,25 @@ class SetTimer extends Component {
 
   constructor(props) {
     super(props);
-
-    this._onPress = this._onPress.bind(this);
+    this.state = {
+      complete: false
+    };
   }
 
-  _onPress() {
+  componentWillReceiveProps(newProps) {
+    if (newProps.minutes === 0 && newProps.seconds === 0) {
+      this.setState({ complete: true });
+    } else {
+      this.setState({ complete: false });
+    }
+  }
+
+  _onPress = () => {
     this.props.handleTimer(!this.props.started);
+  }
+
+  timerColor = () => {
+    return this.state.complete ? COLORS.NOTIFY : COLORS.ACTIVECOLOR;
   }
 
   render() {
@@ -25,7 +38,7 @@ class SetTimer extends Component {
       <TouchableOpacity onPress={this._onPress}>
         <View style={{ flexDirection: 'row', borderColor: COLORS.SECONDARYCOLOR, }}>
           <Text style={{
-            fontSize: 24, color: COLORS.ACTIVECOLOR, textAlignVertical: 'center', includeFontPadding: false
+            fontSize: 24, color: this.timerColor(), textAlignVertical: 'center', includeFontPadding: false
           }}>
             {String(this.props.minutes).padStart(2, '0') + ":" + String(this.props.seconds).padStart(2, '0')}
           </Text>
