@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { handleTimer } from '../../redux/actions/activeWorkoutActions';
@@ -28,7 +27,7 @@ class SetTimer extends Component {
           <Text style={{
             fontSize: 24, color: COLORS.ACTIVECOLOR, textAlignVertical: 'center', includeFontPadding: false
           }}>
-            {moment().minute(this.props.minutes).second(this.props.seconds).format('mm:ss')}
+            {String(this.props.minutes).padStart(2, '0') + ":" + String(this.props.seconds).padStart(2, '0')}
           </Text>
         </View>
       </TouchableOpacity>
