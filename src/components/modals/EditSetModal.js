@@ -26,6 +26,12 @@ class EditSetModal extends Component {
     this.mountTypeName(this.props.type, this.props.types);
   }
 
+  componentWillReceiveProps(newProps) {
+    if (this.props.reps !== newProps.reps) {
+      this.setState({ tmpReps: newProps.reps });
+    }
+  }
+
   createTypeItems = (types) => {
     const typeItems = types.map((type, index) => {
       return (

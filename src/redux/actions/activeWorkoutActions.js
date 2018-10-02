@@ -87,7 +87,7 @@ export const updateSetReps = (setId, reps) => {
     type: UPDATE_SET_REPS,
     setId,
     reps
-  }
+  };
 };
 
 export const updateSetData = (setId, weight, reps, setType, min, sec) => {
