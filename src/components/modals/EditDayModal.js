@@ -14,14 +14,11 @@ class EditDayModal extends Component {
 
     this.state = {
       prevDayId: props.currentDay,
-      tmpDayId: props.currentDay,
-      tmpDayName: props.days[props.currentDay]
+      tmpDayId: props.currentDay
     };
-
-    this.createDayItems = this.createDayItems.bind(this);
   }
 
-  createDayItems(days) {
+  createDayItems = (days) => {
     const dayItems = days.map((day, index) => {
       return (
         <Picker.Item key={index} label={day.name} value={day.id} />
@@ -31,11 +28,7 @@ class EditDayModal extends Component {
   }
 
   updateTmpDay = (dayId) => {
-    const dayName = this.props.days[dayId];
-    this.setState({
-      tmpDayId: dayId,
-      tmpDayName: dayName
-    });
+    this.setState({ tmpDayId: dayId });
   }
 
   save = () => {
@@ -47,11 +40,7 @@ class EditDayModal extends Component {
   }
 
   cancel = () => {
-    const dayName = this.props.days[this.state.prevDayId];
-    this.setState({
-      tmpDayId: this.state.prevDayId,
-      tmpDayName: dayName
-    });
+    this.setState({ tmpDayId: this.state.prevDayId });
     this.props.closeModal();
   }
 
@@ -60,9 +49,9 @@ class EditDayModal extends Component {
       <Modal
         transparent
         visible={this.props.visible}
-        onRequestClose={this.props.closeModal}
+        onRequestClose={this.cancel}
       >
-        <TouchableOpacity onPress={this.props.closeModal} style={{
+        <TouchableOpacity onPress={this.cancel} style={{
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',

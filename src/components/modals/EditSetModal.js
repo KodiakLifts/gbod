@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
+import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { updateSetData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
@@ -13,9 +13,9 @@ class EditSetModal extends Component {
     super(props);
 
     this.state = {
-      typeName: "",
       tmpWeight: props.weight,
       tmpReps: props.reps,
+      prevType: props.type,
       tmpType: props.type,
       tmpMin: props.min,
       tmpSec: props.sec
@@ -23,19 +23,20 @@ class EditSetModal extends Component {
   }
 
   componentDidMount() {
-    this.mountTypeName(this.props.type);
+    this.mountTypeName(this.props.type, this.props.types);
   }
 
-  mountTypeName = (type) => {
-    let name;
-    switch (type) {
-      case "W": name = "Warmup"; break;
-      case "N": name = "Normal"; break;
-      case "F": name = "Failure"; break;
-      case "D": name = "Drop"; break;
-      default: name = ""; break;
-    }
-    this.setState({ typeName: name });
+  createTypeItems = (types) => {
+    const typeItems = types.map((type, index) => {
+      return (
+        <Picker.Item key={index} label={type.name} value={type.id} />
+      );
+    });
+    return (typeItems);
+  }
+
+  mountTypeName = (type, types) => {
+    this.setState({ typeName: types[type].name });
   }
 
   updateTmpWeight = (tmpWeight) => {
@@ -54,27 +55,16 @@ class EditSetModal extends Component {
     }
   }
 
-  updateTmpType = (name) => {
-    let type;
-    switch (name) {
-      case "Warmup": type = "W"; break;
-      case "Normal": type = "N"; break;
-      case "Failure": type = "F"; break;
-      case "Drop": type = "D"; break;
-      default: type = "N"; break;
-    }
-    this.setState({ typeName: name });
+  updateTmpType = (type) => {
     this.setState({ tmpType: type });
   }
 
   updateTmpMin = (min) => {
-
     if (min == null) {
       this.setState({ tmpMin: this.props.min });
     } else {
       this.setState({ tmpMin: parseInt(min) });
     }
-
   }
 
   updateTmpSec = (sec) => {
@@ -83,10 +73,10 @@ class EditSetModal extends Component {
     } else {
       this.setState({ tmpSec: parseInt(sec) });
     }
-
   }
 
   save = () => {
+    this.setState({ prevType: this.state.tmpType });
     this.props.updateSetData(
       this.props.setId,
       this.state.tmpWeight,
@@ -99,7 +89,8 @@ class EditSetModal extends Component {
   }
 
   cancel = () => {
-    const setType = this.props.setId;
+    this.setState({ tmpType: this.state.prevType });
+    this.props.closeModal();
   }
 
   render() {
@@ -107,9 +98,9 @@ class EditSetModal extends Component {
       <Modal
         transparent
         visible={this.props.visible}
-        onRequestClose={this.props.closeModal}
+        onRequestClose={this.cancel}
       >
-        <TouchableOpacity onPress={this.props.closeModal} style={{
+        <TouchableOpacity onPress={this.cancel} style={{
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
@@ -125,26 +116,26 @@ class EditSetModal extends Component {
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
-                <View style={{ flexDirection: 'column', justifyContent: 'center', marginLeft: 25 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <View style={styles.leftColumn}>
+                  <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
                       Weight:
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
                       Reps:
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
                       Rest Time:
                     </Text>
                   </View>
 
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
                       Type:
                     </Text>
@@ -152,8 +143,8 @@ class EditSetModal extends Component {
 
                 </View>
 
-                <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                <View style={styles.rightColumn}>
+                  <View style={styles.rightItem}>
                     <View style={{
                       borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
                     }}>
@@ -170,7 +161,7 @@ class EditSetModal extends Component {
                     </View>
                   </View>
 
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                  <View style={styles.rightItem}>
                     <View style={{
                       borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
                     }}><TextInput
@@ -186,7 +177,7 @@ class EditSetModal extends Component {
                     </View>
                   </View>
 
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                  <View style={styles.rightItem}>
                     <View style={{
                       borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
                     }}><TextInput
@@ -216,22 +207,19 @@ class EditSetModal extends Component {
                     </View>
                   </View>
 
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                  <View style={styles.rightItem}>
                     <Picker
-                      style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 30, marginLeft: 5, marginBottom: 10 }}
-                      selectedValue={this.state.typeName}
+                      style={{ color: COLORS.SECONDARYCOLOR, width: 100 }}
+                      selectedValue={this.state.tmpType}
                       onValueChange={this.updateTmpType}>
-                      <Picker.Item label="Warmup" value="Warmup" />
-                      <Picker.Item label="Normal" value="Normal" />
-                      <Picker.Item label="Failure" value="Failure" />
-                      <Picker.Item label="Drop" value="Drop" />
+                      {this.createTypeItems(this.props.types)}
                     </Picker>
                   </View>
                 </View>
               </View>
 
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <TouchableOpacity onPress={this.props.closeModal}>
+                <TouchableOpacity onPress={this.cancel}>
                   <Text style={TEXTSTYLE.selectedTextButton}>
                     CANCEL
                   </Text>
@@ -257,7 +245,7 @@ EditSetModal.propTypes = {
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.number,
-  typeName: PropTypes.arrayOf(PropTypes.object),
+  types: PropTypes.arrayOf(PropTypes.object),
   min: PropTypes.number,
   sec: PropTypes.number,
   closeModal: PropTypes.func,
@@ -278,4 +266,28 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(EditSetModal);
+const styles = StyleSheet.create({
+  leftColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginLeft: 25,
+  },
+  leftItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 35
+  },
+  rightColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: 10
+  },
+  rightItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 35
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditSetModal);
