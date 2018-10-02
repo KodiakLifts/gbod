@@ -1,4 +1,5 @@
 export const UPDATE_ACTIVE_WORKOUT_UI = 'UPDATE_ACTIVE_WORKOUT_UI';
+export const UPDATE_SET_REPS = 'UPDATE_SET_REPS';
 export const UPDATE_SET_DATA = 'UPDATE_SET_DATA';
 export const UPDATE_EXERCISE_DATA = 'UPDATE_EXERCISE_DATA';
 export const FINISH_WORKOUT = 'FINISH_WORKOUT';
@@ -79,6 +80,14 @@ export const updateActiveWorkoutUI = (setId, exerciseId) => {
     setId,
     exerciseId
   };
+};
+
+export const updateSetReps = (setId, reps) => {
+  return {
+    type: UPDATE_SET_REPS,
+    setId,
+    reps
+  }
 };
 
 export const updateSetData = (setId, weight, reps, setType, min, sec) => {

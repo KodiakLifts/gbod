@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateActiveWorkoutUI, updateWorkoutAndTimer } from '../../redux/actions/activeWorkoutActions';
 import EditSetModal from '../modals/EditSetModal';
+import SetRepsModal from '../modals/SetRepsModal';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -20,11 +21,15 @@ class SetButton extends Component {
 
     this.state = {
       editSetModalVisible: false,
+      setRepsModalVisible: false
     };
   }
 
   _onPress = () => {
     this.props.updateWorkoutAndTimer(this.props.setId, this.props.exerciseId);
+    if (this.props.type === 2 && this.props.complete !== true) {
+      this.setState({ setRepsModalVisible: true });
+    }
   }
 
   _onLongPress = () => {
@@ -32,7 +37,10 @@ class SetButton extends Component {
   }
 
   closeModal = () => {
-    this.setState({ editSetModalVisible: false });
+    this.setState({
+      editSetModalVisible: false,
+      setRepsModalVisible: false
+    });
   }
 
   checkSetType = (type) => {
@@ -57,6 +65,11 @@ class SetButton extends Component {
           type={this.props.type}
           min={this.props.min}
           sec={this.props.sec}
+          closeModal={this.closeModal} />
+        <SetRepsModal
+          visible={this.state.setRepsModalVisible}
+          setId={this.props.setId}
+          reps={this.props.reps}
           closeModal={this.closeModal} />
         <TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
           <View style={this.props.complete ? activeButton : inactiveButton}>

@@ -8,7 +8,8 @@ import {
   START_TIMER,
   DECREMENT_TIMER,
   SET_TIMER,
-  UPDATE_DAY_DATA
+  UPDATE_DAY_DATA,
+  UPDATE_SET_REPS
 } from '../actions/activeWorkoutActions';
 
 export default function workoutData(state = {}, action) {
@@ -33,6 +34,8 @@ export default function workoutData(state = {}, action) {
       return setTimer(state, action.minutes, action.seconds);
     case UPDATE_DAY_DATA:
       return updateDayData(state, action.dayId);
+    case UPDATE_SET_REPS:
+      return updateSetReps(state, action.setId, action.reps);
     default:
       return state;
   }
@@ -165,6 +168,33 @@ const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
   };
   return newState;
 };
+
+const updateSetReps = (state, setId, reps) => {
+  const activeProgram = state.activeWorkout.program;
+
+  const newState = {
+    ...state,
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          sets: state.programs[activeProgram].sets.map(set => {
+            if (set.id === setId) {
+              return {
+                ...set,
+                ...{ reps: reps },
+              };
+            }
+            return set;
+          })
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
+};
+
 
 const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
   const activeProgram = state.activeWorkout.program;
