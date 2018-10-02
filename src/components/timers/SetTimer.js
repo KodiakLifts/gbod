@@ -13,7 +13,7 @@ class SetTimer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      complete: false
+      complete: true
     };
   }
 
@@ -30,7 +30,7 @@ class SetTimer extends Component {
   }
 
   timerColor = () => {
-    return this.state.complete ? COLORS.NOTIFY : COLORS.ACTIVECOLOR;
+    return this.state.complete ? COLORS.INACTIVECOLOR : COLORS.ACTIVECOLOR;
   }
 
   render() {
