@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, CheckBox, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
+import { Modal, Text, CheckBox, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
 import PropTypes from 'prop-types';
 import { updateExerciseData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
@@ -72,13 +72,13 @@ class EditExerciseModal extends Component {
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
-                  <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                  <View style={styles.leftColumn}>
+                    <View style={styles.leftItem}>
                       <Text style={TEXTSTYLE.modalText}>
-                        Superset:
+                        Superset Next Exercise:
                       </Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <View style={styles.leftItem}>
                       <Text style={TEXTSTYLE.modalText}>
                         Include Warmup Sets:
                       </Text>
@@ -86,15 +86,15 @@ class EditExerciseModal extends Component {
 
                   </View>
 
-                  <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 2 }}>
+                  <View style={styles.rightColumn}>
+                    <View style={styles.rightItem}>
                       <CheckBox
                         disabled={this.props.lastExercise}
                         value={this.state.tmpSupersetNext}
                         onValueChange={this.supersetNextToggle}
                       />
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'flex-start', marginBottom: 10 }}>
+                    <View style={styles.rightItem}>
                       <CheckBox
                         value={this.state.tmpIncludeWarmup}
                         onValueChange={this.includeWarmupToggle}
@@ -103,7 +103,7 @@ class EditExerciseModal extends Component {
                   </View>
                 </View>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <View style={styles.footer}>
                   <TouchableOpacity onPress={this.cancel}>
                     <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
                   </TouchableOpacity>
@@ -137,5 +137,33 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
+
+const styles = StyleSheet.create({
+  leftColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  leftItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 35
+  },
+  rightColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: 10
+  },
+  rightItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 35
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  }
+});
 
 export default connect(null, mapDispatchToProps)(EditExerciseModal);

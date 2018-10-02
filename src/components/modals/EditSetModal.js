@@ -218,7 +218,7 @@ class EditSetModal extends Component {
                 </View>
               </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={styles.footer}>
                 <TouchableOpacity onPress={this.cancel}>
                   <Text style={TEXTSTYLE.selectedTextButton}>
                     CANCEL
@@ -230,7 +230,6 @@ class EditSetModal extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-
             </View>
           </TouchableWithoutFeedback>
         </TouchableOpacity>
@@ -270,7 +269,7 @@ const styles = StyleSheet.create({
   leftColumn: {
     flexDirection: 'column',
     justifyContent: 'center',
-    marginLeft: 25,
+    marginLeft: 10,
   },
   leftItem: {
     flexDirection: 'row',
@@ -287,6 +286,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: 35
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
   }
 });
 

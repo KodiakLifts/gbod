@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
+import { Modal, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
 import PropTypes from 'prop-types';
 import { updateDayData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
@@ -67,20 +67,18 @@ class EditDayModal extends Component {
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
 
-                <View style={{ flexDirection: 'column', justifyContent: 'center', marginLeft: 25 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <View style={styles.leftColumn}>
+                  <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
                       Days:
                     </Text>
                   </View>
-
                 </View>
 
-                <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
-
-                  <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+                <View style={styles.rightColumn}>
+                  <View style={styles.rightItem}>
                     <Picker
-                      style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 30, marginLeft: 5, marginBottom: 10 }}
+                      style={{ color: COLORS.SECONDARYCOLOR, width: 100 }}
                       selectedValue={this.state.tmpDayId}
                       onValueChange={this.updateTmpDay}>
                       {this.createDayItems(this.props.days)}
@@ -89,7 +87,7 @@ class EditDayModal extends Component {
                 </View>
               </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <View style={styles.footer}>
                 <TouchableOpacity onPress={this.cancel}>
                   <Text style={TEXTSTYLE.selectedTextButton}>
                     CANCEL
@@ -101,7 +99,6 @@ class EditDayModal extends Component {
                   </Text>
                 </TouchableOpacity>
               </View>
-
             </View>
           </TouchableWithoutFeedback>
         </TouchableOpacity>
@@ -136,5 +133,33 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
+
+const styles = StyleSheet.create({
+  leftColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  leftItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 35
+  },
+  rightColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    marginBottom: 10
+  },
+  rightItem: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    height: 35
+  },
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditDayModal);
