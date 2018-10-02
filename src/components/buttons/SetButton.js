@@ -21,25 +21,21 @@ class SetButton extends Component {
     this.state = {
       editSetModalVisible: false,
     };
-    this._onPress = this._onPress.bind(this);
-    this._onLongPress = this._onLongPress.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.checkSetType = this.checkSetType.bind(this);
   }
 
-  _onPress() {
+  _onPress = () => {
     this.props.updateWorkoutAndTimer(this.props.setId, this.props.exerciseId);
   }
 
-  _onLongPress() {
+  _onLongPress = () => {
     this.setState({ editSetModalVisible: true });
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ editSetModalVisible: false });
   }
 
-  checkSetType(type) {
+  checkSetType = (type) => {
     switch (type) {
       case 0: return "w";
       case 1: return "";

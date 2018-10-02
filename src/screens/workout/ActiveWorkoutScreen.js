@@ -21,16 +21,13 @@ class ActiveWorkout extends Component {
     this.state = {
       editDayModalVisible: false
     };
-
-    this._settingsOnPress = this._settingsOnPress.bind(this);
-    this.closeModal = this.closeModal.bind(this);
   }
 
-  _settingsOnPress() {
+  _settingsOnPress = () => {
     this.setState({ editDayModalVisible: true });
   }
 
-  closeModal() {
+  closeModal = () => {
     this.setState({ editDayModalVisible: false });
   }
 

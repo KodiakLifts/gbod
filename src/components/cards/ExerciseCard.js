@@ -17,22 +17,17 @@ class ExerciseCard extends Component {
     this.state = {
       menuModalVisible: false,
     };
-
-    this._onMenuPress = this._onMenuPress.bind(this);
-    this.closeMenuModal = this.closeMenuModal.bind(this);
-    this.createSetButtons = this.createSetButtons.bind(this);
   }
 
-  _onMenuPress() {
+  _onMenuPress = () => {
     this.setState({ menuModalVisible: true });
   }
 
-  closeMenuModal() {
+  closeMenuModal = () => {
     this.setState({ menuModalVisible: false });
   }
 
-
-  createSetButtons(exerciseId, sets) {
+  createSetButtons = (exerciseId, sets) => {
     const setButtons = sets.map((set, index) => {
       return (
         <SetButton
