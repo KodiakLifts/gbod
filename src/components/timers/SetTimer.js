@@ -35,7 +35,7 @@ class SetTimer extends Component {
 
   render() {
     return (
-      <TouchableOpacity onPress={this._onPress}>
+      <TouchableOpacity onPress={this._onPress} disabled={this.state.complete}>
         <View style={{ flexDirection: 'row', borderColor: COLORS.SECONDARYCOLOR, }}>
           <Text style={{
             fontSize: 24, color: this.timerColor(), textAlignVertical: 'center', includeFontPadding: false
