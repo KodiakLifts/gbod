@@ -14,23 +14,18 @@ export const updateWorkoutAndTimer = (setId, exerciseId) => {
       .workoutData
       .programs[getState().workoutData.activeWorkout.program]
       .sets[setId].complete;
-    dispatch(handleTimer(setComplete, setId));
+    dispatch(handleTimer(setComplete));
   };
 };
 
-export const handleTimer = (setComplete, setId) => {
+export const handleTimer = (setComplete) => {
   this.timer;
   return (dispatch, getState) => {
     let started = getState().workoutData.timer.started;
-    let timerSet = getState().workoutData.timer.set;
-    if (timerSet !== setId) {
-      dispatch(stopTimer());
-      clearInterval(this.timer);
-    }
-    if (setComplete && started) {
-      dispatch(stopTimer());
-      clearInterval(this.timer);
-    }
+
+    clearInterval(this.timer);
+    dispatch(stopTimer());
+
     started = getState().workoutData.timer.started;
     if (setComplete && !started) {
       this.timer = setInterval(() => {
@@ -42,8 +37,8 @@ export const handleTimer = (setComplete, setId) => {
         }
       }, 1000);
     } else {
-      dispatch(stopTimer());
       clearInterval(this.timer);
+      dispatch(stopTimer());
     }
   };
 };
