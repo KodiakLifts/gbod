@@ -39,7 +39,7 @@ class ActiveWorkout extends Component {
             {this.props.title}
           </Text>
           <View style={{ width: 115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <EditDayModal closeModal={this.closeModal} visible={this.state.editDayModalVisible} />
+            <EditDayModal title={this.props.title} closeModal={this.closeModal} visible={this.state.editDayModalVisible} />
             <SetTimer />
             <TouchableOpacity onPress={this._settingsOnPress}>
               <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />

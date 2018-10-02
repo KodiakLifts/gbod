@@ -62,7 +62,7 @@ class EditDayModal extends Component {
             <View style={CONTAINERSTYLE.modalCard}>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={TEXTSTYLE.modalHeader}>
-                  Day
+                  {this.props.title}
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -108,6 +108,7 @@ class EditDayModal extends Component {
 }
 
 EditDayModal.propTypes = {
+  title: PropTypes.string,
   visible: PropTypes.bool,
   currentDay: PropTypes.number,
   days: PropTypes.arrayOf(PropTypes.object),
