@@ -111,7 +111,7 @@ class EditSetModal extends Component {
             <View style={CONTAINERSTYLE.modalCard}>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={TEXTSTYLE.modalHeader}>
-                  Edit Set
+                  Set
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>

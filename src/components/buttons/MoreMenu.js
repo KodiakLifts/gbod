@@ -67,7 +67,7 @@ class MoreMenu extends Component {
             </TouchableWithoutFeedback>
           </Modal>
           <TouchableOpacity onPress={this.showMenu(true)}>
-            <Icon style={TEXTSTYLE.icon} name="ellipsis-v" size={28} color={COLORS.SECONDARYCOLOR} />
+            <Icon style={TEXTSTYLE.icon} name="bars" size={25} color={COLORS.SECONDARYCOLOR} />
           </TouchableOpacity>
         </View>
 

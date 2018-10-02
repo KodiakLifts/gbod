@@ -37,8 +37,6 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     elevation: 2,
-
-
   },
   activeCard: {
     flexDirection: 'column',
@@ -49,8 +47,6 @@ module.exports = StyleSheet.create({
     borderColor: COLORS.SECONDARYCOLOR,
     borderWidth: 1,
     elevation: 2,
-
-
   },
   modalCard: {
     flexDirection: 'column',

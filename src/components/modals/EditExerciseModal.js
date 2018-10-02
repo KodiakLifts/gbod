@@ -67,7 +67,7 @@ class EditExerciseModal extends Component {
               <View style={CONTAINERSTYLE.modalCard}>
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={TEXTSTYLE.modalHeader}>
-                    Edit Exercise
+                    Exercise
                 </Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>

@@ -42,7 +42,7 @@ class ActiveWorkout extends Component {
             <EditDayModal closeModal={this.closeModal} visible={this.state.editDayModalVisible} />
             <SetTimer />
             <TouchableOpacity onPress={this._settingsOnPress}>
-              <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
+              <Icon name={'bars'} size={25} color={COLORS.SECONDARYCOLOR} />
             </TouchableOpacity>
           </View>
         </View>}
@@ -53,7 +53,6 @@ class ActiveWorkout extends Component {
           }}>
             <ResetButton />
             <FinishButton />
-            <View style={{ backgroundColor: COLORS.SECONDARYCOLOR, height: 500 }} />
           </View >
         } />
     );

@@ -62,7 +62,7 @@ class EditDayModal extends Component {
             <View style={CONTAINERSTYLE.modalCard}>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={TEXTSTYLE.modalHeader}>
-                  Edit Day
+                  Day
                 </Text>
               </View>
               <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
@@ -70,7 +70,7 @@ class EditDayModal extends Component {
                 <View style={styles.leftColumn}>
                   <View style={styles.leftItem}>
                     <Text style={TEXTSTYLE.modalText}>
-                      Days:
+                      Select Day:
                     </Text>
                   </View>
                 </View>
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   leftColumn: {
     flexDirection: 'column',
     justifyContent: 'center',
+    marginLeft: 6
   },
   leftItem: {
     flexDirection: 'row',
