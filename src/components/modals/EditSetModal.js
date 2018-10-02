@@ -67,12 +67,33 @@ class EditSetModal extends Component {
     this.setState({ tmpType: type });
   }
 
+  updateTmpMin = (min) => {
+
+    if (min == null) {
+      this.setState({ tmpMin: this.props.min });
+    } else {
+      this.setState({ tmpMin: parseInt(min) });
+    }
+
+  }
+
+  updateTmpSec = (sec) => {
+    if (sec == null) {
+      this.setState({ tmpSec: this.props.sec });
+    } else {
+      this.setState({ tmpSec: parseInt(sec) });
+    }
+
+  }
+
   save = () => {
     this.props.updateSetData(
       this.props.setId,
       this.state.tmpWeight,
       this.state.tmpReps,
-      this.state.tmpType
+      this.state.tmpType,
+      this.state.tmpMin,
+      this.state.tmpSec
     );
     this.props.closeModal();
   }
@@ -115,9 +136,16 @@ class EditSetModal extends Component {
 
                   <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <Text style={TEXTSTYLE.modalText}>
+                      Rest Time:
+                    </Text>
+                  </View>
+
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <Text style={TEXTSTYLE.modalText}>
                       Type:
                     </Text>
                   </View>
+
                 </View>
 
                 <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
@@ -140,7 +168,7 @@ class EditSetModal extends Component {
 
                   <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
                     <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginTop: 6, marginLeft: 6
+                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
                     }}><TextInput
                         style={TEXTSTYLE.modalTextInput}
                         keyboardType="numeric"
@@ -154,9 +182,39 @@ class EditSetModal extends Component {
                     </View>
                   </View>
 
+                  <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                    <View style={{
+                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
+                    }}><TextInput
+                        style={TEXTSTYLE.modalTextInput}
+                        keyboardType="numeric"
+                        keyboardAppearance="dark"
+                        placeholder={String(this.props.min).padStart(2, '0')}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpMin}
+                        maxLength={2}
+                        width={30}
+                      />
+                    </View>
+                    <Text style={[TEXTSTYLE.modalText, { color: COLORS.INACTIVECOLOR, fontWeight: 'bold', paddingTop: 12 }]}>:</Text>
+                    <View style={{
+                      borderBottomColor: 'black', borderBottomWidth: 1,
+                    }}><TextInput
+                        style={TEXTSTYLE.modalTextInput}
+                        keyboardType="numeric"
+                        keyboardAppearance="dark"
+                        placeholder={String(this.props.sec).padStart(2, '0')}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpSec}
+                        maxLength={2}
+                        width={30}
+                      />
+                    </View>
+                  </View>
+
                   <View style={{ justifyContent: 'center', alignItems: 'flex-start' }}>
                     <Picker
-                      style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 50, marginLeft: 5 }}
+                      style={{ color: COLORS.SECONDARYCOLOR, width: 100, height: 30, marginLeft: 5, marginBottom: 10 }}
                       selectedValue={this.state.typeName}
                       onValueChange={this.updateTmpType}>
                       <Picker.Item label="Warmup" value="Warmup" />
@@ -203,8 +261,8 @@ EditSetModal.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateSetData: (setId, weight, reps, setType) => {
-      dispatch(updateSetData(setId, weight, reps, setType));
+    updateSetData: (setId, weight, reps, setType, min, sec) => {
+      dispatch(updateSetData(setId, weight, reps, setType, min, sec));
     }
   };
 };

@@ -14,7 +14,7 @@ export default function workoutData(state = {}, action) {
     case UPDATE_ACTIVE_WORKOUT_UI:
       return updateActiveWorkoutUI(state, action.setId, action.exerciseId);
     case UPDATE_SET_DATA:
-      return updateSetData(state, action.setId, action.weight, action.reps, action.setType);
+      return updateSetData(state, action.setId, action.weight, action.reps, action.setType, action.min, action.sec);
     case UPDATE_EXERCISE_DATA:
       return updateExerciseData(state, action.exerciseId, action.supersetNext, action.includeWarmup);
     case FINISH_WORKOUT:
@@ -26,7 +26,7 @@ export default function workoutData(state = {}, action) {
     case START_TIMER:
       return startTimer(state);
     case DECREMENT_TIMER:
-      return decrementTimer(state);
+      return decrementTimer(state, action.setId);
     default:
       return state;
   }
@@ -55,7 +55,7 @@ const stopTimer = (state) => {
   return newState;
 };
 
-const decrementTimer = (state) => {
+const decrementTimer = (state, setId) => {
   let newMin = state.timer.minutes;
   let newSec = state.timer.seconds;
   let started = state.timer.started;
@@ -79,7 +79,8 @@ const decrementTimer = (state) => {
       ...state.timer,
       ...{ started: started },
       ...{ minutes: newMin },
-      ...{ seconds: newSec }
+      ...{ seconds: newSec },
+      ...{ set: setId }
     }
   };
 
@@ -112,8 +113,9 @@ const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
   return newState;
 };
 
-const updateSetData = (state, setId, weight, reps, setType) => {
+const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
   const activeProgram = state.activeWorkout.program;
+
   const newState = {
     ...state,
     programs: state.programs.map((program, index) => {
@@ -126,7 +128,9 @@ const updateSetData = (state, setId, weight, reps, setType) => {
                 ...set,
                 ...{ weight: weight },
                 ...{ reps: reps },
-                ...{ type: setType }
+                ...{ type: setType },
+                ...{ restMinutes: min },
+                ...{ restSeconds: sec }
               };
             }
             return set;
@@ -136,6 +140,7 @@ const updateSetData = (state, setId, weight, reps, setType) => {
       return program;
     })
   };
+  console.log(newState);
   return newState;
 };
 

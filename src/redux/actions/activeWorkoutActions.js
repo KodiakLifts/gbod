@@ -7,7 +7,6 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 
-
 export const updateWorkoutAndTimer = (setId, exerciseId) => {
   return (dispatch, getState) => {
     dispatch(updateActiveWorkoutUI(setId, exerciseId));
@@ -15,13 +14,19 @@ export const updateWorkoutAndTimer = (setId, exerciseId) => {
       .workoutData
       .programs[getState().workoutData.activeWorkout.program]
       .sets[setId].complete;
-    dispatch(handleTimer(setComplete));
+    dispatch(handleTimer(setComplete, setId));
   };
 };
 
-export const handleTimer = (setComplete) => {
+export const handleTimer = (setComplete, setId) => {
+  this.timer;
   return (dispatch, getState) => {
     let started = getState().workoutData.timer.started;
+    let timerSet = getState().workoutData.timer.set;
+    if (timerSet !== setId) {
+      dispatch(stopTimer());
+      clearInterval(this.timer);
+    }
     if (setComplete && started) {
       dispatch(stopTimer());
       clearInterval(this.timer);
@@ -40,13 +45,13 @@ export const handleTimer = (setComplete) => {
       dispatch(stopTimer());
       clearInterval(this.timer);
     }
-
   };
 };
 
-export const decrementTimer = () => {
+export const decrementTimer = (setId) => {
   return {
-    type: DECREMENT_TIMER
+    type: DECREMENT_TIMER,
+    setId
   };
 };
 
@@ -70,13 +75,15 @@ export const updateActiveWorkoutUI = (setId, exerciseId) => {
   };
 };
 
-export const updateSetData = (setId, weight, reps, setType) => {
+export const updateSetData = (setId, weight, reps, setType, min, sec) => {
   return {
     type: UPDATE_SET_DATA,
     setId,
     weight,
     reps,
-    setType
+    setType,
+    min,
+    sec
   };
 };
 
