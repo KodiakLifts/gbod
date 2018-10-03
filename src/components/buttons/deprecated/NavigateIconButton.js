@@ -4,8 +4,8 @@ import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PropTypes from 'prop-types';
 
-const TEXTSTYLE = require('../../styles/TextStyle');
-const COLORS = require('../../styles/Colors');
+const TEXTSTYLE = require('../../../styles/TextStyle');
+const COLORS = require('../../../styles/Colors');
 
 class NavigateIconButton extends Component {
   navigateTo = () => {

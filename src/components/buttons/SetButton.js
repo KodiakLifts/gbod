@@ -2,32 +2,37 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateActiveWorkoutUI, updateWorkoutAndTimer } from '../../redux/actions/activeWorkoutActions';
+import {
+  updateActiveWorkoutUI,
+  updateWorkoutAndTimer
+} from '../../redux/actions/activeWorkoutActions';
 import EditSetModal from '../modals/EditSetModal';
 import SetRepsModal from '../modals/SetRepsModal';
 
-const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
-
-const activeButton = CONTAINERSTYLE.activeSetButton;
-const inactiveButton = CONTAINERSTYLE.inactiveSetButton;
-const activeText = TEXTSTYLE.activeSetButtonText;
-const inactiveText = TEXTSTYLE.inactiveSetButtonText;
+const style = require('./style');
+const AMRAP = 2;
 
 class SetButton extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      editSetModalVisible: false,
-      setRepsModalVisible: false
-    };
+  state = {
+    editSetModalVisible: false,
+    setRepsModalVisible: false
   }
 
   _onPress = () => {
-    this.props.updateWorkoutAndTimer(this.props.setId, this.props.exerciseId);
-    if (this.props.type === 2 && this.props.complete !== true) {
+    const {
+      updateWorkoutAndTimer,
+      updateActiveWorkoutUI,
+      timerOn,
+      setId,
+      exerciseId,
+      type,
+      complete
+    } = this.props;
+
+    console.log(timerOn)
+    timerOn ? updateWorkoutAndTimer(setId, exerciseId) : updateActiveWorkoutUI;
+
+    if (type === AMRAP && complete !== true) {
       this.setState({ setRepsModalVisible: true });
     }
   }
@@ -43,38 +48,50 @@ class SetButton extends Component {
     });
   }
 
-  checkSetType = (type) => {
-    switch (type) {
-      case 0: return "w";
-      case 1: return "";
-      case 2: return "+";
-      case 3: return "-";
-    }
-    return "";
-  }
-
   render() {
+
+    const {
+      setId,
+      exerciseId,
+      weight,
+      reps,
+      type,
+      min,
+      sec,
+      complete
+    } = this.props;
+
+    const { editSetModalVisible, setRepsModalVisible } = this.state;
+
     return (
       <View>
         <EditSetModal
-          visible={this.state.editSetModalVisible}
-          setId={this.props.setId}
-          exerciseId={this.props.exerciseId}
-          weight={this.props.weight}
-          reps={this.props.reps}
-          type={this.props.type}
-          min={this.props.min}
-          sec={this.props.sec}
+          visible={editSetModalVisible}
+          setId={setId}
+          exerciseId={exerciseId}
+          weight={weight}
+          reps={reps}
+          type={type}
+          min={min}
+          sec={sec}
           closeModal={this.closeModal} />
+
         <SetRepsModal
-          visible={this.state.setRepsModalVisible}
-          setId={this.props.setId}
-          reps={this.props.reps}
+          visible={setRepsModalVisible}
+          setId={setId}
+          reps={reps}
           closeModal={this.closeModal} />
-        <TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
-          <View style={this.props.complete ? activeButton : inactiveButton}>
-            <Text style={this.props.complete ? activeText : inactiveText}>
-              {this.props.weight + "x" + this.props.reps + this.checkSetType(this.props.type)}
+
+        <TouchableOpacity
+          onPress={this._onPress}
+          onLongPress={this._onLongPress}>
+          <View style={
+            complete ? style.activeButton : style.inactiveButton
+          }>
+            <Text style={
+              complete ? style.activeText : style.inactiveText
+            }>
+              {weight + "x" + reps + checkSetType(type)}
             </Text>
           </View>
         </TouchableOpacity>
@@ -82,6 +99,16 @@ class SetButton extends Component {
     );
   }
 }
+
+const checkSetType = (type) => {
+  switch (type) {
+    case 0: return "w";
+    case 1: return "";
+    case 2: return "+";
+    case 3: return "-";
+  }
+  return "";
+};
 
 SetButton.propTypes = {
   exerciseId: PropTypes.number,
@@ -91,6 +118,7 @@ SetButton.propTypes = {
   type: PropTypes.number,
   min: PropTypes.number,
   sec: PropTypes.number,
+  timerOn: PropTypes.number,
   updateActiveWorkoutUI: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
 

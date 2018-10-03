@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import SetButton from '../buttons/SetButton';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { connect } from 'react-redux';
 import EditExerciseModal from '../modals/EditExerciseModal';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -38,7 +37,9 @@ class ExerciseCard extends Component {
           weight={set.weight}
           type={set.type}
           min={set.restMinutes}
-          sec={set.restSeconds} />
+          sec={set.restSeconds}
+          timerOn={set.timerOn}
+        />
       );
     });
     return (
@@ -117,5 +118,7 @@ ExerciseCard.propTypes = {
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
 };
+
+
 
 export default ExerciseCard;

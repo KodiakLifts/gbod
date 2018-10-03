@@ -3,9 +3,9 @@ import { View, TouchableOpacity, Text, Modal, TouchableWithoutFeedback } from 'r
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import PropTypes from 'prop-types';
 
-const COLORS = require("../../styles/Colors");
-const TEXTSTYLE = require("../../styles/TextStyle");
-const CONTAINERSTYLE = require("../../styles/ContainerStyle");
+const COLORS = require("../../../styles/Colors");
+const TEXTSTYLE = require("../../../styles/TextStyle");
+const CONTAINERSTYLE = require("../../../styles/ContainerStyle");
 
 class MoreMenu extends Component {
   constructor() {
@@ -16,7 +16,6 @@ class MoreMenu extends Component {
       options: [],
     };
 
-    this.showMenu = this.showMenu.bind(this);
   }
 
   componentDidMount() {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
-import MoreMenu from '../../components/buttons/MoreMenu';
 
 
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -45,7 +44,7 @@ class NextWorkout extends Component {
             <Text style={TEXTSTYLE.headerText}>
               NEXT - GreySkull LP
             </Text>
-            <MoreMenu options={menuItems} />
+
           </View>
         }
         scrollContent={

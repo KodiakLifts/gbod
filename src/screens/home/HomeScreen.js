@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
-import NavigateIconButton from '../../components/buttons/NavigateIconButton';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -16,7 +16,7 @@ class Home extends Component {
                         <Text style={TEXTSTYLE.headerText}>
                             Home
                         </Text>
-                        <NavigateIconButton iconName="cog" iconSize={28} />
+                        <Icon iconName="cog" iconSize={28} color={COLORS.SECONDARYCOLOR} />
                     </View>
                 }
                 scrollContent={scrollContent} />

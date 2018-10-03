@@ -4,17 +4,13 @@ import { finishWorkout } from '../../redux/actions/activeWorkoutActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
-
-const activeButton = CONTAINERSTYLE.activeSetButton;
-const activeText = TEXTSTYLE.activeSetButtonText;
+const style = require('./style');
 
 const FinishButton = ({ finish }) => {
   return (
     <TouchableOpacity onPress={finish}>
-      <View style={activeButton}>
-        <Text style={activeText}>FINISH</Text>
+      <View style={style.activeButton}>
+        <Text style={style.activeText}>FINISH</Text>
       </View>
     </TouchableOpacity>
   );
@@ -32,4 +28,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(FinishButton)
+export default connect(null, mapDispatchToProps)(FinishButton);
