@@ -66,7 +66,7 @@ class EditDayModal extends Component {
               </View>
               <View style={STYLE.cardColumnsContainer}>
 
-                <View style={STYLE.leftColumn}>
+                <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
                       Select Day:

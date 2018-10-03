@@ -35,7 +35,6 @@ module.exports = StyleSheet.create({
   leftColumn: {
     flexDirection: 'column',
     justifyContent: 'center',
-    marginLeft: 6
   },
   leftItem: {
     flexDirection: 'row',

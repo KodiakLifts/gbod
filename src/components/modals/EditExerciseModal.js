@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import { Modal, Text, CheckBox, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View, Picker } from 'react-native';
+import {
+  Modal,
+  Text,
+  CheckBox,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { updateExerciseData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
-const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./modalStyle');
 
 class EditExerciseModal extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tmpSupersetNext: props.supersetNext,
-      tmpIncludeWarmup: props.includeWarmup
-    };
-
+  state = {
+    tmpSupersetNext: this.props.supersetNext,
+    tmpIncludeWarmup: this.props.includeWarmup
   }
 
   supersetNextToggle = (checked) => {
@@ -32,83 +32,83 @@ class EditExerciseModal extends Component {
   }
 
   save = () => {
-    this.props.updateExerciseData(
-      this.props.exerciseId,
-      this.state.tmpSupersetNext,
-      this.state.tmpIncludeWarmup
+    const { updateExerciseData, exerciseId, closeModal } = this.props;
+    const { tmpSupersetNext, tmpIncludeWarmup } = this.state;
+    updateExerciseData(
+      exerciseId,
+      tmpSupersetNext,
+      tmpIncludeWarmup
     );
-    this.props.closeModal();
+    closeModal();
   }
 
   cancel = () => {
+    const { supersetNext, includeWarmup, closeModal } = this.props;
     this.setState({
-      tmpSupersetNext: this.props.supersetNext,
-      tmpIncludeWarmup: this.props.includeWarmup
+      tmpSupersetNext: supersetNext,
+      tmpIncludeWarmup: includeWarmup
     });
-    this.props.closeModal();
+    closeModal();
   }
 
   render() {
+    const { visible, lastExercise } = this.props;
+    const { tmpSupersetNext, tmpIncludeWarmup } = this.state;
+
     return (
       <View>
         <Modal
           transparent
-          visible={this.props.visible}
-          onRequestClose={this.props.closeModal}
+          visible={visible}
+          onRequestClose={this.cancel}
         >
-          <TouchableOpacity onPress={this.cancel} style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: COLORS.TRANSPARENTOVERLAY
-          }}>
+          <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
             <TouchableWithoutFeedback>
-              <View style={CONTAINERSTYLE.modalCard}>
-                <View style={{ flexDirection: 'row' }}>
-                  <Text style={TEXTSTYLE.modalHeader}>
+              <View style={STYLE.modalCard}>
+                <View style={STYLE.modalHeader}>
+                  <Text style={STYLE.modalHeaderText}>
                     Exercise
                 </Text>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <View style={STYLE.cardColumnsContainer}>
 
-                  <View style={styles.leftColumn}>
-                    <View style={styles.leftItem}>
-                      <Text style={TEXTSTYLE.modalText}>
+                  <View style={STYLE.leftColumn}>
+                    <View style={STYLE.leftItem}>
+                      <Text style={STYLE.modalText}>
                         Superset Next Exercise:
                       </Text>
                     </View>
-                    <View style={styles.leftItem}>
-                      <Text style={TEXTSTYLE.modalText}>
+                    <View style={STYLE.leftItem}>
+                      <Text style={STYLE.modalText}>
                         Include Warmup Sets:
                       </Text>
                     </View>
 
                   </View>
 
-                  <View style={styles.rightColumn}>
-                    <View style={styles.rightItem}>
+                  <View style={STYLE.rightColumn}>
+                    <View style={STYLE.rightItem}>
                       <CheckBox
-                        disabled={this.props.lastExercise}
-                        value={this.state.tmpSupersetNext}
+                        disabled={lastExercise}
+                        value={tmpSupersetNext}
                         onValueChange={this.supersetNextToggle}
                       />
                     </View>
-                    <View style={styles.rightItem}>
+                    <View style={STYLE.rightItem}>
                       <CheckBox
-                        value={this.state.tmpIncludeWarmup}
+                        value={tmpIncludeWarmup}
                         onValueChange={this.includeWarmupToggle}
                       />
                     </View>
                   </View>
                 </View>
 
-                <View style={styles.footer}>
+                <View style={STYLE.footer}>
                   <TouchableOpacity onPress={this.cancel}>
-                    <Text style={TEXTSTYLE.selectedTextButton}>CANCEL</Text>
+                    <Text style={STYLE.selectedTextButton}>CANCEL</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={this.save}>
-                    <Text style={TEXTSTYLE.selectedTextButton}>SAVE</Text>
+                    <Text style={STYLE.selectedTextButton}>SAVE</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -137,33 +137,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
-const styles = StyleSheet.create({
-  leftColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
-  leftItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 35
-  },
-  rightColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  rightItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    height: 35
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  }
-});
 
 export default connect(null, mapDispatchToProps)(EditExerciseModal);
