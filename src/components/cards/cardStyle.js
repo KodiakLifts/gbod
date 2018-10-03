@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 const COLORS = require('../../styles/Colors');
 
 module.exports = StyleSheet.create({
-  cardWrapper: {
+  cardContainer: {
     alignItems: 'center'
   },
   exerciseCardHeader: {
@@ -11,7 +11,7 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between'
   },
-  setButtonsWrapper: {
+  setButtonsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

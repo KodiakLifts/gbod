@@ -44,7 +44,7 @@ class ExerciseCard extends Component {
           lastExercise={lastExercise}
           closeModal={this.closeMenuModal} />
 
-        <View style={STYLE.cardWrapper}>
+        <View style={STYLE.cardContainer}>
           <View style={borderStyle}>
 
             <View style={STYLE.exerciseCardHeader}>
@@ -59,7 +59,7 @@ class ExerciseCard extends Component {
               </TouchableOpacity>
             </View>
 
-            <View style={STYLE.setButtonsWrapper}>
+            <View style={STYLE.setButtonsContainer}>
               {setButtons}
             </View>
           </View>
