@@ -12,7 +12,9 @@ class ScreenTemplate extends Component {
           {this.props.headerContent}
         </View>
         <ScrollView contentContainerStyle={CONTAINERSTYLE.scrollArea}>
+          <View style={{ height: 12 }} />
           {this.props.scrollContent}
+          {this.props.endOfScrollContent}
         </ScrollView>
       </View>
     );
@@ -21,7 +23,8 @@ class ScreenTemplate extends Component {
 
 ScreenTemplate.propTypes = {
   headerContent: PropTypes.object,
-  scrollContent: PropTypes.array
+  scrollContent: PropTypes.array,
+  endOfScrollContent: PropTypes.object
 };
 
 export default ScreenTemplate;

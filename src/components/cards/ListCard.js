@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import MoreMenu from '../buttons/MoreMenu';
 import PropTypes from 'prop-types';
 
 const TEXTSTYLE = require('../../styles/TextStyle');
@@ -18,7 +17,6 @@ const ListCard = (props) => {
           <Text style={TEXTSTYLE.listItemDetails}>{item.details}</Text>
         </View>
         <View style={{ marginRight: 12 }}>
-          <MoreMenu options={item.options} />
           <View style={{ marginVertical: 12 }} />
         </View>
       </View>

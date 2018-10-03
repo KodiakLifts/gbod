@@ -24,6 +24,7 @@ module.exports = StyleSheet.create({
     elevation: 0,
   },
   scrollArea: {
+    elevation: 0,
     flexGrow: 1,
     alignItems: 'center',
     width: Dimensions.get('window').width,
@@ -36,8 +37,6 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     elevation: 2,
-    marginTop: 15,
-    marginHorizontal: 12
   },
   activeCard: {
     flexDirection: 'column',
@@ -48,8 +47,13 @@ module.exports = StyleSheet.create({
     borderColor: COLORS.SECONDARYCOLOR,
     borderWidth: 1,
     elevation: 2,
-    marginTop: 15,
-    marginHorizontal: 12
+  },
+  modalCard: {
+    flexDirection: 'column',
+    padding: 12,
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    borderRadius: 5,
+    elevation: 5,
   },
   listCard: {
     flexDirection: 'column',
@@ -95,5 +99,12 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: COLORS.INACTIVECOLOR,
     borderRadius: 5
+  },
+  textInputArea: {
+    width: 50,
+    height: 30,
+    backgroundColor: COLORS.backgroundColor,
+    borderColor: 'black',
+    borderWidth: 1,
   }
 });

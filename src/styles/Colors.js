@@ -7,5 +7,6 @@ module.exports = {
     INACTIVECOLOR: 'gray',
     BORDERCOLOR: '#161616',
     SHADOWCOLOR: 'black',
-    TRANSPARENTOVERLAY: '#00000050'
+    TRANSPARENTOVERLAY: '#00000050',
+    NOTIFY: '#E74C3C'
 };
