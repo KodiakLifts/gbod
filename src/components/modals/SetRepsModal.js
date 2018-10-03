@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker, StyleSheet } from 'react-native';
+import {
+  Modal,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { updateSetReps } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./modalStyle');
+
+const MAX_LENGTH = 4;
+const TEXT_ENTRY_WIDTH = 60;
 
 class SetRepsModal extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tmpReps: props.reps,
-    };
+  state = {
+    tmpReps: this.props.reps,
   }
 
   updateTmpReps = (tmpReps) => {
@@ -26,11 +31,13 @@ class SetRepsModal extends Component {
   }
 
   save = () => {
-    this.props.updateSetReps(
-      this.props.setId,
-      this.state.tmpReps,
+    const { updateSetReps, setId, closeModal } = this.props;
+    const { tmpReps } = this.state;
+    updateSetReps(
+      setId,
+      tmpReps,
     );
-    this.props.closeModal();
+    closeModal();
   }
 
   cancel = () => {
@@ -38,63 +45,57 @@ class SetRepsModal extends Component {
   }
 
   render() {
+    const { visible, reps } = this.props;
     return (
       <Modal
         transparent
-        visible={this.props.visible}
+        visible={visible}
         onRequestClose={this.cancel}
       >
-        <TouchableOpacity onPress={this.cancel} style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: COLORS.TRANSPARENTOVERLAY
-        }}>
+        <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
-            <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={TEXTSTYLE.modalHeader}>
+            <View style={STYLE.modalCard}>
+              <View style={STYLE.modalHeader}>
+                <Text style={STYLE.modalHeaderText}>
                   AMRAP
                 </Text>
               </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={STYLE.cardColumnsContainer}>
 
-                <View style={styles.leftColumn}>
-                  <View style={styles.leftItem}>
-                    <Text style={TEXTSTYLE.modalText}>
+                <View style={STYLE.leftColumn}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
                       Reps:
                     </Text>
                   </View>
                 </View>
 
-                <View style={styles.rightColumn}>
-                  <View style={styles.rightItem}>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
-                    }}><TextInput
-                        style={TEXTSTYLE.modalTextInput}
+                <View style={STYLE.rightColumn}>
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(this.props.reps)}
+                        placeholder={String(reps)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpReps}
-                        maxLength={4}
-                        width={60}
+                        maxLength={MAX_LENGTH}
+                        width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
                   </View>
                 </View>
               </View>
 
-              <View style={styles.footer}>
+              <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={TEXTSTYLE.selectedTextButton}>
+                  <Text style={STYLE.selectedTextButton}>
                     CANCEL
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={TEXTSTYLE.selectedTextButton}>
+                  <Text style={STYLE.selectedTextButton}>
                     SAVE
                   </Text>
                 </TouchableOpacity>
@@ -122,34 +123,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
-const styles = StyleSheet.create({
-  leftColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginLeft: 10,
-  },
-  leftItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 35
-  },
-  rightColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  rightItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    height: 35
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  }
-});
 
 export default connect(null, mapDispatchToProps)(SetRepsModal);
