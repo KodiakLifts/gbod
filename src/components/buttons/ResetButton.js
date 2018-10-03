@@ -4,13 +4,13 @@ import { resetWorkout } from '../../redux/actions/activeWorkoutActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const style = require('./style');
+const STYLE = require('./buttonStyle');
 
 const FinishButton = ({ reset }) => {
   return (
     <TouchableOpacity onPress={reset}>
-      <View style={style.inactiveButton}>
-        <Text style={style.inactiveText}>RESET</Text>
+      <View style={STYLE.inactiveButton}>
+        <Text style={STYLE.inactiveText}>RESET</Text>
       </View>
     </TouchableOpacity>
   );

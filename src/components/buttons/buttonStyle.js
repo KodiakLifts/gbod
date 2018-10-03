@@ -1,4 +1,4 @@
-import { StyleShee, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const COLORS = require('../../styles/Colors');
 

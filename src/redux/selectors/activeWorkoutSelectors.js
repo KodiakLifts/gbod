@@ -3,8 +3,11 @@ import ExerciseCard from '../../components/cards/ExerciseCard';
 import { createSelector } from 'reselect';
 
 const CONTAINERSTYLE = require('../../styles/ContainerStyle');
-const PROGRAMNAMELENGTH = 12;
-const DAYNAMELENGTH = 5;
+
+const CARD_STYLE = require('../../components/cards/cardStyle');
+
+const PROGRAM_NAME_LENGTH = 12;
+const DAY_NAME_LENGTH = 5;
 
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
@@ -18,11 +21,11 @@ export const getActiveWorkoutTitle = createSelector(
   (programName, dayName) => {
     let program = programName;
     let day = dayName;
-    if (program.length > PROGRAMNAMELENGTH) {
-      program = program.substring(0, PROGRAMNAMELENGTH) + "..";
+    if (program.length > PROGRAM_NAME_LENGTH) {
+      program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
-    if (day.length > DAYNAMELENGTH) {
-      day = day.substring(0, DAYNAMELENGTH) + "..";
+    if (day.length > DAY_NAME_LENGTH) {
+      day = day.substring(0, DAY_NAME_LENGTH) + "..";
     }
     let title = program + " - " + day;
     return title;
@@ -61,7 +64,7 @@ export const getActiveWorkoutCards = createSelector(
 
     activeExercises.forEach((exercise, index) => {
 
-      let includeWarmup = exercise.includeWarmup;
+      const includeWarmup = exercise.includeWarmup;
 
       let sets = activeSets.filter(set => {
         if (!includeWarmup) {
@@ -70,8 +73,8 @@ export const getActiveWorkoutCards = createSelector(
         return (set.exercise === exercise.id);
       });
 
-      let style = (exercise.id === currentExercise ?
-        CONTAINERSTYLE.activeCard : CONTAINERSTYLE.card);
+      const borderStyle = (exercise.id === currentExercise ?
+        CARD_STYLE.activeCard : CARD_STYLE.card);
 
       let lastExercise = false;
       if (index === (activeExercises.length - 1)) {
@@ -82,7 +85,7 @@ export const getActiveWorkoutCards = createSelector(
         <ExerciseCard
           key={index}
           exerciseId={exercise.id}
-          borderStyle={style}
+          borderStyle={borderStyle}
           name={exercise.name}
           sets={sets}
           supersetNext={exercise.supersetNext}

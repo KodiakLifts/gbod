@@ -5,17 +5,12 @@ import SetButton from '../buttons/SetButton';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import EditExerciseModal from '../modals/EditExerciseModal';
 
-const TEXTSTYLE = require('../../styles/TextStyle');
 const COLORS = require('../../styles/Colors');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./cardStyle');
 
 class ExerciseCard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      menuModalVisible: false,
-    };
+  state = {
+    menuModalVisible: false,
   }
 
   _onMenuPress = () => {
@@ -26,71 +21,49 @@ class ExerciseCard extends Component {
     this.setState({ menuModalVisible: false });
   }
 
-  createSetButtons = (exerciseId, sets) => {
-    const setButtons = sets.map((set, index) => {
-      return (
-        <SetButton
-          key={index}
-          exerciseId={exerciseId}
-          setId={set.id}
-          reps={set.reps}
-          weight={set.weight}
-          type={set.type}
-          min={set.restMinutes}
-          sec={set.restSeconds}
-          timerOn={set.timerOn}
-        />
-      );
-    });
-    return (
-      setButtons
-    );
-  }
-
   render() {
-    const { exerciseId, sets, name, borderStyle, supersetNext } = this.props;
-    const setButtons = this.createSetButtons(exerciseId, sets);
+    const {
+      exerciseId,
+      sets,
+      name,
+      borderStyle,
+      supersetNext,
+      includeWarmup,
+      lastExercise
+    } = this.props;
+    const { menuModalVisible } = this.state;
+    const setButtons = createSetButtons(exerciseId, sets);
+
     return (
       <View >
         <EditExerciseModal
-          visible={this.state.menuModalVisible}
-          exerciseId={this.props.exerciseId}
-          supersetNext={this.props.supersetNext}
-          includeWarmup={this.props.includeWarmup}
-          lastExercise={this.props.lastExercise}
+          visible={menuModalVisible}
+          exerciseId={exerciseId}
+          supersetNext={supersetNext}
+          includeWarmup={includeWarmup}
+          lastExercise={lastExercise}
           closeModal={this.closeMenuModal} />
-        <View style={{ alignItems: 'center' }}>
+
+        <View style={STYLE.cardWrapper}>
           <View style={borderStyle}>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}>
+
+            <View style={STYLE.exerciseCardHeader}>
               <TouchableOpacity>
-                <Text style={TEXTSTYLE.listItem}>
+                <Text style={STYLE.exerciseName}>
                   {name}
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity onPress={this._onMenuPress}>
                 <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
               </TouchableOpacity>
             </View>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginHorizontal: 6,
-              'flexWrap': 'wrap'
-            }}>
+
+            <View style={STYLE.setButtonsWrapper}>
               {setButtons}
             </View>
-
-            <View>
-
-            </View>
-
-
           </View>
+
           <Icon
             name={'link'}
             size={15}
@@ -101,6 +74,24 @@ class ExerciseCard extends Component {
     );
   }
 }
+
+const createSetButtons = (exerciseId, sets) => {
+  return sets.map((set, index) => {
+    return (
+      <SetButton
+        key={index}
+        exerciseId={exerciseId}
+        setId={set.id}
+        reps={set.reps}
+        weight={set.weight}
+        type={set.type}
+        min={set.restMinutes}
+        sec={set.restSeconds}
+        timerOn={set.timerOn}
+      />
+    );
+  });
+};
 
 ExerciseCard.propTypes = {
   exerciseId: PropTypes.number,
@@ -118,7 +109,5 @@ ExerciseCard.propTypes = {
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
 };
-
-
 
 export default ExerciseCard;

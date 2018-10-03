@@ -9,7 +9,7 @@ import {
 import EditSetModal from '../modals/EditSetModal';
 import SetRepsModal from '../modals/SetRepsModal';
 
-const style = require('./style');
+const STYLE = require('./buttonStyle');
 const AMRAP = 2;
 
 class SetButton extends Component {
@@ -21,7 +21,6 @@ class SetButton extends Component {
   _onPress = () => {
     const {
       updateWorkoutAndTimer,
-      updateActiveWorkoutUI,
       timerOn,
       setId,
       exerciseId,
@@ -29,8 +28,8 @@ class SetButton extends Component {
       complete
     } = this.props;
 
-    console.log(timerOn)
-    timerOn ? updateWorkoutAndTimer(setId, exerciseId) : updateActiveWorkoutUI;
+    //TODO Implement ignoring timer if off
+    updateWorkoutAndTimer(setId, exerciseId);
 
     if (type === AMRAP && complete !== true) {
       this.setState({ setRepsModalVisible: true });
@@ -86,10 +85,10 @@ class SetButton extends Component {
           onPress={this._onPress}
           onLongPress={this._onLongPress}>
           <View style={
-            complete ? style.activeButton : style.inactiveButton
+            complete ? STYLE.activeButton : STYLE.inactiveButton
           }>
             <Text style={
-              complete ? style.activeText : style.inactiveText
+              complete ? STYLE.activeText : STYLE.inactiveText
             }>
               {weight + "x" + reps + checkSetType(type)}
             </Text>
@@ -118,7 +117,7 @@ SetButton.propTypes = {
   type: PropTypes.number,
   min: PropTypes.number,
   sec: PropTypes.number,
-  timerOn: PropTypes.number,
+  timerOn: PropTypes.bool,
   updateActiveWorkoutUI: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
 

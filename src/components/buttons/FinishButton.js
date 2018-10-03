@@ -4,13 +4,13 @@ import { finishWorkout } from '../../redux/actions/activeWorkoutActions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const style = require('./style');
+const STYLE = require('./buttonStyle');
 
 const FinishButton = ({ finish }) => {
   return (
     <TouchableOpacity onPress={finish}>
-      <View style={style.activeButton}>
-        <Text style={style.activeText}>FINISH</Text>
+      <View style={STYLE.activeButton}>
+        <Text style={STYLE.activeText}>FINISH</Text>
       </View>
     </TouchableOpacity>
   );
