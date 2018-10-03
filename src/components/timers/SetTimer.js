@@ -5,16 +5,11 @@ import { connect } from 'react-redux';
 import { handleTimer } from '../../redux/actions/activeWorkoutActions';
 
 const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./timerStyle');
 
 class SetTimer extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      complete: true
-    };
+  state = {
+    complete: true
   }
 
   componentWillReceiveProps(newProps) {
@@ -26,7 +21,8 @@ class SetTimer extends Component {
   }
 
   _onPress = () => {
-    this.props.handleTimer(!this.props.started);
+    const { handleTimer, started } = this.props;
+    handleTimer(!started);
   }
 
   timerColor = () => {
@@ -34,13 +30,13 @@ class SetTimer extends Component {
   }
 
   render() {
+    const { minutes, seconds } = this.props;
     return (
       <TouchableOpacity onPress={this._onPress} disabled={this.state.complete}>
-        <View style={{ flexDirection: 'row', borderColor: COLORS.SECONDARYCOLOR, }}>
-          <Text style={{
-            fontSize: 24, color: this.timerColor(), textAlignVertical: 'center', includeFontPadding: false
-          }}>
-            {String(this.props.minutes).padStart(2, '0') + ":" + String(this.props.seconds).padStart(2, '0')}
+        <View style={STYLE.timerContainer}>
+          <Text style={[STYLE.timerText, { color: this.timerColor() }]}>
+            {String(minutes).padStart(2, '0') + ":"
+              + String(seconds).padStart(2, '0')}
           </Text>
         </View>
       </TouchableOpacity>
@@ -70,7 +66,6 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(SetTimer);
 
