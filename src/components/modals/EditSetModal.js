@@ -1,44 +1,45 @@
 import React, { Component } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Picker, StyleSheet } from 'react-native';
+import {
+  Modal,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+  Picker
+} from 'react-native';
 import PropTypes from 'prop-types';
 import { updateSetData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./modalStyle');
+
+const MAX_REPS_LENGTH = 4;
+const MAX_WEIGHT_LENGTH = 4;
+const MAX_TIME_LENGTH = 4;
+const TEXT_ENTRY_WIDTH = 60;
+const TIME_ENTRY_WIDTH = 30;
 
 class EditSetModal extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      tmpWeight: props.weight,
-      tmpReps: props.reps,
-      prevType: props.type,
-      tmpType: props.type,
-      tmpMin: props.min,
-      tmpSec: props.sec
-    };
+  state = {
+    tmpWeight: this.props.weight,
+    tmpReps: this.props.reps,
+    prevType: this.props.type,
+    tmpType: this.props.type,
+    tmpMin: this.props.min,
+    tmpSec: this.props.sec
   }
 
   componentDidMount() {
-    this.mountTypeName(this.props.type, this.props.types);
+    const { type, types } = this.props;
+    this.mountTypeName(type, types);
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.reps !== newProps.reps) {
       this.setState({ tmpReps: newProps.reps });
     }
-  }
-
-  createTypeItems = (types) => {
-    const typeItems = types.map((type, index) => {
-      return (
-        <Picker.Item key={index} label={type.name} value={type.id} />
-      );
-    });
-    return (typeItems);
   }
 
   mountTypeName = (type, types) => {
@@ -82,16 +83,18 @@ class EditSetModal extends Component {
   }
 
   save = () => {
+    const { updateSetData, setId, closeModal } = this.props;
+    const { tmpWeight, tmpReps, tmpType, tmpMin, tmpSec } = this.state;
     this.setState({ prevType: this.state.tmpType });
-    this.props.updateSetData(
-      this.props.setId,
-      this.state.tmpWeight,
-      this.state.tmpReps,
-      this.state.tmpType,
-      this.state.tmpMin,
-      this.state.tmpSec
+    updateSetData(
+      setId,
+      tmpWeight,
+      tmpReps,
+      tmpType,
+      tmpMin,
+      tmpSec
     );
-    this.props.closeModal();
+    closeModal();
   }
 
   cancel = () => {
@@ -100,138 +103,131 @@ class EditSetModal extends Component {
   }
 
   render() {
+    const { visible, weight, reps, min, sec, types } = this.props;
+    const { tmpType } = this.state;
     return (
       <Modal
         transparent
-        visible={this.props.visible}
+        visible={visible}
         onRequestClose={this.cancel}
       >
-        <TouchableOpacity onPress={this.cancel} style={{
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: COLORS.TRANSPARENTOVERLAY
-        }}>
+        <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
-            <View style={CONTAINERSTYLE.modalCard}>
-              <View style={{ flexDirection: 'row' }}>
-                <Text style={TEXTSTYLE.modalHeader}>
+            <View style={STYLE.modalCard}>
+              <View style={STYLE.modalHeader}>
+                <Text style={STYLE.modalHeaderText}>
                   Set
                 </Text>
               </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <View style={STYLE.cardColumnsContainer}>
 
-                <View style={styles.leftColumn}>
-                  <View style={styles.leftItem}>
-                    <Text style={TEXTSTYLE.modalText}>
+                <View style={STYLE.leftColumn}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
                       Weight:
                     </Text>
                   </View>
 
-                  <View style={styles.leftItem}>
-                    <Text style={TEXTSTYLE.modalText}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
                       Reps:
                     </Text>
                   </View>
 
-                  <View style={styles.leftItem}>
-                    <Text style={TEXTSTYLE.modalText}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
                       Rest Time:
                     </Text>
                   </View>
 
-                  <View style={styles.leftItem}>
-                    <Text style={TEXTSTYLE.modalText}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
                       Type:
                     </Text>
                   </View>
 
                 </View>
 
-                <View style={styles.rightColumn}>
-                  <View style={styles.rightItem}>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
-                    }}>
+                <View style={STYLE.rightColumn}>
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
                       <TextInput
-                        style={TEXTSTYLE.modalTextInput}
+                        style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(this.props.weight)}
+                        placeholder={String(weight)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpWeight}
-                        maxLength={4}
-                        width={60}
+                        maxLength={MAX_WEIGHT_LENGTH}
+                        width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
                   </View>
 
-                  <View style={styles.rightItem}>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
-                    }}><TextInput
-                        style={TEXTSTYLE.modalTextInput}
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(this.props.reps)}
+                        placeholder={String(reps)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpReps}
-                        maxLength={4}
-                        width={60}
+                        maxLength={MAX_REPS_LENGTH}
+                        width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
                   </View>
 
-                  <View style={styles.rightItem}>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1, marginLeft: 6
-                    }}><TextInput
-                        style={TEXTSTYLE.modalTextInput}
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(this.props.min).padStart(2, '0')}
+                        placeholder={String(min).padStart(2, '0')}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpMin}
-                        maxLength={2}
-                        width={30}
+                        maxLength={MAX_TIME_LENGTH}
+                        width={TIME_ENTRY_WIDTH}
                       />
                     </View>
-                    <Text style={[TEXTSTYLE.modalText, { color: COLORS.INACTIVECOLOR, fontWeight: 'bold', paddingTop: 12 }]}>:</Text>
-                    <View style={{
-                      borderBottomColor: 'black', borderBottomWidth: 1,
-                    }}><TextInput
-                        style={TEXTSTYLE.modalTextInput}
+                    <Text style={STYLE.timeColon}>
+                      :
+                    </Text>
+                    <View style={STYLE.secInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(this.props.sec).padStart(2, '0')}
+                        placeholder={String(sec).padStart(2, '0')}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpSec}
-                        maxLength={2}
-                        width={30}
+                        maxLength={MAX_TIME_LENGTH}
+                        width={TIME_ENTRY_WIDTH}
                       />
                     </View>
                   </View>
 
-                  <View style={styles.rightItem}>
+                  <View style={STYLE.rightItem}>
                     <Picker
-                      style={{ color: COLORS.SECONDARYCOLOR, width: 100 }}
-                      selectedValue={this.state.tmpType}
+                      style={STYLE.picker}
+                      selectedValue={tmpType}
                       onValueChange={this.updateTmpType}>
-                      {this.createTypeItems(this.props.types)}
+                      {createTypeItems(types)}
                     </Picker>
                   </View>
                 </View>
               </View>
 
-              <View style={styles.footer}>
+              <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={TEXTSTYLE.selectedTextButton}>
+                  <Text style={STYLE.selectedTextButton}>
                     CANCEL
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={TEXTSTYLE.selectedTextButton}>
+                  <Text style={STYLE.selectedTextButton}>
                     SAVE
                   </Text>
                 </TouchableOpacity>
@@ -242,6 +238,14 @@ class EditSetModal extends Component {
       </Modal>
     );
   }
+}
+
+const createTypeItems = (types) => {
+  return types.map((type, index) => {
+    return (
+      <Picker.Item key={index} label={type.name} value={type.id} />
+    );
+  });
 }
 
 EditSetModal.propTypes = {
@@ -270,34 +274,5 @@ const mapDispatchToProps = (dispatch) => {
     }
   };
 };
-
-const styles = StyleSheet.create({
-  leftColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginLeft: 10,
-  },
-  leftItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 35
-  },
-  rightColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: 10
-  },
-  rightItem: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    height: 35
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
-  }
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditSetModal);

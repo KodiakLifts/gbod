@@ -92,6 +92,25 @@ module.exports = StyleSheet.create({
   picker: {
     color: COLORS.SECONDARYCOLOR,
     width: 100
+  },
+  textInputContainer: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    marginLeft: 6
+  },
+  timeColon: {
+    fontSize: 18,
+    textAlignVertical: 'center',
+    includeFontPadding: false,
+    marginBottom: 12,
+    color: COLORS.INACTIVECOLOR,
+    fontWeight: 'bold',
+    paddingTop: 12
+  },
+  secInputContainer: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 1
   }
+
 
 });
