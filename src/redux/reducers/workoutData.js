@@ -5,7 +5,6 @@ import {
   RESET_WORKOUT,
   UPDATE_EXERCISE_DATA,
   STOP_TIMER,
-  START_TIMER,
   DECREMENT_TIMER,
   SET_TIMER,
   UPDATE_DAY_DATA,
@@ -14,28 +13,50 @@ import {
 
 export default function workoutData(state = {}, action) {
   switch (action.type) {
+
     case UPDATE_ACTIVE_WORKOUT_UI:
       return updateActiveWorkoutUI(state, action.setId, action.exerciseId);
+
     case UPDATE_SET_DATA:
-      return updateSetData(state, action.setId, action.weight, action.reps, action.setType, action.min, action.sec);
+      return updateSetData(
+        state,
+        action.setId,
+        action.weight,
+        action.reps,
+        action.setType,
+        action.min,
+        action.sec
+      );
+
     case UPDATE_EXERCISE_DATA:
-      return updateExerciseData(state, action.exerciseId, action.supersetNext, action.includeWarmup);
+      return updateExerciseData(
+        state,
+        action.exerciseId,
+        action.supersetNext,
+        action.includeWarmup
+      );
+
     case FINISH_WORKOUT:
       return finishWorkout(state);
+
     case RESET_WORKOUT:
       return resetWorkout(state);
+
     case STOP_TIMER:
       return stopTimer(state);
-    case START_TIMER:
-      return startTimer(state);
+
     case DECREMENT_TIMER:
       return decrementTimer(state, action.setId);
+
     case SET_TIMER:
       return setTimer(state, action.minutes, action.seconds);
+
     case UPDATE_DAY_DATA:
       return updateDayData(state, action.dayId);
+
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
+
     default:
       return state;
   }
@@ -89,17 +110,6 @@ const setTimer = (state, minutes, seconds) => {
   return newState;
 };
 
-const startTimer = (state) => {
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      ...{ started: true }
-    }
-  };
-  return newState;
-};
-
 const stopTimer = (state) => {
   const newState = {
     ...state,
@@ -114,8 +124,7 @@ const stopTimer = (state) => {
 const decrementTimer = (state, setId) => {
   let newMin = state.timer.minutes;
   let newSec = state.timer.seconds;
-  let started = state.timer.started;
-  started = true;
+  let started = true;
 
   if (newMin === 0 && newSec === 0) {
     started = false;
@@ -127,7 +136,6 @@ const decrementTimer = (state, setId) => {
     newMin--;
     newSec = 59;
   }
-
 
   const newState = {
     ...state,
@@ -223,7 +231,6 @@ const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
   };
   return newState;
 };
-
 
 const resetWorkout = (state) => {
   const activeProgram = state.activeWorkout.program;

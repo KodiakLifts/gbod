@@ -4,7 +4,6 @@ export const UPDATE_SET_DATA = 'UPDATE_SET_DATA';
 export const UPDATE_EXERCISE_DATA = 'UPDATE_EXERCISE_DATA';
 export const FINISH_WORKOUT = 'FINISH_WORKOUT';
 export const RESET_WORKOUT = 'RESET_WORKOUT';
-export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 export const SET_TIMER = 'SET_TIMER';
@@ -65,12 +64,6 @@ export const stopTimer = () => {
   clearInterval(this.timer);
   return {
     type: STOP_TIMER
-  };
-};
-
-export const startTimer = () => {
-  return {
-    type: START_TIMER
   };
 };
 

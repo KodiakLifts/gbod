@@ -2,8 +2,6 @@ import React from 'react';
 import ExerciseCard from '../../components/cards/ExerciseCard';
 import { createSelector } from 'reselect';
 
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
-
 const CARD_STYLE = require('../../components/cards/cardStyle');
 
 const PROGRAM_NAME_LENGTH = 12;
