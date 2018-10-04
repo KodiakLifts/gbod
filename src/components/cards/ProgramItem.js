@@ -7,7 +7,7 @@ import ProgramOptionsModal from '../modals/ProgramOptionsModal';
 const COLORS = require('../../styles/Colors');
 const STYLE = require('./cardStyle');
 
-class ListItem extends Component {
+class ProgramItem extends Component {
   state = {
     menuModalVisible: false,
   }
@@ -21,7 +21,7 @@ class ListItem extends Component {
   }
 
   render() {
-    const { name, programId } = this.props;
+    const { name, programId, category } = this.props;
     const { menuModalVisible } = this.state;
     return (
       <View>
@@ -29,6 +29,7 @@ class ListItem extends Component {
           title={name}
           visible={menuModalVisible}
           programId={programId}
+          category={category}
           closeModal={this.closeMenuModal}
         />
         <View style={STYLE.listItem}>
@@ -49,9 +50,10 @@ class ListItem extends Component {
   }
 }
 
-ListItem.propTypes = {
+ProgramItem.propTypes = {
   name: PropTypes.string,
-  programId: PropTypes.number
+  programId: PropTypes.number,
+  category: PropTypes.number
 };
 
-export default ListItem;
+export default ProgramItem;

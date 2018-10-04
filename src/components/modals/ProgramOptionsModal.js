@@ -5,16 +5,22 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  CheckBox
+  CheckBox,
+  TextInput
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
+const COLORS = require('../../styles/Colors');
+
+const TEXT_ENTRY_WIDTH = 160;
+const CUSTOM_CATEGORY = 0;
 
 class ProgramOptionsModal extends Component {
   state = {
-    tmpCurrentProgram: this.props.isCurrentProgram
+    tmpCurrentProgram: this.props.isCurrentProgram,
+    tmpDelete: false
   }
 
   cancel = () => {
@@ -27,8 +33,24 @@ class ProgramOptionsModal extends Component {
     });
   }
 
+  rename = (newName) => {
+
+  }
+
+  copy = (copyName) => {
+
+  }
+
+  toggleDelete = (checked) => {
+    this.setState({
+      tmpDelete: checked
+    });
+  }
+
   render() {
-    const { visible, title } = this.props;
+    const { visible, title, category } = this.props;
+    const editable = (category === CUSTOM_CATEGORY);
+    console.log(editable)
     return (
       <Modal
         transparent
@@ -51,16 +73,67 @@ class ProgramOptionsModal extends Component {
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Make Current Program:
+                      Current Program:
+                    </Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Rename:
+                    </Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Copy:
+                    </Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Delete:
                     </Text>
                   </View>
                 </View>
 
-                <View style={STYLE.rightColumn}>
+
+
+                <View style={[STYLE.rightColumn, { alignItems: 'center', paddingRight: 6 }]}>
                   <View style={STYLE.rightItem}>
                     <CheckBox
                       value={this.state.tmpCurrentProgram}
                       onValueChange={this.toggleCurrentProgram}
+                    />
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        editable={editable}
+                        style={STYLE.modalTextInput}
+                        keyboardAppearance="dark"
+                        placeholder={title}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.rename}
+                        maxLength={30}
+                        width={TEXT_ENTRY_WIDTH}
+                      />
+                    </View>
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
+                        keyboardAppearance="dark"
+                        placeholder={"Copy Name"}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.copy}
+                        maxLength={30}
+                        width={TEXT_ENTRY_WIDTH}
+                      />
+                    </View>
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      disabled={!editable}
+                      value={this.state.tmpDelete}
+                      onValueChange={this.toggleDelete}
                     />
                   </View>
                 </View>
@@ -91,6 +164,7 @@ ProgramOptionsModal.propTypes = {
   visible: PropTypes.bool,
   isCurrentProgram: PropTypes.bool,
   programId: PropTypes.number,
+  category: PropTypes.number,
   closeModal: PropTypes.func
 };
 

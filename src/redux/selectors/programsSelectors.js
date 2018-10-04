@@ -1,7 +1,7 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import ListCard from '../../components/cards/ListCard';
-import ListItem from '../../components/cards/ListItem';
+import ProgramItem from '../../components/cards/ProgramItem';
 
 const NAME_LENGTH = 31;
 
@@ -26,10 +26,11 @@ export const getCategoryCards = createSelector(
             name = name.substring(0, NAME_LENGTH) + "..";
           }
 
-          items.push(<ListItem
+          items.push(<ProgramItem
             key={i}
             name={name}
             programId={program.id}
+            category={program.category}
           />);
         }
       });
