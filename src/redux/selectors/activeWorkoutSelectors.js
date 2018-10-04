@@ -1,12 +1,14 @@
 import React from 'react';
 import ExerciseCard from '../../components/cards/ExerciseCard';
 import SetButton from '../../components/buttons/SetButton';
+import { View, Text } from 'react-native';
 import { createSelector } from 'reselect';
 
 const CARD_STYLE = require('../../components/cards/cardStyle');
+const WORKOUT_STYLE = require('../../screens/workout/workoutStyle');
 
-const PROGRAM_NAME_LENGTH = 12;
-const DAY_NAME_LENGTH = 5;
+const PROGRAM_NAME_LENGTH = 23;
+const DAY_NAME_LENGTH = 23;
 
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
@@ -26,7 +28,15 @@ export const getActiveWorkoutTitle = createSelector(
     if (day.length > DAY_NAME_LENGTH) {
       day = day.substring(0, DAY_NAME_LENGTH) + "..";
     }
-    let title = program + " - " + day;
+    const title =
+      <View>
+        <Text style={WORKOUT_STYLE.headerText}>
+          {program}
+        </Text>
+        <Text style={WORKOUT_STYLE.subHeaderText}>
+          {day}
+        </Text>
+      </View>;
     return title;
   }
 );

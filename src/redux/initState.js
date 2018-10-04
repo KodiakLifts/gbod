@@ -8,15 +8,34 @@ export const initState = {
       set: 0
     },
     activeWorkout: {
-      program: 0,
+      program: 1,
       day: 0,
       currentExercise: 0,
     },
     programs: [
       {
         id: 0,
-        name: "GreySkull LP",
+        name: "Blank Template",
         category: 0,
+        description: "",
+        sets: [
+          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+        ],
+        exercises: [
+          {
+            id: 0, libraryId: 0, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, increaseRule: "",
+            barType: "", units: "", note: ""
+          }
+        ],
+        days: [
+          { id: 0, name: "" }
+        ]
+      },
+      {
+        id: 1,
+        name: "GreySkull LP",
+        category: 1,
         description: "Beginner strength program.",
         sets: [
           { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true },
@@ -40,32 +59,32 @@ export const initState = {
         ],
         exercises: [
           {
-            id: 0, libraryId: 0, day: 0, complete: false,
+            id: 0, libraryId: 1, day: 0, complete: false,
             supersetNext: true, includeWarmup: true, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 1, libraryId: 1, day: 0, complete: false,
+            id: 1, libraryId: 2, day: 0, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 2, libraryId: 2, day: 0, complete: false,
+            id: 2, libraryId: 3, day: 0, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 3, libraryId: 3, day: 1, complete: false,
+            id: 3, libraryId: 4, day: 1, complete: false,
             supersetNext: true, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 4, libraryId: 4, day: 1, complete: false,
+            id: 4, libraryId: 5, day: 1, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 5, libraryId: 5, day: 1, complete: false,
+            id: 5, libraryId: 6, day: 1, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
@@ -76,22 +95,33 @@ export const initState = {
         ]
       },
       {
-        id: 1,
+        id: 2,
         name: "Starting Strength",
-        category: 0,
+        category: 1,
         description: "Another beginner strength program.",
-        sets: [],
-        exercises: [],
-        days: []
-      }
+        sets: [
+          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+        ],
+        exercises: [
+          {
+            id: 0, libraryId: 0, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, increaseRule: "",
+            barType: "", units: "", note: ""
+          }
+        ],
+        days: [
+          { id: 0, name: "" }
+        ]
+      },
     ],
     programCategories: [
-      { id: 0, name: "Beginner" },
-      { id: 1, name: "Bodybuilding" },
-      { id: 2, name: "Conditioning" },
-      { id: 3, name: "Olympic" },
-      { id: 4, name: "Powerlifting" },
-      { id: 5, name: "Strongman" },
+      { id: 0, name: "Custom" },
+      { id: 1, name: "Beginner" },
+      { id: 2, name: "Bodybuilding" },
+      { id: 3, name: "Conditioning" },
+      { id: 4, name: "Olympic" },
+      { id: 5, name: "Powerlifting" },
+      { id: 6, name: "Strongman" },
     ],
     setTypes: [
       { id: 0, name: "Warmup" },
@@ -100,12 +130,13 @@ export const initState = {
       { id: 3, name: "Dropset" }
     ],
     exerciseLibrary: [
-      { id: 0, name: "Bench Press" },
-      { id: 1, name: "Barbell Row" },
-      { id: 2, name: "Squat" },
-      { id: 3, name: "Overhead Press" },
-      { id: 4, name: "Pull-up" },
-      { id: 5, name: "Deadlift" },
+      { id: 0, name: "" },
+      { id: 1, name: "Bench Press" },
+      { id: 2, name: "Barbell Row" },
+      { id: 3, name: "Squat" },
+      { id: 4, name: "Overhead Press" },
+      { id: 5, name: "Pull-up" },
+      { id: 6, name: "Deadlift" },
     ]
   }
 };

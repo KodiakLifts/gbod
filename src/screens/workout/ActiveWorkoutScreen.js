@@ -39,9 +39,9 @@ class ActiveWorkout extends Component {
       <ScreenTemplate
         headerContent={
           <View style={STYLE.headerContent}>
-            <Text style={STYLE.headerText}>
-              {title}
-            </Text>
+
+            {title}
+
             <View style={STYLE.timerSettingsContainer}>
               <EditDayModal
                 title={title}
@@ -68,7 +68,7 @@ class ActiveWorkout extends Component {
 }
 
 ActiveWorkout.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.object,
   cards: PropTypes.arrayOf(PropTypes.object),
 };
 

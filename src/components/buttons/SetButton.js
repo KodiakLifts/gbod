@@ -21,14 +21,12 @@ class SetButton extends Component {
   _onPress = () => {
     const {
       updateWorkoutAndTimer,
-      timerOn,
       setId,
       exerciseId,
       type,
       complete
     } = this.props;
 
-    //TODO Implement ignoring timer if off
     updateWorkoutAndTimer(setId, exerciseId);
 
     if (type === AMRAP && complete !== true) {
@@ -48,7 +46,6 @@ class SetButton extends Component {
   }
 
   render() {
-
     const {
       setId,
       exerciseId,

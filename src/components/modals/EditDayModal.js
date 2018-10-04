@@ -58,10 +58,8 @@ class EditDayModal extends Component {
         >
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
-              <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>
-                  {title}
-                </Text>
+              <View style={[STYLE.modalHeader, { marginBottom: 20 }]}>
+                {title}
               </View>
               <View style={STYLE.cardColumnsContainer}>
 
@@ -115,7 +113,7 @@ const createDayItems = (days) => {
 };
 
 EditDayModal.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.object,
   visible: PropTypes.bool,
   currentDay: PropTypes.number,
   days: PropTypes.arrayOf(PropTypes.object),

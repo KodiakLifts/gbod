@@ -9,6 +9,19 @@ export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_DAY_DATA = 'UPDATE_DAY_DATA';
 
+export const ACTIVE_WORKOUT_ACTIONS = [
+  UPDATE_ACTIVE_WORKOUT_UI,
+  UPDATE_SET_DATA,
+  FINISH_WORKOUT,
+  RESET_WORKOUT,
+  UPDATE_EXERCISE_DATA,
+  STOP_TIMER,
+  DECREMENT_TIMER,
+  SET_TIMER,
+  UPDATE_DAY_DATA,
+  UPDATE_SET_REPS
+];
+
 export const updateDayData = (dayId) => {
   return (dispatch) => {
     clearInterval(this.timer);

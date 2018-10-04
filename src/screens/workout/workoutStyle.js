@@ -11,13 +11,20 @@ module.exports = StyleSheet.create({
   },
   headerText: {
     color: COLORS.TEXTCOLOR,
-    fontSize: 24,
+    fontSize: 22,
+    fontWeight: 'bold',
+    textAlignVertical: 'center',
+    includeFontPadding: false
+  },
+  subHeaderText: {
+    color: COLORS.TEXTCOLOR,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlignVertical: 'center',
     includeFontPadding: false
   },
   timerSettingsContainer: {
-    width: 115,
+    width: 110,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
