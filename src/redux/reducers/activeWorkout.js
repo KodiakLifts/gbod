@@ -88,6 +88,9 @@ const updateDayData = (state, dayId, name) => {
           ...program,
           sets: state.programs[activeProgram].sets.map(set => {
             return { ...set, ...{ complete: false } };
+          }),
+          days: state.programs[activeProgram].days.map(day => {
+            return { ...day, ...{ name: name } };
           })
         };
       }
@@ -95,6 +98,7 @@ const updateDayData = (state, dayId, name) => {
     })
   };
 
+  console.log(newState.programs[activeProgram])
   return newState;
 };
 

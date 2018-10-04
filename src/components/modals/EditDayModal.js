@@ -69,7 +69,7 @@ class EditDayModal extends Component {
   }
 
   render() {
-    const { visible, title, days } = this.props;
+    const { visible, title, days, currentDay } = this.props;
     const { tmpDayId, tmpName } = this.state;
 
     return (
@@ -124,10 +124,10 @@ class EditDayModal extends Component {
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
-                        placeholder={tmpName}
+                        placeholder={days[currentDay].name}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={30}
+                        maxLength={20}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
@@ -194,8 +194,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateDayData: (dayId) => {
-      dispatch(updateDayData(dayId));
+    updateDayData: (dayId, name) => {
+      dispatch(updateDayData(dayId, name));
     }
   };
 };

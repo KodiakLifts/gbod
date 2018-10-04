@@ -25,6 +25,7 @@ export const ACTIVE_WORKOUT_ACTIONS = [
 export const updateDayData = (dayId, name) => {
   return (dispatch) => {
     clearInterval(this.timer);
+    console.log(name)
     dispatch({ type: UPDATE_DAY_DATA, dayId, name });
     dispatch(setTimer(0, 0));
   };
