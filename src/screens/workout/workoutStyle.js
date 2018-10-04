@@ -12,7 +12,7 @@ module.exports = StyleSheet.create({
   headerText: {
     color: COLORS.TEXTCOLOR,
     fontSize: 20,
-
+    fontWeight: 'bold',
     textAlignVertical: 'center',
     includeFontPadding: false
   },
@@ -24,7 +24,7 @@ module.exports = StyleSheet.create({
     includeFontPadding: false
   },
   timerSettingsContainer: {
-    width: 96,
+    width: 98,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
