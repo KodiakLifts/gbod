@@ -3,7 +3,10 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import ScreenTemplate from '../templates/ScreenTemplate';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getActiveWorkoutCards, getActiveWorkoutTitle } from '../../redux/selectors/activeWorkoutSelectors';
+import {
+  getActiveWorkoutCards,
+  getActiveWorkoutTitle
+} from '../../redux/selectors/activeWorkoutSelectors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import FinishButton from '../../components/buttons/FinishButton';
 import ResetButton from '../../components/buttons/ResetButton';
@@ -11,16 +14,14 @@ import SetTimer from '../../components/timers/SetTimer';
 import EditDayModal from '../../components/modals/EditDayModal';
 
 const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./workoutStyle');
+
+const ICON_SIZE = 25;
+const ICON_NAME = 'cog';
 
 class ActiveWorkout extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      editDayModalVisible: false
-    };
+  state = {
+    editDayModalVisible: false
   }
 
   _settingsOnPress = () => {
@@ -32,25 +33,32 @@ class ActiveWorkout extends Component {
   }
 
   render() {
+    const { title, cards } = this.props;
+    const { editDayModalVisible } = this.state;
     return (
       <ScreenTemplate
-        headerContent={<View style={CONTAINERSTYLE.headerContent}>
-          <Text style={TEXTSTYLE.headerText}>
-            {this.props.title}
-          </Text>
-          <View style={{ width: 115, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-            <EditDayModal title={this.props.title} closeModal={this.closeModal} visible={this.state.editDayModalVisible} />
-            <SetTimer />
-            <TouchableOpacity onPress={this._settingsOnPress}>
-              <Icon name={'cog'} size={25} color={COLORS.SECONDARYCOLOR} />
-            </TouchableOpacity>
-          </View>
-        </View>}
-        scrollContent={this.props.cards}
+        headerContent={
+          <View style={STYLE.headerContent}>
+            <Text style={STYLE.headerText}>
+              {title}
+            </Text>
+            <View style={STYLE.timerSettingsContainer}>
+              <EditDayModal
+                title={title}
+                closeModal={this.closeModal}
+                visible={editDayModalVisible} />
+              <SetTimer />
+              <TouchableOpacity onPress={this._settingsOnPress}>
+                <Icon
+                  name={ICON_NAME}
+                  size={ICON_SIZE}
+                  color={COLORS.SECONDARYCOLOR} />
+              </TouchableOpacity>
+            </View>
+          </View>}
+        scrollContent={cards}
         endOfScrollContent={
-          < View style={{
-            flexDirection: 'row',
-          }}>
+          < View style={STYLE.footerContainer}>
             <ResetButton />
             <FinishButton />
           </View >

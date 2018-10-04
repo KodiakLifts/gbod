@@ -1,23 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./screenStyle');
 
-class SubScreenTemplate extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-        <View style={CONTAINERSTYLE.subHeader}>
-          {this.props.headerContent}
-        </View>
-        <ScrollView contentContainerStyle={CONTAINERSTYLE.scrollArea}>
-          {this.props.scrollContent}
-        </ScrollView>
+const SubScreenTemplate = (props) => {
+  const { headerContent, scrollContent } = props;
+  return (
+    <View style={STYLE.subScreenContainer}>
+      <View style={STYLE.subHeader}>
+        {headerContent}
       </View>
-    );
-  }
-}
+      <ScrollView contentContainerStyle={STYLE.scrollArea}>
+        {scrollContent}
+      </ScrollView>
+    </View>
+  );
+};
 
 SubScreenTemplate.propTypes = {
   headerContent: PropTypes.object,

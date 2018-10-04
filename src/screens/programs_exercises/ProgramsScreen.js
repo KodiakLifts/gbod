@@ -7,6 +7,8 @@ import ListCard from '../../components/cards/ListCard';
 const COLORS = require('../../styles/Colors');
 const TEXTSTYLE = require('../../styles/TextStyle');
 
+const STYLE = require('./PEStyle');
+
 const menuItems = [{ name: "option 1" }, { name: "option 2" }];
 
 class Programs extends Component {
@@ -14,18 +16,7 @@ class Programs extends Component {
     return (
       <SubScreenTemplate
         headerContent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
-
-            <TouchableOpacity style={{ flexDirection: 'row' }}>
-              <Icon name="search" size={25} color={COLORS.SECONDARYCOLOR} />
-
-              <Text style={{ color: COLORS.INACTIVECOLOR, textAlignVertical: 'center', paddingLeft: 12, fontSize: 16 }}>
-                Search
-                </Text>
-
-            </TouchableOpacity>
-
-          </View>
+          <View />
         }
         scrollContent={
           <ListCard headerTitle="A" items={[
