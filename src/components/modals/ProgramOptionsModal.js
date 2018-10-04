@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { updateProgramData } from '../../redux/actions/programsActions';
 
 const STYLE = require('./modalStyle');
 const COLORS = require('../../styles/Colors');
@@ -20,7 +21,22 @@ const CUSTOM_CATEGORY = 0;
 class ProgramOptionsModal extends Component {
   state = {
     tmpCurrentProgram: this.props.isCurrentProgram,
+    tmpName: this.props.title,
     tmpDelete: false
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props.isCurrentProgram !== newProps.isCurrentProgram) {
+      this.setState({ tmpCurrentProgram: newProps.isCurrentProgram });
+    }
+  }
+
+  updateTmpName = (tmpName) => {
+    if (tmpName == null) {
+      this.setState({ tmpName: this.props.title });
+    } else {
+      this.setState({ tmpName: tmpName });
+    }
   }
 
   cancel = () => {
@@ -33,24 +49,26 @@ class ProgramOptionsModal extends Component {
     });
   }
 
-  rename = (newName) => {
-
-  }
-
-  copy = (copyName) => {
-
-  }
-
   toggleDelete = (checked) => {
     this.setState({
       tmpDelete: checked
     });
   }
 
+  save = () => {
+    const { updateProgramData, programId, closeModal } = this.props;
+    const { tmpCurrentProgram, tmpName } = this.state;
+    updateProgramData(
+      programId,
+      tmpCurrentProgram,
+      tmpName
+    );
+    closeModal();
+  }
+
   render() {
     const { visible, title, category } = this.props;
     const editable = (category === CUSTOM_CATEGORY);
-    console.log(editable)
     return (
       <Modal
         transparent
@@ -110,7 +128,7 @@ class ProgramOptionsModal extends Component {
                         keyboardAppearance="dark"
                         placeholder={title}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
-                        onChangeText={this.rename}
+                        onChangeText={this.updateTmpName}
                         maxLength={30}
                         width={TEXT_ENTRY_WIDTH}
                       />
@@ -165,7 +183,8 @@ ProgramOptionsModal.propTypes = {
   isCurrentProgram: PropTypes.bool,
   programId: PropTypes.number,
   category: PropTypes.number,
-  closeModal: PropTypes.func
+  closeModal: PropTypes.func,
+  updateProgramData: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -175,4 +194,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(ProgramOptionsModal);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateProgramData: (programId, current, name) => {
+      dispatch(updateProgramData(programId, current, name));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramOptionsModal);
