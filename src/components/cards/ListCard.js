@@ -9,7 +9,7 @@ const ListCard = (props) => {
   return (
     <View>
       <Text style={STYLE.listHeaderText}>{headerTitle}</Text>
-      <View style={STYLE.listCard}>
+      <View style={STYLE.card}>
         {items}
       </View>
     </View >

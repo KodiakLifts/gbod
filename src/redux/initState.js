@@ -17,6 +17,7 @@ export const initState = {
         id: 0,
         name: "GreySkull LP",
         category: 0,
+        description: "Beginner strength program.",
         sets: [
           { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true },
           { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: 1, complete: false, restMinutes: 4, restSeconds: 0, timerOn: true },
@@ -74,6 +75,23 @@ export const initState = {
           { id: 1, name: "B" },
         ]
       },
+      {
+        id: 1,
+        name: "Starting Strength",
+        category: 0,
+        description: "Another beginner strength program.",
+        sets: [],
+        exercises: [],
+        days: []
+      }
+    ],
+    programCategories: [
+      { id: 0, name: "Beginner" },
+      { id: 1, name: "Bodybuilding" },
+      { id: 2, name: "Conditioning" },
+      { id: 3, name: "Olympic" },
+      { id: 4, name: "Powerlifting" },
+      { id: 5, name: "Strongman" },
     ],
     setTypes: [
       { id: 0, name: "Warmup" },

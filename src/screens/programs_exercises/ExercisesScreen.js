@@ -8,7 +8,7 @@ const Exercises = (props) => {
       headerContent={
         <View />
       }
-      scrollContent={<View />}
+      scrollContent={[]}
     />
   );
 };

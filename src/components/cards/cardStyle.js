@@ -18,7 +18,7 @@ module.exports = StyleSheet.create({
     marginHorizontal: 6,
     'flexWrap': 'wrap'
   },
-  exerciseName: {
+  title: {
     color: COLORS.SECONDARYCOLOR,
     fontSize: 20,
     fontWeight: 'bold',
@@ -43,14 +43,6 @@ module.exports = StyleSheet.create({
     borderColor: COLORS.SECONDARYCOLOR,
     borderWidth: 1,
     elevation: 2,
-  },
-  listCard: {
-    flexDirection: 'column',
-    width: (Dimensions.get('window').width - 24),
-    alignSelf: 'flex-start',
-    backgroundColor: COLORS.PRIMARYCOLOR,
-    borderRadius: 5,
-    elevation: 2
   },
   listHeaderText: {
     color: COLORS.TEXTCOLOR,

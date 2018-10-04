@@ -24,16 +24,14 @@ class ExerciseCard extends Component {
   render() {
     const {
       exerciseId,
-      sets,
       name,
       borderStyle,
       supersetNext,
       includeWarmup,
-      lastExercise
+      lastExercise,
+      setButtons
     } = this.props;
     const { menuModalVisible } = this.state;
-    const setButtons = createSetButtons(exerciseId, sets);
-
     return (
       <View >
         <EditExerciseModal
@@ -42,20 +40,26 @@ class ExerciseCard extends Component {
           supersetNext={supersetNext}
           includeWarmup={includeWarmup}
           lastExercise={lastExercise}
-          closeModal={this.closeMenuModal} />
+          closeModal={this.closeMenuModal}
+        />
 
         <View style={STYLE.cardContainer}>
           <View style={borderStyle}>
 
             <View style={STYLE.exerciseCardHeader}>
               <TouchableOpacity>
-                <Text style={STYLE.exerciseName}>
+                <Text style={STYLE.title}>
                   {name}
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity onPress={this._onMenuPress}>
-                <Icon name={'ellipsis-h'} size={25} color={COLORS.SECONDARYCOLOR} style={{ marginRight: 12 }} />
+                <Icon
+                  name={'ellipsis-h'}
+                  size={25}
+                  color={COLORS.SECONDARYCOLOR}
+                  style={{ marginRight: 12 }}
+                />
               </TouchableOpacity>
             </View>
 
@@ -75,39 +79,14 @@ class ExerciseCard extends Component {
   }
 }
 
-const createSetButtons = (exerciseId, sets) => {
-  return sets.map((set, index) => {
-    return (
-      <SetButton
-        key={index}
-        exerciseId={exerciseId}
-        setId={set.id}
-        reps={set.reps}
-        weight={set.weight}
-        type={set.type}
-        min={set.restMinutes}
-        sec={set.restSeconds}
-        timerOn={set.timerOn}
-      />
-    );
-  });
-};
-
 ExerciseCard.propTypes = {
   exerciseId: PropTypes.number,
   borderStyle: PropTypes.object,
   name: PropTypes.string,
-  sets: PropTypes.arrayOf(PropTypes.shape({
-    exercise: PropTypes.number,
-    weight: PropTypes.number,
-    reps: PropTypes.number,
-    type: PropTypes.number,
-    complete: PropTypes.bool,
-    restTime: PropTypes.number
-  })),
   supersetNext: PropTypes.bool,
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
+  setButtons: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default ExerciseCard;

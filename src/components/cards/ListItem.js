@@ -1,23 +1,48 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import ProgramOptionsModal from '../modals/ProgramOptionsModal';
 
+const COLORS = require('../../styles/Colors');
 const STYLE = require('./cardStyle');
 
 class ListItem extends Component {
   state = {
-    optionsModalVisible: false,
+    menuModalVisible: false,
+  }
+
+  _onMenuPress = () => {
+    this.setState({ menuModalVisible: true });
+  }
+
+  closeMenuModal = () => {
+    this.setState({ menuModalVisible: false });
   }
 
   render() {
-    const { name, details } = this.props;
+    const { name, programId } = this.props;
+    const { menuModalVisible } = this.state;
     return (
-      <View style={STYLE.listItem}>
-        <View>
+      <View>
+        <ProgramOptionsModal
+          title={name}
+          visible={menuModalVisible}
+          programId={programId}
+          closeModal={this.closeMenuModal}
+        />
+        <View style={STYLE.listItem}>
           <TouchableOpacity>
-            <Text style={STYLE.listItemText}>{name}</Text>
+            <Text style={STYLE.title}>{name}</Text>
           </TouchableOpacity>
-          <Text style={STYLE.listItemDetails}>{details}</Text>
+          <TouchableOpacity onPress={this._onMenuPress}>
+            <Icon
+              name={'ellipsis-h'}
+              size={25}
+              color={COLORS.SECONDARYCOLOR}
+              style={{ marginRight: 12 }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -26,5 +51,7 @@ class ListItem extends Component {
 
 ListItem.propTypes = {
   name: PropTypes.string,
-  details: PropTypes.string
+  programId: PropTypes.number
 };
+
+export default ListItem;

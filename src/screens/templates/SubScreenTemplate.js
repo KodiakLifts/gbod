@@ -20,7 +20,7 @@ const SubScreenTemplate = (props) => {
 
 SubScreenTemplate.propTypes = {
   headerContent: PropTypes.object,
-  scrollContent: PropTypes.object
+  scrollContent: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default SubScreenTemplate;

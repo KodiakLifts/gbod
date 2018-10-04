@@ -8,7 +8,7 @@ const Logs = (props) => {
       headerContent={
         <View />
       }
-      scrollContent={<View />}
+      scrollContent={[]}
     />
   );
 };

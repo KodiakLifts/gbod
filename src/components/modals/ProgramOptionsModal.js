@@ -5,47 +5,30 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker
+  CheckBox
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateDayData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
 
-class EditDayModal extends Component {
+class ProgramOptionsModal extends Component {
   state = {
-    prevDayId: this.props.currentDay,
-    tmpDayId: this.props.currentDay
-  }
-
-  updateTmpDay = (dayId) => {
-    this.setState({ tmpDayId: dayId });
-  }
-
-  save = () => {
-    const { updateDayData, closeModal } = this.props;
-    const { tmpDayId } = this.state;
-
-    this.setState({ prevDayId: tmpDayId });
-    updateDayData(
-      tmpDayId
-    );
-    closeModal();
+    tmpCurrentProgram: this.props.isCurrentProgram
   }
 
   cancel = () => {
-    const { closeModal } = this.props;
-    const { prevDayId } = this.state;
+    this.props.closeModal();
+  }
 
-    this.setState({ tmpDayId: prevDayId });
-    closeModal();
+  toggleCurrentProgram = (checked) => {
+    this.setState({
+      tmpCurrentProgram: checked
+    });
   }
 
   render() {
-    const { visible, title, days } = this.props;
-    const { tmpDayId } = this.state;
-
+    const { visible, title } = this.props;
     return (
       <Modal
         transparent
@@ -68,19 +51,17 @@ class EditDayModal extends Component {
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Select Day:
+                      Make Current Program:
                     </Text>
                   </View>
                 </View>
 
                 <View style={STYLE.rightColumn}>
                   <View style={STYLE.rightItem}>
-                    <Picker
-                      style={STYLE.picker}
-                      selectedValue={tmpDayId}
-                      onValueChange={this.updateTmpDay}>
-                      {createDayItems(days)}
-                    </Picker>
+                    <CheckBox
+                      value={this.state.tmpCurrentProgram}
+                      onValueChange={this.toggleCurrentProgram}
+                    />
                   </View>
                 </View>
               </View>
@@ -105,41 +86,19 @@ class EditDayModal extends Component {
   }
 }
 
-const createDayItems = (days) => {
-  const dayItems = days.map((day, index) => {
-    return (
-      <Picker.Item key={index} label={day.name} value={day.id} />
-    );
-  });
-  return (dayItems);
-};
-
-EditDayModal.propTypes = {
+ProgramOptionsModal.propTypes = {
   title: PropTypes.string,
   visible: PropTypes.bool,
-  currentDay: PropTypes.number,
-  days: PropTypes.arrayOf(PropTypes.object),
-  closeModal: PropTypes.func,
-  updateDayData: PropTypes.func,
+  isCurrentProgram: PropTypes.bool,
+  programId: PropTypes.number,
+  closeModal: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    days:
-      state
-        .workoutData
-        .programs[state.workoutData.activeWorkout.program]
-        .days,
-    currentDay: state.workoutData.activeWorkout.day
+    isCurrentProgram:
+      state.workoutData.activeWorkout.program === ownProps.programId
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateDayData: (dayId) => {
-      dispatch(updateDayData(dayId));
-    }
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditDayModal);
+export default connect(mapStateToProps)(ProgramOptionsModal);

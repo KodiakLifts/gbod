@@ -8,7 +8,7 @@ const Stats = (props) => {
       headerContent={
         <View />
       }
-      scrollContent={<View />}
+      scrollContent={[]}
     />
   );
 };

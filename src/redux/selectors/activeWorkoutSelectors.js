@@ -1,5 +1,6 @@
 import React from 'react';
 import ExerciseCard from '../../components/cards/ExerciseCard';
+import SetButton from '../../components/buttons/SetButton';
 import { createSelector } from 'reselect';
 
 const CARD_STYLE = require('../../components/cards/cardStyle');
@@ -64,11 +65,27 @@ export const getActiveWorkoutCards = createSelector(
 
       const includeWarmup = exercise.includeWarmup;
 
-      let sets = activeSets.filter(set => {
+      const sets = activeSets.filter(set => {
         if (!includeWarmup) {
           return (set.exercise === exercise.id && set.type !== 0);
         }
         return (set.exercise === exercise.id);
+      });
+
+      const setButtons = sets.map((set, index) => {
+        return (
+          <SetButton
+            key={index}
+            exerciseId={exercise.id}
+            setId={set.id}
+            reps={set.reps}
+            weight={set.weight}
+            type={set.type}
+            min={set.restMinutes}
+            sec={set.restSeconds}
+            timerOn={set.timerOn}
+          />
+        );
       });
 
       const borderStyle = (exercise.id === currentExercise ?
@@ -85,10 +102,10 @@ export const getActiveWorkoutCards = createSelector(
           exerciseId={exercise.id}
           borderStyle={borderStyle}
           name={exercise.name}
-          sets={sets}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}
           lastExercise={lastExercise}
+          setButtons={setButtons}
         />;
 
       workoutCards.push(card);
