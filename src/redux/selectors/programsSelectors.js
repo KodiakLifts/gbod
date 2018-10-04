@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 import ListCard from '../../components/cards/ListCard';
 import ListItem from '../../components/cards/ListItem';
 
+const NAME_LENGTH = 31;
+
 const getPrograms = (state) => state.programs;
 
 const getProgramCategories = (state) => state.programCategories;
@@ -18,9 +20,15 @@ export const getCategoryCards = createSelector(
 
       programs.filter((program, i) => {
         if (program.category === category.id) {
+          let name = program.name;
+
+          if (name.length > NAME_LENGTH) {
+            name = name.substring(0, NAME_LENGTH) + "..";
+          }
+
           items.push(<ListItem
             key={i}
-            name={program.name}
+            name={name}
             programId={program.id}
           />);
         }

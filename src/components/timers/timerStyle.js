@@ -8,7 +8,7 @@ module.exports = StyleSheet.create({
     borderColor: COLORS.SECONDARYCOLOR,
   },
   timerText: {
-    fontSize: 28,
+    fontSize: 24,
     textAlignVertical: 'center',
     includeFontPadding: false
   }

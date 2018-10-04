@@ -7,8 +7,8 @@ import { createSelector } from 'reselect';
 const CARD_STYLE = require('../../components/cards/cardStyle');
 const WORKOUT_STYLE = require('../../screens/workout/workoutStyle');
 
-const PROGRAM_NAME_LENGTH = 23;
-const DAY_NAME_LENGTH = 23;
+const PROGRAM_NAME_LENGTH = 20;
+const DAY_NAME_LENGTH = 5;
 
 const getActiveWorkoutName = (state) => {
   return (state.programs[state.activeWorkout.program].name);
@@ -31,11 +31,9 @@ export const getActiveWorkoutTitle = createSelector(
     const title =
       <View>
         <Text style={WORKOUT_STYLE.headerText}>
-          {program}
+          {program} - {day}
         </Text>
-        <Text style={WORKOUT_STYLE.subHeaderText}>
-          {day}
-        </Text>
+
       </View>;
     return title;
   }
