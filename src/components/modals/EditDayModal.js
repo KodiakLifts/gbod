@@ -10,7 +10,10 @@ import {
   CheckBox
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateDayData } from '../../redux/actions/activeWorkoutActions';
+import {
+  updateDayData,
+  deleteDay
+} from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
@@ -25,6 +28,8 @@ class EditDayModal extends Component {
     tmpName: this.props.days[this.props.currentDay].name,
     tmpDelete: false
   }
+
+  componentWillReceiveProps
 
   updateTmpName = (tmpName) => {
     if (tmpName == null) {
@@ -48,14 +53,20 @@ class EditDayModal extends Component {
   }
 
   save = () => {
-    const { updateDayData, closeModal } = this.props;
-    const { tmpDayId, tmpName } = this.state;
+    const { updateDayData, closeModal, deleteDay, days } = this.props;
+    const { tmpDayId, tmpName, tmpDelete } = this.state;
 
-    this.setState({ prevDayId: tmpDayId });
-    updateDayData(
-      tmpDayId,
-      tmpName
-    );
+    if (tmpDelete) {
+      deleteDay(tmpDayId);
+    } else {
+      this.setState({ prevDayId: tmpDayId });
+      updateDayData(
+        tmpDayId,
+        tmpName
+      );
+    }
+
+    this.setState({ tmpDelete: false });
     closeModal();
   }
 
@@ -63,15 +74,18 @@ class EditDayModal extends Component {
     const { closeModal, days, currentDay } = this.props;
     const { prevDayId } = this.state;
 
-    this.setState({ tmpDayId: prevDayId });
-    this.setState({ tmpName: days[currentDay].name });
+    this.setState({
+      tmpDayId: prevDayId,
+      tmpName: days[currentDay].name,
+      tmpDelete: false
+    });
     closeModal();
   }
 
   render() {
     const { visible, title, days, currentDay } = this.props;
-    const { tmpDayId, tmpName } = this.state;
-
+    const { tmpDayId } = this.state;
+    const deleteDisable = days.length === 1;
     return (
       <Modal
         transparent
@@ -135,6 +149,7 @@ class EditDayModal extends Component {
 
                   <View style={[STYLE.rightItem, { paddingLeft: 26 }]}>
                     <CheckBox
+                      disabled={deleteDisable}
                       value={this.state.tmpDelete}
                       onValueChange={this.toggleDelete}
                     />
@@ -178,7 +193,8 @@ EditDayModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.object),
   closeModal: PropTypes.func,
   updateDayData: PropTypes.func,
-  name: PropTypes.string
+  name: PropTypes.string,
+  deleteDay: PropTypes.func
 };
 
 const mapStateToProps = (state) => {
@@ -196,6 +212,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateDayData: (dayId, name) => {
       dispatch(updateDayData(dayId, name));
+    },
+    deleteDay: (dayId) => {
+      dispatch(deleteDay(dayId));
     }
   };
 };

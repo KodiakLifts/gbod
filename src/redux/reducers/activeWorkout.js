@@ -8,7 +8,8 @@ import {
   DECREMENT_TIMER,
   SET_TIMER,
   UPDATE_DAY_DATA,
-  UPDATE_SET_REPS
+  UPDATE_SET_REPS,
+  DELETE_DAY
 } from '../actions/activeWorkoutActions';
 
 export default function activeWorkout(state = {}, action) {
@@ -54,6 +55,10 @@ export default function activeWorkout(state = {}, action) {
     case UPDATE_DAY_DATA:
       return updateDayData(state, action.dayId, action.name);
 
+    case DELETE_DAY:
+      console.log("DELETEDAY")
+      return deleteDay(state, action.dayId);
+
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
 
@@ -61,6 +66,44 @@ export default function activeWorkout(state = {}, action) {
       return state;
   }
 }
+
+const deleteDay = (state, dayId) => {
+  const activeProgram = state.activeWorkout.program;
+  let activeDay = state.activeWorkout.day;
+
+  let newDays =
+    state.programs[activeProgram].days.filter(day => day.id !== dayId);
+
+  newDays.forEach((day, index) => {
+    if (day.id === activeDay) {
+      activeDay = index;
+    }
+    day.id = index;
+  });
+
+  if (activeDay === dayId) {
+    activeDay = newDays[0].id;
+  }
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: activeDay
+    },
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          days: newDays
+        };
+      }
+      return program;
+    })
+  };
+  console.log(newState)
+  return newState;
+};
 
 const updateDayData = (state, dayId, name) => {
   const activeProgram = state.activeWorkout.program;

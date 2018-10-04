@@ -8,6 +8,7 @@ export const STOP_TIMER = 'STOP_TIMER';
 export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_DAY_DATA = 'UPDATE_DAY_DATA';
+export const DELETE_DAY = 'DELETE_DAY';
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   UPDATE_ACTIVE_WORKOUT_UI,
@@ -19,13 +20,20 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   DECREMENT_TIMER,
   SET_TIMER,
   UPDATE_DAY_DATA,
-  UPDATE_SET_REPS
+  UPDATE_SET_REPS,
+  DELETE_DAY
 ];
+
+export const deleteDay = (dayId) => {
+  return {
+    type: DELETE_DAY,
+    dayId
+  };
+};
 
 export const updateDayData = (dayId, name) => {
   return (dispatch) => {
     clearInterval(this.timer);
-    console.log(name)
     dispatch({ type: UPDATE_DAY_DATA, dayId, name });
     dispatch(setTimer(0, 0));
   };
