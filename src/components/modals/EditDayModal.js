@@ -5,46 +5,72 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker
+  Picker,
+  TextInput,
+  CheckBox
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { updateDayData } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
+const COLORS = require('../../styles/Colors');
+
+const TEXT_ENTRY_WIDTH = 70;
 
 class EditDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
-    tmpDayId: this.props.currentDay
+    tmpDayId: this.props.currentDay,
+    tmpName: this.props.days[this.props.currentDay].name,
+    tmpDelete: false
+  }
+
+  updateTmpName = (tmpName) => {
+    if (tmpName == null) {
+      this.setState({ tmpName: this.props.days[this.state.tmpDayId].name });
+    } else {
+      this.setState({ tmpName: tmpName });
+    }
+  }
+
+  toggleDelete = (checked) => {
+    this.setState({
+      tmpDelete: checked
+    });
   }
 
   updateTmpDay = (dayId) => {
-    this.setState({ tmpDayId: dayId });
+    this.setState({
+      tmpDayId: dayId,
+      tmpName: this.props.days[dayId].name
+    });
   }
 
   save = () => {
     const { updateDayData, closeModal } = this.props;
-    const { tmpDayId } = this.state;
+    const { tmpDayId, tmpName } = this.state;
 
     this.setState({ prevDayId: tmpDayId });
     updateDayData(
-      tmpDayId
+      tmpDayId,
+      tmpName
     );
     closeModal();
   }
 
   cancel = () => {
-    const { closeModal } = this.props;
+    const { closeModal, days, currentDay } = this.props;
     const { prevDayId } = this.state;
 
     this.setState({ tmpDayId: prevDayId });
+    this.setState({ tmpName: days[currentDay].name });
     closeModal();
   }
 
   render() {
     const { visible, title, days } = this.props;
-    const { tmpDayId } = this.state;
+    const { tmpDayId, tmpName } = this.state;
 
     return (
       <Modal
@@ -69,6 +95,18 @@ class EditDayModal extends Component {
                       Select Day:
                     </Text>
                   </View>
+
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Rename:
+                    </Text>
+                  </View>
+
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Delete:
+                    </Text>
+                  </View>
                 </View>
 
                 <View style={STYLE.rightColumn}>
@@ -79,6 +117,27 @@ class EditDayModal extends Component {
                       onValueChange={this.updateTmpDay}>
                       {createDayItems(days)}
                     </Picker>
+                  </View>
+
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
+                        keyboardAppearance="dark"
+                        placeholder={tmpName}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpName}
+                        maxLength={30}
+                        width={TEXT_ENTRY_WIDTH}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={[STYLE.rightItem, { paddingLeft: 26 }]}>
+                    <CheckBox
+                      value={this.state.tmpDelete}
+                      onValueChange={this.toggleDelete}
+                    />
                   </View>
                 </View>
               </View>
@@ -119,6 +178,7 @@ EditDayModal.propTypes = {
   days: PropTypes.arrayOf(PropTypes.object),
   closeModal: PropTypes.func,
   updateDayData: PropTypes.func,
+  name: PropTypes.string
 };
 
 const mapStateToProps = (state) => {
@@ -128,7 +188,7 @@ const mapStateToProps = (state) => {
         .workoutData
         .programs[state.workoutData.activeWorkout.program]
         .days,
-    currentDay: state.workoutData.activeWorkout.day
+    currentDay: state.workoutData.activeWorkout.day,
   };
 };
 

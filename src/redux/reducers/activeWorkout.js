@@ -52,7 +52,7 @@ export default function activeWorkout(state = {}, action) {
       return setTimer(state, action.minutes, action.seconds);
 
     case UPDATE_DAY_DATA:
-      return updateDayData(state, action.dayId);
+      return updateDayData(state, action.dayId, action.name);
 
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
@@ -62,7 +62,7 @@ export default function activeWorkout(state = {}, action) {
   }
 }
 
-const updateDayData = (state, dayId) => {
+const updateDayData = (state, dayId, name) => {
   const activeProgram = state.activeWorkout.program;
 
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {

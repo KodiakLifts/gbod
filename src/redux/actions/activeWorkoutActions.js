@@ -22,10 +22,10 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   UPDATE_SET_REPS
 ];
 
-export const updateDayData = (dayId) => {
+export const updateDayData = (dayId, name) => {
   return (dispatch) => {
     clearInterval(this.timer);
-    dispatch({ type: UPDATE_DAY_DATA, dayId });
+    dispatch({ type: UPDATE_DAY_DATA, dayId, name });
     dispatch(setTimer(0, 0));
   };
 };
