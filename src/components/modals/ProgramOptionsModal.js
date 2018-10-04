@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateProgramData } from '../../redux/actions/programsActions';
+import {
+  updateProgramData,
+  deleteProgram
+} from '../../redux/actions/programsActions';
 
 const STYLE = require('./modalStyle');
 const COLORS = require('../../styles/Colors');
@@ -56,13 +59,23 @@ class ProgramOptionsModal extends Component {
   }
 
   save = () => {
-    const { updateProgramData, programId, closeModal } = this.props;
-    const { tmpCurrentProgram, tmpName } = this.state;
-    updateProgramData(
+    const {
+      updateProgramData,
+      deleteProgram,
       programId,
-      tmpCurrentProgram,
-      tmpName
-    );
+      closeModal
+    } = this.props;
+    const { tmpCurrentProgram, tmpName, tmpDelete } = this.state;
+
+    if (tmpDelete) {
+      deleteProgram(programId);
+    } else {
+      updateProgramData(
+        programId,
+        tmpCurrentProgram,
+        tmpName
+      );
+    }
     closeModal();
   }
 
@@ -123,7 +136,6 @@ class ProgramOptionsModal extends Component {
                   <View style={STYLE.rightItem}>
                     <View style={STYLE.textInputContainer}>
                       <TextInput
-                        editable={editable}
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
                         placeholder={title}
@@ -149,7 +161,6 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.rightItem}>
                     <CheckBox
-                      disabled={!editable}
                       value={this.state.tmpDelete}
                       onValueChange={this.toggleDelete}
                     />
@@ -184,7 +195,8 @@ ProgramOptionsModal.propTypes = {
   programId: PropTypes.number,
   category: PropTypes.number,
   closeModal: PropTypes.func,
-  updateProgramData: PropTypes.func
+  updateProgramData: PropTypes.func,
+  deleteProgram: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -198,6 +210,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateProgramData: (programId, current, name) => {
       dispatch(updateProgramData(programId, current, name));
+    },
+    deleteProgram: (programId) => {
+      dispatch(deleteProgram(programId));
     }
   };
 };

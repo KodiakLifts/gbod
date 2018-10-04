@@ -1,5 +1,6 @@
 import {
-  UPDATE_PROGRAM_DATA
+  UPDATE_PROGRAM_DATA,
+  DELETE_PROGRAM
 } from '../actions/programsActions';
 
 export default function programs(state = {}, action) {
@@ -11,10 +12,40 @@ export default function programs(state = {}, action) {
         action.current,
         action.name,
       );
+    case DELETE_PROGRAM:
+      return deleteProgram(state, action.programId);
     default:
       return state;
   }
 }
+
+const deleteProgram = (state, programId) => {
+  let activeProgram = state.activeWorkout.program;
+
+  let newPrograms =
+    state.programs.filter(program => program.id !== programId);
+
+  newPrograms.forEach((program, index) => {
+    if (program.id === activeProgram) {
+      activeProgram = index;
+    }
+    program.id = index;
+  });
+
+  if (activeProgram === programId) {
+    activeProgram = newPrograms[0].id;
+  }
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      program: activeProgram
+    },
+    programs: newPrograms
+  };
+  return newState;
+};
 
 const updateProgramData = (state, programId, current, name) => {
   let activeProgram;
