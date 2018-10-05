@@ -30,6 +30,8 @@ module.exports = StyleSheet.create({
   subScreenContainer: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderBottomColor: COLORS.BACKCOLOR,
+    borderBottomWidth: 3
   }
 });

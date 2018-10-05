@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.workoutData.exerciseCategories,
     bodyParts: state.workoutData.bodyParts
-    //cards: getLexicalCards(state.workoutData)
+    //cards: getLibraryCards(state.workoutData)
   };
 };
 export default connect(mapStateToProps)(Exercises);
