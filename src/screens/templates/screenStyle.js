@@ -24,10 +24,8 @@ module.exports = StyleSheet.create({
   },
   subHeader: {
     width: Dimensions.get('window').width,
-    paddingTop: 15,
-    paddingBottom: 12,
     backgroundColor: COLORS.BACKCOLOR,
-    elevation: 0,
+    elevation: 2,
   },
   subScreenContainer: {
     flex: 1,

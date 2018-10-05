@@ -8,10 +8,11 @@ const NAME_LENGTH = 31;
 const getPrograms = (state) => state.programs;
 
 const getProgramCategories = (state) => state.programCategories;
+const getSelectedProgramCategory = (state) => state.selectedProgramCategory;
 
 export const getCategoryCards = createSelector(
-  [getPrograms, getProgramCategories],
-  (programs, categories) => {
+  [getPrograms, getProgramCategories, getSelectedProgramCategory],
+  (programs, categories, selectedCategory) => {
 
     let categoryCards = [];
 
@@ -42,7 +43,10 @@ export const getCategoryCards = createSelector(
           items={items}
         />;
 
-      categoryCards.push(card);
+      if (selectedCategory === 0 || selectedCategory === category.id) {
+        categoryCards.push(card);
+      }
+
     });
     return categoryCards;
   }

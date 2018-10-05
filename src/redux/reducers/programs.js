@@ -1,6 +1,7 @@
 import {
   UPDATE_PROGRAM_DATA,
-  DELETE_PROGRAM
+  DELETE_PROGRAM,
+  UPDATE_SELECTED_PROGRAM_CATEGORY
 } from '../actions/programsActions';
 
 export default function programs(state = {}, action) {
@@ -14,9 +15,19 @@ export default function programs(state = {}, action) {
       );
     case DELETE_PROGRAM:
       return deleteProgram(state, action.programId);
+    case UPDATE_SELECTED_PROGRAM_CATEGORY:
+      return updateSelectedProgramCategory(state, action.categoryId);
     default:
       return state;
   }
+}
+
+const updateSelectedProgramCategory = (state, categoryId) => {
+  const newState = {
+    ...state,
+    selectedProgramCategory: categoryId
+  };
+  return newState;
 }
 
 const deleteProgram = (state, programId) => {

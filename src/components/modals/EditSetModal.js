@@ -31,19 +31,10 @@ class EditSetModal extends Component {
     tmpSec: this.props.sec
   }
 
-  componentDidMount() {
-    const { type, types } = this.props;
-    this.mountTypeName(type, types);
-  }
-
   componentWillReceiveProps(newProps) {
     if (this.props.reps !== newProps.reps) {
       this.setState({ tmpReps: newProps.reps });
     }
-  }
-
-  mountTypeName = (type, types) => {
-    this.setState({ typeName: types[type].name });
   }
 
   updateTmpWeight = (tmpWeight) => {
