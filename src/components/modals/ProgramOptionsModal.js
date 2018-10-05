@@ -80,8 +80,8 @@ class ProgramOptionsModal extends Component {
   }
 
   render() {
-    const { visible, title, category } = this.props;
-    const editable = (category === CUSTOM_CATEGORY);
+    const { visible, title, isCurrentProgram } = this.props;
+    const { tmpCurrentProgram, tmpDelete } = this.state;
     return (
       <Modal
         transparent
@@ -126,10 +126,12 @@ class ProgramOptionsModal extends Component {
 
 
 
-                <View style={[STYLE.rightColumn, { alignItems: 'center', paddingRight: 6 }]}>
+                <View style={
+                  [STYLE.rightColumn, { alignItems: 'center', paddingRight: 6 }]}>
                   <View style={STYLE.rightItem}>
                     <CheckBox
-                      value={this.state.tmpCurrentProgram}
+                      disabled={isCurrentProgram}
+                      value={tmpCurrentProgram}
                       onValueChange={this.toggleCurrentProgram}
                     />
                   </View>
@@ -161,7 +163,7 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.rightItem}>
                     <CheckBox
-                      value={this.state.tmpDelete}
+                      value={tmpDelete}
                       onValueChange={this.toggleDelete}
                     />
                   </View>

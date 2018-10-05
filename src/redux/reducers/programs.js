@@ -69,7 +69,6 @@ const updateProgramData = (state, programId, current, name) => {
       return program;
     })
   };
-  console.log(newState);
   return newState;
 
 };
