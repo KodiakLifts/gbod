@@ -56,7 +56,6 @@ export default function activeWorkout(state = {}, action) {
       return updateDayData(state, action.dayId, action.name);
 
     case DELETE_DAY:
-      console.log("DELETEDAY")
       return deleteDay(state, action.dayId);
 
     case UPDATE_SET_REPS:
@@ -101,7 +100,6 @@ const deleteDay = (state, dayId) => {
       return program;
     })
   };
-  console.log(newState)
   return newState;
 };
 
@@ -133,7 +131,10 @@ const updateDayData = (state, dayId, name) => {
             return { ...set, ...{ complete: false } };
           }),
           days: state.programs[activeProgram].days.map(day => {
-            return { ...day, ...{ name: name } };
+            if (day.id === dayId) {
+              return { ...day, ...{ name: name } };
+            }
+            return day;
           })
         };
       }

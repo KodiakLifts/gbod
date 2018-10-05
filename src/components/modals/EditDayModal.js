@@ -25,15 +25,20 @@ class EditDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
     tmpDayId: this.props.currentDay,
+    placeHolder: this.props.days[this.props.currentDay].name,
     tmpName: this.props.days[this.props.currentDay].name,
     tmpDelete: false
   }
 
-  componentWillReceiveProps
+  componentWillReceiveProps(newProps) {
+    if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
+      this.setState({ placeHolder: newProps.days[newProps.currentDay].name });
+    }
+  }
 
   updateTmpName = (tmpName) => {
     if (tmpName == null) {
-      this.setState({ tmpName: this.props.days[this.state.tmpDayId].name });
+      this.setState({ tmpName: this.props.days[this.state.currentDay].name });
     } else {
       this.setState({ tmpName: tmpName });
     }
@@ -48,7 +53,8 @@ class EditDayModal extends Component {
   updateTmpDay = (dayId) => {
     this.setState({
       tmpDayId: dayId,
-      tmpName: this.props.days[dayId].name
+      tmpName: this.props.days[dayId].name,
+      placeHolder: this.props.days[dayId].name
     });
   }
 
@@ -83,8 +89,8 @@ class EditDayModal extends Component {
   }
 
   render() {
-    const { visible, title, days, currentDay } = this.props;
-    const { tmpDayId } = this.state;
+    const { visible, title, days } = this.props;
+    const { tmpDayId, placeHolder } = this.state;
     const deleteDisable = days.length === 1;
     return (
       <Modal
@@ -138,7 +144,7 @@ class EditDayModal extends Component {
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
-                        placeholder={days[currentDay].name}
+                        placeholder={placeHolder}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
                         maxLength={20}

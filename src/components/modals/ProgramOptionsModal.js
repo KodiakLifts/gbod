@@ -19,7 +19,6 @@ const STYLE = require('./modalStyle');
 const COLORS = require('../../styles/Colors');
 
 const TEXT_ENTRY_WIDTH = 160;
-const CUSTOM_CATEGORY = 0;
 
 class ProgramOptionsModal extends Component {
   state = {
