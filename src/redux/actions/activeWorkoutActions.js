@@ -31,10 +31,13 @@ export const deleteDay = (dayId) => {
   };
 };
 
-export const updateDayData = (dayId, name) => {
+export const updateDayData = (dayId, name, remove) => {
   return (dispatch) => {
     clearInterval(this.timer);
     dispatch({ type: UPDATE_DAY_DATA, dayId, name });
+    if (remove) {
+      dispatch(deleteDay(dayId));
+    }
     dispatch(setTimer(0, 0));
   };
 };

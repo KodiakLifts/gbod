@@ -53,9 +53,9 @@ const getActiveExercises = (state) => {
     return exercise.day === state.activeWorkout.day;
   });
 
-  for (let i = 0; i < exercises.length; i++) {
-    exercises[i] = { ...exercises[i], name: state.exerciseLibrary[exercises[i].libraryId].name };
-  }
+  exercises.forEach(exercise => {
+    exercise.name = state.exerciseLibrary[exercise.libraryId].name;
+  });
 
   return exercises;
 };

@@ -59,18 +59,15 @@ class EditDayModal extends Component {
   }
 
   save = () => {
-    const { updateDayData, closeModal, deleteDay, days } = this.props;
+    const { updateDayData, closeModal } = this.props;
     const { tmpDayId, tmpName, tmpDelete } = this.state;
 
-    if (tmpDelete) {
-      deleteDay(tmpDayId);
-    } else {
-      this.setState({ prevDayId: tmpDayId });
-      updateDayData(
-        tmpDayId,
-        tmpName
-      );
-    }
+    this.setState({ prevDayId: tmpDayId });
+    updateDayData(
+      tmpDayId,
+      tmpName,
+      tmpDelete
+    );
 
     this.setState({ tmpDelete: false });
     closeModal();
@@ -216,8 +213,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateDayData: (dayId, name) => {
-      dispatch(updateDayData(dayId, name));
+    updateDayData: (dayId, name, remove) => {
+      dispatch(updateDayData(dayId, name, remove));
     },
     deleteDay: (dayId) => {
       dispatch(deleteDay(dayId));

@@ -68,38 +68,62 @@ export default function activeWorkout(state = {}, action) {
 
 const deleteDay = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  let activeDay = state.activeWorkout.day;
 
-  let newDays =
+  const newDays =
     state.programs[activeProgram].days.filter(day => day.id !== dayId);
-
   newDays.forEach((day, index) => {
-    if (day.id === activeDay) {
-      activeDay = index;
-    }
     day.id = index;
   });
 
-  if (activeDay === dayId) {
-    activeDay = newDays[0].id;
-  }
+  const newSets = state.programs[activeProgram].sets.filter(set =>
+    set.day !== dayId
+  );
+  newSets.forEach((set, index) => {
+    set.id = index;
+    if (set.day >= dayId) {
+      set.day--;
+    }
+  });
+
+  const newExercises =
+    state.programs[activeProgram].exercises.filter(exercise =>
+      exercise.day !== dayId
+    );
+  newExercises.forEach((exercise, index) => {
+    newSets.forEach(set => {
+      if (set.exercise === exercise.id) {
+        set.exercise = index;
+      }
+    });
+    exercise.id = index;
+    if (exercise.day >= dayId) {
+      exercise.day--;
+    }
+  });
+
+  const currentDay = newDays[0].id;
+  const currentExercise = newExercises[0].id;
 
   const newState = {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      day: activeDay
+      day: currentDay,
+      currentExercise: currentExercise
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {
           ...program,
-          days: newDays
+          days: newDays,
+          exercises: newExercises,
+          sets: newSets
         };
       }
       return program;
     })
   };
+  console.log(newState);
   return newState;
 };
 
@@ -141,8 +165,6 @@ const updateDayData = (state, dayId, name) => {
       return program;
     })
   };
-
-  console.log(newState.programs[activeProgram])
   return newState;
 };
 

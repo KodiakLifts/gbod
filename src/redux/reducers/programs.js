@@ -24,11 +24,7 @@ const deleteProgram = (state, programId) => {
 
   let newPrograms =
     state.programs.filter(program => program.id !== programId);
-
   newPrograms.forEach((program, index) => {
-    if (program.id === activeProgram) {
-      activeProgram = index;
-    }
     program.id = index;
   });
 
