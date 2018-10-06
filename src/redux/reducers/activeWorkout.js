@@ -123,7 +123,6 @@ const deleteDay = (state, dayId) => {
       return program;
     })
   };
-  console.log(newState);
   return newState;
 };
 
@@ -152,11 +151,11 @@ const updateDayData = (state, dayId, name) => {
         return {
           ...program,
           sets: state.programs[activeProgram].sets.map(set => {
-            return { ...set, ...{ complete: false } };
+            return { ...set, complete: false };
           }),
           days: state.programs[activeProgram].days.map(day => {
             if (day.id === dayId) {
-              return { ...day, ...{ name: name } };
+              return { ...day, name: name };
             }
             return day;
           })

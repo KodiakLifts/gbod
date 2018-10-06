@@ -34,6 +34,9 @@ class EditDayModal extends Component {
     if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
       this.setState({ placeHolder: newProps.days[newProps.currentDay].name });
     }
+    if (this.state.tmpDayId !== newProps.currentDay) {
+      this.setState({ tmpDayId: newProps.currentDay });
+    }
   }
 
   updateTmpName = (tmpName) => {

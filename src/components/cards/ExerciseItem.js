@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import ExerciseOptionsModal from '../modals/ProgramOptionsModal';
+import ExerciseOptionsModal from '../modals/ExerciseOptionsModal';
 
 const COLORS = require('../../styles/Colors');
 const STYLE = require('./cardStyle');
@@ -21,7 +21,7 @@ class ExerciseItem extends Component {
   }
 
   render() {
-    const { name } = this.props;
+    const { name, category, bodyPart, favorite, oneRepMax, libraryId } = this.props;
     const { menuModalVisible } = this.state;
 
     return (
@@ -30,6 +30,11 @@ class ExerciseItem extends Component {
           title={name}
           visible={menuModalVisible}
           closeModal={this.closeMenuModal}
+          libraryId={libraryId}
+          category={category}
+          bodyPart={bodyPart}
+          favorite={favorite}
+          oneRepMax={oneRepMax}
         />
         <View style={STYLE.listItem}>
           <TouchableOpacity>
@@ -54,5 +59,9 @@ ExerciseItem.propTypes = {
   name: PropTypes.string,
   libraryId: PropTypes.number,
   category: PropTypes.number,
-  bodyPart: PropTypes.number
+  bodyPart: PropTypes.number,
+  favorite: PropTypes.bool,
+  oneRepMax: PropTypes.number
 };
+
+export default ExerciseItem;

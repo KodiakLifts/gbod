@@ -5,6 +5,7 @@ import ProgramItem from '../../components/cards/ProgramItem';
 
 const NAME_LENGTH = 31;
 const ALL_CATEGORIES = 0;
+const FAVORITES = 1;
 
 const getPrograms = (state) => state.programs;
 
@@ -25,7 +26,8 @@ export const getCategoryCards = createSelector(
           let items = [];
 
           programs.filter((program, i) => {
-            if (program.category === category.id) {
+            if (program.category === category.id ||
+              (category.id === FAVORITES && program.favorite)) {
               let name = program.name;
 
               if (name.length > NAME_LENGTH) {

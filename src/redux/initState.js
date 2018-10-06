@@ -18,6 +18,7 @@ export const initState = {
         name: "Blank Template",
         category: 0,
         description: "",
+        favorite: false,
         sets: [
           { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
         ],
@@ -35,8 +36,9 @@ export const initState = {
       {
         id: 1,
         name: "GreySkull LP",
-        category: 1,
+        category: 2,
         description: "Beginner strength program.",
+        favorite: true,
         sets: [
           {
             id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true,
@@ -100,8 +102,9 @@ export const initState = {
       {
         id: 2,
         name: "Starting Strength",
-        category: 1,
+        category: 2,
         description: "Another beginner strength program.",
+        favorite: false,
         sets: [
           { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
         ],
@@ -119,11 +122,11 @@ export const initState = {
     ],
     programCategories: [
       { id: 0, name: "All Categories" },
-      { id: 1, name: "Beginner" },
-      { id: 2, name: "Bodybuilding" },
-      { id: 3, name: "Conditioning" },
-      { id: 4, name: "Custom" },
-      { id: 5, name: "Favorites" },
+      { id: 1, name: "Favorites" },
+      { id: 2, name: "Beginner" },
+      { id: 3, name: "Bodybuilding" },
+      { id: 4, name: "Conditioning" },
+      { id: 5, name: "Custom" },
       { id: 6, name: "Olympic" },
       { id: 7, name: "Powerlifting" },
       { id: 8, name: "Strongman" },
@@ -138,13 +141,13 @@ export const initState = {
     selectedExerciseCategory: 0,
     selectedBodyPart: 0,
     exerciseLibrary: [
-      { id: 0, name: "", bodyPart: 0, category: 0 },
-      { id: 1, name: "Bench Press", bodyPart: 4, category: 2 },
-      { id: 2, name: "Barbell Row", bodyPart: 2, category: 2 },
-      { id: 3, name: "Squat", bodyPart: 7, category: 2 },
-      { id: 4, name: "Overhead Press", bodyPart: 8, category: 2 },
-      { id: 5, name: "Pull-up", bodyPart: 2, category: 3 },
-      { id: 6, name: "Deadlift", bodyPart: 6, category: 2 },
+      { id: 0, name: "", bodyPart: 0, category: 0, favorite: false, oneRepMax: 0 },
+      { id: 1, name: "Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
+      { id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, oneRepMax: 200 },
+      { id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, oneRepMax: 300 },
+      { id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, oneRepMax: 150 },
+      { id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, oneRepMax: 200 },
+      { id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, oneRepMax: 350 },
     ],
     bodyParts: [
       { id: 0, name: "All Body Parts" },

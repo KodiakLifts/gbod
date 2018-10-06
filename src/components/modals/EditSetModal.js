@@ -237,7 +237,7 @@ const createTypeItems = (types) => {
       <Picker.Item key={index} label={type.name} value={type.id} />
     );
   });
-}
+};
 
 EditSetModal.propTypes = {
   visible: PropTypes.bool,

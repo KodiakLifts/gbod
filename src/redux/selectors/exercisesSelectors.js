@@ -1,10 +1,11 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import ListCard from '../../components/cards/ListCard';
-import ExerciseItem from '../../components/cards/ProgramItem';
+import ExerciseItem from '../../components/cards/ExerciseItem';
 
 const ALL_CATEGORIES = 0;
 const ALL_BODY_PARTS = 0;
+const FAVORITES = 6;
 
 const getExercises = (state) => state.exerciseLibrary;
 
@@ -22,7 +23,8 @@ export const getLibraryCards = createSelector(
 
     exercises.forEach(exercise => {
       if (selectedCategory === ALL_CATEGORIES ||
-        selectedCategory === exercise.category) {
+        selectedCategory === exercise.category ||
+        (selectedCategory === FAVORITES && exercise.favorite)) {
         if (selectedBodyPart === ALL_BODY_PARTS ||
           selectedBodyPart === exercise.bodyPart) {
           if (!shownAlphabet.includes(exercise.name.charAt(0).toUpperCase())) {
@@ -45,8 +47,11 @@ export const getLibraryCards = createSelector(
             items.push(<ExerciseItem
               key={i}
               name={name}
+              libraryId={exercise.id}
               category={exercise.category}
               bodyPart={exercise.bodyPart}
+              favorite={exercise.favorite}
+              oneRepMax={exercise.oneRepMax}
             />);
           }
         });
