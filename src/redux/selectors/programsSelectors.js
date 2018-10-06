@@ -18,40 +18,45 @@ export const getCategoryCards = createSelector(
     let categoryCards = [];
 
     categories.forEach((category, index) => {
-      if (selectedCategory === ALL_CATEGORIES ||
-        selectedCategory === category.id) {
+      if (category.id !== 0) {
+        if (selectedCategory === ALL_CATEGORIES ||
+          selectedCategory === category.id) {
 
-        let items = [];
+          let items = [];
 
-        programs.filter((program, i) => {
-          if (program.category === category.id) {
-            let name = program.name;
+          programs.filter((program, i) => {
+            if (program.category === category.id) {
+              let name = program.name;
 
-            if (name.length > NAME_LENGTH) {
-              name = name.substring(0, NAME_LENGTH) + "..";
+              if (name.length > NAME_LENGTH) {
+                name = name.substring(0, NAME_LENGTH) + "..";
+              }
+
+              items.push(<ProgramItem
+                key={i}
+                name={name}
+                programId={program.id}
+                category={program.category}
+              />);
             }
+          });
 
-            items.push(<ProgramItem
-              key={i}
-              name={name}
-              programId={program.id}
-              category={program.category}
-            />);
-          }
-        });
+          items.sort((a, b) => { return a.props.name.localeCompare(b.props.name); });
 
-        let card =
-          <ListCard
-            key={index}
-            headerTitle={category.name}
-            items={items}
-          />;
+          let card =
+            <ListCard
+              key={index}
+              headerTitle={category.name}
+              items={items}
+            />;
 
 
-        categoryCards.push(card);
+          categoryCards.push(card);
+        }
+
       }
-
     });
     return categoryCards;
   }
+
 );
