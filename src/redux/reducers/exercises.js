@@ -1,8 +1,8 @@
 import {
   UPDATE_SELECTED_EXERCISE_CATEGORY,
   UPDATE_SELECTED_BODY_PART,
-  UPDATE_EXERCISE_DATA,
-  DELETE_EXERCISE
+  UPDATE_LIBRARY_EXERCISE_DATA,
+  DELETE_LIBRARY_EXERCISE
 } from '../actions/exercisesActions';
 
 export default function exercises(state = {}, action) {
@@ -11,7 +11,7 @@ export default function exercises(state = {}, action) {
       return updateSelectedExerciseCategory(state, action.categoryId);
     case UPDATE_SELECTED_BODY_PART:
       return updateSelectedBodyPart(state, action.bodyPartId);
-    case UPDATE_EXERCISE_DATA:
+    case UPDATE_LIBRARY_EXERCISE_DATA:
       return updateExerciseData(
         state,
         action.libraryId,
@@ -35,8 +35,24 @@ const updateExerciseData = (
   bodyPart,
   favorite
 ) => {
-
-}
+  const newState = {
+    ...state,
+    exerciseLibrary: state.exerciseLibrary.map(exercise => {
+      if (exercise.id === libraryId) {
+        return {
+          ...exercise,
+          oneRepMax,
+          name,
+          category,
+          bodyPart,
+          favorite
+        };
+      }
+      return exercise;
+    })
+  };
+  return newState;
+};
 
 const updateSelectedExerciseCategory = (state, categoryId) => {
   const newState = {

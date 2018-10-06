@@ -79,9 +79,9 @@ class ExerciseOptionsModal extends Component {
     } = this.props;
     const {
       tmpOneRepMax,
-      tmpBodyPart,
-      tmpCategory,
       tmpName,
+      tmpCategory,
+      tmpBodyPart,
       tmpFavorite,
       tmpDelete
     } = this.state;
@@ -92,9 +92,9 @@ class ExerciseOptionsModal extends Component {
       updateExerciseData(
         libraryId,
         tmpOneRepMax,
-        tmpBodyPart,
-        tmpCategory,
         tmpName,
+        tmpCategory,
+        tmpBodyPart,
         tmpFavorite,
       );
     }
