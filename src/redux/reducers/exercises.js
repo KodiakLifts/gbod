@@ -2,7 +2,7 @@ import {
   UPDATE_SELECTED_EXERCISE_CATEGORY,
   UPDATE_SELECTED_BODY_PART,
   UPDATE_LIBRARY_EXERCISE_DATA,
-  DELETE_LIBRARY_EXERCISE
+  DELETE_LIBRARY_EXERCISE,
 } from '../actions/exercisesActions';
 
 export default function exercises(state = {}, action) {
@@ -21,10 +21,16 @@ export default function exercises(state = {}, action) {
         action.bodyPart,
         action.favorite
       );
+    case DELETE_LIBRARY_EXERCISE:
+      return deleteExercise(state, action.libraryId)
     default:
       return state;
   }
 }
+
+const deleteExercise = (state, libraryId) => {
+  return state;
+};
 
 const updateExerciseData = (
   state,
