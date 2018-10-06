@@ -72,6 +72,8 @@ export default function activeWorkout(state = {}, action) {
 
 const removeSet = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
+  let currentExercise = state.activeWorkout.currentExercise;
+  let newExercises = state.programs[activeProgram].exercises;
 
   let newSets = state.programs[activeProgram].sets.filter(set =>
     set.id !== setId
@@ -81,12 +83,26 @@ const removeSet = (state, setId, exerciseId) => {
   });
 
   let currentSet = newSets.find(set => {
-    return set.exercise = exerciseId;
+    return set.exercise === exerciseId;
   });
 
-
-  if (currentSet == null) {
+  if (currentSet === undefined) {
     currentSet = newSets[0].id;
+
+    newExercises = newExercises.filter(exercise => {
+      return exercise.id !== exerciseId;
+    });
+
+    newExercises.forEach((exercise, index) => {
+      newSets.forEach(set => {
+        if (set.exercise === exercise.id) {
+          set.exercise = index;
+        }
+      });
+      exercise.id = index;
+    });
+
+    currentExercise = newExercises[0].id;
   }
 
   const newState = Object.assign({},
@@ -94,18 +110,21 @@ const removeSet = (state, setId, exerciseId) => {
     {
       activeWorkout: {
         ...state.activeWorkout,
-        set: currentSet
+        set: currentSet,
+        currentExercise: currentExercise
       },
       programs: state.programs.map(program => {
         if (program.id === activeProgram) {
           return {
             ...program,
-            sets: newSets
+            sets: newSets,
+            exercises: newExercises
           };
         }
         return program;
       })
     });
+
   return newState;
 };
 

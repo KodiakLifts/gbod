@@ -81,14 +81,12 @@ class EditSetModal extends Component {
   }
 
   save = () => {
-    console.log(this.props.currentSets)
     const {
       updateSetData,
       setId,
       closeModal,
       exerciseId,
       removeSet,
-      currentSets
     } = this.props;
     const {
       tmpWeight,
@@ -101,7 +99,7 @@ class EditSetModal extends Component {
     this.setState({ prevType: this.state.tmpType });
 
     if (tmpRemoveSet) {
-      removeSet(setId, exerciseId, currentSets);
+      removeSet(setId, exerciseId);
     } else {
       updateSetData(
         setId,
