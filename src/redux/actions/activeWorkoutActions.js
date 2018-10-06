@@ -38,12 +38,9 @@ export const removeSet = (setId, exerciseId, currentSets) => {
 };
 
 export const removeExercise = (exerciseId) => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: REMOVE_EXERCISE,
-      exerciseId
-    });
-
+  return {
+    type: REMOVE_EXERCISE,
+    exerciseId
   };
 };
 

@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateExerciseData, removeExercise, removeSet } from '../../redux/actions/activeWorkoutActions';
+import { updateExerciseData, removeExercise } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
@@ -33,7 +33,12 @@ class EditExerciseModal extends Component {
   }
 
   save = () => {
-    const { updateExerciseData, exerciseId, closeModal } = this.props;
+    const {
+      updateExerciseData,
+      exerciseId,
+      closeModal,
+      removeExercise
+    } = this.props;
     const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
     if (tmpRemove) {
       removeExercise(exerciseId);
@@ -45,6 +50,7 @@ class EditExerciseModal extends Component {
       );
     }
 
+    this.setState({ tmpRemove: false });
     closeModal();
   }
 
