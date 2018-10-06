@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker
+  Picker,
+  CheckBox
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateSetData } from '../../redux/actions/activeWorkoutActions';
+import { updateSetData, removeSet }
+  from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const COLORS = require('../../styles/Colors');
@@ -28,13 +30,18 @@ class EditSetModal extends Component {
     prevType: this.props.type,
     tmpType: this.props.type,
     tmpMin: this.props.min,
-    tmpSec: this.props.sec
+    tmpSec: this.props.sec,
+    tmpRemoveSet: false
   }
 
   componentWillReceiveProps(newProps) {
     if (this.props.reps !== newProps.reps) {
       this.setState({ tmpReps: newProps.reps });
     }
+  }
+
+  toggleRemove = (checked) => {
+    this.setState({ tmpRemoveSet: checked });
   }
 
   updateTmpWeight = (tmpWeight) => {
@@ -74,17 +81,39 @@ class EditSetModal extends Component {
   }
 
   save = () => {
-    const { updateSetData, setId, closeModal } = this.props;
-    const { tmpWeight, tmpReps, tmpType, tmpMin, tmpSec } = this.state;
-    this.setState({ prevType: this.state.tmpType });
-    updateSetData(
+    console.log(this.props.currentSets)
+    const {
+      updateSetData,
       setId,
+      closeModal,
+      exerciseId,
+      removeSet,
+      currentSets
+    } = this.props;
+    const {
       tmpWeight,
       tmpReps,
       tmpType,
       tmpMin,
-      tmpSec
-    );
+      tmpSec,
+      tmpRemoveSet,
+    } = this.state;
+    this.setState({ prevType: this.state.tmpType });
+
+    if (tmpRemoveSet) {
+      removeSet(setId, exerciseId, currentSets);
+    } else {
+      updateSetData(
+        setId,
+        tmpWeight,
+        tmpReps,
+        tmpType,
+        tmpMin,
+        tmpSec,
+      );
+    }
+
+    this.setState({ tmpRemoveSet: false });
     closeModal();
   }
 
@@ -95,7 +124,8 @@ class EditSetModal extends Component {
 
   render() {
     const { visible, weight, reps, min, sec, types } = this.props;
-    const { tmpType } = this.state;
+    const { tmpType, tmpRemoveSet } = this.state;
+
     return (
       <Modal
         transparent
@@ -112,7 +142,7 @@ class EditSetModal extends Component {
               </View>
               <View style={STYLE.cardColumnsContainer}>
 
-                <View style={STYLE.leftColumn}>
+                <View style={[STYLE.leftColumn, { paddingLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
                       Weight:
@@ -134,6 +164,12 @@ class EditSetModal extends Component {
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
                       Type:
+                    </Text>
+                  </View>
+
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Delete Set:
                     </Text>
                   </View>
 
@@ -208,6 +244,13 @@ class EditSetModal extends Component {
                       {createTypeItems(types)}
                     </Picker>
                   </View>
+
+                  <View style={[STYLE.rightItem, { paddingLeft: 22 }]}>
+                    <CheckBox
+                      value={tmpRemoveSet}
+                      onValueChange={this.toggleRemove}
+                    />
+                  </View>
                 </View>
               </View>
 
@@ -242,6 +285,7 @@ const createTypeItems = (types) => {
 EditSetModal.propTypes = {
   visible: PropTypes.bool,
   setId: PropTypes.number,
+  exerciseId: PropTypes.number,
   reps: PropTypes.number,
   weight: PropTypes.number,
   type: PropTypes.number,
@@ -250,11 +294,14 @@ EditSetModal.propTypes = {
   sec: PropTypes.number,
   closeModal: PropTypes.func,
   updateSetData: PropTypes.func,
+  removeSet: PropTypes.func,
+  currentSets: PropTypes.arrayOf(PropTypes.object)
 };
 
 const mapStateToProps = (state) => {
   return {
-    types: state.workoutData.setTypes
+    types: state.workoutData.setTypes,
+    currentSets: state.workoutData.programs[state.workoutData.activeWorkout.program].sets
   };
 };
 
@@ -262,6 +309,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateSetData: (setId, weight, reps, setType, min, sec) => {
       dispatch(updateSetData(setId, weight, reps, setType, min, sec));
+    },
+    removeSet: (setId, exerciseId, currentSets) => {
+      dispatch(removeSet(setId, exerciseId, currentSets));
     }
   };
 };

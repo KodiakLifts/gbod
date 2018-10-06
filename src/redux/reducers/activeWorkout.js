@@ -9,12 +9,13 @@ import {
   SET_TIMER,
   UPDATE_DAY_DATA,
   UPDATE_SET_REPS,
-  DELETE_DAY
+  DELETE_DAY,
+  REMOVE_EXERCISE,
+  REMOVE_SET
 } from '../actions/activeWorkoutActions';
 
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
-
     case UPDATE_ACTIVE_WORKOUT_UI:
       return updateActiveWorkoutUI(state, action.setId, action.exerciseId);
 
@@ -61,21 +62,63 @@ export default function activeWorkout(state = {}, action) {
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
 
+    case REMOVE_SET:
+      return removeSet(state, action.setId, action.exerciseId);
+
     default:
       return state;
   }
 }
 
+const removeSet = (state, setId, exerciseId) => {
+  const activeProgram = state.activeWorkout.program;
+
+  let newSets = state.programs[activeProgram].sets.filter(set =>
+    set.id !== setId
+  );
+  newSets.forEach((set, index) => {
+    set.id = index;
+  });
+
+  let currentSet = newSets.find(set => {
+    return set.exercise = exerciseId;
+  });
+
+
+  if (currentSet == null) {
+    currentSet = newSets[0].id;
+  }
+
+  const newState = Object.assign({},
+    state,
+    {
+      activeWorkout: {
+        ...state.activeWorkout,
+        set: currentSet
+      },
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            sets: newSets
+          };
+        }
+        return program;
+      })
+    });
+  return newState;
+};
+
 const deleteDay = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
 
-  const newDays =
+  let newDays =
     state.programs[activeProgram].days.filter(day => day.id !== dayId);
   newDays.forEach((day, index) => {
     day.id = index;
   });
 
-  const newSets = state.programs[activeProgram].sets.filter(set =>
+  let newSets = state.programs[activeProgram].sets.filter(set =>
     set.day !== dayId
   );
   newSets.forEach((set, index) => {
@@ -85,7 +128,7 @@ const deleteDay = (state, dayId) => {
     }
   });
 
-  const newExercises =
+  let newExercises =
     state.programs[activeProgram].exercises.filter(exercise =>
       exercise.day !== dayId
     );
@@ -104,25 +147,26 @@ const deleteDay = (state, dayId) => {
   const currentDay = newDays[0].id;
   const currentExercise = newExercises[0].id;
 
-  const newState = {
-    ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      day: currentDay,
-      currentExercise: currentExercise
-    },
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          days: newDays,
-          exercises: newExercises,
-          sets: newSets
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      activeWorkout: {
+        ...state.activeWorkout,
+        day: currentDay,
+        currentExercise: currentExercise
+      },
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            days: newDays,
+            exercises: newExercises,
+            sets: newSets
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
@@ -135,58 +179,61 @@ const updateDayData = (state, dayId, name) => {
 
   const currentExercise = exercises[0].id;
 
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      started: false
-    },
-    activeWorkout: {
-      ...state.activeWorkout,
-      day: dayId,
-      currentExercise: currentExercise
-    },
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            return { ...set, complete: false };
-          }),
-          days: state.programs[activeProgram].days.map(day => {
-            if (day.id === dayId) {
-              return { ...day, name: name };
-            }
-            return day;
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        started: false
+      },
+      activeWorkout: {
+        ...state.activeWorkout,
+        day: dayId,
+        currentExercise: currentExercise
+      },
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              return { ...set, complete: false };
+            }),
+            days: state.programs[activeProgram].days.map(day => {
+              if (day.id === dayId) {
+                return { ...day, name: name };
+              }
+              return day;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
 const setTimer = (state, minutes, seconds) => {
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      minutes,
-      seconds
-    }
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        minutes,
+        seconds
+      }
+    });
   return newState;
 };
 
 const stopTimer = (state) => {
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      ...{ started: false }
-    }
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        ...{ started: false }
+      }
+    });
   return newState;
 };
 
@@ -206,98 +253,102 @@ const decrementTimer = (state, setId) => {
     newSec = 59;
   }
 
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      ...{ started: started },
-      ...{ minutes: newMin },
-      ...{ seconds: newSec },
-      ...{ set: setId }
-    }
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        ...{ started: started },
+        ...{ minutes: newMin },
+        ...{ seconds: newSec },
+        ...{ set: setId }
+      }
+    });
 
   return newState;
 };
 
 const updateExerciseData = (state, exerciseId, supersetNext, includeWarmup) => {
   const activeProgram = state.activeWorkout.program;
-  const newState = {
-    ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
-        return {
-          ...program,
-          exercises: state.programs[activeProgram].exercises.map(exercise => {
-            if (exercise.id === exerciseId) {
-              return {
-                ...exercise,
-                ...{ supersetNext: supersetNext },
-                ...{ includeWarmup: includeWarmup }
-              };
-            }
-            return exercise;
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      programs: state.programs.map((program, index) => {
+        if (index === activeProgram) {
+          return {
+            ...program,
+            exercises: state.programs[activeProgram].exercises.map(exercise => {
+              if (exercise.id === exerciseId) {
+                return {
+                  ...exercise,
+                  ...{ supersetNext: supersetNext },
+                  ...{ includeWarmup: includeWarmup }
+                };
+              }
+              return exercise;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
 const updateSetReps = (state, setId, reps) => {
   const activeProgram = state.activeWorkout.program;
-  const newState = {
-    ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            if (set.id === setId) {
-              return {
-                ...set,
-                ...{ reps: reps },
-              };
-            }
-            return set;
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      programs: state.programs.map((program, index) => {
+        if (index === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              if (set.id === setId) {
+                return {
+                  ...set,
+                  ...{ reps: reps },
+                };
+              }
+              return set;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
 const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
   const activeProgram = state.activeWorkout.program;
 
-  const newState = {
-    ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            if (set.id === setId) {
-              return {
-                ...set,
-                ...{ weight: weight },
-                ...{ reps: reps },
-                ...{ type: setType },
-                ...{ restMinutes: min },
-                ...{ restSeconds: sec }
-              };
-            }
-            return set;
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      programs: state.programs.map((program, index) => {
+        if (index === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              if (set.id === setId) {
+                return {
+                  ...set,
+                  ...{ weight: weight },
+                  ...{ reps: reps },
+                  ...{ type: setType },
+                  ...{ restMinutes: min },
+                  ...{ restSeconds: sec }
+                };
+              }
+              return set;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
@@ -310,28 +361,29 @@ const resetWorkout = (state) => {
 
   const currentExercise = exercises[0].id;
 
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      started: false
-    },
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: currentExercise
-    },
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            return { ...set, ...{ complete: false } };
-          })
-        };
-      }
-      return program;
-    })
-  }
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        started: false
+      },
+      activeWorkout: {
+        ...state.activeWorkout,
+        currentExercise: currentExercise
+      },
+      programs: state.programs.map((program, index) => {
+        if (index === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              return { ...set, ...{ complete: false } };
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
@@ -348,29 +400,30 @@ const finishWorkout = (state) => {
 
   const currentExercise = exercises[0].id;
 
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      started: false
-    },
-    activeWorkout: {
-      ...state.activeWorkout,
-      day: activeDay,
-      currentExercise: currentExercise
-    },
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            return { ...set, ...{ complete: false } };
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        started: false
+      },
+      activeWorkout: {
+        ...state.activeWorkout,
+        day: activeDay,
+        currentExercise: currentExercise
+      },
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              return { ...set, ...{ complete: false } };
+            })
+          };
+        }
+        return program;
+      })
+    });
 
   return newState;
 };
@@ -393,40 +446,40 @@ const toggleSetComplete = (state, setId, exerciseId) => {
   const setRestSeconds =
     state.programs[activeProgram].sets[setId].restSeconds;
 
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      ...{ set: setId },
-      ...{ minutes: setRestMinutes },
-      ...{ seconds: setRestSeconds },
-    },
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            if (set.id === setId) {
-              return {
-                ...set, ...{ complete: !setCompleteVal }
-              };
-            }
-            return set;
-          }),
-          exercises: state.programs[activeProgram].exercises.map(exercise => {
-            if (exerciseId === exercise.id) {
-              return {
-                ...exercise, ...{ complete: false }
-              };
-            }
-            return exercise;
-          })
-        };
-      }
-      return program;
-    })
-  };
-
+  const newState = Object.assign({},
+    state,
+    {
+      timer: {
+        ...state.timer,
+        ...{ set: setId },
+        ...{ minutes: setRestMinutes },
+        ...{ seconds: setRestSeconds },
+      },
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            sets: state.programs[activeProgram].sets.map(set => {
+              if (set.id === setId) {
+                return {
+                  ...set, ...{ complete: !setCompleteVal }
+                };
+              }
+              return set;
+            }),
+            exercises: state.programs[activeProgram].exercises.map(exercise => {
+              if (exerciseId === exercise.id) {
+                return {
+                  ...exercise, ...{ complete: false }
+                };
+              }
+              return exercise;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
@@ -442,23 +495,24 @@ const updateExerciseComplete = (state, exerciseId) => {
     return set.complete === true;
   });
 
-  const newState = {
-    ...state,
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          exercises: state.programs[activeProgram].exercises.map(exercise => {
-            if (exercise.id === exerciseId) {
-              return { ...exercise, ...{ complete: exerciseComplete } };
-            }
-            return exercise;
-          })
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      programs: state.programs.map(program => {
+        if (program.id === activeProgram) {
+          return {
+            ...program,
+            exercises: state.programs[activeProgram].exercises.map(exercise => {
+              if (exercise.id === exerciseId) {
+                return { ...exercise, ...{ complete: exerciseComplete } };
+              }
+              return exercise;
+            })
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 };
 
@@ -508,12 +562,13 @@ const updateCurrentExercise = (state, exerciseId) => {
     }
   }
 
-  const newState = {
-    ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: updatedActiveExerciseId,
-    }
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      activeWorkout: {
+        ...state.activeWorkout,
+        currentExercise: updatedActiveExerciseId,
+      }
+    });
   return newState;
 };

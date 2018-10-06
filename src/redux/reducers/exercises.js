@@ -41,37 +41,40 @@ const updateExerciseData = (
   bodyPart,
   favorite
 ) => {
-  const newState = {
-    ...state,
-    exerciseLibrary: state.exerciseLibrary.map(exercise => {
-      if (exercise.id === libraryId) {
-        return {
-          ...exercise,
-          oneRepMax,
-          name,
-          category,
-          bodyPart,
-          favorite
-        };
-      }
-      return exercise;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      exerciseLibrary: state.exerciseLibrary.map(exercise => {
+        if (exercise.id === libraryId) {
+          return {
+            ...exercise,
+            oneRepMax,
+            name,
+            category,
+            bodyPart,
+            favorite
+          };
+        }
+        return exercise;
+      })
+    });
   return newState;
 };
 
 const updateSelectedExerciseCategory = (state, categoryId) => {
-  const newState = {
-    ...state,
-    selectedExerciseCategory: categoryId
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      selectedExerciseCategory: categoryId
+    });
   return newState;
 };
 
 const updateSelectedBodyPart = (state, bodyPartId) => {
-  const newState = {
-    ...state,
-    selectedBodyPart: bodyPartId
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      selectedBodyPart: bodyPartId
+    });
   return newState;
 };

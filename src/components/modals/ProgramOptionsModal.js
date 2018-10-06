@@ -118,7 +118,7 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Delete:
+                      Delete Program:
                     </Text>
                   </View>
                 </View>

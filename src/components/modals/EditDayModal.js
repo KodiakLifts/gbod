@@ -124,7 +124,7 @@ class EditDayModal extends Component {
 
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Delete:
+                      Delete Day:
                     </Text>
                   </View>
                 </View>

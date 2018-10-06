@@ -9,6 +9,8 @@ export const DECREMENT_TIMER = 'DECREMENT_TIMER';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_DAY_DATA = 'UPDATE_DAY_DATA';
 export const DELETE_DAY = 'DELETE_DAY';
+export const REMOVE_EXERCISE = 'DELETE_EXERCISE';
+export const REMOVE_SET = 'REMOVE_SET';
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   UPDATE_ACTIVE_WORKOUT_UI,
@@ -21,8 +23,29 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   SET_TIMER,
   UPDATE_DAY_DATA,
   UPDATE_SET_REPS,
-  DELETE_DAY
+  DELETE_DAY,
+  REMOVE_EXERCISE,
+  REMOVE_SET
 ];
+
+export const removeSet = (setId, exerciseId, currentSets) => {
+  return {
+    type: REMOVE_SET,
+    setId,
+    exerciseId,
+    currentSets
+  };
+};
+
+export const removeExercise = (exerciseId) => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: REMOVE_EXERCISE,
+      exerciseId
+    });
+
+  };
+};
 
 export const deleteDay = (dayId) => {
   return {

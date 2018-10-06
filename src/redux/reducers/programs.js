@@ -23,10 +23,11 @@ export default function programs(state = {}, action) {
 }
 
 const updateSelectedProgramCategory = (state, categoryId) => {
-  const newState = {
-    ...state,
-    selectedProgramCategory: categoryId
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      selectedProgramCategory: categoryId
+    });
   return newState;
 }
 
@@ -43,14 +44,15 @@ const deleteProgram = (state, programId) => {
     activeProgram = newPrograms[0].id;
   }
 
-  const newState = {
-    ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      program: activeProgram
-    },
-    programs: newPrograms
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      activeWorkout: {
+        ...state.activeWorkout,
+        program: activeProgram
+      },
+      programs: newPrograms
+    });
   return newState;
 };
 
@@ -60,22 +62,23 @@ const updateProgramData = (state, programId, current, name) => {
     activeProgram = programId :
     activeProgram = state.activeWorkout.program;
 
-  const newState = {
-    ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      program: activeProgram
-    },
-    programs: state.programs.map(program => {
-      if (program.id === programId) {
-        return {
-          ...program,
-          name: name
-        };
-      }
-      return program;
-    })
-  };
+  const newState = Object.assign({},
+    state,
+    {
+      activeWorkout: {
+        ...state.activeWorkout,
+        program: activeProgram
+      },
+      programs: state.programs.map(program => {
+        if (program.id === programId) {
+          return {
+            ...program,
+            name: name
+          };
+        }
+        return program;
+      })
+    });
   return newState;
 
 };

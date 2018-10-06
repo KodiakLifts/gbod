@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateExerciseData } from '../../redux/actions/activeWorkoutActions';
+import { updateExerciseData, removeExercise, removeSet } from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
@@ -16,29 +16,35 @@ const STYLE = require('./modalStyle');
 class EditExerciseModal extends Component {
   state = {
     tmpSupersetNext: this.props.supersetNext,
-    tmpIncludeWarmup: this.props.includeWarmup
+    tmpIncludeWarmup: this.props.includeWarmup,
+    tmpRemove: false,
   }
 
   supersetNextToggle = (checked) => {
-    this.setState({
-      tmpSupersetNext: checked
-    });
+    this.setState({ tmpSupersetNext: checked });
   }
 
   includeWarmupToggle = (checked) => {
-    this.setState({
-      tmpIncludeWarmup: checked
-    });
+    this.setState({ tmpIncludeWarmup: checked });
+  }
+
+  toggleRemove = (checked) => {
+    this.setState({ tmpRemove: checked });
   }
 
   save = () => {
     const { updateExerciseData, exerciseId, closeModal } = this.props;
-    const { tmpSupersetNext, tmpIncludeWarmup } = this.state;
-    updateExerciseData(
-      exerciseId,
-      tmpSupersetNext,
-      tmpIncludeWarmup
-    );
+    const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
+    if (tmpRemove) {
+      removeExercise(exerciseId);
+    } else {
+      updateExerciseData(
+        exerciseId,
+        tmpSupersetNext,
+        tmpIncludeWarmup
+      );
+    }
+
     closeModal();
   }
 
@@ -53,7 +59,7 @@ class EditExerciseModal extends Component {
 
   render() {
     const { visible, lastExercise } = this.props;
-    const { tmpSupersetNext, tmpIncludeWarmup } = this.state;
+    const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
 
     return (
       <View>
@@ -83,6 +89,11 @@ class EditExerciseModal extends Component {
                         Include Warmup Sets:
                       </Text>
                     </View>
+                    <View style={STYLE.leftItem}>
+                      <Text style={STYLE.modalText}>
+                        Remove Exercise:
+                      </Text>
+                    </View>
 
                   </View>
 
@@ -98,6 +109,12 @@ class EditExerciseModal extends Component {
                       <CheckBox
                         value={tmpIncludeWarmup}
                         onValueChange={this.includeWarmupToggle}
+                      />
+                    </View>
+                    <View style={STYLE.rightItem}>
+                      <CheckBox
+                        value={tmpRemove}
+                        onValueChange={this.toggleRemove}
                       />
                     </View>
                   </View>
@@ -127,13 +144,17 @@ EditExerciseModal.propTypes = {
   supersetNext: PropTypes.bool,
   includeWarmup: PropTypes.bool,
   closeModal: PropTypes.func,
-  updateExerciseData: PropTypes.func
+  updateExerciseData: PropTypes.func,
+  removeExercise: PropTypes.func
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     updateExerciseData: (exerciseId, supersetNext, includeWarmup) => {
       dispatch(updateExerciseData(exerciseId, supersetNext, includeWarmup));
+    },
+    removeExercise: (exerciseId) => {
+      dispatch(removeExercise(exerciseId));
     }
   };
 };

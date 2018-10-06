@@ -66,7 +66,6 @@ const getCurrentExercise = (state) => state.activeWorkout.currentExercise;
 export const getActiveWorkoutCards = createSelector(
   [getActiveSets, getActiveExercises, getCurrentExercise],
   (activeSets, activeExercises, currentExercise) => {
-
     const workoutCards = [];
 
     activeExercises.forEach((exercise, index) => {

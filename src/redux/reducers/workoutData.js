@@ -8,11 +8,9 @@ import exercises from './exercises';
 export default function workoutData(state = {}, action) {
   if (ACTIVE_WORKOUT_ACTIONS.includes(action.type)) {
     return activeWorkout(state, action);
-  }
-  if (PROGRAMS_ACTIONS.includes(action.type)) {
+  } else if (PROGRAMS_ACTIONS.includes(action.type)) {
     return programs(state, action);
-  }
-  if (EXERCISES_ACTIONS.includes(action.type)) {
+  } else if (EXERCISES_ACTIONS.includes(action.type)) {
     return exercises(state, action);
   } else {
     return state;
