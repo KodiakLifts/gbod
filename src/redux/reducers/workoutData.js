@@ -1,5 +1,5 @@
 import { ACTIVE_WORKOUT_ACTIONS } from '../actions/activeWorkoutActions';
-import activeWorkout from './activeWorkout';
+import activeWorkout from './activeWorkout/activeWorkout';
 import { PROGRAMS_ACTIONS } from '../actions/programsActions';
 import programs from './programs';
 import { EXERCISES_ACTIONS } from '../actions/exercisesActions';
