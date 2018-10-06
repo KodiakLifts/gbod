@@ -51,5 +51,8 @@ class ExerciseItem extends Component {
 }
 
 ExerciseItem.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
+  libraryId: PropTypes.number,
+  category: PropTypes.number,
+  bodyPart: PropTypes.number
 };

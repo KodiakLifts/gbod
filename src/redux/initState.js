@@ -143,7 +143,7 @@ export const initState = {
       { id: 2, name: "Barbell Row", bodyPart: 2, category: 2 },
       { id: 3, name: "Squat", bodyPart: 7, category: 2 },
       { id: 4, name: "Overhead Press", bodyPart: 8, category: 2 },
-      { id: 5, name: "Pull-up", bodyPart: 2, category: 2 },
+      { id: 5, name: "Pull-up", bodyPart: 2, category: 3 },
       { id: 6, name: "Deadlift", bodyPart: 6, category: 2 },
     ],
     bodyParts: [
