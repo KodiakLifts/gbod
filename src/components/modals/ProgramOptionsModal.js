@@ -6,7 +6,8 @@ import {
   TouchableWithoutFeedback,
   View,
   CheckBox,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -62,12 +63,24 @@ class ProgramOptionsModal extends Component {
       updateProgramData,
       deleteProgram,
       programId,
-      closeModal
+      closeModal,
+      title
     } = this.props;
     const { tmpCurrentProgram, tmpName, tmpDelete } = this.state;
 
     if (tmpDelete) {
-      deleteProgram(programId);
+      Alert.alert(
+        'Delete Exercise',
+        'Are you sure you want to delete '
+        + title + " from the programs library?",
+        [
+          { text: 'CONFIRM', onPress: () => deleteProgram(programId) },
+          {
+            text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
+          }
+        ],
+        { cancelable: false }
+      );
     } else {
       updateProgramData(
         programId,

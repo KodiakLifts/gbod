@@ -167,7 +167,7 @@ class EditSetModal extends Component {
 
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Delete Set:
+                      Remove Set:
                     </Text>
                   </View>
 

@@ -7,7 +7,8 @@ import {
   View,
   CheckBox,
   TextInput,
-  Picker
+  Picker,
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -75,7 +76,8 @@ class ExerciseOptionsModal extends Component {
       libraryId,
       closeModal,
       deleteExercise,
-      updateExerciseData
+      updateExerciseData,
+      title
     } = this.props;
     const {
       tmpOneRepMax,
@@ -87,7 +89,18 @@ class ExerciseOptionsModal extends Component {
     } = this.state;
 
     if (tmpDelete) {
-      deleteExercise(libraryId);
+      Alert.alert(
+        'Delete Exercise',
+        'Are you sure you want to delete '
+        + title + " from the exercise library?",
+        [
+          { text: 'CONFIRM', onPress: () => deleteExercise(libraryId) },
+          {
+            text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
+          }
+        ],
+        { cancelable: false }
+      );
     } else {
       updateExerciseData(
         libraryId,

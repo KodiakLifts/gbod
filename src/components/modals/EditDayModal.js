@@ -7,7 +7,8 @@ import {
   View,
   Picker,
   TextInput,
-  CheckBox
+  CheckBox,
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import {
@@ -66,11 +67,32 @@ class EditDayModal extends Component {
     const { tmpDayId, tmpName, tmpDelete } = this.state;
 
     this.setState({ prevDayId: tmpDayId });
-    updateDayData(
-      tmpDayId,
-      tmpName,
-      tmpDelete
-    );
+    if (tmpDelete) {
+      Alert.alert(
+        'Delete Exercise',
+        'Are you sure you want to delete '
+        + tmpName + " from the exercise library?",
+        [
+          {
+            text: 'CONFIRM', onPress: () => updateDayData(
+              tmpDayId,
+              tmpName,
+              tmpDelete
+            )
+          },
+          {
+            text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      updateDayData(
+        tmpDayId,
+        tmpName,
+        tmpDelete
+      );
+    }
 
     this.setState({ tmpDelete: false });
     closeModal();
