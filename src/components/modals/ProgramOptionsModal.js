@@ -5,47 +5,51 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker,
-  TextInput,
   CheckBox,
+  TextInput,
   Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
-import {
-  updateDayData,
-  deleteDay
-} from '../../redux/actions/activeWorkoutActions';
 import { connect } from 'react-redux';
+import {
+  updateProgramData,
+  deleteProgram
+} from '../../redux/actions/programsActions';
 
 const STYLE = require('./modalStyle');
 const COLORS = require('../../styles/Colors');
 
-const TEXT_ENTRY_WIDTH = 70;
+const TEXT_ENTRY_WIDTH = 160;
 
-class EditDayModal extends Component {
+class ProgramOptionsModal extends Component {
   state = {
-    prevDayId: this.props.currentDay,
-    tmpDayId: this.props.currentDay,
-    placeHolder: this.props.days[this.props.currentDay].name,
-    tmpName: this.props.days[this.props.currentDay].name,
+    tmpCurrentProgram: this.props.isCurrentProgram,
+    tmpName: this.props.title,
     tmpDelete: false
   }
 
   componentWillReceiveProps(newProps) {
-    if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
-      this.setState({ placeHolder: newProps.days[newProps.currentDay].name });
-    }
-    if (this.state.tmpDayId !== newProps.currentDay) {
-      this.setState({ tmpDayId: newProps.currentDay });
+    if (this.props.isCurrentProgram !== newProps.isCurrentProgram) {
+      this.setState({ tmpCurrentProgram: newProps.isCurrentProgram });
     }
   }
 
   updateTmpName = (tmpName) => {
     if (tmpName == null) {
-      this.setState({ tmpName: this.props.days[this.state.currentDay].name });
+      this.setState({ tmpName: this.props.title });
     } else {
       this.setState({ tmpName: tmpName });
     }
+  }
+
+  cancel = () => {
+    this.props.closeModal();
+  }
+
+  toggleCurrentProgram = (checked) => {
+    this.setState({
+      tmpCurrentProgram: checked
+    });
   }
 
   toggleDelete = (checked) => {
@@ -54,32 +58,23 @@ class EditDayModal extends Component {
     });
   }
 
-  updateTmpDay = (dayId) => {
-    this.setState({
-      tmpDayId: dayId,
-      tmpName: this.props.days[dayId].name,
-      placeHolder: this.props.days[dayId].name
-    });
-  }
-
   save = () => {
-    const { updateDayData, closeModal } = this.props;
-    const { tmpDayId, tmpName, tmpDelete } = this.state;
+    const {
+      updateProgramData,
+      deleteProgram,
+      programId,
+      closeModal,
+      title
+    } = this.props;
+    const { tmpCurrentProgram, tmpName, tmpDelete } = this.state;
 
-    this.setState({ prevDayId: tmpDayId });
     if (tmpDelete) {
       Alert.alert(
         'Delete Exercise',
         'Are you sure you want to delete '
-        + tmpName + ' from the exercise library?',
+        + title + " from the programs library?",
         [
-          {
-            text: 'CONFIRM', onPress: () => updateDayData(
-              tmpDayId,
-              tmpName,
-              tmpDelete
-            )
-          },
+          { text: 'CONFIRM', onPress: () => deleteProgram(programId) },
           {
             text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
           }
@@ -87,33 +82,18 @@ class EditDayModal extends Component {
         { cancelable: false }
       );
     } else {
-      updateDayData(
-        tmpDayId,
-        tmpName,
-        tmpDelete
+      updateProgramData(
+        programId,
+        tmpCurrentProgram,
+        tmpName
       );
     }
-
-    this.setState({ tmpDelete: false });
-    closeModal();
-  }
-
-  cancel = () => {
-    const { closeModal, days, currentDay } = this.props;
-    const { prevDayId } = this.state;
-
-    this.setState({
-      tmpDayId: prevDayId,
-      tmpName: days[currentDay].name,
-      tmpDelete: false
-    });
     closeModal();
   }
 
   render() {
-    const { visible, title, days } = this.props;
-    const { tmpDayId, placeHolder } = this.state;
-    const deleteDisable = days.length === 1;
+    const { visible, title, isCurrentProgram } = this.props;
+    const { tmpCurrentProgram, tmpDelete } = this.state;
     return (
       <Modal
         transparent
@@ -126,59 +106,76 @@ class EditDayModal extends Component {
         >
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
-              <View style={[STYLE.modalHeader, { marginBottom: 20 }]}>
-                {title}
+              <View style={STYLE.modalHeader}>
+                <Text style={STYLE.modalHeaderText}>
+                  {title}
+                </Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
 
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Select Day:
+                      Current Program:
                     </Text>
                   </View>
-
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
                       Rename:
                     </Text>
                   </View>
-
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Delete Day:
+                      Copy:
+                    </Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>
+                      Delete Program:
                     </Text>
                   </View>
                 </View>
 
-                <View style={STYLE.rightColumn}>
-                  <View style={STYLE.rightItem}>
-                    <Picker
-                      style={STYLE.picker}
-                      selectedValue={tmpDayId}
-                      onValueChange={this.updateTmpDay}>
-                      {createDayItems(days)}
-                    </Picker>
-                  </View>
 
+
+                <View style={
+                  [STYLE.rightColumn, { alignItems: 'center', paddingRight: 6 }]}>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      disabled={isCurrentProgram}
+                      value={tmpCurrentProgram}
+                      onValueChange={this.toggleCurrentProgram}
+                    />
+                  </View>
                   <View style={STYLE.rightItem}>
                     <View style={STYLE.textInputContainer}>
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
-                        placeholder={placeHolder}
+                        placeholder={title}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={20}
+                        maxLength={30}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
                   </View>
-
-                  <View style={[STYLE.rightItem, { paddingLeft: 26 }]}>
+                  <View style={STYLE.rightItem}>
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
+                        keyboardAppearance="dark"
+                        placeholder={"Copy Name"}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.copy}
+                        maxLength={30}
+                        width={TEXT_ENTRY_WIDTH}
+                      />
+                    </View>
+                  </View>
+                  <View style={STYLE.rightItem}>
                     <CheckBox
-                      disabled={deleteDisable}
-                      value={this.state.tmpDelete}
+                      value={tmpDelete}
                       onValueChange={this.toggleDelete}
                     />
                   </View>
@@ -205,46 +202,33 @@ class EditDayModal extends Component {
   }
 }
 
-const createDayItems = (days) => {
-  const dayItems = days.map((day, index) => {
-    return (
-      <Picker.Item key={index} label={day.name} value={day.id} />
-    );
-  });
-  return (dayItems);
-};
-
-EditDayModal.propTypes = {
-  title: PropTypes.object,
+ProgramOptionsModal.propTypes = {
+  title: PropTypes.string,
   visible: PropTypes.bool,
-  currentDay: PropTypes.number,
-  days: PropTypes.arrayOf(PropTypes.object),
+  isCurrentProgram: PropTypes.bool,
+  programId: PropTypes.number,
+  category: PropTypes.number,
   closeModal: PropTypes.func,
-  updateDayData: PropTypes.func,
-  name: PropTypes.string,
-  deleteDay: PropTypes.func
+  updateProgramData: PropTypes.func,
+  deleteProgram: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    days:
-      state
-        .workoutData
-        .programs[state.workoutData.activeWorkout.program]
-        .days,
-    currentDay: state.workoutData.activeWorkout.day,
+    isCurrentProgram:
+      state.workoutData.activeWorkout.program === ownProps.programId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateDayData: (dayId, name, remove) => {
-      dispatch(updateDayData(dayId, name, remove));
+    updateProgramData: (programId, current, name) => {
+      dispatch(updateProgramData(programId, current, name));
     },
-    deleteDay: (dayId) => {
-      dispatch(deleteDay(dayId));
+    deleteProgram: (programId) => {
+      dispatch(deleteProgram(programId));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditDayModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ProgramOptionsModal);

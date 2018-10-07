@@ -31,7 +31,7 @@ const MainTabs = createBottomTabNavigator({
         return <Icon name={iconName} size={25} color={tintColor} />;
       },
     }),
-    initialRouteName: 'Workout',
+    initialRouteName: 'ProgramsExercises',
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,

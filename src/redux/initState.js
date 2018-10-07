@@ -8,17 +8,42 @@ export const initState = {
       set: 0
     },
     activeWorkout: {
-      program: 0,
+      program: 1,
       day: 0,
       currentExercise: 0,
     },
     programs: [
       {
         id: 0,
-        name: "GreySkull LP",
+        name: "Blank Template",
         category: 0,
+        description: "",
+        favorite: false,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true },
+          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+        ],
+        exercises: [
+          {
+            id: 0, libraryId: 0, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, increaseRule: "",
+            barType: "", units: "", note: ""
+          }
+        ],
+        days: [
+          { id: 0, name: "" }
+        ]
+      },
+      {
+        id: 1,
+        name: "GreySkull LP",
+        category: 2,
+        description: "Beginner strength program.",
+        favorite: true,
+        sets: [
+          {
+            id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true,
+            percentage: true, percent: 50
+          },
           { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: 1, complete: false, restMinutes: 4, restSeconds: 0, timerOn: true },
           { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: 2, complete: false, restMinutes: 5, restSeconds: 0, timerOn: true },
           { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
@@ -39,32 +64,32 @@ export const initState = {
         ],
         exercises: [
           {
-            id: 0, libraryId: 0, day: 0, complete: false,
+            id: 0, libraryId: 1, day: 0, complete: false,
             supersetNext: true, includeWarmup: true, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 1, libraryId: 1, day: 0, complete: false,
+            id: 1, libraryId: 2, day: 0, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 2, libraryId: 2, day: 0, complete: false,
+            id: 2, libraryId: 3, day: 0, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 3, libraryId: 3, day: 1, complete: false,
+            id: 3, libraryId: 4, day: 1, complete: false,
             supersetNext: true, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 4, libraryId: 4, day: 1, complete: false,
+            id: 4, libraryId: 5, day: 1, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
           {
-            id: 5, libraryId: 5, day: 1, complete: false,
+            id: 5, libraryId: 6, day: 1, complete: false,
             supersetNext: false, includeWarmup: false, increaseRule: "",
             barType: "", units: "", note: ""
           },
@@ -74,20 +99,80 @@ export const initState = {
           { id: 1, name: "B" },
         ]
       },
+      {
+        id: 2,
+        name: "Starting Strength",
+        category: 2,
+        description: "Another beginner strength program.",
+        favorite: false,
+        sets: [
+          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+        ],
+        exercises: [
+          {
+            id: 0, libraryId: 0, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, increaseRule: "",
+            barType: "", units: "", note: ""
+          }
+        ],
+        days: [
+          { id: 0, name: "" }
+        ]
+      },
     ],
+    programCategories: [
+      { id: 0, name: "All Categories" },
+      { id: 1, name: "Favorites" },
+      { id: 2, name: "Beginner" },
+      { id: 3, name: "Bodybuilding" },
+      { id: 4, name: "Conditioning" },
+      { id: 5, name: "Custom" },
+      { id: 6, name: "Olympic" },
+      { id: 7, name: "Powerlifting" },
+      { id: 8, name: "Strongman" },
+    ],
+    selectedProgramCategory: 0,
     setTypes: [
       { id: 0, name: "Warmup" },
       { id: 1, name: "Normal" },
       { id: 2, name: "AMRAP" },
       { id: 3, name: "Dropset" }
     ],
+    selectedExerciseCategory: 0,
+    selectedBodyPart: 0,
     exerciseLibrary: [
-      { id: 0, name: "Bench Press" },
-      { id: 1, name: "Barbell Row" },
-      { id: 2, name: "Squat" },
-      { id: 3, name: "Overhead Press" },
-      { id: 4, name: "Pull-up" },
-      { id: 5, name: "Deadlift" },
+      { id: 0, name: "", bodyPart: 0, category: 0, favorite: false, oneRepMax: 0 },
+      { id: 1, name: "Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
+      { id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, oneRepMax: 200 },
+      { id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, oneRepMax: 300 },
+      { id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, oneRepMax: 150 },
+      { id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, oneRepMax: 200 },
+      { id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, oneRepMax: 350 },
+    ],
+    bodyParts: [
+      { id: 0, name: "All Body Parts" },
+      { id: 1, name: "Arms" },
+      { id: 2, name: "Back" },
+      { id: 3, name: "Cardio" },
+      { id: 4, name: "Chest" },
+      { id: 5, name: "Core" },
+      { id: 6, name: "Full Body" },
+      { id: 7, name: "Legs" },
+      { id: 8, name: "Shoulders" },
+      { id: 9, name: "Other" }
+    ],
+    exerciseCategories: [
+      { id: 0, name: "All Categories" },
+      { id: 1, name: "Assisted" },
+      { id: 2, name: "Barbell" },
+      { id: 3, name: "Bodyweight" },
+      { id: 4, name: "Conditioning" },
+      { id: 5, name: "Dumbbell" },
+      { id: 6, name: "Favorites" },
+      { id: 7, name: "Machine" },
+      { id: 8, name: "Olympic" },
+      { id: 9, name: "Other" },
+      { id: 10, name: "Strongman" }
     ]
   }
 };

@@ -36,6 +36,20 @@ module.exports = StyleSheet.create({
     color: 'white',
     textAlignVertical: 'center',
     includeFontPadding: false
+  },
+  fab: {
+    borderWidth: 3,
+    borderColor: 'rgba(0,0,0,0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 70,
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    height: 70,
+    backgroundColor: COLORS.SECONDARYCOLOR,
+    borderRadius: 40,
+    elevation: 3
   }
 
 

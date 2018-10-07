@@ -1,41 +1,73 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Picker } from 'react-native';
 import SubScreenTemplate from '../templates/SubScreenTemplate';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ListCard from '../../components/cards/ListCard';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCategoryCards } from '../../redux/selectors/programsSelectors';
+import {
+  updateSelectedProgramCategory
+} from '../../redux/actions/programsActions';
 
-const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-
-const menuItems = [{ name: "option 1" }, { name: "option 2" }];
+const STYLE = require('./PEStyle');
 
 class Programs extends Component {
+  state = {
+    tmpCategory: 0
+  }
+
+  updateTmpCategory = (category) => {
+    this.setState({ tmpCategory: category });
+    this.props.updateSelectedProgramCategory(category);
+  }
+
+
   render() {
+    const { cards, categories } = this.props;
+    const { tmpCategory } = this.state;
     return (
       <SubScreenTemplate
         headerContent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
-
-            <TouchableOpacity style={{ flexDirection: 'row' }}>
-              <Icon name="search" size={25} color={COLORS.SECONDARYCOLOR} />
-
-              <Text style={{ color: COLORS.INACTIVECOLOR, textAlignVertical: 'center', paddingLeft: 12, fontSize: 16 }}>
-                Search
-                </Text>
-
-            </TouchableOpacity>
-
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Picker
+              style={STYLE.pickerHalf}
+              selectedValue={tmpCategory}
+              onValueChange={this.updateTmpCategory}
+            >
+              {createItems(categories)}
+            </Picker>
           </View>
         }
-        scrollContent={
-          <ListCard headerTitle="A" items={[
-            { name: 'Exercise 1', details: '125x5, 125x5, 125x5+', options: menuItems },
-            { name: 'Exercise 2', details: '125x5, 125x5, 125x5+', options: menuItems }
-          ]} />
-        }
+        scrollContent={cards}
       />
     );
   }
 }
 
-export default Programs;
+Programs.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.arrayOf(PropTypes.object),
+  updateSelectedProgramCategory: PropTypes.func
+};
+
+const createItems = (items) => {
+  return items.map((item, index) =>
+    <Picker.Item key={index} label={item.name} value={item.id} />);
+};
+
+const mapStateToProps = (state) => {
+  return {
+    cards: getCategoryCards(state.workoutData),
+    categories: state.workoutData.programCategories,
+    selectedCategory: state.workoutData.selectedProgramCategory
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSelectedProgramCategory: (categoryId) => {
+      dispatch(updateSelectedProgramCategory(categoryId));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Programs);
