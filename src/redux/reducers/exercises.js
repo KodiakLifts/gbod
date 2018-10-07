@@ -29,10 +29,6 @@ export default function exercises(state = {}, action) {
 }
 
 const deleteExercise = (state, libraryId) => {
-  const activeProgram = state.activeWorkout.program;
-  let currentExercise = state.activeWorkout.currentExercise;
-  let currentSet = state.activeWorkout.set;
-
   let newLibrary = state.exerciseLibrary.filter(exercise => {
     return exercise.id !== libraryId;
   });
@@ -77,9 +73,6 @@ const deleteExercise = (state, libraryId) => {
     exercise.id = index;
   });
 
-  console.log(newPrograms);
-  console.log(newLibrary)
-
   const newState = {
     ...state,
     activeWorkout: {
@@ -90,8 +83,6 @@ const deleteExercise = (state, libraryId) => {
     programs: newPrograms,
     exerciseLibrary: newLibrary
   };
-
-  console.log(newState)
   return newState;
 };
 
