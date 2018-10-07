@@ -102,9 +102,7 @@ class NewExerciseModal extends Component {
         'The exercise '
         + nameTaken.name + ' already exists.\n',
         [
-          {
-            text: 'OK', style: 'cancel'
-          }
+          { text: 'OK', style: 'cancel' }
         ],
         { cancelable: true }
       );

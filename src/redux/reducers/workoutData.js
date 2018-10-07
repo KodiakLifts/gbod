@@ -3,7 +3,7 @@ import activeWorkout from './activeWorkout/activeWorkout';
 import { PROGRAMS_ACTIONS } from '../actions/programsActions';
 import programs from './programs';
 import { EXERCISES_ACTIONS } from '../actions/exercisesActions';
-import exercises from './exercises';
+import exercises from './exercises/exercises';
 
 export default function workoutData(state = {}, action) {
   if (ACTIVE_WORKOUT_ACTIONS.includes(action.type)) {
