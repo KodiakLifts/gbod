@@ -22,14 +22,77 @@ export default function exercises(state = {}, action) {
         action.favorite
       );
     case DELETE_LIBRARY_EXERCISE:
-      return deleteExercise(state, action.libraryId)
+      return deleteExercise(state, action.libraryId);
     default:
       return state;
   }
 }
 
 const deleteExercise = (state, libraryId) => {
-  return state;
+  const activeProgram = state.activeWorkout.program;
+  let currentExercise = state.activeWorkout.currentExercise;
+  let currentSet = state.activeWorkout.set;
+
+  let newLibrary = state.exerciseLibrary.filter(exercise => {
+    return exercise.id !== libraryId;
+  });
+
+  let removedExerciseId;
+
+  let newPrograms = state.programs;
+
+  newPrograms.forEach(program => {
+
+    let newExercises = program.exercises.filter(exercise => {
+      if (exercise.libraryId === libraryId) {
+        removedExerciseId = exercise.id;
+      }
+      return exercise.libraryId !== libraryId;
+    });
+
+    let newSets = program.sets.filter(set => {
+      return set.exercise !== removedExerciseId;
+    });
+    newSets.forEach((set, index) => {
+      set.id = index;
+    });
+
+    newExercises.forEach((exercise, index) => {
+      newSets.forEach(set => {
+        if (set.exercise === exercise.id) {
+          set.exercise = index;
+        }
+      });
+      exercise.id = index;
+
+      let tmpLibId = newLibrary.findIndex(e => e.id === exercise.libraryId);
+      exercise.libraryId = tmpLibId;
+    });
+
+    program.sets = newSets;
+    program.exercises = newExercises;
+  });
+
+  newLibrary.forEach((exercise, index) => {
+    exercise.id = index;
+  });
+
+  console.log(newPrograms);
+  console.log(newLibrary)
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      set: 0,
+      currentExercise: 0
+    },
+    programs: newPrograms,
+    exerciseLibrary: newLibrary
+  };
+
+  console.log(newState)
+  return newState;
 };
 
 const updateExerciseData = (

@@ -98,6 +98,7 @@ class ExerciseOptionsModal extends Component {
         tmpFavorite,
       );
     }
+    this.setState({ tmpDelete: false });
     closeModal();
   }
 
