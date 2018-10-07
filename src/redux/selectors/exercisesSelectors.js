@@ -56,7 +56,9 @@ export const getLibraryCards = createSelector(
           }
         });
 
-        items.sort((a, b) => { return a.props.name.localeCompare(b.props.name); });
+        items.sort((a, b) => {
+          return a.props.name.localeCompare(b.props.name);
+        });
 
         let card =
           <ListCard
@@ -69,6 +71,9 @@ export const getLibraryCards = createSelector(
       }
     }
     );
+    libraryCards.sort((a, b) => {
+      return a.props.headerTitle.localeCompare(b.props.headerTitle);
+    });
 
     return libraryCards;
 
