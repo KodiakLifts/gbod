@@ -8,13 +8,24 @@ import {
   updateSelectedExerciseCategory,
   updateSelectedBodyPart
 } from '../../redux/actions/exercisesActions';
+import Fab from '../../components/buttons/Fab';
+import NewExerciseModal from '../../components/modals/NewExerciseModal';
 
 const STYLE = require('./PEStyle');
 
 class Exercises extends Component {
   state = {
     tmpCategory: 0,
-    tmpBodyPart: 0
+    tmpBodyPart: 0,
+    newExerciseModalVisible: false
+  }
+
+  _newExercisePress = () => {
+    this.setState({ newExerciseModalVisible: true });
+  }
+
+  closeModal = () => {
+    this.setState({ newExerciseModalVisible: false });
   }
 
   updateTmpCategory = (category) => {
@@ -29,9 +40,14 @@ class Exercises extends Component {
 
   render() {
     const { categories, bodyParts, cards } = this.props;
-    const { tmpCategory, tmpBodyPart } = this.state;
+    const { tmpCategory, tmpBodyPart, newExerciseModalVisible } = this.state;
     return (
       <SubScreenTemplate
+        modal={
+          <NewExerciseModal
+            visible={newExerciseModalVisible}
+            closeModal={this.closeModal}
+          />}
         headerContent={
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             <Picker
@@ -48,10 +64,10 @@ class Exercises extends Component {
             >
               {createItems(bodyParts)}
             </Picker>
-
           </View>
         }
         scrollContent={cards}
+        footer={<Fab onPress={this._newExercisePress} />}
       />
     );
   }

@@ -31,7 +31,6 @@ module.exports = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    borderBottomColor: COLORS.BACKCOLOR,
-    borderBottomWidth: 3
+    backgroundColor: COLORS.BACKCOLOR
   }
 });
