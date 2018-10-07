@@ -16,7 +16,7 @@ import {
   updateProgramData,
   deleteProgram
 } from '../../redux/actions/programsActions';
-import { updateExerciseData, deleteExercise }
+import { newExercise }
   from '../../redux/actions/exercisesActions';
 
 const STYLE = require('./modalStyle');
@@ -29,14 +29,14 @@ class NewExerciseModal extends Component {
   state = {
     tmpName: "New Exercise",
     tmpOneRepMax: 0,
-    tmpCategory: undefined,
-    tmpBodyPart: undefined,
+    tmpCategory: 9,
+    tmpBodyPart: 9,
     tmpFavorite: false,
   }
 
   updateTmpOneRepMax = (weight) => {
     if (weight == null) {
-      this.setState({ tmpOneRepMax: this.props.oneRepMax });
+      this.setState({ tmpOneRepMax: 0 });
     } else {
       this.setState({ tmpOneRepMax: parseInt(weight) });
     }
@@ -44,7 +44,7 @@ class NewExerciseModal extends Component {
 
   updateTmpName = (name) => {
     if (name == null) {
-      this.setState({ tmpName: this.props.title });
+      this.setState({ tmpName: "New Exercise" });
     } else {
       this.setState({ tmpName: name });
     }
@@ -68,22 +68,23 @@ class NewExerciseModal extends Component {
 
   save = () => {
     const {
-      libraryId,
       closeModal,
-      updateExerciseData,
+      newExercise,
+      exercises
     } = this.props;
     const {
-      tmpOneRepMax,
       tmpName,
+      tmpOneRepMax,
       tmpCategory,
       tmpBodyPart,
       tmpFavorite,
     } = this.state;
 
-    updateExerciseData(
-      libraryId,
-      tmpOneRepMax,
+
+
+    newExercise(
       tmpName,
+      tmpOneRepMax,
       tmpCategory,
       tmpBodyPart,
       tmpFavorite,
@@ -95,8 +96,6 @@ class NewExerciseModal extends Component {
   render() {
     const {
       visible,
-      title,
-      oneRepMax,
       categories,
       bodyParts
     } = this.props;
@@ -104,6 +103,8 @@ class NewExerciseModal extends Component {
       tmpBodyPart,
       tmpCategory,
       tmpFavorite,
+      tmpOneRepMax,
+      tmpName
     } = this.state;
     return (
       <Modal
@@ -119,7 +120,7 @@ class NewExerciseModal extends Component {
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
                 <Text style={STYLE.modalHeaderText}>
-                  {title}
+                  New Exercise
                 </Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
@@ -127,12 +128,12 @@ class NewExerciseModal extends Component {
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      One Rep max:
+                      Name:
                     </Text>
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>
-                      Rename:
+                      One Rep max:
                     </Text>
                   </View>
                   <View style={STYLE.leftItem}>
@@ -159,11 +160,10 @@ class NewExerciseModal extends Component {
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
-                        keyboardType="numeric"
-                        placeholder={String(oneRepMax)}
+                        placeholder={"New Exercise"}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
-                        onChangeText={this.updateTmpOneRepMax}
-                        maxLength={4}
+                        onChangeText={this.updateTmpName}
+                        maxLength={30}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
@@ -173,10 +173,11 @@ class NewExerciseModal extends Component {
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
-                        placeholder={title}
+                        keyboardType="numeric"
+                        placeholder={String(tmpOneRepMax)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
-                        onChangeText={this.updateTmpName}
-                        maxLength={30}
+                        onChangeText={this.updateTmpOneRepMax}
+                        maxLength={4}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
@@ -222,7 +223,6 @@ class NewExerciseModal extends Component {
           </TouchableWithoutFeedback>
         </TouchableOpacity>
       </Modal>
-
     );
   }
 }
@@ -236,22 +236,17 @@ const createItems = (items) => {
 };
 
 NewExerciseModal.propTypes = {
-  title: PropTypes.string,
   visible: PropTypes.bool,
   closeModal: PropTypes.func,
-  libraryId: PropTypes.number,
-  category: PropTypes.number,
-  bodyPart: PropTypes.number,
-  favorite: PropTypes.bool,
-  oneRepMax: PropTypes.number,
   categories: PropTypes.arrayOf(PropTypes.object),
   bodyParts: PropTypes.arrayOf(PropTypes.object),
-  deleteExercise: PropTypes.func,
-  updateExerciseData: PropTypes.func
+  newExercise: PropTypes.func,
+  exercises: PropTypes.arrayOf(PropTypes.object)
 };
 
 const mapStateToProps = (state) => {
   return {
+    exercises: state.workoutData.exerciseLibrary,
     categories: state.workoutData.exerciseCategories.slice(1),
     bodyParts: state.workoutData.bodyParts.slice(1)
   };
@@ -259,18 +254,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateExerciseData: (
-      libraryId,
-      oneRepMax,
+    newExercise: (
       name,
+      oneRepMax,
       category,
       bodyPart,
       favorite
     ) => {
-      dispatch(updateExerciseData(
-        libraryId,
-        oneRepMax,
+      dispatch(newExercise(
         name,
+        oneRepMax,
         category,
         bodyPart,
         favorite
