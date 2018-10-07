@@ -1,11 +1,11 @@
-export const updateActiveWorkoutUI = (state, setId, exerciseId) => {
+export default (state, setId, exerciseId) => {
   const setState = toggleSetComplete(state, setId, exerciseId);
   const exerciseState = updateExerciseComplete(setState, exerciseId);
   const currentExerciseState = updateCurrentExercise(exerciseState, exerciseId);
   return currentExerciseState;
 };
 
-export const toggleSetComplete = (state, setId, exerciseId) => {
+const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
   const setCompleteVal =
@@ -52,7 +52,7 @@ export const toggleSetComplete = (state, setId, exerciseId) => {
   return newState;
 };
 
-export const updateExerciseComplete = (state, exerciseId) => {
+const updateExerciseComplete = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
   const sets = state.programs[state.activeWorkout.program].sets;
 
@@ -84,7 +84,7 @@ export const updateExerciseComplete = (state, exerciseId) => {
   return newState;
 };
 
-export const updateCurrentExercise = (state, exerciseId) => {
+const updateCurrentExercise = (state, exerciseId) => {
 
   const activeProgram = state.activeWorkout.program;
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {

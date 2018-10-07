@@ -8,7 +8,7 @@ import {
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { updateExerciseData, removeExercise } from '../../redux/actions/activeWorkoutActions';
+import { updateExerciseData, removeExercise } from '../../redux/actions/activeWorkout/activeWorkoutActions';
 import { connect } from 'react-redux';
 
 const STYLE = require('./modalStyle');
