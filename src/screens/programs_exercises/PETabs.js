@@ -11,7 +11,7 @@ const PETabs = createMaterialTopTabNavigator({
   EXERCISES: Exercises
 },
   {
-    initialRouteName: 'PROGRAMS',
+    initialRouteName: 'EXERCISES',
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,

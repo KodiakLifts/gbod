@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const STYLE = require('./screenStyle');
+const SCROLL_TOP_PADDING = 12;
 
-class ScreenTemplate extends Component {
-  render() {
-    return (
-      <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center' }}>
-        <View style={CONTAINERSTYLE.header}>
-          {this.props.headerContent}
-        </View>
-        <ScrollView contentContainerStyle={CONTAINERSTYLE.scrollArea}>
-          <View style={{ height: 12 }} />
-          {this.props.scrollContent}
-          {this.props.endOfScrollContent}
-        </ScrollView>
+const ScreenTemplate = (props) => {
+  const { headerContent, scrollContent, endOfScrollContent } = props;
+  return (
+    <View style={STYLE.container}>
+      <View style={STYLE.header}>
+        {headerContent}
       </View>
-    );
-  }
-}
+      <ScrollView contentContainerStyle={STYLE.scrollArea}>
+        <View style={{ height: SCROLL_TOP_PADDING }} />
+        {scrollContent}
+        {endOfScrollContent}
+      </ScrollView>
+    </View>
+  );
+};
 
 ScreenTemplate.propTypes = {
   headerContent: PropTypes.object,
-  scrollContent: PropTypes.array,
+  scrollContent: PropTypes.arrayOf(PropTypes.object),
   endOfScrollContent: PropTypes.object
 };
 

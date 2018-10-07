@@ -1,41 +1,107 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Picker } from 'react-native';
 import SubScreenTemplate from '../templates/SubScreenTemplate';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ListCard from '../../components/cards/ListCard';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getLibraryCards } from '../../redux/selectors/exercisesSelectors';
+import {
+  updateSelectedExerciseCategory,
+  updateSelectedBodyPart
+} from '../../redux/actions/exercisesActions';
+import Fab from '../../components/buttons/Fab';
+import NewExerciseModal from '../../components/modals/NewExerciseModal';
 
-const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-
-const menuItems = [{ name: "option 1" }, { name: "option 2" }];
+const STYLE = require('./PEStyle');
 
 class Exercises extends Component {
+  state = {
+    tmpCategory: 0,
+    tmpBodyPart: 0,
+    newExerciseModalVisible: false
+  }
+
+  _newExercisePress = () => {
+    this.setState({ newExerciseModalVisible: true });
+  }
+
+  closeModal = () => {
+    this.setState({ newExerciseModalVisible: false });
+  }
+
+  updateTmpCategory = (category) => {
+    this.setState({ tmpCategory: category });
+    this.props.updateSelectedExerciseCategory(category);
+  }
+
+  updateTmpBodyPart = (bodyPart) => {
+    this.setState({ tmpBodyPart: bodyPart });
+    this.props.updateSelectedBodyPart(bodyPart);
+  }
+
   render() {
+    const { categories, bodyParts, cards } = this.props;
+    const { tmpCategory, tmpBodyPart, newExerciseModalVisible } = this.state;
     return (
       <SubScreenTemplate
+        modal={
+          <NewExerciseModal
+            visible={newExerciseModalVisible}
+            closeModal={this.closeModal}
+          />}
         headerContent={
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 15 }}>
-
-            <TouchableOpacity style={{ flexDirection: 'row' }}>
-              <Icon name="search" size={25} color={COLORS.SECONDARYCOLOR} />
-
-              <Text style={{ color: COLORS.INACTIVECOLOR, textAlignVertical: 'center', paddingLeft: 12, fontSize: 16 }}>
-                Search
-                </Text>
-
-            </TouchableOpacity>
-
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Picker
+              style={STYLE.pickerHalf}
+              selectedValue={tmpCategory}
+              onValueChange={this.updateTmpCategory}
+            >
+              {createItems(categories)}
+            </Picker>
+            <Picker
+              style={STYLE.pickerHalf}
+              selectedValue={tmpBodyPart}
+              onValueChange={this.updateTmpBodyPart}
+            >
+              {createItems(bodyParts)}
+            </Picker>
           </View>
         }
-        scrollContent={
-          <ListCard headerTitle="A" items={[
-            { name: 'Exercise 1', details: '125x5, 125x5, 125x5+', options: menuItems },
-            { name: 'Exercise 2', details: '125x5, 125x5, 125x5+', options: menuItems }
-          ]} />
-        }
+        scrollContent={cards}
+        footer={<Fab onPress={this._newExercisePress} />}
       />
     );
   }
 }
 
-export default Exercises;
+const createItems = (items) => {
+  return items.map((item, index) =>
+    <Picker.Item key={index} label={item.name} value={item.id} />);
+};
+
+Exercises.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.object),
+  bodyParts: PropTypes.arrayOf(PropTypes.object),
+  cards: PropTypes.arrayOf(PropTypes.object),
+  updateSelectedExerciseCategory: PropTypes.func,
+  updateSelectedBodyPart: PropTypes.func
+};
+
+const mapStateToProps = (state) => {
+  return {
+    categories: state.workoutData.exerciseCategories,
+    bodyParts: state.workoutData.bodyParts,
+    cards: getLibraryCards(state.workoutData)
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateSelectedExerciseCategory: (categoryId) => {
+      dispatch(updateSelectedExerciseCategory(categoryId));
+    },
+    updateSelectedBodyPart: (bodyPartId) => {
+      dispatch(updateSelectedBodyPart(bodyPartId));
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Exercises);

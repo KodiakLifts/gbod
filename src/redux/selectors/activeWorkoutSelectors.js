@@ -1,10 +1,13 @@
 import React from 'react';
 import ExerciseCard from '../../components/cards/ExerciseCard';
+import SetButton from '../../components/buttons/SetButton';
+import { View, Text } from 'react-native';
 import { createSelector } from 'reselect';
 
 const CARD_STYLE = require('../../components/cards/cardStyle');
+const WORKOUT_STYLE = require('../../screens/workout/workoutStyle');
 
-const PROGRAM_NAME_LENGTH = 12;
+const PROGRAM_NAME_LENGTH = 20;
 const DAY_NAME_LENGTH = 5;
 
 const getActiveWorkoutName = (state) => {
@@ -25,7 +28,13 @@ export const getActiveWorkoutTitle = createSelector(
     if (day.length > DAY_NAME_LENGTH) {
       day = day.substring(0, DAY_NAME_LENGTH) + "..";
     }
-    let title = program + " - " + day;
+    const title =
+      <View>
+        <Text style={WORKOUT_STYLE.headerText}>
+          {program} - {day}
+        </Text>
+
+      </View>;
     return title;
   }
 );
@@ -44,9 +53,9 @@ const getActiveExercises = (state) => {
     return exercise.day === state.activeWorkout.day;
   });
 
-  for (let i = 0; i < exercises.length; i++) {
-    exercises[i] = { ...exercises[i], name: state.exerciseLibrary[exercises[i].libraryId].name };
-  }
+  exercises.forEach(exercise => {
+    exercise.name = state.exerciseLibrary[exercise.libraryId].name;
+  });
 
   return exercises;
 };
@@ -57,18 +66,33 @@ const getCurrentExercise = (state) => state.activeWorkout.currentExercise;
 export const getActiveWorkoutCards = createSelector(
   [getActiveSets, getActiveExercises, getCurrentExercise],
   (activeSets, activeExercises, currentExercise) => {
-
     const workoutCards = [];
 
     activeExercises.forEach((exercise, index) => {
 
       const includeWarmup = exercise.includeWarmup;
 
-      let sets = activeSets.filter(set => {
+      const sets = activeSets.filter(set => {
         if (!includeWarmup) {
           return (set.exercise === exercise.id && set.type !== 0);
         }
         return (set.exercise === exercise.id);
+      });
+
+      const setButtons = sets.map((set, index) => {
+        return (
+          <SetButton
+            key={index}
+            exerciseId={exercise.id}
+            setId={set.id}
+            reps={set.reps}
+            weight={set.weight}
+            type={set.type}
+            min={set.restMinutes}
+            sec={set.restSeconds}
+            timerOn={set.timerOn}
+          />
+        );
       });
 
       const borderStyle = (exercise.id === currentExercise ?
@@ -85,10 +109,10 @@ export const getActiveWorkoutCards = createSelector(
           exerciseId={exercise.id}
           borderStyle={borderStyle}
           name={exercise.name}
-          sets={sets}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}
           lastExercise={lastExercise}
+          setButtons={setButtons}
         />;
 
       workoutCards.push(card);

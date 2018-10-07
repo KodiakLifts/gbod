@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  updateActiveWorkoutUI,
+  setPress,
   updateWorkoutAndTimer
 } from '../../redux/actions/activeWorkoutActions';
 import EditSetModal from '../modals/EditSetModal';
@@ -21,14 +21,12 @@ class SetButton extends Component {
   _onPress = () => {
     const {
       updateWorkoutAndTimer,
-      timerOn,
       setId,
       exerciseId,
       type,
       complete
     } = this.props;
 
-    //TODO Implement ignoring timer if off
     updateWorkoutAndTimer(setId, exerciseId);
 
     if (type === AMRAP && complete !== true) {
@@ -48,7 +46,6 @@ class SetButton extends Component {
   }
 
   render() {
-
     const {
       setId,
       exerciseId,
@@ -83,7 +80,9 @@ class SetButton extends Component {
 
         <TouchableOpacity
           onPress={this._onPress}
-          onLongPress={this._onLongPress}>
+          onLongPress={this._onLongPress}
+          delayLongPress={20}
+        >
           <View style={
             complete ? STYLE.activeButton : STYLE.inactiveButton
           }>
@@ -137,7 +136,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateActiveWorkoutUI: (setId, exerciseId) => {
-      dispatch(updateActiveWorkoutUI(setId, exerciseId));
+      dispatch(setPress(setId, exerciseId));
     },
     updateWorkoutAndTimer: (setId, exerciseId, started, complete) => {
       dispatch(updateWorkoutAndTimer(setId, exerciseId, started, complete));
