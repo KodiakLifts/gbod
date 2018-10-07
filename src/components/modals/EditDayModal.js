@@ -71,7 +71,7 @@ class EditDayModal extends Component {
       Alert.alert(
         'Delete Exercise',
         'Are you sure you want to delete '
-        + tmpName + " from the exercise library?",
+        + tmpName + ' from the exercise library?',
         [
           {
             text: 'CONFIRM', onPress: () => updateDayData(

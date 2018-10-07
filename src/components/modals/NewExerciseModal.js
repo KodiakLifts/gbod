@@ -80,17 +80,35 @@ class NewExerciseModal extends Component {
       tmpFavorite,
     } = this.state;
 
+    let nameTaken = exercises.find(exercise => {
+      return (
+        exercise.name.toUpperCase().replace(/\s+/g, '')
+        === tmpName.toUpperCase().replace(/\s+/g, '')
+      );
+    });
 
-
-    newExercise(
-      tmpName,
-      tmpOneRepMax,
-      tmpCategory,
-      tmpBodyPart,
-      tmpFavorite,
-    );
-
-    closeModal();
+    if (nameTaken === undefined) {
+      newExercise(
+        tmpName,
+        tmpOneRepMax,
+        tmpCategory,
+        tmpBodyPart,
+        tmpFavorite,
+      );
+      closeModal();
+    } else {
+      Alert.alert(
+        'Name Taken',
+        'The exercise '
+        + nameTaken.name + ' already exists.\n',
+        [
+          {
+            text: 'OK', style: 'cancel'
+          }
+        ],
+        { cancelable: true }
+      );
+    }
   }
 
   render() {
