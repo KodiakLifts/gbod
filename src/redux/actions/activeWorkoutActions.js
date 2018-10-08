@@ -73,7 +73,7 @@ export const updateWorkoutAndTimer = (setId, exerciseId) => {
   };
 };
 
-const handleTimer = (setComplete) => {
+export const handleTimer = (setComplete) => {
   this.timer;
   return (dispatch, getState) => {
     let started = getState().workoutData.timer.started;
@@ -98,14 +98,14 @@ const handleTimer = (setComplete) => {
   };
 };
 
-const decrementTimer = (setId) => {
+export const decrementTimer = (setId) => {
   return {
     type: DECREMENT_TIMER,
     setId
   };
 };
 
-const stopTimer = () => {
+export const stopTimer = () => {
   clearInterval(this.timer);
   return {
     type: STOP_TIMER
