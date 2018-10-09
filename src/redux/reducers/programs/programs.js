@@ -19,7 +19,8 @@ export default function programs(state = {}, action) {
         state,
         action.programId,
         action.current,
-        action.name
+        action.name,
+        action.categoryId
       );
     case DELETE_PROGRAM:
       return deleteProgram(state, action.programId);

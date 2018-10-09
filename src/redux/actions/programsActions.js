@@ -30,12 +30,13 @@ export const newProgram = (
   };
 };
 
-export const updateProgram = (programId, current, name) => {
+export const updateProgram = (programId, current, name, categoryId) => {
   return {
     type: UPDATE_PROGRAM_DATA,
     programId,
     current,
-    name
+    name,
+    categoryId
   };
 };
 

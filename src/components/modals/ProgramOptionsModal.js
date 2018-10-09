@@ -7,7 +7,8 @@ import {
   View,
   CheckBox,
   TextInput,
-  Alert
+  Alert,
+  Picker
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -20,11 +21,13 @@ const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
 
 const TEXT_ENTRY_WIDTH = 160;
+const PICKER_WIDTH = 160;
 
 class ProgramOptionsModal extends Component {
   state = {
     tmpCurrentProgram: this.props.isCurrentProgram,
     tmpName: this.props.title,
+    tmpCategory: this.props.category,
     tmpDelete: false
   };
 
@@ -33,6 +36,10 @@ class ProgramOptionsModal extends Component {
       this.setState({ tmpCurrentProgram: newProps.isCurrentProgram });
     }
   }
+
+  updateTmpCategory = categoryId => {
+    this.setState({ tmpCategory: categoryId });
+  };
 
   updateTmpName = tmpName => {
     if (tmpName == null) {
@@ -47,15 +54,11 @@ class ProgramOptionsModal extends Component {
   };
 
   toggleCurrentProgram = checked => {
-    this.setState({
-      tmpCurrentProgram: checked
-    });
+    this.setState({ tmpCurrentProgram: checked });
   };
 
   toggleDelete = checked => {
-    this.setState({
-      tmpDelete: checked
-    });
+    this.setState({ tmpDelete: checked });
   };
 
   save = () => {
@@ -66,7 +69,7 @@ class ProgramOptionsModal extends Component {
       closeModal,
       title
     } = this.props;
-    const { tmpCurrentProgram, tmpName, tmpDelete } = this.state;
+    const { tmpCurrentProgram, tmpName, tmpDelete, tmpCategory } = this.state;
 
     if (tmpDelete) {
       Alert.alert(
@@ -85,14 +88,14 @@ class ProgramOptionsModal extends Component {
         { cancelable: false }
       );
     } else {
-      updateProgramData(programId, tmpCurrentProgram, tmpName);
+      updateProgramData(programId, tmpCurrentProgram, tmpName, tmpCategory);
     }
     closeModal();
   };
 
   render() {
-    const { visible, title, isCurrentProgram } = this.props;
-    const { tmpCurrentProgram, tmpDelete } = this.state;
+    const { visible, title, isCurrentProgram, categories } = this.props;
+    const { tmpCurrentProgram, tmpDelete, tmpCategory } = this.state;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
@@ -108,6 +111,9 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Rename:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Category:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Delete Program:</Text>
@@ -141,6 +147,15 @@ class ProgramOptionsModal extends Component {
                     </View>
                   </View>
                   <View style={STYLE.rightItem}>
+                    <Picker
+                      style={[STYLE.picker, { width: PICKER_WIDTH }]}
+                      selectedValue={tmpCategory}
+                      onValueChange={this.updateTmpCategory}
+                    >
+                      {createItems(categories)}
+                    </Picker>
+                  </View>
+                  <View style={STYLE.rightItem}>
                     <CheckBox
                       value={tmpDelete}
                       onValueChange={this.toggleDelete}
@@ -165,6 +180,12 @@ class ProgramOptionsModal extends Component {
   }
 }
 
+const createItems = items => {
+  return items.map((item, index) => {
+    return <Picker.Item key={index} label={item.name} value={item.id} />;
+  });
+};
+
 ProgramOptionsModal.propTypes = {
   title: PropTypes.string,
   visible: PropTypes.bool,
@@ -173,20 +194,22 @@ ProgramOptionsModal.propTypes = {
   category: PropTypes.number,
   closeModal: PropTypes.func,
   updateProgramData: PropTypes.func,
-  deleteProgram: PropTypes.func
+  deleteProgram: PropTypes.func,
+  categories: PropTypes.arrayOf(PropTypes.object)
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     isCurrentProgram:
-      state.workoutData.activeWorkout.program === ownProps.programId
+      state.workoutData.activeWorkout.program === ownProps.programId,
+    categories: state.workoutData.programCategories.slice(2)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateProgramData: (programId, current, name) => {
-      dispatch(updateProgram(programId, current, name));
+    updateProgramData: (programId, current, name, category) => {
+      dispatch(updateProgram(programId, current, name, category));
     },
     deleteProgram: programId => {
       dispatch(deleteProgram(programId));

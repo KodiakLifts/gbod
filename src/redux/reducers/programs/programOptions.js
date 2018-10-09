@@ -29,7 +29,13 @@ export const deleteProgram = (state, programId) => {
   return newState;
 };
 
-export const updateProgramData = (state, programId, current, name) => {
+export const updateProgramData = (
+  state,
+  programId,
+  current,
+  name,
+  categoryId
+) => {
   let activeProgram;
   current
     ? (activeProgram = programId)
@@ -45,7 +51,8 @@ export const updateProgramData = (state, programId, current, name) => {
       if (program.id === programId) {
         return {
           ...program,
-          name: name
+          name: name,
+          category: categoryId
         };
       }
       return program;

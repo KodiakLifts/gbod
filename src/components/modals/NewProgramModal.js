@@ -74,7 +74,7 @@ class NewProgramModal extends Component {
       tmpCurrentProgram,
       tmpName,
       tmpTemplate,
-      tmpCategory + 2,
+      tmpCategory,
       tmpDescription,
       tmpFavorite
     );
