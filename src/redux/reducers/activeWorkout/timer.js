@@ -10,7 +10,7 @@ export const setTimer = (state, minutes, seconds) => {
   return newState;
 };
 
-export const stopTimer = (state) => {
+export const stopTimer = state => {
   const newState = {
     ...state,
     timer: {

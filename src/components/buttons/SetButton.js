@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
   setPress,
   updateWorkoutAndTimer
-} from '../../redux/actions/activeWorkoutActions';
-import EditSetModal from '../modals/EditSetModal';
-import SetRepsModal from '../modals/SetRepsModal';
+} from "../../redux/actions/activeWorkoutActions";
+import EditSetModal from "../modals/EditSetModal";
+import SetRepsModal from "../modals/SetRepsModal";
 
-const STYLE = require('./buttonStyle');
+const STYLE = require("./buttonStyle");
 const AMRAP = 2;
 
 class SetButton extends Component {
   state = {
     editSetModalVisible: false,
     setRepsModalVisible: false
-  }
+  };
 
   _onPress = () => {
     const {
@@ -32,18 +32,18 @@ class SetButton extends Component {
     if (type === AMRAP && complete !== true) {
       this.setState({ setRepsModalVisible: true });
     }
-  }
+  };
 
   _onLongPress = () => {
     this.setState({ editSetModalVisible: true });
-  }
+  };
 
   closeModal = () => {
     this.setState({
       editSetModalVisible: false,
       setRepsModalVisible: false
     });
-  }
+  };
 
   render() {
     const {
@@ -70,25 +70,22 @@ class SetButton extends Component {
           type={type}
           min={min}
           sec={sec}
-          closeModal={this.closeModal} />
+          closeModal={this.closeModal}
+        />
 
         <SetRepsModal
           visible={setRepsModalVisible}
           setId={setId}
           reps={reps}
-          closeModal={this.closeModal} />
+          closeModal={this.closeModal}
+        />
 
         <TouchableOpacity
           onPress={this._onPress}
           onLongPress={this._onLongPress}
-
         >
-          <View style={
-            complete ? STYLE.activeButton : STYLE.inactiveButton
-          }>
-            <Text style={
-              complete ? STYLE.activeText : STYLE.inactiveText
-            }>
+          <View style={complete ? STYLE.activeButton : STYLE.inactiveButton}>
+            <Text style={complete ? STYLE.activeText : STYLE.inactiveText}>
               {weight + "x" + reps + checkSetType(type)}
             </Text>
           </View>
@@ -98,12 +95,16 @@ class SetButton extends Component {
   }
 }
 
-const checkSetType = (type) => {
+const checkSetType = type => {
   switch (type) {
-    case 0: return "w";
-    case 1: return "";
-    case 2: return "+";
-    case 3: return "-";
+    case 0:
+      return "w";
+    case 1:
+      return "";
+    case 2:
+      return "+";
+    case 3:
+      return "-";
   }
   return "";
 };
@@ -120,20 +121,19 @@ SetButton.propTypes = {
   updateActiveWorkoutUI: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
 
-  complete: PropTypes.bool,
+  complete: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     complete:
-      state
-        .workoutData
-        .programs[state.workoutData.activeWorkout.program]
-        .sets[ownProps.setId].complete,
+      state.workoutData.programs[state.workoutData.activeWorkout.program].sets[
+        ownProps.setId
+      ].complete
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateActiveWorkoutUI: (setId, exerciseId) => {
       dispatch(setPress(setId, exerciseId));
@@ -144,4 +144,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetButton);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SetButton);

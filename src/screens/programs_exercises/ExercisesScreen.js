@@ -1,42 +1,42 @@
-import React, { Component } from 'react';
-import { View, Picker } from 'react-native';
-import SubScreenTemplate from '../templates/SubScreenTemplate';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getLibraryCards } from '../../redux/selectors/exercisesSelectors';
+import React, { Component } from "react";
+import { View, Picker } from "react-native";
+import SubScreenTemplate from "../templates/SubScreenTemplate";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getLibraryCards } from "../../redux/selectors/exercisesSelectors";
 import {
   updateSelectedExerciseCategory,
   updateSelectedBodyPart
-} from '../../redux/actions/exercisesActions';
-import Fab from '../../components/buttons/Fab';
-import NewExerciseModal from '../../components/modals/NewExerciseModal';
+} from "../../redux/actions/exercisesActions";
+import Fab from "../../components/buttons/Fab";
+import NewExerciseModal from "../../components/modals/NewExerciseModal";
 
-const STYLE = require('./PEStyle');
+const STYLE = require("./PEStyle");
 
 class Exercises extends Component {
   state = {
     tmpCategory: 0,
     tmpBodyPart: 0,
     newExerciseModalVisible: false
-  }
+  };
 
   _newExercisePress = () => {
     this.setState({ newExerciseModalVisible: true });
-  }
+  };
 
   closeModal = () => {
     this.setState({ newExerciseModalVisible: false });
-  }
+  };
 
-  updateTmpCategory = (category) => {
+  updateTmpCategory = category => {
     this.setState({ tmpCategory: category });
     this.props.updateSelectedExerciseCategory(category);
-  }
+  };
 
-  updateTmpBodyPart = (bodyPart) => {
+  updateTmpBodyPart = bodyPart => {
     this.setState({ tmpBodyPart: bodyPart });
     this.props.updateSelectedBodyPart(bodyPart);
-  }
+  };
 
   render() {
     const { categories, bodyParts, cards } = this.props;
@@ -47,9 +47,12 @@ class Exercises extends Component {
           <NewExerciseModal
             visible={newExerciseModalVisible}
             closeModal={this.closeModal}
-          />}
+          />
+        }
         headerContent={
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
             <Picker
               style={STYLE.pickerHalf}
               selectedValue={tmpCategory}
@@ -73,9 +76,10 @@ class Exercises extends Component {
   }
 }
 
-const createItems = (items) => {
-  return items.map((item, index) =>
-    <Picker.Item key={index} label={item.name} value={item.id} />);
+const createItems = items => {
+  return items.map((item, index) => (
+    <Picker.Item key={index} label={item.name} value={item.id} />
+  ));
 };
 
 Exercises.propTypes = {
@@ -86,7 +90,7 @@ Exercises.propTypes = {
   updateSelectedBodyPart: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.workoutData.exerciseCategories,
     bodyParts: state.workoutData.bodyParts,
@@ -94,14 +98,17 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    updateSelectedExerciseCategory: (categoryId) => {
+    updateSelectedExerciseCategory: categoryId => {
       dispatch(updateSelectedExerciseCategory(categoryId));
     },
-    updateSelectedBodyPart: (bodyPartId) => {
+    updateSelectedBodyPart: bodyPartId => {
       dispatch(updateSelectedBodyPart(bodyPartId));
     }
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Exercises);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Exercises);

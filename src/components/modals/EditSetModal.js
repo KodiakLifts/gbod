@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Modal,
   Text,
@@ -8,14 +8,16 @@ import {
   View,
   Picker,
   CheckBox
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { updateSetData, removeSet }
-  from '../../redux/actions/activeWorkoutActions';
-import { connect } from 'react-redux';
+} from "react-native";
+import PropTypes from "prop-types";
+import {
+  updateSetData,
+  removeSet
+} from "../../redux/actions/activeWorkoutActions";
+import { connect } from "react-redux";
 
-const COLORS = require('../../styles/Colors');
-const STYLE = require('./modalStyle');
+const COLORS = require("../../styles/Colors");
+const STYLE = require("./modalStyle");
 
 const MAX_REPS_LENGTH = 4;
 const MAX_WEIGHT_LENGTH = 4;
@@ -32,7 +34,7 @@ class EditSetModal extends Component {
     tmpMin: this.props.min,
     tmpSec: this.props.sec,
     tmpRemoveSet: false
-  }
+  };
 
   componentWillReceiveProps(newProps) {
     if (this.props.reps !== newProps.reps) {
@@ -40,45 +42,45 @@ class EditSetModal extends Component {
     }
   }
 
-  toggleRemove = (checked) => {
+  toggleRemove = checked => {
     this.setState({ tmpRemoveSet: checked });
-  }
+  };
 
-  updateTmpWeight = (tmpWeight) => {
+  updateTmpWeight = tmpWeight => {
     if (tmpWeight == null) {
       this.setState({ tmpWeight: this.props.weight });
     } else {
       this.setState({ tmpWeight: parseInt(tmpWeight) });
     }
-  }
+  };
 
-  updateTmpReps = (tmpReps) => {
+  updateTmpReps = tmpReps => {
     if (tmpReps == null) {
       this.setState({ tmpReps: this.props.reps });
     } else {
       this.setState({ tmpReps: parseInt(tmpReps) });
     }
-  }
+  };
 
-  updateTmpType = (type) => {
+  updateTmpType = type => {
     this.setState({ tmpType: type });
-  }
+  };
 
-  updateTmpMin = (min) => {
+  updateTmpMin = min => {
     if (min == null) {
       this.setState({ tmpMin: this.props.min });
     } else {
       this.setState({ tmpMin: parseInt(min) });
     }
-  }
+  };
 
-  updateTmpSec = (sec) => {
+  updateTmpSec = sec => {
     if (sec == null) {
       this.setState({ tmpSec: this.props.sec });
     } else {
       this.setState({ tmpSec: parseInt(sec) });
     }
-  }
+  };
 
   save = () => {
     const {
@@ -86,7 +88,7 @@ class EditSetModal extends Component {
       setId,
       closeModal,
       exerciseId,
-      removeSet,
+      removeSet
     } = this.props;
     const {
       tmpWeight,
@@ -94,83 +96,58 @@ class EditSetModal extends Component {
       tmpType,
       tmpMin,
       tmpSec,
-      tmpRemoveSet,
+      tmpRemoveSet
     } = this.state;
     this.setState({ prevType: this.state.tmpType });
 
     if (tmpRemoveSet) {
       removeSet(setId, exerciseId);
     } else {
-      updateSetData(
-        setId,
-        tmpWeight,
-        tmpReps,
-        tmpType,
-        tmpMin,
-        tmpSec,
-      );
+      updateSetData(setId, tmpWeight, tmpReps, tmpType, tmpMin, tmpSec);
     }
 
     this.setState({ tmpRemoveSet: false });
     closeModal();
-  }
+  };
 
   cancel = () => {
     this.setState({ tmpType: this.state.prevType });
     this.props.closeModal();
-  }
+  };
 
   render() {
     const { visible, weight, reps, min, sec, types } = this.props;
     const { tmpType, tmpRemoveSet } = this.state;
 
     return (
-      <Modal
-        transparent
-        visible={visible}
-        onRequestClose={this.cancel}
-      >
+      <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>
-                  Set
-                </Text>
+                <Text style={STYLE.modalHeaderText}>Set</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
-
                 <View style={[STYLE.leftColumn, { paddingLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Weight:
-                    </Text>
+                    <Text style={STYLE.modalText}>Weight:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Reps:
-                    </Text>
+                    <Text style={STYLE.modalText}>Reps:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Rest Time:
-                    </Text>
+                    <Text style={STYLE.modalText}>Rest Time:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Type:
-                    </Text>
+                    <Text style={STYLE.modalText}>Type:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Remove Set:
-                    </Text>
+                    <Text style={STYLE.modalText}>Remove Set:</Text>
                   </View>
-
                 </View>
 
                 <View style={STYLE.rightColumn}>
@@ -210,22 +187,20 @@ class EditSetModal extends Component {
                         style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(min).padStart(2, '0')}
+                        placeholder={String(min).padStart(2, "0")}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpMin}
                         maxLength={MAX_TIME_LENGTH}
                         width={TIME_ENTRY_WIDTH}
                       />
                     </View>
-                    <Text style={STYLE.timeColon}>
-                      :
-                    </Text>
+                    <Text style={STYLE.timeColon}>:</Text>
                     <View style={STYLE.secInputContainer}>
                       <TextInput
                         style={STYLE.modalTextInput}
                         keyboardType="numeric"
                         keyboardAppearance="dark"
-                        placeholder={String(sec).padStart(2, '0')}
+                        placeholder={String(sec).padStart(2, "0")}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpSec}
                         maxLength={MAX_TIME_LENGTH}
@@ -238,7 +213,8 @@ class EditSetModal extends Component {
                     <Picker
                       style={STYLE.picker}
                       selectedValue={tmpType}
-                      onValueChange={this.updateTmpType}>
+                      onValueChange={this.updateTmpType}
+                    >
                       {createTypeItems(types)}
                     </Picker>
                   </View>
@@ -254,14 +230,10 @@ class EditSetModal extends Component {
 
               <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={STYLE.selectedTextButton}>
-                    CANCEL
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>CANCEL</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={STYLE.selectedTextButton}>
-                    SAVE
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>SAVE</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -272,11 +244,9 @@ class EditSetModal extends Component {
   }
 }
 
-const createTypeItems = (types) => {
+const createTypeItems = types => {
   return types.map((type, index) => {
-    return (
-      <Picker.Item key={index} label={type.name} value={type.id} />
-    );
+    return <Picker.Item key={index} label={type.name} value={type.id} />;
   });
 };
 
@@ -296,14 +266,15 @@ EditSetModal.propTypes = {
   currentSets: PropTypes.arrayOf(PropTypes.object)
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     types: state.workoutData.setTypes,
-    currentSets: state.workoutData.programs[state.workoutData.activeWorkout.program].sets
+    currentSets:
+      state.workoutData.programs[state.workoutData.activeWorkout.program].sets
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateSetData: (setId, weight, reps, setType, min, sec) => {
       dispatch(updateSetData(setId, weight, reps, setType, min, sec));
@@ -314,4 +285,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditSetModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditSetModal);

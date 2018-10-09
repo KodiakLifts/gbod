@@ -1,21 +1,17 @@
-import React from 'react';
-import { View, ScrollView } from 'react-native';
-import PropTypes from 'prop-types';
+import React from "react";
+import { View, ScrollView } from "react-native";
+import PropTypes from "prop-types";
 
-const STYLE = require('./screenStyle');
-const COLORS = require('../../styles/Colors');
+const STYLE = require("./screenStyle");
+const COLORS = require("../../styles/Colors");
 
-const SubScreenTemplate = (props) => {
+const SubScreenTemplate = props => {
   const { headerContent, scrollContent, footer, modal } = props;
   return (
     <View style={STYLE.subScreenContainer}>
       {modal}
-      <View style={STYLE.subHeader}>
-        {headerContent}
-      </View>
-      <ScrollView
-        contentContainerStyle={STYLE.scrollArea}
-      >
+      <View style={STYLE.subHeader}>{headerContent}</View>
+      <ScrollView contentContainerStyle={STYLE.scrollArea}>
         {scrollContent}
       </ScrollView>
       {footer}

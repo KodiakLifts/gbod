@@ -1,27 +1,34 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import ExerciseOptionsModal from '../modals/ExerciseOptionsModal';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
+import Icon from "react-native-vector-icons/FontAwesome5";
+import ExerciseOptionsModal from "../modals/ExerciseOptionsModal";
 
-const COLORS = require('../../styles/Colors');
-const STYLE = require('./cardStyle');
+const COLORS = require("../../styles/Colors");
+const STYLE = require("./cardStyle");
 
 class ExerciseItem extends Component {
   state = {
-    menuModalVisible: false,
-  }
+    menuModalVisible: false
+  };
 
   _onMenuPress = () => {
     this.setState({ menuModalVisible: true });
-  }
+  };
 
   closeMenuModal = () => {
     this.setState({ menuModalVisible: false });
-  }
+  };
 
   render() {
-    const { name, category, bodyPart, favorite, oneRepMax, libraryId } = this.props;
+    const {
+      name,
+      category,
+      bodyPart,
+      favorite,
+      oneRepMax,
+      libraryId
+    } = this.props;
     const { menuModalVisible } = this.state;
 
     return (
@@ -42,7 +49,7 @@ class ExerciseItem extends Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={this._onMenuPress}>
             <Icon
-              name={'ellipsis-h'}
+              name={"ellipsis-h"}
               size={25}
               color={COLORS.SECONDARYCOLOR}
               style={{ marginRight: 12 }}
@@ -52,7 +59,6 @@ class ExerciseItem extends Component {
       </View>
     );
   }
-
 }
 
 ExerciseItem.propTypes = {

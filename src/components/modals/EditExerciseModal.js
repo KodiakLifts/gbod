@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Modal,
   Text,
@@ -6,31 +6,34 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { updateExerciseData, removeExercise } from '../../redux/actions/activeWorkoutActions';
-import { connect } from 'react-redux';
+} from "react-native";
+import PropTypes from "prop-types";
+import {
+  updateExerciseData,
+  removeExercise
+} from "../../redux/actions/activeWorkoutActions";
+import { connect } from "react-redux";
 
-const STYLE = require('./modalStyle');
+const STYLE = require("./modalStyle");
 
 class EditExerciseModal extends Component {
   state = {
     tmpSupersetNext: this.props.supersetNext,
     tmpIncludeWarmup: this.props.includeWarmup,
-    tmpRemove: false,
-  }
+    tmpRemove: false
+  };
 
-  supersetNextToggle = (checked) => {
+  supersetNextToggle = checked => {
     this.setState({ tmpSupersetNext: checked });
-  }
+  };
 
-  includeWarmupToggle = (checked) => {
+  includeWarmupToggle = checked => {
     this.setState({ tmpIncludeWarmup: checked });
-  }
+  };
 
-  toggleRemove = (checked) => {
+  toggleRemove = checked => {
     this.setState({ tmpRemove: checked });
-  }
+  };
 
   save = () => {
     const {
@@ -43,16 +46,12 @@ class EditExerciseModal extends Component {
     if (tmpRemove) {
       removeExercise(exerciseId);
     } else {
-      updateExerciseData(
-        exerciseId,
-        tmpSupersetNext,
-        tmpIncludeWarmup
-      );
+      updateExerciseData(exerciseId, tmpSupersetNext, tmpIncludeWarmup);
     }
 
     this.setState({ tmpRemove: false });
     closeModal();
-  }
+  };
 
   cancel = () => {
     const { supersetNext, includeWarmup, closeModal } = this.props;
@@ -61,7 +60,7 @@ class EditExerciseModal extends Component {
       tmpIncludeWarmup: includeWarmup
     });
     closeModal();
-  }
+  };
 
   render() {
     const { visible, lastExercise } = this.props;
@@ -69,21 +68,14 @@ class EditExerciseModal extends Component {
 
     return (
       <View>
-        <Modal
-          transparent
-          visible={visible}
-          onRequestClose={this.cancel}
-        >
+        <Modal transparent visible={visible} onRequestClose={this.cancel}>
           <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
             <TouchableWithoutFeedback>
               <View style={STYLE.modalCard}>
                 <View style={STYLE.modalHeader}>
-                  <Text style={STYLE.modalHeaderText}>
-                    Exercise
-                </Text>
+                  <Text style={STYLE.modalHeaderText}>Exercise</Text>
                 </View>
                 <View style={STYLE.cardColumnsContainer}>
-
                   <View style={STYLE.leftColumn}>
                     <View style={STYLE.leftItem}>
                       <Text style={STYLE.modalText}>
@@ -91,16 +83,11 @@ class EditExerciseModal extends Component {
                       </Text>
                     </View>
                     <View style={STYLE.leftItem}>
-                      <Text style={STYLE.modalText}>
-                        Include Warmup Sets:
-                      </Text>
+                      <Text style={STYLE.modalText}>Include Warmup Sets:</Text>
                     </View>
                     <View style={STYLE.leftItem}>
-                      <Text style={STYLE.modalText}>
-                        Remove Exercise:
-                      </Text>
+                      <Text style={STYLE.modalText}>Remove Exercise:</Text>
                     </View>
-
                   </View>
 
                   <View style={STYLE.rightColumn}>
@@ -154,15 +141,18 @@ EditExerciseModal.propTypes = {
   removeExercise: PropTypes.func
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateExerciseData: (exerciseId, supersetNext, includeWarmup) => {
       dispatch(updateExerciseData(exerciseId, supersetNext, includeWarmup));
     },
-    removeExercise: (exerciseId) => {
+    removeExercise: exerciseId => {
       dispatch(removeExercise(exerciseId));
     }
   };
 };
 
-export default connect(null, mapDispatchToProps)(EditExerciseModal);
+export default connect(
+  null,
+  mapDispatchToProps
+)(EditExerciseModal);

@@ -14,13 +14,10 @@ export const newExercise = (
     category: category,
     favorite: favorite,
     oneRepMax: oneRepMax
-  }
+  };
   const newState = {
     ...state,
-    exerciseLibrary: [
-      ...state.exerciseLibrary,
-      newItem
-    ]
+    exerciseLibrary: [...state.exerciseLibrary, newItem]
   };
   return newState;
 };
@@ -79,7 +76,6 @@ export const deleteExercise = (state, libraryId) => {
   let newPrograms = state.programs;
 
   newPrograms.forEach(program => {
-
     let newExercises = program.exercises.filter(exercise => {
       if (exercise.libraryId === libraryId) {
         removedExerciseId = exercise.id;
