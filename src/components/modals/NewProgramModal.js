@@ -19,20 +19,19 @@ const COLORS = require("../../styles/Colors");
 const TEXT_ENTRY_WIDTH = 160;
 const PICKER_WIDTH = 160;
 
-let index;
-let title;
-
 class NewProgramModal extends Component {
   state = {
     tmpCurrentProgram: true,
-    tmpName: title,
-    tmpTemplate: 0
+    tmpName: "New Program " + this.props.programs.length,
+    tmpTemplate: 0,
+    tmpCategory: 0,
+    tmpDescription: "",
+    tmpFavorite: true
   };
 
-  index = this.props.programs.length;
-  title = "New Program " + index;
-
   updateTmpName = tmpName => {
+    const index = this.props.programs.length;
+    const title = "New Program " + index;
     if (tmpName == null) {
       this.setState({ tmpName: title });
     } else {
@@ -44,28 +43,53 @@ class NewProgramModal extends Component {
     this.setState({ tmpTemplate: program });
   };
 
+  updateTmpCategory = category => {
+    this.setState({ tmpCategory: category });
+  };
+
+  toggleFavorite = checked => {
+    this.setState({ tmpFavorite: checked });
+  };
+
   cancel = () => {
     this.props.closeModal();
   };
 
   toggleCurrentProgram = checked => {
-    this.setState({
-      tmpCurrentProgram: checked
-    });
+    this.setState({ tmpCurrentProgram: checked });
   };
 
   save = () => {
     const { closeModal, newProgram } = this.props;
-    const { tmpCurrentProgram, tmpName, tmpTemplate } = this.state;
+    const {
+      tmpCurrentProgram,
+      tmpName,
+      tmpTemplate,
+      tmpCategory,
+      tmpDescription,
+      tmpFavorite
+    } = this.state;
 
-    newProgram(tmpCurrentProgram, tmpName, tmpTemplate);
+    newProgram(
+      tmpCurrentProgram,
+      tmpName,
+      tmpTemplate,
+      tmpCategory + 2,
+      tmpDescription,
+      tmpFavorite
+    );
 
     closeModal();
   };
 
   render() {
-    const { visible, programs } = this.props;
-    const { tmpCurrentProgram, tmpTemplate } = this.state;
+    const { visible, programs, categories } = this.props;
+    const {
+      tmpCurrentProgram,
+      tmpTemplate,
+      tmpCategory,
+      tmpFavorite
+    } = this.state;
     const index = programs.length;
     const title = "New Program ";
     return (
@@ -86,6 +110,12 @@ class NewProgramModal extends Component {
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Template:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Category:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Favorite:</Text>
                   </View>
                 </View>
 
@@ -123,6 +153,22 @@ class NewProgramModal extends Component {
                       {createItems(programs)}
                     </Picker>
                   </View>
+                  <View style={STYLE.rightItem}>
+                    <Picker
+                      style={[STYLE.picker, { width: PICKER_WIDTH }]}
+                      selectedValue={tmpCategory}
+                      onValueChange={this.updateTmpCategory}
+                    >
+                      {createItems(categories)}
+                    </Picker>
+                  </View>
+
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      value={tmpFavorite}
+                      onValueChange={this.toggleFavorite}
+                    />
+                  </View>
                 </View>
               </View>
 
@@ -154,19 +200,30 @@ NewProgramModal.propTypes = {
   category: PropTypes.number,
   closeModal: PropTypes.func,
   programs: PropTypes.arrayOf(PropTypes.object),
+  categories: PropTypes.arrayOf(PropTypes.object),
   newProgram: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
-    programs: state.workoutData.programs
+    programs: state.workoutData.programs,
+    categories: state.workoutData.programCategories.slice(2)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    newProgram: (programId, current, name) => {
-      dispatch(newProgram(programId, current, name));
+    newProgram: (
+      current,
+      name,
+      templateId,
+      categoryId,
+      description,
+      favorite
+    ) => {
+      dispatch(
+        newProgram(current, name, templateId, categoryId, description, favorite)
+      );
     }
   };
 };

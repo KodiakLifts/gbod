@@ -11,12 +11,22 @@ export const PROGRAMS_ACTIONS = [
   NEW_PROGRAM
 ];
 
-export const newProgram = (current, name, template) => {
+export const newProgram = (
+  current,
+  name,
+  templateId,
+  categoryId,
+  description,
+  favorite
+) => {
   return {
     type: NEW_PROGRAM,
     current,
     name,
-    template
+    templateId,
+    categoryId,
+    description,
+    favorite
   };
 };
 
