@@ -1,4 +1,6 @@
-export const initState = {
+export const initState =
+  // prettier-ignore
+  {
   workoutData:
   {
     timer: {
@@ -30,7 +32,7 @@ export const initState = {
           }
         ],
         days: [
-          { id: 0, name: "" }
+          { id: 0, name: "Day 1" }
         ]
       },
       {

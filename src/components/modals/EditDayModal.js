@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Modal,
   Text,
@@ -9,16 +9,16 @@ import {
   TextInput,
   CheckBox,
   Alert
-} from 'react-native';
-import PropTypes from 'prop-types';
+} from "react-native";
+import PropTypes from "prop-types";
 import {
   updateDayData,
   deleteDay
-} from '../../redux/actions/activeWorkoutActions';
-import { connect } from 'react-redux';
+} from "../../redux/actions/activeWorkoutActions";
+import { connect } from "react-redux";
 
-const STYLE = require('./modalStyle');
-const COLORS = require('../../styles/Colors');
+const STYLE = require("./modalStyle");
+const COLORS = require("../../styles/Colors");
 
 const TEXT_ENTRY_WIDTH = 70;
 
@@ -29,7 +29,7 @@ class EditDayModal extends Component {
     placeHolder: this.props.days[this.props.currentDay].name,
     tmpName: this.props.days[this.props.currentDay].name,
     tmpDelete: false
-  }
+  };
 
   componentWillReceiveProps(newProps) {
     if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
@@ -40,27 +40,27 @@ class EditDayModal extends Component {
     }
   }
 
-  updateTmpName = (tmpName) => {
+  updateTmpName = tmpName => {
     if (tmpName == null) {
       this.setState({ tmpName: this.props.days[this.state.currentDay].name });
     } else {
       this.setState({ tmpName: tmpName });
     }
-  }
+  };
 
-  toggleDelete = (checked) => {
+  toggleDelete = checked => {
     this.setState({
       tmpDelete: checked
     });
-  }
+  };
 
-  updateTmpDay = (dayId) => {
+  updateTmpDay = dayId => {
     this.setState({
       tmpDayId: dayId,
       tmpName: this.props.days[dayId].name,
       placeHolder: this.props.days[dayId].name
     });
-  }
+  };
 
   save = () => {
     const { updateDayData, closeModal } = this.props;
@@ -69,34 +69,30 @@ class EditDayModal extends Component {
     this.setState({ prevDayId: tmpDayId });
     if (tmpDelete) {
       Alert.alert(
-        'Delete Exercise',
-        'Are you sure you want to delete '
-        + tmpName + ' from the exercise library?',
+        "Delete Exercise",
+        "Are you sure you want to delete " +
+          tmpName +
+          " from the exercise library?",
         [
           {
-            text: 'CONFIRM', onPress: () => updateDayData(
-              tmpDayId,
-              tmpName,
-              tmpDelete
-            )
+            text: "CONFIRM",
+            onPress: () => updateDayData(tmpDayId, tmpName, tmpDelete)
           },
           {
-            text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
+            text: "CANCEL",
+            onPress: () => this.setState({ tmpDelete: false }),
+            style: "cancel"
           }
         ],
         { cancelable: false }
       );
     } else {
-      updateDayData(
-        tmpDayId,
-        tmpName,
-        tmpDelete
-      );
+      updateDayData(tmpDayId, tmpName, tmpDelete);
     }
 
     this.setState({ tmpDelete: false });
     closeModal();
-  }
+  };
 
   cancel = () => {
     const { closeModal, days, currentDay } = this.props;
@@ -108,46 +104,32 @@ class EditDayModal extends Component {
       tmpDelete: false
     });
     closeModal();
-  }
+  };
 
   render() {
     const { visible, title, days } = this.props;
     const { tmpDayId, placeHolder } = this.state;
     const deleteDisable = days.length === 1;
     return (
-      <Modal
-        transparent
-        visible={visible}
-        onRequestClose={this.cancel}
-      >
-        <TouchableOpacity
-          onPress={this.cancel}
-          style={STYLE.modalContainer}
-        >
+      <Modal transparent visible={visible} onRequestClose={this.cancel}>
+        <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={[STYLE.modalHeader, { marginBottom: 20 }]}>
                 {title}
               </View>
               <View style={STYLE.cardColumnsContainer}>
-
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Select Day:
-                    </Text>
+                    <Text style={STYLE.modalText}>Select Day:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Rename:
-                    </Text>
+                    <Text style={STYLE.modalText}>Rename:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Delete Day:
-                    </Text>
+                    <Text style={STYLE.modalText}>Delete Day:</Text>
                   </View>
                 </View>
 
@@ -156,7 +138,8 @@ class EditDayModal extends Component {
                     <Picker
                       style={STYLE.picker}
                       selectedValue={tmpDayId}
-                      onValueChange={this.updateTmpDay}>
+                      onValueChange={this.updateTmpDay}
+                    >
                       {createDayItems(days)}
                     </Picker>
                   </View>
@@ -187,14 +170,10 @@ class EditDayModal extends Component {
 
               <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={STYLE.selectedTextButton}>
-                    CANCEL
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>CANCEL</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={STYLE.selectedTextButton}>
-                    SAVE
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>SAVE</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -205,13 +184,11 @@ class EditDayModal extends Component {
   }
 }
 
-const createDayItems = (days) => {
+const createDayItems = days => {
   const dayItems = days.map((day, index) => {
-    return (
-      <Picker.Item key={index} label={day.name} value={day.id} />
-    );
+    return <Picker.Item key={index} label={day.name} value={day.id} />;
   });
-  return (dayItems);
+  return dayItems;
 };
 
 EditDayModal.propTypes = {
@@ -225,26 +202,26 @@ EditDayModal.propTypes = {
   deleteDay: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     days:
-      state
-        .workoutData
-        .programs[state.workoutData.activeWorkout.program]
-        .days,
-    currentDay: state.workoutData.activeWorkout.day,
+      state.workoutData.programs[state.workoutData.activeWorkout.program].days,
+    currentDay: state.workoutData.activeWorkout.day
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateDayData: (dayId, name, remove) => {
       dispatch(updateDayData(dayId, name, remove));
     },
-    deleteDay: (dayId) => {
+    deleteDay: dayId => {
       dispatch(deleteDay(dayId));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditDayModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(EditDayModal);

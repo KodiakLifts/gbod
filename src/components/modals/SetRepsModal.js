@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Modal,
   Text,
@@ -6,67 +6,55 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { updateSetReps } from '../../redux/actions/activeWorkoutActions';
-import { connect } from 'react-redux';
+} from "react-native";
+import PropTypes from "prop-types";
+import { updateSetReps } from "../../redux/actions/activeWorkoutActions";
+import { connect } from "react-redux";
 
-const COLORS = require('../../styles/Colors');
-const STYLE = require('./modalStyle');
+const COLORS = require("../../styles/Colors");
+const STYLE = require("./modalStyle");
 
 const MAX_LENGTH = 4;
 const TEXT_ENTRY_WIDTH = 60;
 
 class SetRepsModal extends Component {
   state = {
-    tmpReps: this.props.reps,
-  }
+    tmpReps: this.props.reps
+  };
 
-  updateTmpReps = (tmpReps) => {
+  updateTmpReps = tmpReps => {
     if (tmpReps == null) {
       this.setState({ tmpReps: this.props.reps });
     } else {
       this.setState({ tmpReps: parseInt(tmpReps) });
     }
-  }
+  };
 
   save = () => {
     const { updateSetReps, setId, closeModal } = this.props;
     const { tmpReps } = this.state;
-    updateSetReps(
-      setId,
-      tmpReps,
-    );
+    updateSetReps(setId, tmpReps);
     closeModal();
-  }
+  };
 
   cancel = () => {
     this.props.closeModal();
-  }
+  };
 
   render() {
     const { visible, reps } = this.props;
     return (
-      <Modal
-        transparent
-        visible={visible}
-        onRequestClose={this.cancel}
-      >
+      <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>
-                  AMRAP
-                </Text>
+                <Text style={STYLE.modalHeaderText}>AMRAP</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
-
                 <View style={STYLE.leftColumn}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Reps:
-                    </Text>
+                    <Text style={STYLE.modalText}>Reps:</Text>
                   </View>
                 </View>
 
@@ -90,14 +78,10 @@ class SetRepsModal extends Component {
 
               <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={STYLE.selectedTextButton}>
-                    CANCEL
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>CANCEL</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={STYLE.selectedTextButton}>
-                    SAVE
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>SAVE</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -113,10 +97,10 @@ SetRepsModal.propTypes = {
   setId: PropTypes.number,
   reps: PropTypes.number,
   closeModal: PropTypes.func,
-  updateSetReps: PropTypes.func,
+  updateSetReps: PropTypes.func
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     updateSetReps: (setId, reps) => {
       dispatch(updateSetReps(setId, reps));
@@ -124,4 +108,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SetRepsModal);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SetRepsModal);

@@ -39,9 +39,11 @@ export const removeExercise = (state, exerciseId) => {
     set.id = index;
   });
 
-  let newExercises = state.programs[activeProgram].exercises.filter(exercise => {
-    return exercise.id !== exerciseId;
-  });
+  let newExercises = state.programs[activeProgram].exercises.filter(
+    exercise => {
+      return exercise.id !== exerciseId;
+    }
+  );
   newExercises.forEach((exercise, index) => {
     newSets.forEach(set => {
       if (set.exercise === exercise.id) {

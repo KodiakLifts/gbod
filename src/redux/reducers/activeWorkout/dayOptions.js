@@ -1,14 +1,15 @@
 export const deleteDay = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
 
-  let newDays =
-    state.programs[activeProgram].days.filter(day => day.id !== dayId);
+  let newDays = state.programs[activeProgram].days.filter(
+    day => day.id !== dayId
+  );
   newDays.forEach((day, index) => {
     day.id = index;
   });
 
-  let newSets = state.programs[activeProgram].sets.filter(set =>
-    set.day !== dayId
+  let newSets = state.programs[activeProgram].sets.filter(
+    set => set.day !== dayId
   );
   newSets.forEach((set, index) => {
     set.id = index;
@@ -17,10 +18,9 @@ export const deleteDay = (state, dayId) => {
     }
   });
 
-  let newExercises =
-    state.programs[activeProgram].exercises.filter(exercise =>
-      exercise.day !== dayId
-    );
+  let newExercises = state.programs[activeProgram].exercises.filter(
+    exercise => exercise.day !== dayId
+  );
   newExercises.forEach((exercise, index) => {
     newSets.forEach(set => {
       if (set.exercise === exercise.id) {

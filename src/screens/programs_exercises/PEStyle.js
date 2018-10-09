@@ -1,14 +1,14 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
-const COLORS = require('../../styles/Colors');
+const COLORS = require("../../styles/Colors");
 
 module.exports = StyleSheet.create({
   pickerHalf: {
     color: COLORS.SECONDARYCOLOR,
-    width: (Dimensions.get('window').width / 2)
+    width: Dimensions.get("window").width / 2
   },
   pickerFull: {
     color: COLORS.SECONDARYCOLOR,
-    width: Dimensions.get('window').width
+    width: Dimensions.get("window").width
   }
 });

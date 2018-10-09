@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { finishWorkout } from '../../redux/actions/activeWorkoutActions';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { finishWorkout } from "../../redux/actions/activeWorkoutActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const STYLE = require('./buttonStyle');
+const STYLE = require("./buttonStyle");
 
 const FinishButton = ({ finish }) => {
   return (
@@ -20,7 +20,7 @@ FinishButton.propTypes = {
   finish: PropTypes.func
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     finish: () => {
       dispatch(finishWorkout());
@@ -28,4 +28,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(FinishButton);
+export default connect(
+  null,
+  mapDispatchToProps
+)(FinishButton);

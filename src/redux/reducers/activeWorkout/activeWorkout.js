@@ -12,14 +12,14 @@ import {
   DELETE_DAY,
   REMOVE_EXERCISE,
   REMOVE_SET
-} from '../../actions/activeWorkoutActions';
+} from "../../actions/activeWorkoutActions";
 
-import setPress from './setPress';
-import { finishWorkout, resetWorkout } from './endWorkout';
-import { setTimer, stopTimer, decrementTimer } from './timer';
-import { updateSetData, updateSetReps, removeSet } from './setOptions';
-import { updateExerciseData, removeExercise } from './exerciseOptions';
-import { updateDayData, deleteDay } from './dayOptions';
+import setPress from "./setPress";
+import { finishWorkout, resetWorkout } from "./endWorkout";
+import { setTimer, stopTimer, decrementTimer } from "./timer";
+import { updateSetData, updateSetReps, removeSet } from "./setOptions";
+import { updateExerciseData, removeExercise } from "./exerciseOptions";
+import { updateDayData, deleteDay } from "./dayOptions";
 
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {

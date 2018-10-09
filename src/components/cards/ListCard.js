@@ -1,18 +1,16 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import PropTypes from 'prop-types';
+import React from "react";
+import { Text, View } from "react-native";
+import PropTypes from "prop-types";
 
-const STYLE = require('./cardStyle');
+const STYLE = require("./cardStyle");
 
-const ListCard = (props) => {
+const ListCard = props => {
   const { headerTitle, items } = props;
   return (
     <View>
       <Text style={STYLE.listHeaderText}>{headerTitle}</Text>
-      <View style={STYLE.card}>
-        {items}
-      </View>
-    </View >
+      <View style={STYLE.card}>{items}</View>
+    </View>
   );
 };
 

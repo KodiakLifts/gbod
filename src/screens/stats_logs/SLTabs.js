@@ -1,17 +1,17 @@
-import { createMaterialTopTabNavigator } from 'react-navigation';
-import Stats from './StatsScreen';
-import Logs from './LogsScreen';
+import { createMaterialTopTabNavigator } from "react-navigation";
+import Stats from "./StatsScreen";
+import Logs from "./LogsScreen";
 
+const COLORS = require("../../styles/Colors");
+const TEXTSTYLE = require("../../styles/TextStyle");
 
-const COLORS = require('../../styles/Colors');
-const TEXTSTYLE = require('../../styles/TextStyle');
-
-const PETabs = createMaterialTopTabNavigator({
-  STATS: Stats,
-  LOGS: Logs
-},
+const PETabs = createMaterialTopTabNavigator(
   {
-    initialRouteName: 'STATS',
+    STATS: Stats,
+    LOGS: Logs
+  },
+  {
+    initialRouteName: "STATS",
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,
@@ -24,9 +24,10 @@ const PETabs = createMaterialTopTabNavigator({
         backgroundColor: COLORS.BACKCOLOR,
         borderTopWidth: 2,
         borderTopColor: COLORS.BORDERCOLOR,
-        elevation: 4,
+        elevation: 4
       }
     }
-  });
+  }
+);
 
 export default PETabs;

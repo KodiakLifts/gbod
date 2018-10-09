@@ -1,21 +1,18 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import ScreenTemplate from '../templates/ScreenTemplate';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { View, Text } from "react-native";
+import ScreenTemplate from "../templates/ScreenTemplate";
+import PropTypes from "prop-types";
 
-
-const TEXTSTYLE = require('../../styles/TextStyle');
-const CONTAINERSTYLE = require('../../styles/ContainerStyle');
+const TEXTSTYLE = require("../../styles/TextStyle");
+const CONTAINERSTYLE = require("../../styles/ContainerStyle");
 
 const menuItems = [{ name: "option 1" }, { name: "option 2" }];
 
-const benchPressSets =
-  [
-    { weight: 125, reps: 5, type: 'N' },
-    { weight: 125, reps: 5, type: 'N' },
-    { weight: 125, reps: 5, type: 'F' }
-  ];
-
+const benchPressSets = [
+  { weight: 125, reps: 5, type: "N" },
+  { weight: 125, reps: 5, type: "N" },
+  { weight: 125, reps: 5, type: "F" }
+];
 
 class NextWorkout extends Component {
   constructor() {
@@ -32,7 +29,7 @@ class NextWorkout extends Component {
     event.preventDefault();
 
     this.setState({
-      showMenu: true,
+      showMenu: true
     });
   }
 
@@ -41,15 +38,10 @@ class NextWorkout extends Component {
       <ScreenTemplate
         headerContent={
           <View style={CONTAINERSTYLE.headerContent}>
-            <Text style={TEXTSTYLE.headerText}>
-              NEXT - GreySkull LP
-            </Text>
-
+            <Text style={TEXTSTYLE.headerText}>NEXT - GreySkull LP</Text>
           </View>
         }
-        scrollContent={
-          []
-        }
+        scrollContent={[]}
       />
     );
   }
