@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Modal,
   Text,
@@ -9,18 +9,16 @@ import {
   TextInput,
   Picker,
   Alert
-} from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+} from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import {
-  updateProgramData,
-  deleteProgram
-} from '../../redux/actions/programsActions';
-import { updateExerciseData, deleteExercise }
-  from '../../redux/actions/exercisesActions';
+  updateExerciseData,
+  deleteExercise
+} from "../../redux/actions/exercisesActions";
 
-const STYLE = require('./modalStyle');
-const COLORS = require('../../styles/Colors');
+const STYLE = require("./modalStyle");
+const COLORS = require("../../styles/Colors");
 
 const TEXT_ENTRY_WIDTH = 160;
 const PICKER_WIDTH = 160;
@@ -32,44 +30,44 @@ class ExerciseOptionsModal extends Component {
     tmpCategory: this.props.category,
     tmpBodyPart: this.props.bodyPart,
     tmpFavorite: this.props.favorite,
-    tmpDelete: false,
-  }
+    tmpDelete: false
+  };
 
-  updateTmpOneRepMax = (weight) => {
+  updateTmpOneRepMax = weight => {
     if (weight == null) {
       this.setState({ tmpOneRepMax: this.props.oneRepMax });
     } else {
       this.setState({ tmpOneRepMax: parseInt(weight) });
     }
-  }
+  };
 
-  updateTmpName = (name) => {
+  updateTmpName = name => {
     if (name == null) {
       this.setState({ tmpName: this.props.title });
     } else {
       this.setState({ tmpName: name });
     }
-  }
+  };
 
-  updateTmpCategory = (category) => {
+  updateTmpCategory = category => {
     this.setState({ tmpCategory: category });
-  }
+  };
 
-  updateTmpBodyPart = (bodyPart) => {
+  updateTmpBodyPart = bodyPart => {
     this.setState({ tmpBodyPart: bodyPart });
-  }
+  };
 
-  toggleFavorite = (checked) => {
+  toggleFavorite = checked => {
     this.setState({ tmpFavorite: checked });
-  }
+  };
 
-  toggleDelete = (checked) => {
+  toggleDelete = checked => {
     this.setState({ tmpDelete: checked });
-  }
+  };
 
   cancel = () => {
     this.props.closeModal();
-  }
+  };
 
   save = () => {
     const {
@@ -90,13 +88,16 @@ class ExerciseOptionsModal extends Component {
 
     if (tmpDelete) {
       Alert.alert(
-        'Delete Exercise',
-        'Are you sure you want to delete '
-        + title + " from the exercise library?",
+        "Delete Exercise",
+        "Are you sure you want to delete " +
+          title +
+          " from the exercise library?",
         [
-          { text: 'CONFIRM', onPress: () => deleteExercise(libraryId) },
+          { text: "CONFIRM", onPress: () => deleteExercise(libraryId) },
           {
-            text: 'CANCEL', onPress: () => this.setState({ tmpDelete: false }), style: 'cancel'
+            text: "CANCEL",
+            onPress: () => this.setState({ tmpDelete: false }),
+            style: "cancel"
           }
         ],
         { cancelable: false }
@@ -108,81 +109,52 @@ class ExerciseOptionsModal extends Component {
         tmpName,
         tmpCategory,
         tmpBodyPart,
-        tmpFavorite,
+        tmpFavorite
       );
     }
     this.setState({ tmpDelete: false });
     closeModal();
-  }
+  };
 
   render() {
-    const {
-      visible,
-      title,
-      oneRepMax,
-      categories,
-      bodyParts
-    } = this.props;
-    const {
-      tmpBodyPart,
-      tmpCategory,
-      tmpFavorite,
-      tmpDelete
-    } = this.state;
+    const { visible, title, oneRepMax, categories, bodyParts } = this.props;
+    const { tmpBodyPart, tmpCategory, tmpFavorite, tmpDelete } = this.state;
     return (
-      <Modal
-        transparent
-        visible={visible}
-        onRequestClose={this.cancel}
-      >
-        <TouchableOpacity
-          onPress={this.cancel}
-          style={STYLE.modalContainer}
-        >
+      <Modal transparent visible={visible} onRequestClose={this.cancel}>
+        <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>
-                  {title}
-                </Text>
+                <Text style={STYLE.modalHeaderText}>{title}</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
-
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      One Rep max:
-                    </Text>
+                    <Text style={STYLE.modalText}>One Rep max:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Rename:
-                    </Text>
+                    <Text style={STYLE.modalText}>Rename:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Category:
-                    </Text>
+                    <Text style={STYLE.modalText}>Category:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Body Part:
-                    </Text>
+                    <Text style={STYLE.modalText}>Body Part:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Favorite:
-                    </Text>
+                    <Text style={STYLE.modalText}>Favorite:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>
-                      Delete:
-                    </Text>
+                    <Text style={STYLE.modalText}>Delete:</Text>
                   </View>
                 </View>
 
-                <View style={
-                  [STYLE.rightColumn, { alignItems: 'center', paddingRight: 6 }]}>
+                <View
+                  style={[
+                    STYLE.rightColumn,
+                    { alignItems: "center", paddingRight: 6 }
+                  ]}
+                >
                   <View style={STYLE.rightItem}>
                     <View style={STYLE.textInputContainer}>
                       <TextInput
@@ -214,7 +186,8 @@ class ExerciseOptionsModal extends Component {
                     <Picker
                       style={[STYLE.picker, { width: PICKER_WIDTH }]}
                       selectedValue={tmpCategory}
-                      onValueChange={this.updateTmpCategory}>
+                      onValueChange={this.updateTmpCategory}
+                    >
                       {createItems(categories)}
                     </Picker>
                   </View>
@@ -222,7 +195,8 @@ class ExerciseOptionsModal extends Component {
                     <Picker
                       style={[STYLE.picker, { width: PICKER_WIDTH }]}
                       selectedValue={tmpBodyPart}
-                      onValueChange={this.updateTmpBodyPart}>
+                      onValueChange={this.updateTmpBodyPart}
+                    >
                       {createItems(bodyParts)}
                     </Picker>
                   </View>
@@ -243,32 +217,23 @@ class ExerciseOptionsModal extends Component {
 
               <View style={STYLE.footer}>
                 <TouchableOpacity onPress={this.cancel}>
-                  <Text style={STYLE.selectedTextButton}>
-                    CANCEL
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>CANCEL</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.save}>
-                  <Text style={STYLE.selectedTextButton}>
-                    SAVE
-                  </Text>
+                  <Text style={STYLE.selectedTextButton}>SAVE</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>
         </TouchableOpacity>
       </Modal>
-
     );
   }
-
-
 }
 
-const createItems = (items) => {
+const createItems = items => {
   return items.map((item, index) => {
-    return (
-      <Picker.Item key={index} label={item.name} value={item.id} />
-    );
+    return <Picker.Item key={index} label={item.name} value={item.id} />;
   });
 };
 
@@ -287,16 +252,16 @@ ExerciseOptionsModal.propTypes = {
   updateExerciseData: PropTypes.func
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     categories: state.workoutData.exerciseCategories.slice(1),
     bodyParts: state.workoutData.bodyParts.slice(1)
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    deleteExercise: (libraryId) => {
+    deleteExercise: libraryId => {
       dispatch(deleteExercise(libraryId));
     },
     updateExerciseData: (
@@ -307,16 +272,21 @@ const mapDispatchToProps = (dispatch) => {
       bodyPart,
       favorite
     ) => {
-      dispatch(updateExerciseData(
-        libraryId,
-        oneRepMax,
-        name,
-        category,
-        bodyPart,
-        favorite
-      ));
+      dispatch(
+        updateExerciseData(
+          libraryId,
+          oneRepMax,
+          name,
+          category,
+          bodyPart,
+          favorite
+        )
+      );
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseOptionsModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExerciseOptionsModal);

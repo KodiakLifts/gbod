@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { handleTimer } from '../../redux/actions/activeWorkoutActions';
+import React, { Component } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { handleTimer } from "../../redux/actions/activeWorkoutActions";
 
-const COLORS = require('../../styles/Colors');
-const STYLE = require('./timerStyle');
+const COLORS = require("../../styles/Colors");
+const STYLE = require("./timerStyle");
 
 class SetTimer extends Component {
   state = {
     complete: true
-  }
+  };
 
   componentWillReceiveProps(newProps) {
     if (newProps.minutes === 0 && newProps.seconds === 0) {
@@ -23,11 +23,11 @@ class SetTimer extends Component {
   _onPress = () => {
     const { handleTimer, started } = this.props;
     handleTimer(!started);
-  }
+  };
 
   timerColor = () => {
     return this.state.complete ? COLORS.INACTIVECOLOR : COLORS.ACTIVECOLOR;
-  }
+  };
 
   render() {
     const { minutes, seconds } = this.props;
@@ -35,8 +35,9 @@ class SetTimer extends Component {
       <TouchableOpacity onPress={this._onPress} disabled={this.state.complete}>
         <View style={STYLE.timerContainer}>
           <Text style={[STYLE.timerText, { color: this.timerColor() }]}>
-            {String(minutes).padStart(2, '0') + ":"
-              + String(seconds).padStart(2, '0')}
+            {String(minutes).padStart(2, "0") +
+              ":" +
+              String(seconds).padStart(2, "0")}
           </Text>
         </View>
       </TouchableOpacity>
@@ -51,7 +52,7 @@ SetTimer.propTypes = {
   started: PropTypes.bool
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     minutes: state.workoutData.timer.minutes,
     seconds: state.workoutData.timer.seconds,
@@ -59,13 +60,15 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    handleTimer: (setComplete) => {
+    handleTimer: setComplete => {
       dispatch(handleTimer(setComplete));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SetTimer);
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SetTimer);

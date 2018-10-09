@@ -4,14 +4,14 @@ import {
   UPDATE_LIBRARY_EXERCISE_DATA,
   DELETE_LIBRARY_EXERCISE,
   NEW_LIBRARY_EXERCISE
-} from '../../actions/exercisesActions';
+} from "../../actions/exercisesActions";
 import {
   updateExerciseData,
   updateSelectedBodyPart,
   updateSelectedExerciseCategory,
   deleteExercise,
   newExercise
-} from './exerciseLibrary';
+} from "./exerciseLibrary";
 
 export default function exercises(state = {}, action) {
   switch (action.type) {
@@ -38,15 +38,9 @@ export default function exercises(state = {}, action) {
         action.oneRepMax,
         action.category,
         action.bodyPart,
-        action.favorite);
+        action.favorite
+      );
     default:
       return state;
   }
 }
-
-
-
-
-
-
-

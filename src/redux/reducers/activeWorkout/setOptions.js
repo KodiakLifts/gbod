@@ -1,4 +1,12 @@
-export const updateSetData = (state, setId, weight, reps, setType, min, sec) => {
+export const updateSetData = (
+  state,
+  setId,
+  weight,
+  reps,
+  setType,
+  min,
+  sec
+) => {
   const activeProgram = state.activeWorkout.program;
 
   const newState = {
@@ -40,7 +48,7 @@ export const updateSetReps = (state, setId, reps) => {
             if (set.id === setId) {
               return {
                 ...set,
-                ...{ reps: reps },
+                ...{ reps: reps }
               };
             }
             return set;
@@ -58,8 +66,8 @@ export const removeSet = (state, setId, exerciseId) => {
   let currentExercise = state.activeWorkout.currentExercise;
   let newExercises = state.programs[activeProgram].exercises;
 
-  let newSets = state.programs[activeProgram].sets.filter(set =>
-    set.id !== setId
+  let newSets = state.programs[activeProgram].sets.filter(
+    set => set.id !== setId
   );
   newSets.forEach((set, index) => {
     set.id = index;

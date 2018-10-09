@@ -8,13 +8,10 @@ export default (state, setId, exerciseId) => {
 const toggleSetComplete = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
-  const setCompleteVal =
-    state.programs[activeProgram].sets[setId].complete;
+  const setCompleteVal = state.programs[activeProgram].sets[setId].complete;
 
-  const setRestMinutes =
-    state.programs[activeProgram].sets[setId].restMinutes;
-  const setRestSeconds =
-    state.programs[activeProgram].sets[setId].restSeconds;
+  const setRestMinutes = state.programs[activeProgram].sets[setId].restMinutes;
+  const setRestSeconds = state.programs[activeProgram].sets[setId].restSeconds;
 
   const newState = {
     ...state,
@@ -22,7 +19,7 @@ const toggleSetComplete = (state, setId, exerciseId) => {
       ...state.timer,
       ...{ set: setId },
       ...{ minutes: setRestMinutes },
-      ...{ seconds: setRestSeconds },
+      ...{ seconds: setRestSeconds }
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
@@ -31,7 +28,8 @@ const toggleSetComplete = (state, setId, exerciseId) => {
           sets: state.programs[activeProgram].sets.map(set => {
             if (set.id === setId) {
               return {
-                ...set, ...{ complete: !setCompleteVal }
+                ...set,
+                ...{ complete: !setCompleteVal }
               };
             }
             return set;
@@ -39,7 +37,8 @@ const toggleSetComplete = (state, setId, exerciseId) => {
           exercises: state.programs[activeProgram].exercises.map(exercise => {
             if (exerciseId === exercise.id) {
               return {
-                ...exercise, ...{ complete: false }
+                ...exercise,
+                ...{ complete: false }
               };
             }
             return exercise;
@@ -60,7 +59,7 @@ const updateExerciseComplete = (state, exerciseId) => {
     return set.exercise === exerciseId;
   });
 
-  const exerciseComplete = currentSets.every((set) => {
+  const exerciseComplete = currentSets.every(set => {
     return set.complete === true;
   });
 
@@ -85,7 +84,6 @@ const updateExerciseComplete = (state, exerciseId) => {
 };
 
 const updateCurrentExercise = (state, exerciseId) => {
-
   const activeProgram = state.activeWorkout.program;
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {
     return exercise.day === state.activeWorkout.day;
@@ -95,19 +93,22 @@ const updateCurrentExercise = (state, exerciseId) => {
     return exercise.id === exerciseId;
   });
 
-  const exerciseComplete = state.programs[activeProgram]
-    .exercises[exerciseId].complete;
+  const exerciseComplete =
+    state.programs[activeProgram].exercises[exerciseId].complete;
 
   let updatedActiveExerciseId = exerciseId;
 
   if (exerciseComplete) {
-    const allExercisesComplete = exercises.every((exercise) => {
+    const allExercisesComplete = exercises.every(exercise => {
       return exercise.complete === true;
     });
 
     if (!allExercisesComplete) {
       let foundExercise = false;
-      let index = (currentExerciseIndex === (exercises.length - 1) ? 0 : currentExerciseIndex++);
+      let index =
+        currentExerciseIndex === exercises.length - 1
+          ? 0
+          : currentExerciseIndex++;
       for (let i = index; i < exercises.length; i++) {
         if (!exercises[i].complete) {
           updatedActiveExerciseId = exercises[i].id;
@@ -134,7 +135,7 @@ const updateCurrentExercise = (state, exerciseId) => {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      currentExercise: updatedActiveExerciseId,
+      currentExercise: updatedActiveExerciseId
     }
   };
   return newState;

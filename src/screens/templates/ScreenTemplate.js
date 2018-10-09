@@ -1,17 +1,15 @@
-import React from 'react';
-import { View, ScrollView } from 'react-native';
-import PropTypes from 'prop-types';
+import React from "react";
+import { View, ScrollView } from "react-native";
+import PropTypes from "prop-types";
 
-const STYLE = require('./screenStyle');
+const STYLE = require("./screenStyle");
 const SCROLL_TOP_PADDING = 12;
 
-const ScreenTemplate = (props) => {
+const ScreenTemplate = props => {
   const { headerContent, scrollContent, endOfScrollContent } = props;
   return (
     <View style={STYLE.container}>
-      <View style={STYLE.header}>
-        {headerContent}
-      </View>
+      <View style={STYLE.header}>{headerContent}</View>
       <ScrollView contentContainerStyle={STYLE.scrollArea}>
         <View style={{ height: SCROLL_TOP_PADDING }} />
         {scrollContent}
