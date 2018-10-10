@@ -1,3 +1,14 @@
+export const updateActiveDay = (state, dayId) => {
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: dayId
+    }
+  };
+  return newState;
+};
+
 export const deleteDay = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
 

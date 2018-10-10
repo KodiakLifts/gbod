@@ -20,21 +20,19 @@ const getActiveDayName = state => {
 };
 
 export const getActiveWorkoutTitle = createSelector(
-  [getActiveWorkoutName, getActiveDayName],
-  (programName, dayName) => {
+  [getActiveWorkoutName],
+  programName => {
     let program = programName;
-    let day = dayName;
+    // let day = dayName;
     if (program.length > PROGRAM_NAME_LENGTH) {
       program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
-    if (day.length > DAY_NAME_LENGTH) {
-      day = day.substring(0, DAY_NAME_LENGTH) + "..";
-    }
+    // if (day.length > DAY_NAME_LENGTH) {
+    //   day = day.substring(0, DAY_NAME_LENGTH) + "..";
+    // }
     const title = (
       <View>
-        <Text style={WORKOUT_STYLE.headerText}>
-          {program} - {day}
-        </Text>
+        <Text style={WORKOUT_STYLE.headerText}>{program}</Text>
       </View>
     );
     return title;

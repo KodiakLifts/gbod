@@ -8,6 +8,7 @@ export const STOP_TIMER = "STOP_TIMER";
 export const DECREMENT_TIMER = "DECREMENT_TIMER";
 export const SET_TIMER = "SET_TIMER";
 export const UPDATE_DAY_DATA = "UPDATE_DAY_DATA";
+export const UPDATE_ACTIVE_DAY = "UPDATE_ACTIVE_DAY";
 export const DELETE_DAY = "DELETE_DAY";
 export const REMOVE_EXERCISE = "DELETE_EXERCISE";
 export const REMOVE_SET = "REMOVE_SET";
@@ -22,11 +23,19 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   DECREMENT_TIMER,
   SET_TIMER,
   UPDATE_DAY_DATA,
+  UPDATE_ACTIVE_DAY,
   UPDATE_SET_REPS,
   DELETE_DAY,
   REMOVE_EXERCISE,
   REMOVE_SET
 ];
+
+export const updateActiveDay = dayId => {
+  return {
+    type: UPDATE_ACTIVE_DAY,
+    dayId
+  };
+};
 
 export const removeSet = (setId, exerciseId, currentSets) => {
   return {

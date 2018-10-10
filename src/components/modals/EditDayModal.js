@@ -25,7 +25,7 @@ const TEXT_ENTRY_WIDTH = 70;
 class EditDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
-    tmpDayId: this.props.currentDay,
+    currentDay: this.props.currentDay,
     placeHolder: this.props.days[this.props.currentDay].name,
     tmpName: this.props.days[this.props.currentDay].name,
     tmpDelete: false
@@ -34,9 +34,6 @@ class EditDayModal extends Component {
   componentWillReceiveProps(newProps) {
     if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
       this.setState({ placeHolder: newProps.days[newProps.currentDay].name });
-    }
-    if (this.state.tmpDayId !== newProps.currentDay) {
-      this.setState({ tmpDayId: newProps.currentDay });
     }
   }
 
@@ -54,29 +51,21 @@ class EditDayModal extends Component {
     });
   };
 
-  updateTmpDay = dayId => {
-    this.setState({
-      tmpDayId: dayId,
-      tmpName: this.props.days[dayId].name,
-      placeHolder: this.props.days[dayId].name
-    });
-  };
-
   save = () => {
-    const { updateDayData, closeModal } = this.props;
-    const { tmpDayId, tmpName, tmpDelete } = this.state;
+    const { updateDayData, closeModal, currentDay } = this.props;
+    const { tmpName, tmpDelete } = this.state;
 
-    this.setState({ prevDayId: tmpDayId });
+    this.setState({ prevDayId: currentDay });
     if (tmpDelete) {
       Alert.alert(
-        "Delete Exercise",
-        "Are you sure you want to delete " +
+        "Delete Day",
+        "Are you sure you want to delete day " +
           tmpName +
-          " from the exercise library?",
+          " from this program?",
         [
           {
             text: "CONFIRM",
-            onPress: () => updateDayData(tmpDayId, tmpName, tmpDelete)
+            onPress: () => updateDayData(currentDay, tmpName, tmpDelete)
           },
           {
             text: "CANCEL",
@@ -87,7 +76,7 @@ class EditDayModal extends Component {
         { cancelable: false }
       );
     } else {
-      updateDayData(tmpDayId, tmpName, tmpDelete);
+      updateDayData(currentDay, tmpName, tmpDelete);
     }
 
     this.setState({ tmpDelete: false });
@@ -108,7 +97,7 @@ class EditDayModal extends Component {
 
   render() {
     const { visible, title, days } = this.props;
-    const { tmpDayId, placeHolder } = this.state;
+    const { currentDay, placeHolder } = this.state;
     const deleteDisable = days.length === 1;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
@@ -121,10 +110,6 @@ class EditDayModal extends Component {
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>Select Day:</Text>
-                  </View>
-
-                  <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Rename:</Text>
                   </View>
 
@@ -134,16 +119,6 @@ class EditDayModal extends Component {
                 </View>
 
                 <View style={STYLE.rightColumn}>
-                  <View style={STYLE.rightItem}>
-                    <Picker
-                      style={STYLE.picker}
-                      selectedValue={tmpDayId}
-                      onValueChange={this.updateTmpDay}
-                    >
-                      {createDayItems(days)}
-                    </Picker>
-                  </View>
-
                   <View style={STYLE.rightItem}>
                     <View style={STYLE.textInputContainer}>
                       <TextInput

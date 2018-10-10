@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const COLORS = require("../../styles/Colors");
 
@@ -31,5 +31,17 @@ module.exports = StyleSheet.create({
   },
   footerContainer: {
     flexDirection: "row"
+  },
+  picker: {
+    height: 37,
+    marginLeft: 6,
+    color: COLORS.SECONDARYCOLOR,
+    width: Dimensions.get("window").width / 3
+  },
+  subHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: COLORS.PRIMARYCOLOR
   }
 });
