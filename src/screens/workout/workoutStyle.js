@@ -33,7 +33,7 @@ module.exports = StyleSheet.create({
     flexDirection: "row"
   },
   picker: {
-    height: 37,
+    height: 40,
     marginLeft: 6,
     color: COLORS.SECONDARYCOLOR,
     width: Dimensions.get("window").width / 3
@@ -43,5 +43,12 @@ module.exports = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: COLORS.PRIMARYCOLOR
+  },
+  menuPlusContainer: {
+    width: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginRight: 12
   }
 });

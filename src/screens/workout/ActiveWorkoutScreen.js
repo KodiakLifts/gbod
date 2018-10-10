@@ -110,16 +110,18 @@ class ActiveWorkout extends Component {
               closeModal={this.closeModal}
               visible={editDayModalVisible}
             />
-            <TouchableOpacity
-              onPress={this._dayMenuOnPress}
-              style={{ marginRight: 12 }}
-            >
-              <Icon
-                name={"ellipsis-h"}
-                size={ICON_SIZE}
-                color={COLORS.SECONDARYCOLOR}
-              />
-            </TouchableOpacity>
+            <View style={STYLE.menuPlusContainer}>
+              <TouchableOpacity>
+                <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this._dayMenuOnPress}>
+                <Icon
+                  name={"ellipsis-h"}
+                  size={ICON_SIZE}
+                  color={COLORS.SECONDARYCOLOR}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         }
         scrollContent={cards}

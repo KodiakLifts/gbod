@@ -1,9 +1,17 @@
 export const updateActiveDay = (state, dayId) => {
+  const activeProgram = state.activeWorkout.program;
+  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.day === dayId;
+  });
+
+  const currentExercise = exercises[0].id;
+
   const newState = {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      day: dayId
+      day: dayId,
+      currentExercise: currentExercise
     }
   };
   return newState;
@@ -72,22 +80,11 @@ export const deleteDay = (state, dayId) => {
 export const updateDayData = (state, dayId, name) => {
   const activeProgram = state.activeWorkout.program;
 
-  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
-    return exercise.day === dayId;
-  });
-
-  const currentExercise = exercises[0].id;
-
   const newState = {
     ...state,
     timer: {
       ...state.timer,
       started: false
-    },
-    activeWorkout: {
-      ...state.activeWorkout,
-      day: dayId,
-      currentExercise: currentExercise
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {

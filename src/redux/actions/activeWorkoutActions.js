@@ -31,9 +31,10 @@ export const ACTIVE_WORKOUT_ACTIONS = [
 ];
 
 export const updateActiveDay = dayId => {
-  return {
-    type: UPDATE_ACTIVE_DAY,
-    dayId
+  return dispatch => {
+    clearInterval(this.timer);
+    dispatch({ type: UPDATE_ACTIVE_DAY, dayId });
+    dispatch(setTimer(0, 0));
   };
 };
 
@@ -62,12 +63,12 @@ export const deleteDay = dayId => {
 
 export const updateDayData = (dayId, name, remove) => {
   return dispatch => {
-    clearInterval(this.timer);
     dispatch({ type: UPDATE_DAY_DATA, dayId, name });
     if (remove) {
+      clearInterval(this.timer);
       dispatch(deleteDay(dayId));
+      dispatch(setTimer(0, 0));
     }
-    dispatch(setTimer(0, 0));
   };
 };
 
