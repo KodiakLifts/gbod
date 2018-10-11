@@ -12,6 +12,7 @@ export const UPDATE_ACTIVE_DAY = "UPDATE_ACTIVE_DAY";
 export const DELETE_DAY = "DELETE_DAY";
 export const ADD_DAY = "ADD_DAY";
 export const REMOVE_EXERCISE = "DELETE_EXERCISE";
+export const ADD_SET = "ADD_SET";
 export const REMOVE_SET = "REMOVE_SET";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
@@ -29,8 +30,15 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   DELETE_DAY,
   ADD_DAY,
   REMOVE_EXERCISE,
+  ADD_SET,
   REMOVE_SET
 ];
+
+export const addSet = () => {
+  return {
+    type: ADD_SET
+  };
+};
 
 export const addDay = name => {
   return dispatch => {
