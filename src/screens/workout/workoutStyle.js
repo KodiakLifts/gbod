@@ -45,7 +45,7 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.PRIMARYCOLOR
   },
   menuPlusContainer: {
-    width: 60,
+    width: 59,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
