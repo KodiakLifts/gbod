@@ -40,6 +40,12 @@ class ExerciseCard extends Component {
     if (active) {
       return (
         <View style={STYLE.menuPlusContainer}>
+          <TouchableOpacity>
+            <Icon name={"angle-down"} size={23} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Icon name={"angle-up"} size={25} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
           <TouchableOpacity onPress={this._addSetPress}>
             <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
           </TouchableOpacity>
