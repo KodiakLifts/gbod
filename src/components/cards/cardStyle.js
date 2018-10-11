@@ -34,6 +34,12 @@ module.exports = StyleSheet.create({
     borderRadius: 5,
     elevation: 2
   },
+  modalCard: {
+    flexDirection: "column",
+    alignSelf: "stretch",
+    width: Dimensions.get("window").width - 70,
+    backgroundColor: COLORS.PRIMARYCOLOR
+  },
   activeCard: {
     flexDirection: "column",
     width: Dimensions.get("window").width - 24,
@@ -55,6 +61,14 @@ module.exports = StyleSheet.create({
   listItem: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomColor: COLORS.BACKCOLOR,
+    borderBottomWidth: 1
+  },
+  modalListItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
     justifyContent: "space-between",
     borderBottomColor: COLORS.BACKCOLOR,
     borderBottomWidth: 1

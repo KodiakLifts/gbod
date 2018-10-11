@@ -22,6 +22,22 @@ export const newExercise = (
   return newState;
 };
 
+export const updateModalSelectedBodyPart = (state, bodyPartId) => {
+  const newState = {
+    ...state,
+    modalSelectedBodyPart: bodyPartId
+  };
+  return newState;
+};
+
+export const updateModalSelectedExerciseCategory = (state, categoryId) => {
+  const newState = {
+    ...state,
+    modalSelectedExerciseCategory: categoryId
+  };
+  return newState;
+};
+
 export const updateSelectedBodyPart = (state, bodyPartId) => {
   const newState = {
     ...state,

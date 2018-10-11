@@ -13,6 +13,7 @@ import ResetButton from "../../components/buttons/ResetButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
 import NewDayModal from "../../components/modals/NewDayModal";
+import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
 import Fab from "../../components/buttons/Fab";
 import { updateActiveDay } from "../../redux/actions/activeWorkoutActions";
 
@@ -29,6 +30,7 @@ class ActiveWorkout extends Component {
   state = {
     editDayModalVisible: false,
     newDayModalVisible: false,
+    addExerciseModalVisible: false,
     day: this.props.activeDay,
     days: this.props.days
   };
@@ -66,6 +68,11 @@ class ActiveWorkout extends Component {
     }
   };
 
+  _addExercisePress = () => {
+    console.log("ADDEXERCISE");
+    this.setState({ addExerciseModalVisible: true });
+  };
+
   _newDayPress = () => {
     this.setState({ newDayModalVisible: true });
   };
@@ -79,13 +86,20 @@ class ActiveWorkout extends Component {
   closeModal = () => {
     this.setState({
       editDayModalVisible: false,
-      newDayModalVisible: false
+      newDayModalVisible: false,
+      addExerciseModalVisible: false
     });
   };
 
   render() {
     const { title, cards } = this.props;
-    const { editDayModalVisible, newDayModalVisible, day, days } = this.state;
+    const {
+      editDayModalVisible,
+      newDayModalVisible,
+      addExerciseModalVisible,
+      day,
+      days
+    } = this.state;
     return (
       <ScreenTemplate
         headerContent={
@@ -121,6 +135,10 @@ class ActiveWorkout extends Component {
               closeModal={this.closeModal}
               visible={newDayModalVisible}
             />
+            <AddExerciseToWorkoutModal
+              closeModal={this.closeModal}
+              visible={addExerciseModalVisible}
+            />
             <View style={STYLE.menuPlusContainer}>
               <TouchableOpacity onPress={this._newDayPress}>
                 <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
@@ -142,7 +160,7 @@ class ActiveWorkout extends Component {
             <FinishButton />
           </View>
         }
-        footer={<Fab onPress={this._newExercisePress} />}
+        footer={<Fab onPress={this._addExercisePress} />}
       />
     );
   }

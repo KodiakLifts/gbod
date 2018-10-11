@@ -142,6 +142,8 @@ export const initState =
     ],
     selectedExerciseCategory: 0,
     selectedBodyPart: 0,
+    modalSelectedExerciseCategory: 0,
+    modalSelectedBodyPart: 0,
     exerciseLibrary: [
       { id: 0, name: "", bodyPart: 0, category: 0, favorite: false, oneRepMax: 0 },
       { id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
@@ -150,6 +152,9 @@ export const initState =
       { id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, oneRepMax: 150 },
       { id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, oneRepMax: 200 },
       { id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, oneRepMax: 350 },
+      { id: 7, name: "Chest Dip", bodyPart: 4, category: 3, favorite: true, oneRepMax: 150 },
+      { id: 8, name: "Behind The Neck Press", bodyPart: 8, category: 2, favorite: false, oneRepMax: 200 },
+      { id: 9, name: "Front Squat", bodyPart: 7, category: 2, favorite: false, oneRepMax: 350 },
     ],
     bodyParts: [
       { id: 0, name: "All Body Parts" },
