@@ -95,7 +95,7 @@ class ExerciseCard extends Component {
             name={"link"}
             size={15}
             color={supersetNext ? COLORS.SECONDARYCOLOR : COLORS.BACKCOLOR}
-            style={{ transform: [{ rotateZ: "135deg" }] }}
+            style={{ transform: [{ rotateZ: "135deg" }], paddingBottom: 2 }}
           />
         </View>
       </View>

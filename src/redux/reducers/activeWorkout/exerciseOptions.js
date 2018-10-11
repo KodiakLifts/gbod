@@ -26,12 +26,32 @@ export const addExercise = (state, libraryId) => {
     note: ""
   };
 
+  const newSetId = state.programs[activeProgram].sets.length;
+
+  const newSet = {
+    id: newSetId,
+    exercise: exerciseId,
+    day: day,
+    weight: 0,
+    reps: 0,
+    type: 1,
+    complete: false,
+    restMinutes: 0,
+    restSeconds: 0,
+    timerOn: true
+  };
+
   const newState = {
     ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: exerciseId
+    },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {
           ...program,
+          sets: [...program.sets, newSet],
           exercises: [...program.exercises, newExercise]
         };
       }
