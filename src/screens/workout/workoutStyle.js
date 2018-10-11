@@ -36,7 +36,7 @@ module.exports = StyleSheet.create({
     height: 40,
     marginLeft: 6,
     color: COLORS.SECONDARYCOLOR,
-    width: Dimensions.get("window").width / 3
+    width: Dimensions.get("window").width / 3 + 12
   },
   subHeader: {
     flexDirection: "row",

@@ -50,17 +50,37 @@ class ExerciseCard extends Component {
                 <Text style={STYLE.title}>{name}</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={this._onMenuPress}>
-                <Icon
-                  name={"ellipsis-h"}
-                  size={25}
-                  color={COLORS.SECONDARYCOLOR}
-                  style={{ marginRight: 12 }}
-                />
-              </TouchableOpacity>
+              <View style={STYLE.menuPlusContainer}>
+                <TouchableOpacity>
+                  <Icon
+                    name={"angle-down"}
+                    size={27}
+                    color={COLORS.SECONDARYCOLOR}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Icon
+                    name={"angle-up"}
+                    size={27}
+                    color={COLORS.SECONDARYCOLOR}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this._onMenuPress}>
+                  <Icon
+                    name={"ellipsis-h"}
+                    size={25}
+                    color={COLORS.SECONDARYCOLOR}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
 
             <View style={STYLE.setButtonsContainer}>{setButtons}</View>
+
+            <View style={STYLE.sortContainer} />
           </View>
 
           <Icon

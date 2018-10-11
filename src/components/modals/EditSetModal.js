@@ -125,7 +125,7 @@ class EditSetModal extends Component {
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>Set</Text>
+                <Text style={STYLE.modalHeaderText}>Set Options</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { paddingLeft: 6 }]}>

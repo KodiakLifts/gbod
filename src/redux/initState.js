@@ -103,7 +103,7 @@ export const initState =
       },
       {
         id: 2,
-        name: "Starting Strength",
+        name: "5/3/1 Boring But Big",
         category: 2,
         description: "Another beginner strength program.",
         favorite: false,
@@ -118,7 +118,7 @@ export const initState =
           }
         ],
         days: [
-          { id: 0, name: "" }
+          { id: 0, name: "Day 1" }
         ]
       },
     ],
@@ -144,7 +144,7 @@ export const initState =
     selectedBodyPart: 0,
     exerciseLibrary: [
       { id: 0, name: "", bodyPart: 0, category: 0, favorite: false, oneRepMax: 0 },
-      { id: 1, name: "Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
+      { id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
       { id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, oneRepMax: 200 },
       { id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, oneRepMax: 300 },
       { id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, oneRepMax: 150 },

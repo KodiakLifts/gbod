@@ -96,16 +96,16 @@ class EditDayModal extends Component {
   };
 
   render() {
-    const { visible, title, days } = this.props;
-    const { currentDay, placeHolder } = this.state;
+    const { visible, days } = this.props;
+    const { placeHolder } = this.state;
     const deleteDisable = days.length === 1;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
-              <View style={[STYLE.modalHeader, { marginBottom: 20 }]}>
-                {title}
+              <View style={STYLE.modalHeader}>
+                <Text style={STYLE.modalHeaderText}>Day Options</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
@@ -159,15 +159,7 @@ class EditDayModal extends Component {
   }
 }
 
-const createDayItems = days => {
-  const dayItems = days.map((day, index) => {
-    return <Picker.Item key={index} label={day.name} value={day.id} />;
-  });
-  return dayItems;
-};
-
 EditDayModal.propTypes = {
-  title: PropTypes.object,
   visible: PropTypes.bool,
   currentDay: PropTypes.number,
   days: PropTypes.arrayOf(PropTypes.object),

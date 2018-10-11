@@ -7,29 +7,22 @@ import { createSelector } from "reselect";
 const CARD_STYLE = require("../../components/cards/cardStyle");
 const WORKOUT_STYLE = require("../../screens/workout/workoutStyle");
 
-const PROGRAM_NAME_LENGTH = 20;
-const DAY_NAME_LENGTH = 5;
+const PROGRAM_NAME_LENGTH = 26;
+const EXERCISE_NAME_LENGTH = 24;
 
 const getActiveWorkoutName = state => {
   return state.programs[state.activeWorkout.program].name;
-};
-const getActiveDayName = state => {
-  return state.programs[state.activeWorkout.program].days[
-    state.activeWorkout.day
-  ].name;
 };
 
 export const getActiveWorkoutTitle = createSelector(
   [getActiveWorkoutName],
   programName => {
     let program = programName;
-    // let day = dayName;
+
     if (program.length > PROGRAM_NAME_LENGTH) {
       program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
-    // if (day.length > DAY_NAME_LENGTH) {
-    //   day = day.substring(0, DAY_NAME_LENGTH) + "..";
-    // }
+
     const title = (
       <View>
         <Text style={WORKOUT_STYLE.headerText}>{program}</Text>
@@ -102,12 +95,17 @@ export const getActiveWorkoutCards = createSelector(
         lastExercise = true;
       }
 
+      let name = exercise.name;
+      if (name.length > EXERCISE_NAME_LENGTH) {
+        name = name.substring(0, EXERCISE_NAME_LENGTH) + "..";
+      }
+
       let card = (
         <ExerciseCard
           key={index}
           exerciseId={exercise.id}
           borderStyle={borderStyle}
-          name={exercise.name}
+          name={name}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}
           lastExercise={lastExercise}

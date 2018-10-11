@@ -106,7 +106,6 @@ class ActiveWorkout extends Component {
               {createItems(days)}
             </Picker>
             <EditDayModal
-              title={title}
               closeModal={this.closeModal}
               visible={editDayModalVisible}
             />
@@ -117,7 +116,7 @@ class ActiveWorkout extends Component {
               <TouchableOpacity onPress={this._dayMenuOnPress}>
                 <Icon
                   name={"ellipsis-h"}
-                  size={ICON_SIZE}
+                  size={25}
                   color={COLORS.SECONDARYCOLOR}
                 />
               </TouchableOpacity>

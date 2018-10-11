@@ -74,5 +74,19 @@ module.exports = StyleSheet.create({
     includeFontPadding: false,
     marginHorizontal: 12,
     marginBottom: 12
+  },
+  menuPlusContainer: {
+    width: 118,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginRight: 12
+  },
+  sortContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 160,
+    paddingBottom: 6
   }
 });
