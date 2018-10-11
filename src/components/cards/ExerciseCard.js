@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import SetButton from "../buttons/SetButton";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import EditExerciseModal from "../modals/EditExerciseModal";
+import { addSet } from "../../redux/actions/activeWorkoutActions";
+import { connect } from "react-redux";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
@@ -11,6 +13,11 @@ const STYLE = require("./cardStyle");
 class ExerciseCard extends Component {
   state = {
     menuModalVisible: false
+  };
+
+  _addSetPress = () => {
+    const { addSet, exerciseId } = this.props;
+    addSet(exerciseId);
   };
 
   _onMenuPress = () => {
@@ -51,7 +58,7 @@ class ExerciseCard extends Component {
               </TouchableOpacity>
 
               <View style={STYLE.menuPlusContainer}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this._addSetPress}>
                   <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this._onMenuPress}>
@@ -88,7 +95,19 @@ ExerciseCard.propTypes = {
   supersetNext: PropTypes.bool,
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
-  setButtons: PropTypes.arrayOf(PropTypes.object)
+  setButtons: PropTypes.arrayOf(PropTypes.object),
+  addSet: PropTypes.func
 };
 
-export default ExerciseCard;
+const mapDispatchToProps = dispatch => {
+  return {
+    addSet: exerciseId => {
+      dispatch(addSet(exerciseId));
+    }
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ExerciseCard);

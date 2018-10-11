@@ -1,3 +1,40 @@
+export const addSet = (state, exerciseId) => {
+  const activeProgram = state.activeWorkout.program;
+  const activeExercise = state.programs[activeProgram].exercises[exerciseId];
+  const activeSets = state.programs[activeProgram].sets.filter(set => {
+    return set.exercise === activeExercise.id;
+  });
+  const lastSet = activeSets[activeSets.length - 1];
+
+  const newSet = {
+    id: lastSet.id + 1,
+    exercise: exerciseId,
+    day: lastSet.day,
+    weight: lastSet.weight,
+    reps: lastSet.reps,
+    type: lastSet.type,
+    complete: false,
+    restMinutes: lastSet.type,
+    restSeconds: lastSet.type,
+    timerOn: true
+  };
+
+  const newState = {
+    ...state,
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          sets: [...program.sets, newSet]
+        };
+      }
+      return program;
+    })
+  };
+
+  return newState;
+};
+
 export const updateSetData = (
   state,
   setId,

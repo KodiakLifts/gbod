@@ -13,13 +13,14 @@ import {
   DELETE_DAY,
   ADD_DAY,
   REMOVE_EXERCISE,
+  ADD_SET,
   REMOVE_SET
 } from "../../actions/activeWorkoutActions";
 
 import setPress from "./setPress";
 import { finishWorkout, resetWorkout } from "./endWorkout";
 import { setTimer, stopTimer, decrementTimer } from "./timer";
-import { updateSetData, updateSetReps, removeSet } from "./setOptions";
+import { updateSetData, updateSetReps, removeSet, addSet } from "./setOptions";
 import { updateExerciseData, removeExercise } from "./exerciseOptions";
 import {
   updateDayData,
@@ -70,6 +71,8 @@ export default function activeWorkout(state = {}, action) {
       return addDay(state, action.name);
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
+    case ADD_SET:
+      return addSet(state, action.exerciseId);
     case REMOVE_SET:
       return removeSet(state, action.setId, action.exerciseId);
     case REMOVE_EXERCISE:

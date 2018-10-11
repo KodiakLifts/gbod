@@ -34,9 +34,10 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   REMOVE_SET
 ];
 
-export const addSet = () => {
+export const addSet = exerciseId => {
   return {
-    type: ADD_SET
+    type: ADD_SET,
+    exerciseId
   };
 };
 
