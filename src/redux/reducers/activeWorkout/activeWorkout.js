@@ -11,6 +11,7 @@ import {
   UPDATE_DAY_DATA,
   UPDATE_SET_REPS,
   DELETE_DAY,
+  ADD_DAY,
   REMOVE_EXERCISE,
   REMOVE_SET
 } from "../../actions/activeWorkoutActions";
@@ -20,7 +21,12 @@ import { finishWorkout, resetWorkout } from "./endWorkout";
 import { setTimer, stopTimer, decrementTimer } from "./timer";
 import { updateSetData, updateSetReps, removeSet } from "./setOptions";
 import { updateExerciseData, removeExercise } from "./exerciseOptions";
-import { updateDayData, deleteDay, updateActiveDay } from "./dayOptions";
+import {
+  updateDayData,
+  deleteDay,
+  updateActiveDay,
+  addDay
+} from "./dayOptions";
 
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
@@ -60,6 +66,8 @@ export default function activeWorkout(state = {}, action) {
       return updateDayData(state, action.dayId, action.name);
     case DELETE_DAY:
       return deleteDay(state, action.dayId);
+    case ADD_DAY:
+      return addDay(state, action.name);
     case UPDATE_SET_REPS:
       return updateSetReps(state, action.setId, action.reps);
     case REMOVE_SET:

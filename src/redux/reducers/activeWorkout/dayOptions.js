@@ -4,7 +4,8 @@ export const updateActiveDay = (state, dayId) => {
     return exercise.day === dayId;
   });
 
-  const currentExercise = exercises[0].id;
+  const currentExercise =
+    exercises.length !== 0 ? exercises[0].id : state.activeWorkout.exercise;
 
   const newState = {
     ...state,
@@ -13,6 +14,30 @@ export const updateActiveDay = (state, dayId) => {
       day: dayId,
       currentExercise: currentExercise
     }
+  };
+  return newState;
+};
+
+export const addDay = (state, name) => {
+  const activeProgram = state.activeWorkout.program;
+  const newId = state.programs[activeProgram].days.length;
+  const newDay = { id: newId, name: name };
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: newId
+    },
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          days: [...program.days, newDay]
+        };
+      }
+      return program;
+    })
   };
   return newState;
 };

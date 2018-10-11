@@ -10,6 +10,7 @@ export const SET_TIMER = "SET_TIMER";
 export const UPDATE_DAY_DATA = "UPDATE_DAY_DATA";
 export const UPDATE_ACTIVE_DAY = "UPDATE_ACTIVE_DAY";
 export const DELETE_DAY = "DELETE_DAY";
+export const ADD_DAY = "ADD_DAY";
 export const REMOVE_EXERCISE = "DELETE_EXERCISE";
 export const REMOVE_SET = "REMOVE_SET";
 
@@ -26,9 +27,18 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   UPDATE_ACTIVE_DAY,
   UPDATE_SET_REPS,
   DELETE_DAY,
+  ADD_DAY,
   REMOVE_EXERCISE,
   REMOVE_SET
 ];
+
+export const addDay = name => {
+  return dispatch => {
+    clearInterval(this.timer);
+    dispatch({ type: ADD_DAY, name });
+    dispatch(setTimer(0, 0));
+  };
+};
 
 export const updateActiveDay = dayId => {
   return dispatch => {

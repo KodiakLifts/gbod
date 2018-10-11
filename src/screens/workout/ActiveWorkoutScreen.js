@@ -12,11 +12,9 @@ import FinishButton from "../../components/buttons/FinishButton";
 import ResetButton from "../../components/buttons/ResetButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
+import NewDayModal from "../../components/modals/NewDayModal";
 import Fab from "../../components/buttons/Fab";
-import {
-  updateActiveDay,
-  updateDayData
-} from "../../redux/actions/activeWorkoutActions";
+import { updateActiveDay } from "../../redux/actions/activeWorkoutActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./workoutStyle");
@@ -30,6 +28,7 @@ let prevDays;
 class ActiveWorkout extends Component {
   state = {
     editDayModalVisible: false,
+    newDayModalVisible: false,
     day: this.props.activeDay,
     days: this.props.days
   };
@@ -50,10 +49,12 @@ class ActiveWorkout extends Component {
 
   switchDay = dayId => {
     let nameChange = false;
-    for (let i = 0; i < this.state.days.length; i++) {
-      if (this.state.days[i].name !== prevDays[i].name) {
-        nameChange = true;
-        break;
+    if (this.state.days.length === prevDays.length) {
+      for (let i = 0; i < this.state.days.length; i++) {
+        if (this.state.days[i].name !== prevDays[i].name) {
+          nameChange = true;
+          break;
+        }
       }
     }
     if (nameChange) {
@@ -65,19 +66,26 @@ class ActiveWorkout extends Component {
     }
   };
 
-  _dayMenuOnPress = () => {
+  _newDayPress = () => {
+    this.setState({ newDayModalVisible: true });
+  };
+
+  _dayMenuPress = () => {
     this.setState({ editDayModalVisible: true });
   };
 
   _settingsOnPress = () => {};
 
   closeModal = () => {
-    this.setState({ editDayModalVisible: false });
+    this.setState({
+      editDayModalVisible: false,
+      newDayModalVisible: false
+    });
   };
 
   render() {
     const { title, cards } = this.props;
-    const { editDayModalVisible, day, days } = this.state;
+    const { editDayModalVisible, newDayModalVisible, day, days } = this.state;
     return (
       <ScreenTemplate
         headerContent={
@@ -109,11 +117,15 @@ class ActiveWorkout extends Component {
               closeModal={this.closeModal}
               visible={editDayModalVisible}
             />
+            <NewDayModal
+              closeModal={this.closeModal}
+              visible={newDayModalVisible}
+            />
             <View style={STYLE.menuPlusContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={this._newDayPress}>
                 <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={this._dayMenuOnPress}>
+              <TouchableOpacity onPress={this._dayMenuPress}>
                 <Icon
                   name={"ellipsis-h"}
                   size={25}
@@ -147,8 +159,7 @@ ActiveWorkout.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object),
   days: PropTypes.arrayOf(PropTypes.object),
   activeDay: PropTypes.number,
-  updateActiveDay: PropTypes.func,
-  updateDayData: PropTypes.func
+  updateActiveDay: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -165,9 +176,6 @@ const mapDispatchToProps = dispatch => {
   return {
     updateActiveDay: dayId => {
       dispatch(updateActiveDay(dayId));
-    },
-    updateDayData: (dayId, name, remove) => {
-      dispatch(updateDayData(dayId, name, remove));
     }
   };
 };
