@@ -96,7 +96,8 @@ ExerciseCard.propTypes = {
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
   setButtons: PropTypes.arrayOf(PropTypes.object),
-  addSet: PropTypes.func
+  addSet: PropTypes.func,
+  active: PropTypes.bool
 };
 
 const mapDispatchToProps = dispatch => {

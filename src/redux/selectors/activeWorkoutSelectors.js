@@ -105,6 +105,7 @@ export const getActiveWorkoutCards = createSelector(
           key={index}
           exerciseId={exercise.id}
           borderStyle={borderStyle}
+          active={exercise.id === currentExercise}
           name={name}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}

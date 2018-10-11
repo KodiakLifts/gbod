@@ -20,9 +20,6 @@ import { updateActiveDay } from "../../redux/actions/activeWorkoutActions";
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./workoutStyle");
 
-const ICON_SIZE = 25;
-const ICON_NAME = "cog";
-
 let prevDay;
 let prevDays;
 
@@ -69,7 +66,6 @@ class ActiveWorkout extends Component {
   };
 
   _addExercisePress = () => {
-    console.log("ADDEXERCISE");
     this.setState({ addExerciseModalVisible: true });
   };
 
@@ -109,11 +105,7 @@ class ActiveWorkout extends Component {
             <View style={STYLE.timerSettingsContainer}>
               <SetTimer />
               <TouchableOpacity onPress={this._settingsOnPress}>
-                <Icon
-                  name={ICON_NAME}
-                  size={ICON_SIZE}
-                  color={COLORS.SECONDARYCOLOR}
-                />
+                <Icon name={"cog"} size={25} color={COLORS.SECONDARYCOLOR} />
               </TouchableOpacity>
             </View>
           </View>

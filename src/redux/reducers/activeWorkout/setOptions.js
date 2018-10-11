@@ -5,9 +5,10 @@ export const addSet = (state, exerciseId) => {
     return set.exercise === activeExercise.id;
   });
   const lastSet = activeSets[activeSets.length - 1];
+  const newSetId = lastSet.id + 1;
 
   const newSet = {
-    id: lastSet.id + 1,
+    id: newSetId,
     exercise: exerciseId,
     day: lastSet.day,
     weight: lastSet.weight,
@@ -19,13 +20,23 @@ export const addSet = (state, exerciseId) => {
     timerOn: true
   };
 
+  const oldSets = state.programs[activeProgram].sets;
+  const newSets = [
+    ...oldSets.slice(0, newSetId),
+    newSet,
+    ...oldSets.slice(newSetId)
+  ];
+  for (let i = newSetId; i < newSets.length; i++) {
+    newSets[i].id = i;
+  }
+
   const newState = {
     ...state,
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
         return {
           ...program,
-          sets: [...program.sets, newSet]
+          sets: newSets
         };
       }
       return program;
