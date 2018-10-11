@@ -1,3 +1,53 @@
+export const shiftExerciseDown = (state, exerciseId) => {
+  const activeProgram = state.activeWorkout.program;
+  const newExercises = state.programs[activeProgram].exercises;
+
+  const exerciseToShift = newExercises[exerciseId];
+  newExercises[exerciseId] = newExercises[exerciseId + 1];
+  newExercises[exerciseId + 1] = exerciseToShift;
+
+  newExercises.forEach((exercise, index) => {
+    newExercises[index].id = index;
+  });
+
+  const currentExercise = state.activeWorkout.currentExercise + 1;
+
+  const newSets = state.programs[activeProgram].sets.map(set => {
+    if (set.exercise === exerciseId) {
+      return { ...set, exercise: exerciseId + 1 };
+    } else if (set.exercise === exerciseId + 1) {
+      return { ...set, exercise: exerciseId };
+    }
+    return set;
+  });
+
+  newSets.forEach((set, index) => {
+    newSets[index].id = index;
+  });
+
+  const newState = {
+    ...state,
+    activeWorkout: { ...state.activeWorkout, currentExercise: currentExercise },
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          sets: newSets,
+          exercises: newExercises
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
+};
+
+export const shiftSetsDown = (state, exerciseId) => {};
+
+export const shiftExerciseUp = (state, exerciseId) => {
+  return state;
+};
+
 export const makeCurrentExercise = (state, exerciseId) => {
   const newState = {
     ...state,

@@ -16,6 +16,8 @@ export const ADD_SET = "ADD_SET";
 export const REMOVE_SET = "REMOVE_SET";
 export const ADD_EXERCISE = "ADD_EXERCISE";
 export const MAKE_CURRENT_EXERCISE = "MAKE_CURRENT_EXERCISE";
+export const SHIFT_EXERCISE_DOWN = "SHIFT_EXERCISE_DOWN";
+export const SHIFT_EXERCISE_UP = "SHIFT_EXERCISE_UP";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -35,8 +37,24 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   ADD_SET,
   REMOVE_SET,
   ADD_EXERCISE,
-  MAKE_CURRENT_EXERCISE
+  MAKE_CURRENT_EXERCISE,
+  SHIFT_EXERCISE_UP,
+  SHIFT_EXERCISE_DOWN
 ];
+
+export const shiftExerciseDown = exerciseId => {
+  return {
+    type: SHIFT_EXERCISE_DOWN,
+    exerciseId
+  };
+};
+
+export const shiftExerciseUp = exerciseId => {
+  return {
+    type: SHIFT_EXERCISE_UP,
+    exerciseId
+  };
+};
 
 export const makeCurrentExercise = exerciseId => {
   return {

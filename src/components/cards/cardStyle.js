@@ -90,9 +90,9 @@ module.exports = StyleSheet.create({
     marginBottom: 12
   },
   menuPlusContainer: {
-    width: 117,
+    width: 122,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     marginRight: 12
   },

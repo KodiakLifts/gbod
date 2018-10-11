@@ -90,10 +90,9 @@ export const getActiveWorkoutCards = createSelector(
           ? CARD_STYLE.activeCard
           : CARD_STYLE.card;
 
-      let lastExercise = false;
-      if (index === activeExercises.length - 1) {
-        lastExercise = true;
-      }
+      const lastExercise = exercise.id === activeExercises.length - 1;
+
+      const firstExercise = exercise.id === 0;
 
       let name = exercise.name;
       if (name.length > EXERCISE_NAME_LENGTH) {
@@ -109,6 +108,7 @@ export const getActiveWorkoutCards = createSelector(
           name={name}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}
+          firstExercise={firstExercise}
           lastExercise={lastExercise}
           setButtons={setButtons}
         />

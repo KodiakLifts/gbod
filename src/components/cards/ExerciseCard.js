@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import SetButton from "../buttons/SetButton";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import EditExerciseModal from "../modals/EditExerciseModal";
 import {
   addSet,
-  makeCurrentExercise
+  makeCurrentExercise,
+  shiftExerciseDown,
+  shiftExerciseUp
 } from "../../redux/actions/activeWorkoutActions";
 import { connect } from "react-redux";
 
@@ -36,23 +37,66 @@ class ExerciseCard extends Component {
     this.setState({ menuModalVisible: false });
   };
 
+  _shiftUp = () => {
+    const { shiftExerciseUp, exerciseId } = this.props;
+    shiftExerciseUp(exerciseId);
+  };
+
+  _shiftDown = () => {
+    const { shiftExerciseDown, exerciseId } = this.props;
+    shiftExerciseDown(exerciseId);
+  };
+
   renderControls = active => {
+    const { lastExercise, firstExercise } = this.props;
     if (active) {
       return (
         <View style={STYLE.menuPlusContainer}>
-          <TouchableOpacity>
-            <Icon name={"angle-down"} size={23} color={COLORS.SECONDARYCOLOR} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Icon name={"angle-up"} size={25} color={COLORS.SECONDARYCOLOR} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._addSetPress}>
+          {this.renderShiftDown(lastExercise)}
+          {this.renderShiftUp(firstExercise)}
+          <TouchableOpacity
+            onPress={this._addSetPress}
+            style={{ margin: 1, paddingHorizontal: 5 }}
+          >
             <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={this._onMenuPress}>
+          <TouchableOpacity
+            onPress={this._onMenuPress}
+            style={{ margin: 1, paddingLeft: 5 }}
+          >
             <Icon name={"ellipsis-h"} size={25} color={COLORS.SECONDARYCOLOR} />
           </TouchableOpacity>
         </View>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  renderShiftDown = lastExercise => {
+    if (!lastExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftDown}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-down"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  renderShiftUp = firstExercise => {
+    if (!firstExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftUp}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-up"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
       );
     } else {
       return null;
@@ -116,10 +160,13 @@ ExerciseCard.propTypes = {
   supersetNext: PropTypes.bool,
   includeWarmup: PropTypes.bool,
   lastExercise: PropTypes.bool,
+  firstExercise: PropTypes.bool,
   setButtons: PropTypes.arrayOf(PropTypes.object),
   addSet: PropTypes.func,
   active: PropTypes.bool,
-  makeCurrentExercise: PropTypes.func
+  makeCurrentExercise: PropTypes.func,
+  shiftExerciseDown: PropTypes.func,
+  shiftExerciseUp: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
@@ -129,6 +176,12 @@ const mapDispatchToProps = dispatch => {
     },
     makeCurrentExercise: exerciseId => {
       dispatch(makeCurrentExercise(exerciseId));
+    },
+    shiftExerciseDown: exerciseId => {
+      dispatch(shiftExerciseDown(exerciseId));
+    },
+    shiftExerciseUp: exerciseId => {
+      dispatch(shiftExerciseUp(exerciseId));
     }
   };
 };
