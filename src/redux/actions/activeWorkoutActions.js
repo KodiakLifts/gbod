@@ -15,6 +15,7 @@ export const REMOVE_EXERCISE = "DELETE_EXERCISE";
 export const ADD_SET = "ADD_SET";
 export const REMOVE_SET = "REMOVE_SET";
 export const ADD_EXERCISE = "ADD_EXERCISE";
+export const MAKE_CURRENT_EXERCISE = "MAKE_CURRENT_EXERCISE";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -33,8 +34,16 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   REMOVE_EXERCISE,
   ADD_SET,
   REMOVE_SET,
-  ADD_EXERCISE
+  ADD_EXERCISE,
+  MAKE_CURRENT_EXERCISE
 ];
+
+export const makeCurrentExercise = exerciseId => {
+  return {
+    type: MAKE_CURRENT_EXERCISE,
+    exerciseId
+  };
+};
 
 export const addExercise = libraryId => {
   return {

@@ -1,3 +1,14 @@
+export const makeCurrentExercise = (state, exerciseId) => {
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: exerciseId
+    }
+  };
+  return newState;
+};
+
 export const addExercise = (state, libraryId) => {
   const activeProgram = state.activeWorkout.program;
   const exerciseId = state.programs[activeProgram].exercises.length;
@@ -28,7 +39,6 @@ export const addExercise = (state, libraryId) => {
     })
   };
 
-  console.log(newState);
   return newState;
 };
 

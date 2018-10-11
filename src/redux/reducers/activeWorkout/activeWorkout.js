@@ -15,7 +15,8 @@ import {
   REMOVE_EXERCISE,
   ADD_EXERCISE,
   ADD_SET,
-  REMOVE_SET
+  REMOVE_SET,
+  MAKE_CURRENT_EXERCISE
 } from "../../actions/activeWorkoutActions";
 
 import setPress from "./setPress";
@@ -25,7 +26,8 @@ import { updateSetData, updateSetReps, removeSet, addSet } from "./setOptions";
 import {
   updateExerciseData,
   removeExercise,
-  addExercise
+  addExercise,
+  makeCurrentExercise
 } from "./exerciseOptions";
 import {
   updateDayData,
@@ -84,6 +86,8 @@ export default function activeWorkout(state = {}, action) {
       return removeExercise(state, action.exerciseId);
     case ADD_EXERCISE:
       return addExercise(state, action.libraryId);
+    case MAKE_CURRENT_EXERCISE:
+      return makeCurrentExercise(state, action.exerciseId);
     default:
       return state;
   }

@@ -14,7 +14,6 @@ import {
   updateModalSelectedExerciseCategory,
   updateModalSelectedBodyPart
 } from "../../redux/actions/exercisesActions";
-import { addExercise } from "../../redux/actions/activeWorkoutActions";
 
 const STYLE = require("./modalStyle");
 
@@ -125,9 +124,6 @@ const mapDispatchToProps = dispatch => {
     },
     updateModalSelectedBodyPart: bodyPartId => {
       dispatch(updateModalSelectedBodyPart(bodyPartId));
-    },
-    addExercise: libraryId => {
-      dispatch(addExercise(libraryId));
     }
   };
 };
