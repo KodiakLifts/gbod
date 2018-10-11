@@ -1,9 +1,15 @@
 export const addSet = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
   const activeExercise = state.programs[activeProgram].exercises[exerciseId];
-  const activeSets = state.programs[activeProgram].sets.filter(set => {
+
+  let activeSets = state.programs[activeProgram].sets.filter(set => {
     return set.exercise === activeExercise.id;
   });
+  if (activeSets.length === 0) {
+    activeSets = state.programs[activeProgram].sets.filter(set => {
+      return set.day === state.activeWorkout.day;
+    });
+  }
   const lastSet = activeSets[activeSets.length - 1];
   const newSetId = lastSet.id + 1;
 

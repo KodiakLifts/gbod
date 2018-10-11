@@ -124,6 +124,7 @@ export const getModalLibraryCards = createSelector(
                 bodyPart={exercise.bodyPart}
                 favorite={exercise.favorite}
                 oneRepMax={exercise.oneRepMax}
+                closeModal={null}
               />
             );
           }

@@ -14,6 +14,7 @@ import {
   updateModalSelectedExerciseCategory,
   updateModalSelectedBodyPart
 } from "../../redux/actions/exercisesActions";
+import { addExercise } from "../../redux/actions/activeWorkoutActions";
 
 const STYLE = require("./modalStyle");
 
@@ -38,8 +39,10 @@ class AddExerciseToWorkoutModal extends Component {
   };
 
   render() {
-    const { categories, bodyParts, cards, visible } = this.props;
+    const { categories, bodyParts, cards, visible, closeModal } = this.props;
     const { tmpCategory, tmpBodyPart } = this.state;
+    itemsFunctionality(cards, closeModal);
+
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
@@ -75,6 +78,21 @@ class AddExerciseToWorkoutModal extends Component {
   }
 }
 
+const itemsFunctionality = (cards, closeModal) => {
+  cards.forEach(card => {
+    card.props.items.forEach((item, index) => {
+      const newItem = {
+        ...item,
+        props: {
+          ...item.props,
+          closeModal: closeModal
+        }
+      };
+      card.props.items[index] = newItem;
+    });
+  });
+};
+
 const createItems = items => {
   return items.map((item, index) => (
     <Picker.Item key={index} label={item.name} value={item.id} />
@@ -107,6 +125,9 @@ const mapDispatchToProps = dispatch => {
     },
     updateModalSelectedBodyPart: bodyPartId => {
       dispatch(updateModalSelectedBodyPart(bodyPartId));
+    },
+    addExercise: libraryId => {
+      dispatch(addExercise(libraryId));
     }
   };
 };

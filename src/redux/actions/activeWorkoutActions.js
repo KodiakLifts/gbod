@@ -14,6 +14,7 @@ export const ADD_DAY = "ADD_DAY";
 export const REMOVE_EXERCISE = "DELETE_EXERCISE";
 export const ADD_SET = "ADD_SET";
 export const REMOVE_SET = "REMOVE_SET";
+export const ADD_EXERCISE = "ADD_EXERCISE";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -31,8 +32,16 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   ADD_DAY,
   REMOVE_EXERCISE,
   ADD_SET,
-  REMOVE_SET
+  REMOVE_SET,
+  ADD_EXERCISE
 ];
+
+export const addExercise = libraryId => {
+  return {
+    type: ADD_EXERCISE,
+    libraryId
+  };
+};
 
 export const addSet = exerciseId => {
   return {

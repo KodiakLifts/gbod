@@ -2,39 +2,28 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import Icon from "react-native-vector-icons/FontAwesome5";
-import ExerciseOptionsModal from "../modals/ExerciseOptionsModal";
+import { addExercise } from "../../redux/actions/activeWorkoutActions";
 
-const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
 
-class ModalExerciseItem extends Component {
-  state = {
-    menuModalVisible: false
-  };
-
-  render() {
-    const {
-      name,
-      category,
-      bodyPart,
-      favorite,
-      oneRepMax,
-      libraryId
-    } = this.props;
-    const { menuModalVisible } = this.state;
-
-    return (
-      <View>
-        <View style={STYLE.modalListItem}>
-          <TouchableOpacity>
-            <Text style={STYLE.title}>{name}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+const ModalExerciseItem = props => {
+  function _onPress() {
+    const { libraryId, addExercise, closeModal } = props;
+    addExercise(libraryId);
+    closeModal();
   }
-}
+
+  const { name, category, bodyPart, favorite, oneRepMax, libraryId } = props;
+  return (
+    <View>
+      <View style={STYLE.modalListItem}>
+        <TouchableOpacity onPress={_onPress}>
+          <Text style={STYLE.title}>{name}</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 ModalExerciseItem.propTypes = {
   name: PropTypes.string,
@@ -42,11 +31,20 @@ ModalExerciseItem.propTypes = {
   category: PropTypes.number,
   bodyPart: PropTypes.number,
   favorite: PropTypes.bool,
-  oneRepMax: PropTypes.number
+  oneRepMax: PropTypes.number,
+  closeModal: PropTypes.func,
+  addExercise: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    addExercise: libraryId => {
+      dispatch(addExercise(libraryId));
+    }
+  };
 };
 
-export default connect()(ModalExerciseItem);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ModalExerciseItem);

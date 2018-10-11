@@ -1,3 +1,37 @@
+export const addExercise = (state, libraryId) => {
+  const activeProgram = state.activeWorkout.program;
+  const exerciseId = state.programs[activeProgram].exercises.length;
+  const day = state.activeWorkout.day;
+  const newExercise = {
+    id: exerciseId,
+    libraryId: libraryId,
+    day: day,
+    complete: false,
+    supersetNext: false,
+    includeWarmup: false,
+    increaseRule: "",
+    barType: "",
+    units: "",
+    note: ""
+  };
+
+  const newState = {
+    ...state,
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          exercises: [...program.exercises, newExercise]
+        };
+      }
+      return program;
+    })
+  };
+
+  console.log(newState);
+  return newState;
+};
+
 export const updateExerciseData = (
   state,
   exerciseId,
@@ -7,8 +41,8 @@ export const updateExerciseData = (
   const activeProgram = state.activeWorkout.program;
   const newState = {
     ...state,
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
         return {
           ...program,
           exercises: state.programs[activeProgram].exercises.map(exercise => {
