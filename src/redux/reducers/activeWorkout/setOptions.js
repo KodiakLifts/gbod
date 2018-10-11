@@ -120,7 +120,7 @@ export const removeSet = (state, setId, exerciseId) => {
     set => set.id !== setId
   );
   newSets.forEach((set, index) => {
-    set.id = index;
+    newSets[index].id = index;
   });
 
   let currentSet = newSets.find(set => {

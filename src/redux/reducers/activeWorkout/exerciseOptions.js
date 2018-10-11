@@ -21,8 +21,8 @@ export const shiftExerciseDown = (state, exerciseId) => {
     return set;
   });
 
-  newSets.forEach((set, index) => {
-    newSets[index].id = index;
+  newSets.map((set, index) => {
+    return { id: index };
   });
 
   const newState = {
@@ -150,7 +150,7 @@ export const removeExercise = (state, exerciseId) => {
     return set.exercise !== exerciseId;
   });
   newSets.forEach((set, index) => {
-    set.id = index;
+    newSets[index].id = index;
   });
 
   let newExercises = state.programs[activeProgram].exercises.filter(
