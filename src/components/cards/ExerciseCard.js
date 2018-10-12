@@ -103,6 +103,23 @@ class ExerciseCard extends Component {
     }
   };
 
+  renderSupersetLink = (supersetNext, lastExercise) => {
+    let linkColor;
+    if (supersetNext && !lastExercise) {
+      linkColor = COLORS.SECONDARYCOLOR;
+    } else {
+      linkColor = COLORS.BACKCOLOR;
+    }
+    return (
+      <Icon
+        name={"link"}
+        size={15}
+        color={linkColor}
+        style={{ transform: [{ rotateZ: "135deg" }], paddingBottom: 2 }}
+      />
+    );
+  };
+
   render() {
     const {
       exerciseId,
@@ -141,12 +158,7 @@ class ExerciseCard extends Component {
               <View style={STYLE.sortContainer} />
             </View>
           </TouchableOpacity>
-          <Icon
-            name={"link"}
-            size={15}
-            color={supersetNext ? COLORS.SECONDARYCOLOR : COLORS.BACKCOLOR}
-            style={{ transform: [{ rotateZ: "135deg" }], paddingBottom: 2 }}
-          />
+          {this.renderSupersetLink(supersetNext, lastExercise)}
         </View>
       </View>
     );
