@@ -42,10 +42,48 @@ export const shiftExerciseDown = (state, exerciseId) => {
   return newState;
 };
 
-export const shiftSetsDown = (state, exerciseId) => {};
-
 export const shiftExerciseUp = (state, exerciseId) => {
-  return state;
+  const activeProgram = state.activeWorkout.program;
+  const newExercises = state.programs[activeProgram].exercises;
+
+  const exerciseToShift = newExercises[exerciseId];
+  newExercises[exerciseId] = newExercises[exerciseId - 1];
+  newExercises[exerciseId - 1] = exerciseToShift;
+
+  newExercises.map((exercise, index) => {
+    exercise.id = index;
+  });
+
+  const currentExercise = state.activeWorkout.currentExercise - 1;
+
+  const newSets = state.programs[activeProgram].sets.map(set => {
+    if (set.exercise === exerciseId) {
+      return { ...set, exercise: exerciseId - 1 };
+    } else if (set.exercise === exerciseId - 1) {
+      return { ...set, exercise: exerciseId };
+    }
+    return set;
+  });
+
+  newSets.map((set, index) => {
+    set.id = index;
+  });
+
+  const newState = {
+    ...state,
+    activeWorkout: { ...state.activeWorkout, currentExercise: currentExercise },
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          sets: newSets,
+          exercises: newExercises
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
 };
 
 export const makeCurrentExercise = (state, exerciseId) => {
@@ -61,7 +99,7 @@ export const makeCurrentExercise = (state, exerciseId) => {
 
 export const addExercise = (state, libraryId) => {
   const activeProgram = state.activeWorkout.program;
-  const exerciseId = state.programs[activeProgram].exercises.length;
+  let exerciseId = state.programs[activeProgram].exercises.length;
   const day = state.activeWorkout.day;
   const newExercise = {
     id: exerciseId,
@@ -75,9 +113,26 @@ export const addExercise = (state, libraryId) => {
     units: "",
     note: ""
   };
+  const exercises = Array.from(state.programs[activeProgram].exercises);
+  let exerciseInsertIndex;
+  exercises.map((exercise, index) => {
+    if (exercise.day === day) {
+      exerciseInsertIndex = index;
+    }
+  });
+  const newExercises = [
+    ...exercises.slice(0, exerciseInsertIndex + 1),
+    newExercise,
+    ...exercises.slice(exerciseInsertIndex + 1)
+  ];
 
+  newExercises.map((exercise, index) => {
+    if (exercise.day === day) {
+      exerciseId = index;
+    }
+    exercise.id = index;
+  });
   const newSetId = state.programs[activeProgram].sets.length;
-
   const newSet = {
     id: newSetId,
     exercise: exerciseId,
@@ -90,6 +145,26 @@ export const addExercise = (state, libraryId) => {
     restSeconds: 0,
     timerOn: true
   };
+  const sets = Array.from(state.programs[activeProgram].sets);
+  let setInsertIndex;
+  sets.map((set, index) => {
+    if (set.day === day) {
+      setInsertIndex = index;
+    }
+  });
+  const newSets = [
+    ...sets.slice(0, setInsertIndex + 1),
+    newSet,
+    ...sets.slice(setInsertIndex + 1)
+  ];
+  newSets.map((set, index) => {
+    set.id = index;
+  });
+  newSets.map(set => {
+    if (set.day > day) {
+      set.exercise = set.exercise + 1;
+    }
+  });
 
   const newState = {
     ...state,
@@ -101,14 +176,13 @@ export const addExercise = (state, libraryId) => {
       if (program.id === activeProgram) {
         return {
           ...program,
-          sets: [...program.sets, newSet],
-          exercises: [...program.exercises, newExercise]
+          sets: newSets,
+          exercises: newExercises
         };
       }
       return program;
     })
   };
-
   return newState;
 };
 
