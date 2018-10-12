@@ -13,6 +13,7 @@ export const initState =
       program: 1,
       day: 0,
       currentExercise: 0,
+      dayBarActive: false
     },
     programs: [
       {

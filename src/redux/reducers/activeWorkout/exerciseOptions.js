@@ -27,7 +27,10 @@ export const shiftExerciseDown = (state, exerciseId) => {
 
   const newState = {
     ...state,
-    activeWorkout: { ...state.activeWorkout, currentExercise: currentExercise },
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: currentExercise
+    },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {
@@ -71,7 +74,10 @@ export const shiftExerciseUp = (state, exerciseId) => {
 
   const newState = {
     ...state,
-    activeWorkout: { ...state.activeWorkout, currentExercise: currentExercise },
+    activeWorkout: {
+      ...state.activeWorkout,
+      currentExercise: currentExercise
+    },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {
@@ -170,7 +176,8 @@ export const addExercise = (state, libraryId) => {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      currentExercise: exerciseId
+      currentExercise: exerciseId,
+      dayBarActive: false
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Picker } from "react-native";
+import { View, Text, TouchableOpacity, Picker, Modal } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -15,7 +15,10 @@ import EditDayModal from "../../components/modals/EditDayModal";
 import NewDayModal from "../../components/modals/NewDayModal";
 import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
 import Fab from "../../components/buttons/Fab";
-import { updateActiveDay } from "../../redux/actions/activeWorkoutActions";
+import {
+  updateActiveDay,
+  dayBarPress
+} from "../../redux/actions/activeWorkoutActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./workoutStyle");
@@ -87,8 +90,82 @@ class ActiveWorkout extends Component {
     });
   };
 
+  renderControls = (day, days, dayBarActive) => {
+    const lastDay = day === days.length - 1 ? true : false;
+    const firstDay = day === 0 ? true : false;
+    if (dayBarActive) {
+      return (
+        <View style={STYLE.menuPlusContainer}>
+          <FinishButton />
+          {this.renderShiftDown(lastDay)}
+          {this.renderShiftUp(firstDay)}
+          <TouchableOpacity
+            onPress={this._newDayPress}
+            style={{ margin: 1, paddingHorizontal: 5 }}
+          >
+            <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this._dayMenuPress}
+            style={{ margin: 1, paddingLeft: 5 }}
+          >
+            <Icon name={"ellipsis-h"} size={25} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.deactivateDayBar}
+            style={STYLE.blankModal}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View style={STYLE.menuPlusContainerCollapsed}>
+          <FinishButton />
+        </View>
+      );
+    }
+  };
+
+  renderShiftDown = lastExercise => {
+    if (!lastExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftDown}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-down"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  renderShiftUp = firstExercise => {
+    if (!firstExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftUp}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-up"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  _dayBarPress = () => {
+    this.props.dayBarPress();
+  };
+
+  deactivateDayBar = () => {
+    this.props.dayBarPress();
+  };
+
   render() {
-    const { title, cards } = this.props;
+    const { title, cards, dayBarActive } = this.props;
     const {
       editDayModalVisible,
       newDayModalVisible,
@@ -111,47 +188,34 @@ class ActiveWorkout extends Component {
           </View>
         }
         subHeaderContent={
-          <View style={STYLE.subHeader}>
-            <Picker
-              style={STYLE.picker}
-              selectedValue={day}
-              onValueChange={this.switchDay}
+          <TouchableOpacity activeOpacity={0.6} onPress={this._dayBarPress}>
+            <View
+              style={dayBarActive ? STYLE.subHeaderHighlight : STYLE.subHeader}
             >
-              {createItems(days)}
-            </Picker>
-            <EditDayModal
-              closeModal={this.closeModal}
-              visible={editDayModalVisible}
-            />
-            <NewDayModal
-              closeModal={this.closeModal}
-              visible={newDayModalVisible}
-            />
-            <AddExerciseToWorkoutModal
-              closeModal={this.closeModal}
-              visible={addExerciseModalVisible}
-            />
-            <View style={STYLE.menuPlusContainer}>
-              <TouchableOpacity onPress={this._newDayPress}>
-                <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={this._dayMenuPress}>
-                <Icon
-                  name={"ellipsis-h"}
-                  size={25}
-                  color={COLORS.SECONDARYCOLOR}
-                />
-              </TouchableOpacity>
+              <Picker
+                style={STYLE.picker}
+                selectedValue={day}
+                onValueChange={this.switchDay}
+              >
+                {createItems(days)}
+              </Picker>
+              <EditDayModal
+                closeModal={this.closeModal}
+                visible={editDayModalVisible}
+              />
+              <NewDayModal
+                closeModal={this.closeModal}
+                visible={newDayModalVisible}
+              />
+              <AddExerciseToWorkoutModal
+                closeModal={this.closeModal}
+                visible={addExerciseModalVisible}
+              />
+              {this.renderControls(day, days, dayBarActive)}
             </View>
-          </View>
+          </TouchableOpacity>
         }
         scrollContent={cards}
-        endOfScrollContent={
-          <View style={STYLE.footerContainer}>
-            <ResetButton />
-            <FinishButton />
-          </View>
-        }
         footer={<Fab onPress={this._addExercisePress} />}
       />
     );
@@ -169,7 +233,9 @@ ActiveWorkout.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object),
   days: PropTypes.arrayOf(PropTypes.object),
   activeDay: PropTypes.number,
-  updateActiveDay: PropTypes.func
+  updateActiveDay: PropTypes.func,
+  dayBarActive: PropTypes.bool,
+  dayBarPress: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -177,6 +243,7 @@ const mapStateToProps = state => {
     title: getActiveWorkoutTitle(state.workoutData),
     cards: getActiveWorkoutCards(state.workoutData),
     activeDay: state.workoutData.activeWorkout.day,
+    dayBarActive: state.workoutData.activeWorkout.dayBarActive,
     days:
       state.workoutData.programs[state.workoutData.activeWorkout.program].days
   };
@@ -186,6 +253,9 @@ const mapDispatchToProps = dispatch => {
   return {
     updateActiveDay: dayId => {
       dispatch(updateActiveDay(dayId));
+    },
+    dayBarPress: () => {
+      dispatch(dayBarPress());
     }
   };
 };

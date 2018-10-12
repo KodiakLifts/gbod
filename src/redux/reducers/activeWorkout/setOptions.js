@@ -34,6 +34,9 @@ export const addSet = (state, exerciseId) => {
 
   const newState = {
     ...state,
+    activeWorkout: {
+      ...state.activeWorkout
+    },
     programs: state.programs.map((program, index) => {
       if (index === activeProgram) {
         return {

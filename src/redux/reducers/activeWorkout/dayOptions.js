@@ -1,3 +1,22 @@
+export const dayBarPress = state => {
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      dayBarActive: true
+    }
+  };
+  return newState;
+};
+
+export const deactivateDayBar = state => {
+  const newState = {
+    ...state,
+    activeWorkout: { ...state.activeWorkout, dayBarActive: false }
+  };
+  return newState;
+};
+
 export const updateActiveDay = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
   const exercises = state.programs[activeProgram].exercises.filter(exercise => {

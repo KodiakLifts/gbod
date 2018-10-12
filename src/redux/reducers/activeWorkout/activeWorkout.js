@@ -18,7 +18,9 @@ import {
   REMOVE_SET,
   MAKE_CURRENT_EXERCISE,
   SHIFT_EXERCISE_DOWN,
-  SHIFT_EXERCISE_UP
+  SHIFT_EXERCISE_UP,
+  DAY_BAR_PRESS,
+  DEACTIVATE_DAY_BAR
 } from "../../actions/activeWorkoutActions";
 
 import setPress from "./setPress";
@@ -37,7 +39,9 @@ import {
   updateDayData,
   deleteDay,
   updateActiveDay,
-  addDay
+  addDay,
+  dayBarPress,
+  deactivateDayBar
 } from "./dayOptions";
 
 export default function activeWorkout(state = {}, action) {
@@ -96,6 +100,10 @@ export default function activeWorkout(state = {}, action) {
       return shiftExerciseDown(state, action.exerciseId);
     case SHIFT_EXERCISE_UP:
       return shiftExerciseUp(state, action.exerciseId);
+    case DAY_BAR_PRESS:
+      return dayBarPress(state);
+    case DEACTIVATE_DAY_BAR:
+      return deactivateDayBar(state);
     default:
       return state;
   }

@@ -18,6 +18,8 @@ export const ADD_EXERCISE = "ADD_EXERCISE";
 export const MAKE_CURRENT_EXERCISE = "MAKE_CURRENT_EXERCISE";
 export const SHIFT_EXERCISE_DOWN = "SHIFT_EXERCISE_DOWN";
 export const SHIFT_EXERCISE_UP = "SHIFT_EXERCISE_UP";
+export const DAY_BAR_PRESS = "DAY_BAR_PRESS";
+export const DEACTIVATE_DAY_BAR = "DEACTIVATE_DAY_BAR";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -39,8 +41,22 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   ADD_EXERCISE,
   MAKE_CURRENT_EXERCISE,
   SHIFT_EXERCISE_UP,
-  SHIFT_EXERCISE_DOWN
+  SHIFT_EXERCISE_DOWN,
+  DAY_BAR_PRESS,
+  DEACTIVATE_DAY_BAR
 ];
+
+export const deactivateDayBar = () => {
+  return {
+    type: DEACTIVATE_DAY_BAR
+  };
+};
+
+export const dayBarPress = () => {
+  return {
+    type: DAY_BAR_PRESS
+  };
+};
 
 export const shiftExerciseDown = exerciseId => {
   return {

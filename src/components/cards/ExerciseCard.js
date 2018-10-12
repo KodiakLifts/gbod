@@ -7,7 +7,8 @@ import {
   addSet,
   makeCurrentExercise,
   shiftExerciseDown,
-  shiftExerciseUp
+  shiftExerciseUp,
+  deactivateDayBar
 } from "../../redux/actions/activeWorkoutActions";
 import { connect } from "react-redux";
 
@@ -20,17 +21,20 @@ class ExerciseCard extends Component {
   };
 
   _cardPress = () => {
-    const { makeCurrentExercise, exerciseId } = this.props;
+    const { makeCurrentExercise, exerciseId, deactivateDayBar } = this.props;
     makeCurrentExercise(exerciseId);
+    deactivateDayBar();
   };
 
   _addSetPress = () => {
-    const { addSet, exerciseId } = this.props;
+    const { addSet, exerciseId, deactivateDayBar } = this.props;
     addSet(exerciseId);
+    deactivateDayBar();
   };
 
   _onMenuPress = () => {
     this.setState({ menuModalVisible: true });
+    this.props.deactivateDayBar();
   };
 
   closeMenuModal = () => {
@@ -38,13 +42,15 @@ class ExerciseCard extends Component {
   };
 
   _shiftUp = () => {
-    const { shiftExerciseUp, exerciseId } = this.props;
+    const { shiftExerciseUp, exerciseId, deactivateDayBar } = this.props;
     shiftExerciseUp(exerciseId);
+    deactivateDayBar();
   };
 
   _shiftDown = () => {
-    const { shiftExerciseDown, exerciseId } = this.props;
+    const { shiftExerciseDown, exerciseId, deactivateDayBar } = this.props;
     shiftExerciseDown(exerciseId);
+    deactivateDayBar();
   };
 
   renderControls = active => {
@@ -178,7 +184,8 @@ ExerciseCard.propTypes = {
   active: PropTypes.bool,
   makeCurrentExercise: PropTypes.func,
   shiftExerciseDown: PropTypes.func,
-  shiftExerciseUp: PropTypes.func
+  shiftExerciseUp: PropTypes.func,
+  deactivateDayBar: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
@@ -194,6 +201,9 @@ const mapDispatchToProps = dispatch => {
     },
     shiftExerciseUp: exerciseId => {
       dispatch(shiftExerciseUp(exerciseId));
+    },
+    deactivateDayBar: () => {
+      dispatch(deactivateDayBar());
     }
   };
 };

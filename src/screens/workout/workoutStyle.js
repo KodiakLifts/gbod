@@ -45,11 +45,27 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.PRIMARYCOLOR,
     paddingHorizontal: 13
   },
-  menuPlusContainer: {
-    width: 59,
+  subHeaderHighlight: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: COLORS.PRIMARYCOLOR,
+    paddingHorizontal: 13,
+    borderColor: COLORS.SECONDARYCOLOR,
+    borderBottomWidth: 1
+  },
+  menuPlusContainer: {
+    width: 180,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
     marginRight: 12
+  },
+  menuPlusContainerCollapsed: {
+    width: 180,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    marginRight: 4
   }
 });
