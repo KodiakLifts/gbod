@@ -10,7 +10,7 @@ export const deleteProgram = (state, programId) => {
   let activeProgram = state.activeWorkout.program;
 
   let newPrograms = state.programs.filter(program => program.id !== programId);
-  newPrograms.forEach((program, index) => {
+  newPrograms.map((program, index) => {
     program.id = index;
   });
 

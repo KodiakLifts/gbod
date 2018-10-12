@@ -78,8 +78,8 @@ class AddExerciseToWorkoutModal extends Component {
 }
 
 const itemsFunctionality = (cards, closeModal) => {
-  cards.forEach(card => {
-    card.props.items.forEach((item, index) => {
+  cards.map(card => {
+    card.props.items.map((item, index) => {
       const newItem = {
         ...item,
         props: {

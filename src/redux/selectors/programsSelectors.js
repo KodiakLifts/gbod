@@ -17,7 +17,7 @@ export const getCategoryCards = createSelector(
   (programs, categories, selectedCategory) => {
     let categoryCards = [];
 
-    categories.forEach((category, index) => {
+    categories.map((category, index) => {
       if (category.id !== 0) {
         if (
           selectedCategory === ALL_CATEGORIES ||

@@ -22,7 +22,7 @@ export const getLibraryCards = createSelector(
     let shownAlphabet = [];
     let shownExercises = [];
 
-    exercises.forEach(exercise => {
+    exercises.map(exercise => {
       if (
         selectedCategory === ALL_CATEGORIES ||
         selectedCategory === exercise.category ||
@@ -40,11 +40,11 @@ export const getLibraryCards = createSelector(
       }
     });
 
-    shownAlphabet.forEach((letter, index) => {
+    shownAlphabet.map((letter, index) => {
       if (letter !== "") {
         let items = [];
 
-        shownExercises.forEach((exercise, i) => {
+        shownExercises.map((exercise, i) => {
           let name = exercise.name;
           if (name.toUpperCase().startsWith(letter)) {
             items.push(
@@ -90,7 +90,7 @@ export const getModalLibraryCards = createSelector(
     let shownAlphabet = [];
     let shownExercises = [];
 
-    exercises.forEach(exercise => {
+    exercises.map(exercise => {
       if (
         selectedCategory === ALL_CATEGORIES ||
         selectedCategory === exercise.category ||
@@ -108,11 +108,11 @@ export const getModalLibraryCards = createSelector(
       }
     });
 
-    shownAlphabet.forEach((letter, index) => {
+    shownAlphabet.map((letter, index) => {
       if (letter !== "") {
         let items = [];
 
-        shownExercises.forEach((exercise, i) => {
+        shownExercises.map((exercise, i) => {
           let name = exercise.name;
           if (name.toUpperCase().startsWith(letter)) {
             items.push(

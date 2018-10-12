@@ -119,7 +119,7 @@ export const removeSet = (state, setId, exerciseId) => {
   let newSets = state.programs[activeProgram].sets.filter(
     set => set.id !== setId
   );
-  newSets.forEach((set, index) => {
+  newSets.map((set, index) => {
     newSets[index].id = index;
   });
 
@@ -134,8 +134,8 @@ export const removeSet = (state, setId, exerciseId) => {
       return exercise.id !== exerciseId;
     });
 
-    newExercises.forEach((exercise, index) => {
-      newSets.forEach(set => {
+    newExercises.map((exercise, index) => {
+      newSets.map(set => {
         if (set.exercise === exercise.id) {
           set.exercise = index;
         }

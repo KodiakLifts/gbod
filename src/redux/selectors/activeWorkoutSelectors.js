@@ -45,7 +45,7 @@ const getActiveExercises = state => {
     }
   );
 
-  exercises.forEach(exercise => {
+  exercises.map(exercise => {
     exercise.name = state.exerciseLibrary[exercise.libraryId].name;
   });
 
@@ -59,7 +59,7 @@ export const getActiveWorkoutCards = createSelector(
   (activeSets, activeExercises, currentExercise) => {
     const workoutCards = [];
 
-    activeExercises.forEach((exercise, index) => {
+    activeExercises.map((exercise, index) => {
       const includeWarmup = exercise.includeWarmup;
 
       const sets = activeSets.filter(set => {
