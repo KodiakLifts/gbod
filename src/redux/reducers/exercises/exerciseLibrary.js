@@ -6,6 +6,13 @@ export const newExercise = (
   bodyPart,
   favorite
 ) => {
+  const tempMaxes = state.exerciseLibrary[0].repMaxes;
+  const newMaxes = tempMaxes.map(max => {
+    if (max.reps === 1) {
+      max.weight = oneRepMax;
+    }
+    return max;
+  });
   const endIndex = state.exerciseLibrary.length;
   const newItem = {
     id: endIndex,
@@ -13,7 +20,7 @@ export const newExercise = (
     bodyPart: bodyPart,
     category: category,
     favorite: favorite,
-    oneRepMax: oneRepMax
+    repMaxes: newMaxes
   };
   const newState = {
     ...state,
@@ -63,17 +70,23 @@ export const updateExerciseData = (
   bodyPart,
   favorite
 ) => {
+  const newMaxes = state.exerciseLibrary[libraryId].repMaxes.map(max => {
+    if (max.reps === 1) {
+      max.weight = oneRepMax;
+    }
+    return max;
+  });
   const newState = {
     ...state,
     exerciseLibrary: state.exerciseLibrary.map(exercise => {
       if (exercise.id === libraryId) {
         return {
           ...exercise,
-          oneRepMax,
           name,
           category,
           bodyPart,
-          favorite
+          favorite,
+          newMaxes
         };
       }
       return exercise;
