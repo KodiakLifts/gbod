@@ -213,7 +213,7 @@ export const initState =
         logs: [{
           id: 0, date: "", program: 0, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
-            { reps: 0, weight: 0, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false }
+            { reps: 0, weight: 0, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
           ]
         }]
       },
