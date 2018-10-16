@@ -20,6 +20,9 @@ export const SHIFT_EXERCISE_DOWN = "SHIFT_EXERCISE_DOWN";
 export const SHIFT_EXERCISE_UP = "SHIFT_EXERCISE_UP";
 export const DAY_BAR_PRESS = "DAY_BAR_PRESS";
 export const DEACTIVATE_DAY_BAR = "DEACTIVATE_DAY_BAR";
+export const SHIFT_DAY_DOWN = "SHIFT_DAY_DOWN";
+export const SHIFT_DAY_UP = "SHIFT_DAY_UP";
+export const SET_CURRENT_DAY = "SET_CURRENT_DAY";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -43,8 +46,38 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   SHIFT_EXERCISE_UP,
   SHIFT_EXERCISE_DOWN,
   DAY_BAR_PRESS,
-  DEACTIVATE_DAY_BAR
+  DEACTIVATE_DAY_BAR,
+  SHIFT_DAY_DOWN,
+  SHIFT_DAY_UP,
+  SET_CURRENT_DAY
 ];
+
+export const setCurrentDay = dayId => {
+  return {
+    type: SET_CURRENT_DAY,
+    dayId
+  };
+};
+
+export const shiftDayDown = dayId => {
+  return dispatch => {
+    dispatch({
+      type: SHIFT_DAY_DOWN,
+      dayId
+    });
+    dispatch(setCurrentDay(dayId + 1));
+  };
+};
+
+export const shiftDayUp = dayId => {
+  return dispatch => {
+    dispatch({
+      type: SHIFT_DAY_UP,
+      dayId
+    });
+    dispatch(setCurrentDay(dayId - 1));
+  };
+};
 
 export const deactivateDayBar = () => {
   return {

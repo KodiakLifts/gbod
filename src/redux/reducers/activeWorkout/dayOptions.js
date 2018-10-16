@@ -1,3 +1,124 @@
+export const setCurrentDay = (state, dayId) => {
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout,
+      day: dayId
+    }
+  };
+  return newState;
+};
+
+export const shiftDayDown = (state, dayId) => {
+  const activeProgram = state.activeWorkout.program;
+  const newDays = state.programs[activeProgram].days;
+
+  const dayToShift = newDays[dayId];
+  newDays[dayId] = newDays[dayId + 1];
+  newDays[dayId + 1] = dayToShift;
+
+  newDays.map((day, index) => {
+    day.id = index;
+  });
+
+  const newSets = state.programs[activeProgram].sets.map(set => {
+    if (set.day === dayId) {
+      return { ...set, day: dayId + 1 };
+    } else if (set.day === dayId + 1) {
+      return { ...set, day: dayId };
+    }
+    return set;
+  });
+
+  newSets.map((set, index) => {
+    set.id = index;
+  });
+
+  const newExercises = state.programs[activeProgram].exercises.map(exercise => {
+    if (exercise.day === dayId) {
+      return { ...exercise, day: dayId + 1 };
+    } else if (exercise.day === dayId + 1) {
+      return { ...exercise, day: dayId };
+    }
+    return exercise;
+  });
+
+  newExercises.map((exercise, index) => {
+    exercise.id = index;
+  });
+
+  const newState = {
+    ...state,
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          sets: newSets,
+          exercises: newExercises,
+          days: newDays
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
+};
+
+export const shiftDayUp = (state, dayId) => {
+  const activeProgram = state.activeWorkout.program;
+  const newDays = state.programs[activeProgram].days;
+
+  const dayToShift = newDays[dayId];
+  newDays[dayId] = newDays[dayId - 1];
+  newDays[dayId - 1] = dayToShift;
+
+  newDays.map((day, index) => {
+    day.id = index;
+  });
+
+  const newSets = state.programs[activeProgram].sets.map(set => {
+    if (set.day === dayId) {
+      return { ...set, day: dayId - 1 };
+    } else if (set.day === dayId - 1) {
+      return { ...set, day: dayId };
+    }
+    return set;
+  });
+
+  newSets.map((set, index) => {
+    set.id = index;
+  });
+
+  const newExercises = state.programs[activeProgram].exercises.map(exercise => {
+    if (exercise.day === dayId) {
+      return { ...exercise, day: dayId - 1 };
+    } else if (exercise.day === dayId - 1) {
+      return { ...exercise, day: dayId };
+    }
+    return exercise;
+  });
+
+  newExercises.map((exercise, index) => {
+    exercise.id = index;
+  });
+
+  const newState = {
+    ...state,
+    programs: state.programs.map(program => {
+      if (program.id === activeProgram) {
+        return {
+          ...program,
+          sets: newSets,
+          exercises: newExercises,
+          days: newDays
+        };
+      }
+      return program;
+    })
+  };
+  return newState;
+};
+
 export const dayBarPress = state => {
   const newState = {
     ...state,

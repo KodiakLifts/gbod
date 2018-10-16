@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Picker, Modal } from "react-native";
+import { View, TouchableOpacity, Picker } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -9,7 +9,6 @@ import {
 } from "../../redux/selectors/activeWorkoutSelectors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import FinishButton from "../../components/buttons/FinishButton";
-import ResetButton from "../../components/buttons/ResetButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
 import NewDayModal from "../../components/modals/NewDayModal";
@@ -17,7 +16,9 @@ import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWork
 import Fab from "../../components/buttons/Fab";
 import {
   updateActiveDay,
-  dayBarPress
+  dayBarPress,
+  shiftDayDown,
+  shiftDayUp
 } from "../../redux/actions/activeWorkoutActions";
 
 const COLORS = require("../../styles/Colors");
@@ -126,7 +127,7 @@ class ActiveWorkout extends Component {
     if (!lastExercise) {
       return (
         <TouchableOpacity
-          onPress={this._shiftDown}
+          onPress={this._shiftDayDown}
           style={{ margin: 1, paddingHorizontal: 5 }}
         >
           <Icon name={"angle-down"} size={27} color={COLORS.SECONDARYCOLOR} />
@@ -141,7 +142,7 @@ class ActiveWorkout extends Component {
     if (!firstExercise) {
       return (
         <TouchableOpacity
-          onPress={this._shiftUp}
+          onPress={this._shiftDayUp}
           style={{ margin: 1, paddingHorizontal: 5 }}
         >
           <Icon name={"angle-up"} size={27} color={COLORS.SECONDARYCOLOR} />
@@ -150,6 +151,16 @@ class ActiveWorkout extends Component {
     } else {
       return null;
     }
+  };
+
+  _shiftDayDown = () => {
+    const { shiftDayDown, activeDay } = this.props;
+    shiftDayDown(activeDay);
+  };
+
+  _shiftDayUp = () => {
+    const { shiftDayUp, activeDay } = this.props;
+    shiftDayUp(activeDay);
   };
 
   _dayBarPress = () => {
@@ -231,7 +242,9 @@ ActiveWorkout.propTypes = {
   activeDay: PropTypes.number,
   updateActiveDay: PropTypes.func,
   dayBarActive: PropTypes.bool,
-  dayBarPress: PropTypes.func
+  dayBarPress: PropTypes.func,
+  shiftDayDown: PropTypes.func,
+  shiftDayUp: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -252,6 +265,12 @@ const mapDispatchToProps = dispatch => {
     },
     dayBarPress: () => {
       dispatch(dayBarPress());
+    },
+    shiftDayDown: dayId => {
+      dispatch(shiftDayDown(dayId));
+    },
+    shiftDayUp: dayId => {
+      dispatch(shiftDayUp(dayId));
     }
   };
 };
