@@ -7,7 +7,7 @@ import {
   getActiveWorkoutCards,
   getActiveWorkoutTitle
 } from "../../redux/selectors/activeWorkoutSelectors";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import FinishButton from "../../components/buttons/FinishButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
