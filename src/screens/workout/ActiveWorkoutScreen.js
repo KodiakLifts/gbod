@@ -111,10 +111,6 @@ class ActiveWorkout extends Component {
           >
             <Icon name={"ellipsis-h"} size={25} color={COLORS.SECONDARYCOLOR} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.deactivateDayBar}
-            style={STYLE.blankModal}
-          />
         </View>
       );
     } else {
