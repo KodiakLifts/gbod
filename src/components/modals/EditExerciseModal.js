@@ -73,7 +73,7 @@ class EditExerciseModal extends Component {
             <TouchableWithoutFeedback>
               <View style={STYLE.modalCard}>
                 <View style={STYLE.modalHeader}>
-                  <Text style={STYLE.modalHeaderText}>Exercise</Text>
+                  <Text style={STYLE.modalHeaderText}>Exercise Options</Text>
                 </View>
                 <View style={STYLE.cardColumnsContainer}>
                   <View style={STYLE.leftColumn}>

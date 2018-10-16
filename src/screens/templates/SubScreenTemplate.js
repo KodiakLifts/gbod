@@ -3,7 +3,6 @@ import { View, ScrollView } from "react-native";
 import PropTypes from "prop-types";
 
 const STYLE = require("./screenStyle");
-const COLORS = require("../../styles/Colors");
 
 const SubScreenTemplate = props => {
   const { headerContent, scrollContent, footer, modal } = props;

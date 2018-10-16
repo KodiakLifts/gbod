@@ -5,16 +5,11 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker,
   TextInput,
-  CheckBox,
   Alert
 } from "react-native";
 import PropTypes from "prop-types";
-import {
-  updateDayData,
-  deleteDay
-} from "../../redux/actions/activeWorkoutActions";
+import { addDay } from "../../redux/actions/activeWorkoutActions";
 import { connect } from "react-redux";
 
 const STYLE = require("./modalStyle");
@@ -22,20 +17,12 @@ const COLORS = require("../../styles/Colors");
 
 const TEXT_ENTRY_WIDTH = 70;
 
-class EditDayModal extends Component {
+class NewDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
-    currentDay: this.props.currentDay,
-    placeHolder: this.props.days[this.props.currentDay].name,
-    tmpName: this.props.days[this.props.currentDay].name,
-    tmpDelete: false
+    placeHolder: "Day " + this.props.days.length,
+    tmpName: "Day " + this.props.days.length
   };
-
-  componentWillReceiveProps(newProps) {
-    if (this.state.placeHolder !== newProps.days[newProps.currentDay].name) {
-      this.setState({ placeHolder: newProps.days[newProps.currentDay].name });
-    }
-  }
 
   updateTmpName = tmpName => {
     if (tmpName == null) {
@@ -45,76 +32,33 @@ class EditDayModal extends Component {
     }
   };
 
-  toggleDelete = checked => {
-    this.setState({
-      tmpDelete: checked
-    });
-  };
-
   save = () => {
-    const { updateDayData, closeModal, currentDay } = this.props;
-    const { tmpName, tmpDelete } = this.state;
-
-    this.setState({ prevDayId: currentDay });
-    if (tmpDelete) {
-      Alert.alert(
-        "Delete Day",
-        "Are you sure you want to delete day " +
-          tmpName +
-          " from this program?",
-        [
-          {
-            text: "CONFIRM",
-            onPress: () => updateDayData(currentDay, tmpName, tmpDelete)
-          },
-          {
-            text: "CANCEL",
-            onPress: () => this.setState({ tmpDelete: false }),
-            style: "cancel"
-          }
-        ],
-        { cancelable: false }
-      );
-    } else {
-      updateDayData(currentDay, tmpName, tmpDelete);
-    }
-
-    this.setState({ tmpDelete: false });
+    const { closeModal, addDay } = this.props;
+    const { tmpName } = this.state;
+    addDay(tmpName);
     closeModal();
   };
 
   cancel = () => {
-    const { closeModal, days, currentDay } = this.props;
-    const { prevDayId } = this.state;
-
-    this.setState({
-      tmpDayId: prevDayId,
-      tmpName: days[currentDay].name,
-      tmpDelete: false
-    });
+    const { closeModal } = this.props;
     closeModal();
   };
 
   render() {
-    const { visible, days } = this.props;
+    const { visible } = this.props;
     const { placeHolder } = this.state;
-    const deleteDisable = days.length === 1;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>Day Options</Text>
+                <Text style={STYLE.modalHeaderText}>New Day</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>Rename:</Text>
-                  </View>
-
-                  <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>Delete Day:</Text>
+                    <Text style={STYLE.modalText}>Name:</Text>
                   </View>
                 </View>
 
@@ -131,14 +75,6 @@ class EditDayModal extends Component {
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
-                  </View>
-
-                  <View style={[STYLE.rightItem, { paddingLeft: 26 }]}>
-                    <CheckBox
-                      disabled={deleteDisable}
-                      value={this.state.tmpDelete}
-                      onValueChange={this.toggleDelete}
-                    />
                   </View>
                 </View>
               </View>
@@ -159,31 +95,26 @@ class EditDayModal extends Component {
   }
 }
 
-EditDayModal.propTypes = {
+NewDayModal.propTypes = {
   visible: PropTypes.bool,
   currentDay: PropTypes.number,
   days: PropTypes.arrayOf(PropTypes.object),
   closeModal: PropTypes.func,
-  updateDayData: PropTypes.func,
   name: PropTypes.string,
-  deleteDay: PropTypes.func
+  addDay: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
     days:
-      state.workoutData.programs[state.workoutData.activeWorkout.program].days,
-    currentDay: state.workoutData.activeWorkout.day
+      state.workoutData.programs[state.workoutData.activeWorkout.program].days
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateDayData: (dayId, name, remove) => {
-      dispatch(updateDayData(dayId, name, remove));
-    },
-    deleteDay: dayId => {
-      dispatch(deleteDay(dayId));
+    addDay: name => {
+      dispatch(addDay(name));
     }
   };
 };
@@ -191,4 +122,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditDayModal);
+)(NewDayModal);

@@ -54,7 +54,8 @@ export const finishWorkout = state => {
     activeWorkout: {
       ...state.activeWorkout,
       day: activeDay,
-      currentExercise: currentExercise
+      currentExercise: currentExercise,
+      dayBarActive: false
     },
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {

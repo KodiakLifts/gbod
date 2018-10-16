@@ -16,9 +16,9 @@ export const newProgram = (
     category: categoryId,
     description: description,
     favorite: favorite,
-    sets: template.sets,
-    exercises: template.exercises,
-    days: template.days
+    sets: Array.from(template.sets),
+    exercises: Array.from(template.exercises),
+    days: Array.from(template.days)
   };
 
   const newState = {

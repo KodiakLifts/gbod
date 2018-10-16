@@ -135,7 +135,8 @@ const updateCurrentExercise = (state, exerciseId) => {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
-      currentExercise: updatedActiveExerciseId
+      currentExercise: updatedActiveExerciseId,
+      dayBarActive: false
     }
   };
   return newState;
