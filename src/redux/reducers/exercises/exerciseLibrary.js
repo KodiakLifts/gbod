@@ -6,6 +6,13 @@ export const newExercise = (
   bodyPart,
   favorite
 ) => {
+  const tempMaxes = state.exerciseLibrary[0].repMaxes;
+  const newMaxes = tempMaxes.map(max => {
+    if (max.reps === 1) {
+      max.weight = oneRepMax;
+    }
+    return max;
+  });
   const endIndex = state.exerciseLibrary.length;
   const newItem = {
     id: endIndex,
@@ -13,11 +20,27 @@ export const newExercise = (
     bodyPart: bodyPart,
     category: category,
     favorite: favorite,
-    oneRepMax: oneRepMax
+    repMaxes: newMaxes
   };
   const newState = {
     ...state,
     exerciseLibrary: [...state.exerciseLibrary, newItem]
+  };
+  return newState;
+};
+
+export const updateModalSelectedBodyPart = (state, bodyPartId) => {
+  const newState = {
+    ...state,
+    modalSelectedBodyPart: bodyPartId
+  };
+  return newState;
+};
+
+export const updateModalSelectedExerciseCategory = (state, categoryId) => {
+  const newState = {
+    ...state,
+    modalSelectedExerciseCategory: categoryId
   };
   return newState;
 };
@@ -47,17 +70,23 @@ export const updateExerciseData = (
   bodyPart,
   favorite
 ) => {
+  const newMaxes = state.exerciseLibrary[libraryId].repMaxes.map(max => {
+    if (max.reps === 1) {
+      max.weight = oneRepMax;
+    }
+    return max;
+  });
   const newState = {
     ...state,
     exerciseLibrary: state.exerciseLibrary.map(exercise => {
       if (exercise.id === libraryId) {
         return {
           ...exercise,
-          oneRepMax,
           name,
           category,
           bodyPart,
-          favorite
+          favorite,
+          newMaxes
         };
       }
       return exercise;
@@ -75,7 +104,7 @@ export const deleteExercise = (state, libraryId) => {
 
   let newPrograms = state.programs;
 
-  newPrograms.forEach(program => {
+  newPrograms.map(program => {
     let newExercises = program.exercises.filter(exercise => {
       if (exercise.libraryId === libraryId) {
         removedExerciseId = exercise.id;
@@ -86,12 +115,12 @@ export const deleteExercise = (state, libraryId) => {
     let newSets = program.sets.filter(set => {
       return set.exercise !== removedExerciseId;
     });
-    newSets.forEach((set, index) => {
+    newSets.map((set, index) => {
       set.id = index;
     });
 
-    newExercises.forEach((exercise, index) => {
-      newSets.forEach(set => {
+    newExercises.map((exercise, index) => {
+      newSets.map(set => {
         if (set.exercise === exercise.id) {
           set.exercise = index;
         }
@@ -106,7 +135,7 @@ export const deleteExercise = (state, libraryId) => {
     program.exercises = newExercises;
   });
 
-  newLibrary.forEach((exercise, index) => {
+  newLibrary.map((exercise, index) => {
     exercise.id = index;
   });
 

@@ -41,9 +41,7 @@ class Programs extends Component {
           />
         }
         headerContent={
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
+          <View style={[STYLE.subHeader, { paddingHorizontal: 6 }]}>
             <Picker
               style={STYLE.pickerHalf}
               selectedValue={tmpCategory}

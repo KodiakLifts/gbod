@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, Picker, Text } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -9,77 +9,279 @@ import {
 } from "../../redux/selectors/activeWorkoutSelectors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import FinishButton from "../../components/buttons/FinishButton";
-import ResetButton from "../../components/buttons/ResetButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
+import NewDayModal from "../../components/modals/NewDayModal";
+import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
+import Fab from "../../components/buttons/Fab";
+import {
+  updateActiveDay,
+  dayBarPress,
+  shiftDayDown,
+  shiftDayUp
+} from "../../redux/actions/activeWorkoutActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./workoutStyle");
 
-const ICON_SIZE = 25;
-const ICON_NAME = "cog";
+let prevDay;
+let prevDays;
 
 class ActiveWorkout extends Component {
   state = {
-    editDayModalVisible: false
+    editDayModalVisible: false,
+    newDayModalVisible: false,
+    addExerciseModalVisible: false,
+    day: this.props.activeDay,
+    days: this.props.days
   };
 
-  _settingsOnPress = () => {
+  componentDidMount() {
+    prevDay = this.props.activeDay;
+    prevDays = this.props.days;
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.state.day !== newProps.activeDay) {
+      this.setState({ day: newProps.activeDay });
+    }
+    if (this.state.days !== newProps.days) {
+      this.setState({ days: newProps.days });
+    }
+  }
+
+  switchDay = dayId => {
+    let nameChange = false;
+    if (this.state.days.length === prevDays.length) {
+      for (let i = 0; i < this.state.days.length; i++) {
+        if (this.state.days[i].name !== prevDays[i].name) {
+          nameChange = true;
+          break;
+        }
+      }
+    }
+    if (nameChange) {
+      prevDays = this.state.days;
+      this.setState({ day: prevDay });
+    } else {
+      prevDay = dayId;
+      this.props.updateActiveDay(dayId);
+    }
+  };
+
+  _addExercisePress = () => {
+    this.setState({ addExerciseModalVisible: true });
+  };
+
+  _newDayPress = () => {
+    this.setState({ newDayModalVisible: true });
+  };
+
+  _dayMenuPress = () => {
     this.setState({ editDayModalVisible: true });
   };
 
+  _settingsOnPress = () => {};
+
   closeModal = () => {
-    this.setState({ editDayModalVisible: false });
+    this.setState({
+      editDayModalVisible: false,
+      newDayModalVisible: false,
+      addExerciseModalVisible: false
+    });
+  };
+
+  renderControls = (day, days, dayBarActive) => {
+    const lastDay = day === days.length - 1 ? true : false;
+    const firstDay = day === 0 ? true : false;
+    if (dayBarActive) {
+      return (
+        <View style={STYLE.menuPlusContainer}>
+          <FinishButton />
+          {this.renderShiftDown(lastDay)}
+          {this.renderShiftUp(firstDay)}
+          <TouchableOpacity
+            onPress={this._newDayPress}
+            style={{ margin: 1, paddingHorizontal: 5 }}
+          >
+            <Icon name={"plus"} size={23} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this._dayMenuPress}
+            style={{ margin: 1, paddingLeft: 5 }}
+          >
+            <Icon name={"ellipsis-h"} size={25} color={COLORS.SECONDARYCOLOR} />
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View style={STYLE.menuPlusContainerCollapsed}>
+          <FinishButton />
+        </View>
+      );
+    }
+  };
+
+  renderShiftDown = lastExercise => {
+    if (!lastExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftDayDown}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-down"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  renderShiftUp = firstExercise => {
+    if (!firstExercise) {
+      return (
+        <TouchableOpacity
+          onPress={this._shiftDayUp}
+          style={{ margin: 1, paddingHorizontal: 5 }}
+        >
+          <Icon name={"angle-up"} size={27} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
+  _shiftDayDown = () => {
+    const { shiftDayDown, activeDay } = this.props;
+    shiftDayDown(activeDay);
+  };
+
+  _shiftDayUp = () => {
+    const { shiftDayUp, activeDay } = this.props;
+    shiftDayUp(activeDay);
+  };
+
+  _dayBarPress = () => {
+    this.props.dayBarPress();
+  };
+
+  deactivateDayBar = () => {
+    this.props.dayBarPress();
   };
 
   render() {
-    const { title, cards } = this.props;
-    const { editDayModalVisible } = this.state;
+    const { title, cards, dayBarActive } = this.props;
+    const {
+      editDayModalVisible,
+      newDayModalVisible,
+      addExerciseModalVisible,
+      day,
+      days
+    } = this.state;
     return (
       <ScreenTemplate
         headerContent={
           <View style={STYLE.headerContent}>
-            {title}
+            <TouchableOpacity>
+              <Text style={STYLE.headerText}>{title}</Text>
+            </TouchableOpacity>
 
             <View style={STYLE.timerSettingsContainer}>
-              <EditDayModal
-                title={title}
-                closeModal={this.closeModal}
-                visible={editDayModalVisible}
-              />
               <SetTimer />
               <TouchableOpacity onPress={this._settingsOnPress}>
                 <Icon
-                  name={ICON_NAME}
-                  size={ICON_SIZE}
+                  name={"sticky-note"}
+                  size={25}
                   color={COLORS.SECONDARYCOLOR}
                 />
               </TouchableOpacity>
             </View>
           </View>
         }
-        scrollContent={cards}
-        endOfScrollContent={
-          <View style={STYLE.footerContainer}>
-            <ResetButton />
-            <FinishButton />
-          </View>
+        subHeaderContent={
+          <TouchableOpacity activeOpacity={0.6} onPress={this._dayBarPress}>
+            <View
+              style={dayBarActive ? STYLE.subHeaderHighlight : STYLE.subHeader}
+            >
+              <Picker
+                style={STYLE.picker}
+                selectedValue={day}
+                onValueChange={this.switchDay}
+              >
+                {createItems(days)}
+              </Picker>
+              <EditDayModal
+                closeModal={this.closeModal}
+                visible={editDayModalVisible}
+              />
+              <NewDayModal
+                closeModal={this.closeModal}
+                visible={newDayModalVisible}
+              />
+              <AddExerciseToWorkoutModal
+                closeModal={this.closeModal}
+                visible={addExerciseModalVisible}
+              />
+              {this.renderControls(day, days, dayBarActive)}
+            </View>
+          </TouchableOpacity>
         }
+        scrollContent={cards}
+        footer={<Fab onPress={this._addExercisePress} />}
       />
     );
   }
 }
 
+const createItems = items => {
+  return items.map((item, index) => (
+    <Picker.Item key={index} label={item.name} value={item.id} />
+  ));
+};
+
 ActiveWorkout.propTypes = {
-  title: PropTypes.object,
-  cards: PropTypes.arrayOf(PropTypes.object)
+  title: PropTypes.string,
+  cards: PropTypes.arrayOf(PropTypes.object),
+  days: PropTypes.arrayOf(PropTypes.object),
+  activeDay: PropTypes.number,
+  updateActiveDay: PropTypes.func,
+  dayBarActive: PropTypes.bool,
+  dayBarPress: PropTypes.func,
+  shiftDayDown: PropTypes.func,
+  shiftDayUp: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
     title: getActiveWorkoutTitle(state.workoutData),
-    cards: getActiveWorkoutCards(state.workoutData)
+    cards: getActiveWorkoutCards(state.workoutData),
+    activeDay: state.workoutData.activeWorkout.day,
+    dayBarActive: state.workoutData.activeWorkout.dayBarActive,
+    days:
+      state.workoutData.programs[state.workoutData.activeWorkout.program].days
   };
 };
 
-export default connect(mapStateToProps)(ActiveWorkout);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateActiveDay: dayId => {
+      dispatch(updateActiveDay(dayId));
+    },
+    dayBarPress: () => {
+      dispatch(dayBarPress());
+    },
+    shiftDayDown: dayId => {
+      dispatch(shiftDayDown(dayId));
+    },
+    shiftDayUp: dayId => {
+      dispatch(shiftDayUp(dayId));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ActiveWorkout);

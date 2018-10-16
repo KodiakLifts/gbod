@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const COLORS = require("../../styles/Colors");
 
@@ -110,5 +110,30 @@ module.exports = StyleSheet.create({
   secInputContainer: {
     borderBottomColor: "black",
     borderBottomWidth: 1
+  },
+  exercisePickerHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: COLORS.PRIMARYCOLOR
+  },
+  exercisePickerCard: {
+    flexDirection: "column",
+    backgroundColor: COLORS.BACKCOLOR,
+    borderRadius: 5,
+    elevation: 5,
+    width: Dimensions.get("window").width - 70,
+    height: Dimensions.get("window").height - 200
+  },
+  pickerHalf: {
+    height: 40,
+    color: COLORS.SECONDARYCOLOR,
+    width: Dimensions.get("window").width / 2 - 50
+  },
+  scrollArea: {
+    elevation: 0,
+    flexGrow: 1,
+    alignItems: "center",
+    backgroundColor: COLORS.BACKCOLOR
   }
 });

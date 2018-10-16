@@ -1,42 +1,29 @@
 import React from "react";
 import ExerciseCard from "../../components/cards/ExerciseCard";
 import SetButton from "../../components/buttons/SetButton";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { createSelector } from "reselect";
 
 const CARD_STYLE = require("../../components/cards/cardStyle");
 const WORKOUT_STYLE = require("../../screens/workout/workoutStyle");
 
-const PROGRAM_NAME_LENGTH = 20;
-const DAY_NAME_LENGTH = 5;
+const PROGRAM_NAME_LENGTH = 26;
+const EXERCISE_NAME_LENGTH = 24;
 
 const getActiveWorkoutName = state => {
   return state.programs[state.activeWorkout.program].name;
 };
-const getActiveDayName = state => {
-  return state.programs[state.activeWorkout.program].days[
-    state.activeWorkout.day
-  ].name;
-};
 
 export const getActiveWorkoutTitle = createSelector(
-  [getActiveWorkoutName, getActiveDayName],
-  (programName, dayName) => {
+  [getActiveWorkoutName],
+  programName => {
     let program = programName;
-    let day = dayName;
+
     if (program.length > PROGRAM_NAME_LENGTH) {
       program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
-    if (day.length > DAY_NAME_LENGTH) {
-      day = day.substring(0, DAY_NAME_LENGTH) + "..";
-    }
-    const title = (
-      <View>
-        <Text style={WORKOUT_STYLE.headerText}>
-          {program} - {day}
-        </Text>
-      </View>
-    );
+
+    const title = program;
     return title;
   }
 );
@@ -54,7 +41,7 @@ const getActiveExercises = state => {
     }
   );
 
-  exercises.forEach(exercise => {
+  exercises.map(exercise => {
     exercise.name = state.exerciseLibrary[exercise.libraryId].name;
   });
 
@@ -68,7 +55,7 @@ export const getActiveWorkoutCards = createSelector(
   (activeSets, activeExercises, currentExercise) => {
     const workoutCards = [];
 
-    activeExercises.forEach((exercise, index) => {
+    activeExercises.map((exercise, index) => {
       const includeWarmup = exercise.includeWarmup;
 
       const sets = activeSets.filter(set => {
@@ -99,9 +86,13 @@ export const getActiveWorkoutCards = createSelector(
           ? CARD_STYLE.activeCard
           : CARD_STYLE.card;
 
-      let lastExercise = false;
-      if (index === activeExercises.length - 1) {
-        lastExercise = true;
+      const lastExercise = exercise.id === activeExercises.length - 1;
+
+      const firstExercise = exercise.id === 0;
+
+      let name = exercise.name;
+      if (name.length > EXERCISE_NAME_LENGTH) {
+        name = name.substring(0, EXERCISE_NAME_LENGTH) + "..";
       }
 
       let card = (
@@ -109,9 +100,11 @@ export const getActiveWorkoutCards = createSelector(
           key={index}
           exerciseId={exercise.id}
           borderStyle={borderStyle}
-          name={exercise.name}
+          active={exercise.id === currentExercise}
+          name={name}
           supersetNext={exercise.supersetNext}
           includeWarmup={exercise.includeWarmup}
+          firstExercise={firstExercise}
           lastExercise={lastExercise}
           setButtons={setButtons}
         />

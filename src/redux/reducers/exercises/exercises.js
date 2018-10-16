@@ -3,9 +3,13 @@ import {
   UPDATE_SELECTED_BODY_PART,
   UPDATE_LIBRARY_EXERCISE_DATA,
   DELETE_LIBRARY_EXERCISE,
-  NEW_LIBRARY_EXERCISE
+  NEW_LIBRARY_EXERCISE,
+  UPDATE_MODAL_SELECTED_BODY_PART,
+  UPDATE_MODAL_SELECTED_EXERCISE_CATEGORY
 } from "../../actions/exercisesActions";
 import {
+  updateModalSelectedBodyPart,
+  updateModalSelectedExerciseCategory,
   updateExerciseData,
   updateSelectedBodyPart,
   updateSelectedExerciseCategory,
@@ -40,6 +44,10 @@ export default function exercises(state = {}, action) {
         action.bodyPart,
         action.favorite
       );
+    case UPDATE_MODAL_SELECTED_BODY_PART:
+      return updateModalSelectedBodyPart(state, action.bodyPartId);
+    case UPDATE_MODAL_SELECTED_EXERCISE_CATEGORY:
+      return updateModalSelectedExerciseCategory(state, action.categoryId);
     default:
       return state;
   }

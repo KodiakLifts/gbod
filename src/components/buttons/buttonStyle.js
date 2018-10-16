@@ -25,6 +25,24 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.INACTIVECOLOR,
     borderRadius: 5
   },
+  finishButton: {
+    padding: 0,
+    width: 70,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.SECONDARYCOLOR,
+    borderRadius: 5
+  },
+  finishText: {
+    margin: 1,
+    paddingRight: 5,
+    fontSize: 16,
+    color: COLORS.SECONDARYCOLOR,
+    fontWeight: "bold",
+    textAlignVertical: "center",
+    includeFontPadding: false
+  },
   activeText: {
     fontSize: 18,
     color: "black",

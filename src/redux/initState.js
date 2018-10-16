@@ -13,6 +13,8 @@ export const initState =
       program: 1,
       day: 0,
       currentExercise: 0,
+      dayBarActive: false,
+      notes: ""
     },
     programs: [
       {
@@ -22,13 +24,15 @@ export const initState =
         description: "",
         favorite: false,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+          {
+            id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50}
         ],
         exercises: [
           {
             id: 0, libraryId: 0, day: 0, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           }
         ],
         days: [
@@ -44,81 +48,118 @@ export const initState =
         sets: [
           {
             id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true,
-            percentage: true, percent: 50
+            percentage: false, percent: 50
           },
-          { id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: 1, complete: false, restMinutes: 4, restSeconds: 0, timerOn: true },
-          { id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: 2, complete: false, restMinutes: 5, restSeconds: 0, timerOn: true },
-          { id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: 0, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
-          { id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true },
+          {
+            id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: 1, complete: false, restMinutes: 4, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: 2, complete: false, restMinutes: 5, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: 0, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
+          {
+            id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50},
         ],
         exercises: [
           {
             id: 0, libraryId: 1, day: 0, complete: false,
-            supersetNext: true, includeWarmup: true, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: true, includeWarmup: true, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
           {
             id: 1, libraryId: 2, day: 0, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
           {
             id: 2, libraryId: 3, day: 0, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
           {
             id: 3, libraryId: 4, day: 1, complete: false,
-            supersetNext: true, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
           {
             id: 4, libraryId: 5, day: 1, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
           {
             id: 5, libraryId: 6, day: 1, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           },
         ],
         days: [
           { id: 0, name: "A" },
           { id: 1, name: "B" },
+          {id: 2, name: "C"}
         ]
       },
       {
         id: 2,
-        name: "Starting Strength",
+        name: "5/3/1 Boring But Big",
         category: 2,
         description: "Another beginner strength program.",
         favorite: false,
         sets: [
-          { id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true }
+          {
+            id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50}
         ],
         exercises: [
           {
             id: 0, libraryId: 0, day: 0, complete: false,
-            supersetNext: false, includeWarmup: false, increaseRule: "",
-            barType: "", units: "", note: ""
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
           }
         ],
         days: [
-          { id: 0, name: "" }
+          { id: 0, name: "Day 1" }
         ]
       },
     ],
@@ -142,14 +183,273 @@ export const initState =
     ],
     selectedExerciseCategory: 0,
     selectedBodyPart: 0,
+    modalSelectedExerciseCategory: 0,
+    modalSelectedBodyPart: 0,
     exerciseLibrary: [
-      { id: 0, name: "", bodyPart: 0, category: 0, favorite: false, oneRepMax: 0 },
-      { id: 1, name: "Bench Press", bodyPart: 4, category: 2, favorite: true, oneRepMax: 200 },
-      { id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, oneRepMax: 200 },
-      { id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, oneRepMax: 300 },
-      { id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, oneRepMax: 150 },
-      { id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, oneRepMax: 200 },
-      { id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, oneRepMax: 350 },
+      {
+        id: 0, name: "", bodyPart: 0, category: 0, favorite: false,
+        repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },],
+        logs: [
+          {
+          id: 0, date: "", program: 0, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          sets: [
+            { reps: 0, weight: 0, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+          ]
+          }
+        ]
+      },
+      {
+        id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true,
+        repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 200 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },],
+        logs: [
+          {
+            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            sets: [
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },],
+        logs: [
+          {
+            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            sets: [
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 7, name: "Chest Dip", bodyPart: 4, category: 3, favorite: true, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 8, name: "Behind The Neck Press", bodyPart: 8, category: 2, favorite: false,
+        repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
+      {
+        id: 9, name: "Front Squat", bodyPart: 7, category: 2, favorite: false, repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 0 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },] },
     ],
     bodyParts: [
       { id: 0, name: "All Body Parts" },
@@ -175,6 +475,43 @@ export const initState =
       { id: 8, name: "Olympic" },
       { id: 9, name: "Other" },
       { id: 10, name: "Strongman" }
+    ],
+    units: [
+      { id: 0, name: "lbs" },
+      { id: 1, name: "kgs" },
+      { id: 2, name: "in" },
+      { id: 3, name: "cm" },
+      { id: 4, name: "%" },
+      {id: 5, name: "kcal"}
+    ],
+    measurementCategories: [
+      { id: 0, name: "Bodyweight", units: 0 },
+      { id: 1, name: "Body Fat Percentage", units: 4 },
+      { id: 2, name: "Calories", units: 5 },
+      { id: 3, name: "Neck", units: 2 },
+      { id: 4, name: "Shoulders", units: 2 },
+      { id: 5, name: "Chest", units: 2 },
+      { id: 6, name: "Left Bicep", units: 2 },
+      { id: 7, name: "Right Bicep", units: 2 },
+      { id: 8, name: "Left Forearm", units: 2 },
+      { id: 9, name: "Right Forearm", units: 2 },
+      { id: 10, name: "Upper Abs", units: 2 },
+      { id: 11, name: "Waist", units: 2 },
+      { id: 12, name: "Lower Abs", units: 2 },
+      { id: 13, name: "Hips", units: 2 },
+      { id: 14, name: "Left Thigh", units: 2 },
+      { id: 15, name: "Right Thigh", units: 2 },
+      { id: 16, name: "Left Calf", units: 2 },
+      { id: 17, name: "Right Calf", units: 2 },
+    ],
+    logs: [
+      {
+        id: 0, date: "2018-10-16", notes: "Had a good workout.", libraryExercises: [1, 2],
+        measurements: [
+          { id: 0, measurementCategory: 0, ammount: 180 },
+          { id: 1, measurementCategory: 1, ammount: 20 }
+        ]
+      }
     ]
   }
 };

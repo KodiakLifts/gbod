@@ -139,7 +139,7 @@ class NewProgramModal extends Component {
                         placeholder={title + index}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={30}
+                        maxLength={26}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>

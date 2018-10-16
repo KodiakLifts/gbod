@@ -1,3 +1,56 @@
+export const addSet = (state, exerciseId) => {
+  const activeProgram = state.activeWorkout.program;
+  const activeExercise = state.programs[activeProgram].exercises[exerciseId];
+
+  let activeSets = state.programs[activeProgram].sets.filter(set => {
+    return set.exercise === activeExercise.id;
+  });
+
+  const lastSet = activeSets[activeSets.length - 1];
+  const newSetId = lastSet.id + 1;
+
+  const newSet = {
+    id: newSetId,
+    exercise: exerciseId,
+    day: lastSet.day,
+    weight: lastSet.weight,
+    reps: lastSet.reps,
+    type: lastSet.type,
+    complete: false,
+    restMinutes: lastSet.restMinutes,
+    restSeconds: lastSet.restSeconds,
+    timerOn: true
+  };
+
+  const oldSets = state.programs[activeProgram].sets;
+  const newSets = [
+    ...oldSets.slice(0, newSetId),
+    newSet,
+    ...oldSets.slice(newSetId)
+  ];
+  for (let i = newSetId; i < newSets.length; i++) {
+    newSets[i].id = i;
+  }
+
+  const newState = {
+    ...state,
+    activeWorkout: {
+      ...state.activeWorkout
+    },
+    programs: state.programs.map((program, index) => {
+      if (index === activeProgram) {
+        return {
+          ...program,
+          sets: newSets
+        };
+      }
+      return program;
+    })
+  };
+
+  return newState;
+};
+
 export const updateSetData = (
   state,
   setId,
@@ -69,8 +122,8 @@ export const removeSet = (state, setId, exerciseId) => {
   let newSets = state.programs[activeProgram].sets.filter(
     set => set.id !== setId
   );
-  newSets.forEach((set, index) => {
-    set.id = index;
+  newSets.map((set, index) => {
+    newSets[index].id = index;
   });
 
   let currentSet = newSets.find(set => {
@@ -84,8 +137,8 @@ export const removeSet = (state, setId, exerciseId) => {
       return exercise.id !== exerciseId;
     });
 
-    newExercises.forEach((exercise, index) => {
-      newSets.forEach(set => {
+    newExercises.map((exercise, index) => {
+      newSets.map(set => {
         if (set.exercise === exercise.id) {
           set.exercise = index;
         }

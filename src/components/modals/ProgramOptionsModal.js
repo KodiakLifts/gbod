@@ -102,7 +102,7 @@ class ProgramOptionsModal extends Component {
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>{title}</Text>
+                <Text style={STYLE.modalHeaderText}>{title} Options</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>

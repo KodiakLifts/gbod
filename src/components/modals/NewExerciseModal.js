@@ -135,7 +135,7 @@ class NewExerciseModal extends Component {
                         placeholder={"New Exercise"}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={30}
+                        maxLength={24}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>
