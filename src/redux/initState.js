@@ -210,15 +210,18 @@ export const initState =
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },],
-        logs: [{
+        logs: [
+          {
           id: 0, date: "", program: 0, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
             { reps: 0, weight: 0, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
           ]
-        }]
+          }
+        ]
       },
       {
-        id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true, repMaxes: [
+        id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true,
+        repMaxes: [
           { reps: 0, weight: 0 },
           { reps: 1, weight: 200 },
           { reps: 2, weight: 0 },
@@ -239,7 +242,18 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: [
+          {
+            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            sets: [
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+            ]
+          }
+        ]
+      },
       {
         id: 2, name: "Barbell Row", bodyPart: 2, category: 2, favorite: true, repMaxes: [
           { reps: 0, weight: 0 },
@@ -262,7 +276,18 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: [
+          {
+            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            sets: [
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+            ]
+          }
+        ]
+      },
       {
         id: 3, name: "Squat", bodyPart: 7, category: 2, favorite: false, repMaxes: [
           { reps: 0, weight: 0 },
@@ -379,7 +404,8 @@ export const initState =
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },] },
       {
-        id: 8, name: "Behind The Neck Press", bodyPart: 8, category: 2, favorite: false, repMaxes: [
+        id: 8, name: "Behind The Neck Press", bodyPart: 8, category: 2, favorite: false,
+        repMaxes: [
           { reps: 0, weight: 0 },
           { reps: 1, weight: 0 },
           { reps: 2, weight: 0 },
@@ -455,17 +481,35 @@ export const initState =
       { id: 1, name: "kgs" },
       { id: 2, name: "in" },
       { id: 3, name: "cm" },
-      { id: 4, name: "%"}
+      { id: 4, name: "%" },
+      {id: 5, name: "kcal"}
     ],
     measurementCategories: [
-      { id: 0, name: "Weight", units: 0 },
-      { id: 1, name: "Body Fat Percentage", units: 0 }
+      { id: 0, name: "Bodyweight", units: 0 },
+      { id: 1, name: "Body Fat Percentage", units: 4 },
+      { id: 2, name: "Calories", units: 5 },
+      { id: 3, name: "Neck", units: 2 },
+      { id: 4, name: "Shoulders", units: 2 },
+      { id: 5, name: "Chest", units: 2 },
+      { id: 6, name: "Left Bicep", units: 2 },
+      { id: 7, name: "Right Bicep", units: 2 },
+      { id: 8, name: "Left Forearm", units: 2 },
+      { id: 9, name: "Right Forearm", units: 2 },
+      { id: 10, name: "Upper Abs", units: 2 },
+      { id: 11, name: "Waist", units: 2 },
+      { id: 12, name: "Lower Abs", units: 2 },
+      { id: 13, name: "Hips", units: 2 },
+      { id: 14, name: "Left Thigh", units: 2 },
+      { id: 15, name: "Right Thigh", units: 2 },
+      { id: 16, name: "Left Calf", units: 2 },
+      { id: 17, name: "Right Calf", units: 2 },
     ],
     logs: [
       {
-        id: 0, date: "", notes: "", libraryExercises: [0],
+        id: 0, date: "2018-10-16", notes: "Had a good workout.", libraryExercises: [1, 2],
         measurements: [
-          {id: 0, measurementCategory: 0, ammount: 0}
+          { id: 0, measurementCategory: 0, ammount: 180 },
+          { id: 1, measurementCategory: 1, ammount: 20 }
         ]
       }
     ]
