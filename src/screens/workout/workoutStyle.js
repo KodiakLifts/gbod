@@ -10,7 +10,7 @@ module.exports = StyleSheet.create({
     paddingHorizontal: 15
   },
   headerText: {
-    color: COLORS.TEXTCOLOR,
+    color: COLORS.SECONDARYCOLOR,
     fontSize: 20,
     fontWeight: "bold",
     textAlignVertical: "center",

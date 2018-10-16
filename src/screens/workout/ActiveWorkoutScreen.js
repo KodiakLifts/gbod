@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Picker } from "react-native";
+import { View, TouchableOpacity, Picker, Text } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -7,7 +7,7 @@ import {
   getActiveWorkoutCards,
   getActiveWorkoutTitle
 } from "../../redux/selectors/activeWorkoutSelectors";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import Icon from "react-native-vector-icons/FontAwesome";
 import FinishButton from "../../components/buttons/FinishButton";
 import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
@@ -184,12 +184,18 @@ class ActiveWorkout extends Component {
       <ScreenTemplate
         headerContent={
           <View style={STYLE.headerContent}>
-            {title}
+            <TouchableOpacity>
+              <Text style={STYLE.headerText}>{title}</Text>
+            </TouchableOpacity>
 
             <View style={STYLE.timerSettingsContainer}>
               <SetTimer />
               <TouchableOpacity onPress={this._settingsOnPress}>
-                <Icon name={"cog"} size={25} color={COLORS.SECONDARYCOLOR} />
+                <Icon
+                  name={"sticky-note"}
+                  size={25}
+                  color={COLORS.SECONDARYCOLOR}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -236,7 +242,7 @@ const createItems = items => {
 };
 
 ActiveWorkout.propTypes = {
-  title: PropTypes.object,
+  title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
   days: PropTypes.arrayOf(PropTypes.object),
   activeDay: PropTypes.number,

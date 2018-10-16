@@ -1,7 +1,7 @@
 import React from "react";
 import ExerciseCard from "../../components/cards/ExerciseCard";
 import SetButton from "../../components/buttons/SetButton";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { createSelector } from "reselect";
 
 const CARD_STYLE = require("../../components/cards/cardStyle");
@@ -23,11 +23,7 @@ export const getActiveWorkoutTitle = createSelector(
       program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
 
-    const title = (
-      <View>
-        <Text style={WORKOUT_STYLE.headerText}>{program}</Text>
-      </View>
-    );
+    const title = program;
     return title;
   }
 );
