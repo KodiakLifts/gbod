@@ -13,6 +13,8 @@ const getSelectedLogDate = state => state.selectedLogDate;
 const getWorkoutLogs = state => state.workoutLogs;
 const getPrograms = state => state.programs;
 const getMeasurementLogs = state => state.measurementLogs;
+const getMeasurementCategories = state => state.measurementCategories;
+const getUnits = state => state.units;
 
 export const getLogCards = createSelector(
   [
@@ -20,9 +22,19 @@ export const getLogCards = createSelector(
     getWorkoutLogs,
     getExerciseLibrary,
     getPrograms,
-    getMeasurementLogs
+    getMeasurementLogs,
+    getMeasurementCategories,
+    getUnits
   ],
-  (date, workoutLogs, exerciseLibrary, programs, measurements) => {
+  (
+    date,
+    workoutLogs,
+    exerciseLibrary,
+    programs,
+    measurementLogs,
+    measurementCategories,
+    units
+  ) => {
     let cards = [];
     let items = [];
     const selectedLogs = workoutLogs.filter(log => {
@@ -77,11 +89,41 @@ export const getLogCards = createSelector(
       );
     });
 
-    const measurementsItem = <MeasurementsItem />;
+    const measurementLog = measurementLogs.find(log => {
+      return log.date === date;
+    });
 
-    // cards.unshift(
-    //   <ListCard key={getNumber()} headerTitle={date} items={measurementsItem} />
-    // );
+    let labels = [];
+    let measurements = [];
+
+    measurementLog.measurements.forEach(measure => {
+      labels.push(
+        measurementCategories[measure.measurementCategory].name + ": "
+      );
+      measurements.push(
+        "" +
+          measure.ammount +
+          " " +
+          units[measurementCategories[measure.measurementCategory].units].name
+      );
+    });
+
+    const measurementsItem = (
+      <MeasurementsItem
+        key={getNumber()}
+        logId={measurementLog.id}
+        labels={labels}
+        measurements={measurements}
+      />
+    );
+
+    cards.unshift(
+      <ListCard
+        key={getNumber()}
+        headerTitle={date}
+        items={[measurementsItem]}
+      />
+    );
 
     return cards;
   }

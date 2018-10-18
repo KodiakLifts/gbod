@@ -20,8 +20,34 @@ class MeasurementsItem extends Component {
     this.setState({ menuModalVisible: false });
   };
 
+  renderLabels = labels => {
+    return labels.map((label, index) => {
+      return (
+        <Text
+          key={index}
+          style={[STYLE.listItemDetails, { textAlign: "left" }]}
+        >
+          {label}
+        </Text>
+      );
+    });
+  };
+
+  renderMeasures = measurements => {
+    return measurements.map((measure, index) => {
+      return (
+        <Text
+          key={index}
+          style={[STYLE.listItemDetails, { textAlign: "left" }]}
+        >
+          {measure}
+        </Text>
+      );
+    });
+  };
+
   render() {
-    const { logId, measurements } = this.props;
+    const { logId, labels, measurements } = this.props;
     const { menuModalVisible } = this.state;
 
     return (
@@ -58,7 +84,14 @@ class MeasurementsItem extends Component {
               />
             </TouchableOpacity>
           </View>
-          <Text style={STYLE.listItemDetails}>{measurements}</Text>
+          <View style={{ flexDirection: "row", justifyContent: "flex-start" }}>
+            <View style={{ flexDirection: "column" }}>
+              {this.renderLabels(labels)}
+            </View>
+            <View style={{ flexDirection: "column" }}>
+              {this.renderMeasures(measurements)}
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -67,7 +100,8 @@ class MeasurementsItem extends Component {
 
 MeasurementsItem.propTypes = {
   logId: PropTypes.number,
-  measurements: PropTypes.string
+  labels: PropTypes.arrayOf(PropTypes.string),
+  measurements: PropTypes.arrayOf(PropTypes.string)
 };
 
 export default MeasurementsItem;
