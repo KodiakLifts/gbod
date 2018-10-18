@@ -6,6 +6,5 @@ export const updateActiveNotes = (state, notes) => {
       notes: notes
     }
   };
-  console.log(newState);
   return newState;
 };
