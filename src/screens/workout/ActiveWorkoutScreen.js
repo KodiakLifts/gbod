@@ -15,6 +15,7 @@ import NewDayModal from "../../components/modals/NewDayModal";
 import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
 import NoteModal from "../../components/modals/NoteModal";
 import Fab from "../../components/buttons/Fab";
+import NoteButton from "../../components/buttons/NoteButton";
 import {
   updateActiveDay,
   dayBarPress,
@@ -199,13 +200,7 @@ class ActiveWorkout extends Component {
             />
             <View style={STYLE.timerSettingsContainer}>
               <SetTimer />
-              <TouchableOpacity onPress={this._notePress}>
-                <Icon
-                  name={"sticky-note"}
-                  size={25}
-                  color={COLORS.SECONDARYCOLOR}
-                />
-              </TouchableOpacity>
+              <NoteButton onPress={this._notePress} />
             </View>
           </View>
         }
