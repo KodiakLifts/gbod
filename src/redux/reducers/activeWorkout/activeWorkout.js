@@ -23,7 +23,8 @@ import {
   DEACTIVATE_DAY_BAR,
   SHIFT_DAY_DOWN,
   SHIFT_DAY_UP,
-  SET_CURRENT_DAY
+  SET_CURRENT_DAY,
+  UPDATE_ACTIVE_NOTES
 } from "../../actions/activeWorkoutActions";
 
 import setPress from "./setPress";
@@ -49,6 +50,7 @@ import {
   shiftDayUp,
   setCurrentDay
 } from "./dayOptions";
+import { updateActiveNotes } from "./notes";
 
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
@@ -116,6 +118,8 @@ export default function activeWorkout(state = {}, action) {
       return shiftDayUp(state, action.dayId);
     case SET_CURRENT_DAY:
       return setCurrentDay(state, action.dayId);
+    case UPDATE_ACTIVE_NOTES:
+      return updateActiveNotes(state, action.notes);
     default:
       return state;
   }

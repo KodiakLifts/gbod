@@ -1,12 +1,9 @@
 import React from "react";
-import { Text } from "react-native";
 import { createSelector } from "reselect";
 import ListCard from "../../components/cards/ListCard";
 import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
 import NotesItem from "../../components/cards/NotesItem";
 import MeasurementsItem from "../../components/cards/MeasurementsItem";
-
-const CARDSTYLE = require("../../components/cards/cardStyle");
 
 const getExerciseLibrary = state => state.exerciseLibrary;
 const getSelectedLogDate = state => state.selectedLogDate;

@@ -17,6 +17,10 @@ const COLORS = require("../../styles/Colors");
 class CalendarModal extends Component {
   state = {};
 
+  componentDidMount() {
+    this.onDateChange(moment(new Date()));
+  }
+
   save = () => {
     const { closeModal } = this.props;
     closeModal();

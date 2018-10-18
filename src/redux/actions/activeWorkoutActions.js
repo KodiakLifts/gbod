@@ -23,6 +23,7 @@ export const DEACTIVATE_DAY_BAR = "DEACTIVATE_DAY_BAR";
 export const SHIFT_DAY_DOWN = "SHIFT_DAY_DOWN";
 export const SHIFT_DAY_UP = "SHIFT_DAY_UP";
 export const SET_CURRENT_DAY = "SET_CURRENT_DAY";
+export const UPDATE_ACTIVE_NOTES = "UPDATE_ACTIVE_NOTES";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -49,8 +50,16 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   DEACTIVATE_DAY_BAR,
   SHIFT_DAY_DOWN,
   SHIFT_DAY_UP,
-  SET_CURRENT_DAY
+  SET_CURRENT_DAY,
+  UPDATE_ACTIVE_NOTES
 ];
+
+export const updateActiveNotes = notes => {
+  return {
+    type: UPDATE_ACTIVE_NOTES,
+    notes
+  };
+};
 
 export const setCurrentDay = dayId => {
   return {
