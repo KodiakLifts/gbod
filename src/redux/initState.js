@@ -310,7 +310,15 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: [{
+          id: 0, date: "2018-10-17", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          sets: [
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+          ]
+        }]},
       {
         id: 4, name: "Overhead Press", bodyPart: 8, category: 2, favorite: true, repMaxes: [
           { reps: 0, weight: 0 },
@@ -333,7 +341,15 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: [{
+          id: 0, date: "2018-10-17", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          sets: [
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+            { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+          ]
+        }]},
       {
         id: 5, name: "Pull-up", bodyPart: 2, category: 3, favorite: false, repMaxes: [
           { reps: 0, weight: 0 },
@@ -507,10 +523,17 @@ export const initState =
     selectedLogDate: "2018-10-16",
     logs: [
       {
-        id: 0, date: "2018-10-16", program: 1, day: 0, notes: "Had a good workout.", libraryExercises: [1, 2],
+        id: 0, date: "2018-10-16", program: 1, day: 0, notes: "Had a good workout. Made a lot of progress on bench press by tucking elbows more.", libraryExercises: [1, 2],
         measurements: [
           { id: 0, measurementCategory: 0, ammount: 180 },
           { id: 1, measurementCategory: 1, ammount: 20 }
+        ]
+      },
+      {
+        id: 1, date: "2018-10-17", program: 1, day: 1, notes: "Had a good workout again.", libraryExercises: [3, 4],
+        measurements: [
+          { id: 0, measurementCategory: 2, ammount: 2000 },
+          { id: 1, measurementCategory: 3, ammount: 15 }
         ]
       }
     ]

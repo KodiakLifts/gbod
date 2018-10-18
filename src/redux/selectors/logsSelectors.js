@@ -3,6 +3,7 @@ import { Text } from "react-native";
 import { createSelector } from "reselect";
 import ListCard from "../../components/cards/ListCard";
 import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
+import NotesItem from "../../components/cards/NotesItem";
 
 const CARDSTYLE = require("../../components/cards/cardStyle");
 
@@ -11,18 +12,19 @@ const getSelectedLogDate = state => state.selectedLogDate;
 const getLogs = state => state.logs;
 const getPrograms = state => state.programs;
 
-export const getExerciseLogCards = createSelector(
+export const getLogCards = createSelector(
   [getSelectedLogDate, getLogs, getExerciseLibrary, getPrograms],
   (date, logs, exerciseLibrary, programs) => {
     let cards = [];
     let items = [];
-    const selectedLogs = logs.map(log => {
-      if (log.date === date) {
-        return log;
-      }
+    let measurements = [];
+    const selectedLogs = logs.filter(log => {
+      return log.date === date;
     });
-    selectedLogs.forEach((log, index) => {
+    selectedLogs.forEach(log => {
       items = [];
+      items.push(<NotesItem key={getNumber} notes={log.notes} />);
+      measurements.push(log.measurements);
       log.libraryExercises.forEach(libraryId => {
         const foundExercise = exerciseLibrary.find(exercise => {
           return exercise.id === libraryId;

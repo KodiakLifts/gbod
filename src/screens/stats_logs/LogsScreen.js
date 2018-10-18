@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import PropTypes from "prop-types";
 import SubScreenTemplate from "../templates/SubScreenTemplate";
-import { getExerciseLogCards } from "../../redux/selectors/logsSelectors";
+import { getLogCards } from "../../redux/selectors/logsSelectors";
 import { connect } from "react-redux";
 
 class Logs extends Component {
@@ -23,7 +23,7 @@ Logs.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    cards: getExerciseLogCards(state.workoutData)
+    cards: getLogCards(state.workoutData)
   };
 };
 
