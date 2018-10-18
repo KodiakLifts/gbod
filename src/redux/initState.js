@@ -247,9 +247,9 @@ export const initState =
           {
             id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
             sets: [
-              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
-              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
-              { reps: 0, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
             ]
           }
         ]
@@ -281,9 +281,9 @@ export const initState =
           {
             id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
             sets: [
-              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
-              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
-              { reps: 0, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+              { reps: 5, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
             ]
           }
         ]
@@ -504,9 +504,10 @@ export const initState =
       { id: 16, name: "Left Calf", units: 2 },
       { id: 17, name: "Right Calf", units: 2 },
     ],
+    selectedLogDate: "2018-10-16",
     logs: [
       {
-        id: 0, date: "2018-10-16", notes: "Had a good workout.", libraryExercises: [1, 2],
+        id: 0, date: "2018-10-16", program: 1, day: 0, notes: "Had a good workout.", libraryExercises: [1, 2],
         measurements: [
           { id: 0, measurementCategory: 0, ammount: 180 },
           { id: 1, measurementCategory: 1, ammount: 20 }

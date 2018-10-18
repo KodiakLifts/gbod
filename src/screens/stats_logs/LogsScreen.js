@@ -1,9 +1,30 @@
-import React from "react";
+import React, { Component } from "react";
 import { View } from "react-native";
+import PropTypes from "prop-types";
 import SubScreenTemplate from "../templates/SubScreenTemplate";
+import { getExerciseLogCards } from "../../redux/selectors/logsSelectors";
+import { connect } from "react-redux";
 
-const Logs = props => {
-  return <SubScreenTemplate headerContent={<View />} scrollContent={[]} />;
+class Logs extends Component {
+  state = {};
+  render() {
+    return (
+      <SubScreenTemplate
+        headerContent={<View />}
+        scrollContent={this.props.cards}
+      />
+    );
+  }
+}
+
+Logs.propTypes = {
+  cards: PropTypes.arrayOf(PropTypes.object)
 };
 
-export default Logs;
+const mapStateToProps = state => {
+  return {
+    cards: getExerciseLogCards(state.workoutData)
+  };
+};
+
+export default connect(mapStateToProps)(Logs);
