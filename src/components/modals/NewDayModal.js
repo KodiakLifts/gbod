@@ -71,7 +71,7 @@ class NewDayModal extends Component {
                         placeholder={placeHolder}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={20}
+                        maxLength={10}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>

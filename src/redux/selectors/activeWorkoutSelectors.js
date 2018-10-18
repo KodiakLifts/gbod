@@ -7,23 +7,35 @@ import { createSelector } from "reselect";
 const CARD_STYLE = require("../../components/cards/cardStyle");
 const WORKOUT_STYLE = require("../../screens/workout/workoutStyle");
 
-const PROGRAM_NAME_LENGTH = 26;
+const PROGRAM_NAME_LENGTH = 17;
+const DAY_NAME_LENGTH = 5;
 const EXERCISE_NAME_LENGTH = 24;
 
 const getActiveWorkoutName = state => {
   return state.programs[state.activeWorkout.program].name;
 };
 
+const getActiveDayName = state => {
+  return state.programs[state.activeWorkout.program].days[
+    state.activeWorkout.day
+  ].name;
+};
+
 export const getActiveWorkoutTitle = createSelector(
-  [getActiveWorkoutName],
-  programName => {
+  [getActiveWorkoutName, getActiveDayName],
+  (programName, dayName) => {
     let program = programName;
+    let day = dayName;
 
     if (program.length > PROGRAM_NAME_LENGTH) {
       program = program.substring(0, PROGRAM_NAME_LENGTH) + "..";
     }
 
-    const title = program;
+    if (day.length > DAY_NAME_LENGTH) {
+      day = day.substring(0, DAY_NAME_LENGTH) + "..";
+    }
+
+    const title = program + " - " + day;
     return title;
   }
 );
