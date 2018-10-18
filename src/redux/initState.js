@@ -251,6 +251,14 @@ export const initState =
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
             ]
+          },
+          {
+            id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            sets: [
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
+              { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 }
+            ]
           }
         ]
       },
@@ -312,7 +320,7 @@ export const initState =
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },],
         logs: [{
-          id: 0, date: "2018-10-17", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -343,7 +351,7 @@ export const initState =
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },],
         logs: [{
-          id: 0, date: "2018-10-17", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -521,20 +529,22 @@ export const initState =
       { id: 17, name: "Right Calf", units: 2 },
     ],
     selectedLogDate: "2018-10-16",
-    logs: [
+    measurementLogs: [
+      {
+        id: 0, date: "2018-10-16", measurements: [
+          { id: 0, measurementCategory: 0, ammount: 180 },
+          { id: 1, measurementCategory: 1, ammount: 20 },
+          { id: 2, measurementCategory: 2, ammount: 2000 },
+          { id: 3, measurementCategory: 3, ammount: 15 }
+        ]
+      }
+    ],
+    workoutLogs: [
       {
         id: 0, date: "2018-10-16", program: 1, day: 0, notes: "Had a good workout. Made a lot of progress on bench press by tucking elbows more.", libraryExercises: [1, 2],
-        measurements: [
-          { id: 0, measurementCategory: 0, ammount: 180 },
-          { id: 1, measurementCategory: 1, ammount: 20 }
-        ]
       },
       {
-        id: 1, date: "2018-10-17", program: 1, day: 1, notes: "Had a good workout again.", libraryExercises: [3, 4],
-        measurements: [
-          { id: 0, measurementCategory: 2, ammount: 2000 },
-          { id: 1, measurementCategory: 3, ammount: 15 }
-        ]
+        id: 1, date: "2018-10-16", program: 1, day: 1, notes: "Had a good workout again.", libraryExercises: [1, 3, 4],
       }
     ]
   }

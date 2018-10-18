@@ -4,43 +4,53 @@ import { createSelector } from "reselect";
 import ListCard from "../../components/cards/ListCard";
 import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
 import NotesItem from "../../components/cards/NotesItem";
+import MeasurementsItem from "../../components/cards/MeasurementsItem";
 
 const CARDSTYLE = require("../../components/cards/cardStyle");
 
 const getExerciseLibrary = state => state.exerciseLibrary;
 const getSelectedLogDate = state => state.selectedLogDate;
-const getLogs = state => state.logs;
+const getWorkoutLogs = state => state.workoutLogs;
 const getPrograms = state => state.programs;
+const getMeasurementLogs = state => state.measurementLogs;
 
 export const getLogCards = createSelector(
-  [getSelectedLogDate, getLogs, getExerciseLibrary, getPrograms],
-  (date, logs, exerciseLibrary, programs) => {
+  [
+    getSelectedLogDate,
+    getWorkoutLogs,
+    getExerciseLibrary,
+    getPrograms,
+    getMeasurementLogs
+  ],
+  (date, workoutLogs, exerciseLibrary, programs, measurements) => {
     let cards = [];
     let items = [];
-    let measurements = [];
-    const selectedLogs = logs.filter(log => {
+    const selectedLogs = workoutLogs.filter(log => {
       return log.date === date;
     });
     selectedLogs.forEach(log => {
       items = [];
       items.push(<NotesItem key={getNumber} notes={log.notes} />);
-      measurements.push(log.measurements);
       log.libraryExercises.forEach(libraryId => {
         const foundExercise = exerciseLibrary.find(exercise => {
           return exercise.id === libraryId;
         });
         if (foundExercise !== undefined) {
-          const foundLogs = foundExercise.logs.map(logA => {
-            if (logA.date === date) {
-              return logA;
+          const foundLogs = foundExercise.logs.filter(eLog => {
+            if (
+              eLog.date === date &&
+              eLog.program === log.program &&
+              eLog.day === log.day
+            ) {
+              return eLog;
             }
           });
-          if (foundLogs.length !== undefined) {
-            foundLogs.forEach((l, i) => {
+          if (foundLogs.length !== 0) {
+            foundLogs.forEach(fLog => {
               let summary = "";
-              l.sets.forEach((set, index) => {
+              fLog.sets.forEach((set, index) => {
                 summary += "" + set.weight + "x" + set.reps;
-                if (index !== l.sets.length - 1) {
+                if (index !== fLog.sets.length - 1) {
                   summary += ", ";
                 }
               });
@@ -49,7 +59,7 @@ export const getLogCards = createSelector(
                   key={getNumber()}
                   libraryId={foundExercise.id}
                   name={foundExercise.name}
-                  sets={l.sets}
+                  sets={fLog.sets}
                   summary={summary}
                 />
               );
@@ -66,6 +76,12 @@ export const getLogCards = createSelector(
         <ListCard key={getNumber()} headerTitle={header} items={items} />
       );
     });
+
+    const measurementsItem = <MeasurementsItem />;
+
+    // cards.unshift(
+    //   <ListCard key={getNumber()} headerTitle={date} items={measurementsItem} />
+    // );
 
     return cards;
   }
