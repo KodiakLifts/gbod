@@ -380,7 +380,8 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: []},
       {
         id: 6, name: "Deadlift", bodyPart: 6, category: 2, favorite: false, repMaxes: [
           { reps: 0, weight: 0 },
@@ -403,7 +404,8 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: []},
       {
         id: 7, name: "Chest Dip", bodyPart: 4, category: 3, favorite: true, repMaxes: [
           { reps: 0, weight: 0 },
@@ -426,7 +428,8 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: []},
       {
         id: 8, name: "Behind The Neck Press", bodyPart: 8, category: 2, favorite: false,
         repMaxes: [
@@ -450,7 +453,8 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: []},
       {
         id: 9, name: "Front Squat", bodyPart: 7, category: 2, favorite: false, repMaxes: [
           { reps: 0, weight: 0 },
@@ -473,7 +477,8 @@ export const initState =
           { reps: 17, weight: 0 },
           { reps: 18, weight: 0 },
           { reps: 19, weight: 0 },
-          { reps: 20, weight: 0 },] },
+          { reps: 20, weight: 0 },],
+        logs: []},
     ],
     bodyParts: [
       { id: 0, name: "All Body Parts" },

@@ -38,7 +38,7 @@ export const finishWorkout = state => {
   const activeProgram = state.activeWorkout.program;
   const currentActiveDay = state.activeWorkout.day;
   const date = moment(new Date()).format("YYYY-MM-DD");
-  const updatedSets = state.programs[activeProgram].sets;
+  const updatedSets = Array.from(state.programs[activeProgram].sets);
 
   const setsToLog = updatedSets.filter(set => {
     return set.day === currentActiveDay && set.complete;
@@ -65,12 +65,15 @@ export const finishWorkout = state => {
     }
   });
 
-  let newExerciseLibrary = [...state.exerciseLibrary];
+  let newExerciseLibrary = Array.from(state.exerciseLibrary);
   if (exercisesToLog.length !== 0) {
     exercisesToLog.forEach(exercise => {
       newExerciseLibrary = state.exerciseLibrary.map(e => {
         if (e.id === exercise.libraryId) {
-          let workoutsTowardsIncrease = exercise.workoutsTowardsIncrease + 1;
+          let workoutsTowardsIncrease = exercise.workoutsTowardsIncrease;
+          if (exercise.complete) {
+            workoutsTowardsIncrease++;
+          }
           if (workoutsTowardsIncrease === exercise.workoutsToIncrease) {
             workoutsTowardsIncrease = 0;
             updatedSets.forEach(set => {
@@ -81,33 +84,35 @@ export const finishWorkout = state => {
           }
           return {
             ...e,
-            logs: state.exerciseLibrary[exercise.libraryId].logs.concat({
-              id: state.exerciseLibrary[exercise.libraryId].logs.length,
-              date: date,
-              program: activeProgram,
-              day: currentActiveDay,
-              supersetNext: exercise.supersetNext,
-              includeWarmup: exercise.includeWarmup,
-              workoutsToIncrease: exercise.workoutsToIncrease,
-              increaseAmmount: exercise.increaseAmmount,
-              workoutsTowardsIncrease: workoutsTowardsIncrease,
-              barType: exercise.barType,
-              units: exercise.units,
-              sets: setsToLog.map(set => {
-                if (set.exercise === exercise.id) {
-                  return {
-                    reps: set.reps,
-                    weight: set.weight,
-                    type: set.type,
-                    restMinutes: set.restMinutes,
-                    restSeconds: set.restSeconds,
-                    timerOn: set.timerOn,
-                    percentage: set.percentage,
-                    percent: set.percent
-                  };
-                }
-              })
-            })
+            logs: state.exerciseLibrary[exercise.libraryId].logs.concat([
+              {
+                id: state.exerciseLibrary[exercise.libraryId].logs.length,
+                date: date,
+                program: activeProgram,
+                day: currentActiveDay,
+                supersetNext: exercise.supersetNext,
+                includeWarmup: exercise.includeWarmup,
+                workoutsToIncrease: exercise.workoutsToIncrease,
+                increaseAmmount: exercise.increaseAmmount,
+                workoutsTowardsIncrease: workoutsTowardsIncrease,
+                barType: exercise.barType,
+                units: exercise.units,
+                sets: setsToLog.map(set => {
+                  if (set.exercise === exercise.id) {
+                    return {
+                      reps: set.reps,
+                      weight: set.weight,
+                      type: set.type,
+                      restMinutes: set.restMinutes,
+                      restSeconds: set.restSeconds,
+                      timerOn: set.timerOn,
+                      percentage: set.percentage,
+                      percent: set.percent
+                    };
+                  }
+                })
+              }
+            ])
           };
         }
         return e;
@@ -126,7 +131,7 @@ export const finishWorkout = state => {
     })
   };
 
-  const days = state.programs[activeProgram].days;
+  const days = Array.from(state.programs[activeProgram].days);
 
   let nextActiveDay = currentActiveDay;
   nextActiveDay === days.length - 1 ? (nextActiveDay = 0) : nextActiveDay++;
@@ -171,6 +176,7 @@ export const finishWorkout = state => {
     exerciseLibrary: newExerciseLibrary,
     workoutLogs: state.workoutLogs.concat(newWorkoutLog)
   };
+  console.log(newState);
 
   return newState;
 };

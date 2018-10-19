@@ -22,7 +22,7 @@ export const addSet = (state, exerciseId) => {
     timerOn: true
   };
 
-  const oldSets = state.programs[activeProgram].sets;
+  const oldSets = Array.from(state.programs[activeProgram].sets);
   const newSets = [
     ...oldSets.slice(0, newSetId),
     newSet,
@@ -117,7 +117,7 @@ export const updateSetReps = (state, setId, reps) => {
 export const removeSet = (state, setId, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
   let currentExercise = state.activeWorkout.currentExercise;
-  let newExercises = state.programs[activeProgram].exercises;
+  let newExercises = Array.from(state.programs[activeProgram].exercises);
 
   let newSets = state.programs[activeProgram].sets.filter(
     set => set.id !== setId

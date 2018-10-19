@@ -1,6 +1,6 @@
 export const shiftExerciseDown = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
-  const newExercises = state.programs[activeProgram].exercises;
+  const newExercises = Array.from(state.programs[activeProgram].exercises);
 
   const exerciseToShift = newExercises[exerciseId];
   newExercises[exerciseId] = newExercises[exerciseId + 1];
@@ -47,7 +47,7 @@ export const shiftExerciseDown = (state, exerciseId) => {
 
 export const shiftExerciseUp = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
-  const newExercises = state.programs[activeProgram].exercises;
+  const newExercises = Array.from(state.programs[activeProgram].exercises);
 
   const exerciseToShift = newExercises[exerciseId];
   newExercises[exerciseId] = newExercises[exerciseId - 1];

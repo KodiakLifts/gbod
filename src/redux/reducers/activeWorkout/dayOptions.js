@@ -11,7 +11,7 @@ export const setCurrentDay = (state, dayId) => {
 
 export const shiftDayDown = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  const newDays = state.programs[activeProgram].days;
+  const newDays = Array.from(state.programs[activeProgram].days);
 
   const dayToShift = newDays[dayId];
   newDays[dayId] = newDays[dayId + 1];
@@ -66,7 +66,7 @@ export const shiftDayDown = (state, dayId) => {
 
 export const shiftDayUp = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  const newDays = state.programs[activeProgram].days;
+  const newDays = Array.from(state.programs[activeProgram].days);
 
   const dayToShift = newDays[dayId];
   newDays[dayId] = newDays[dayId - 1];
