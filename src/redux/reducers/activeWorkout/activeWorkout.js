@@ -27,7 +27,7 @@ import {
   UPDATE_ACTIVE_NOTES
 } from "../../actions/activeWorkoutActions";
 
-import setPress from "./setPress";
+import setPress from "./_oldSetPress";
 import { finishWorkout, resetWorkout } from "./endWorkout";
 import { setTimer, stopTimer, decrementTimer } from "./timer";
 import { updateSetData, updateSetReps, removeSet, addSet } from "./setOptions";
