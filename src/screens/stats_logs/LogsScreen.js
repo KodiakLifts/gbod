@@ -7,27 +7,16 @@ import { connect } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import CalendarModal from "../../components/modals/CalendarModal";
 import moment from "moment";
+import Fab from "../../components/buttons/Fab";
+import AddMeasurementModal from "../../components/modals/AddMeasurementModal";
 
 const STYLE = require("./SLStyle");
 const COLORS = require("../../styles/Colors");
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
 class Logs extends Component {
   state = {
-    calendarVisible: false
+    calendarVisible: false,
+    measurementModalVisible: false
   };
 
   parseDate = dateString => {
@@ -39,7 +28,14 @@ class Logs extends Component {
   };
 
   closeModal = () => {
-    this.setState({ calendarVisible: false });
+    this.setState({
+      calendarVisible: false,
+      measurementModalVisible: false
+    });
+  };
+
+  _showAddMeasurement = () => {
+    this.setState({ measurementModalVisible: true });
   };
 
   render() {
@@ -52,6 +48,10 @@ class Logs extends Component {
               visible={this.state.calendarVisible}
               closeModal={this.closeModal}
               selectedDate={selectedDate}
+            />
+            <AddMeasurementModal
+              visible={this.state.measurementModalVisible}
+              closeModal={this.closeModal}
             />
             <TouchableOpacity
               onPress={this._showCalendar}
@@ -70,6 +70,7 @@ class Logs extends Component {
           </View>
         }
         scrollContent={this.props.cards}
+        footer={<Fab onPress={this._showAddMeasurement} />}
       />
     );
   }

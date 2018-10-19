@@ -38,35 +38,33 @@ class NoteModal extends Component {
   render() {
     const { visible } = this.props;
     return (
-      <View>
-        <Modal transparent visible={visible} onRequestClose={this.exit}>
-          <TouchableOpacity onPress={this.exit} style={STYLE.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View
-                style={{
-                  backgroundColor: COLORS.PRIMARYCOLOR,
-                  padding: 12,
-                  borderRadius: 5,
-                  height: 350,
-                  width: 350,
-                  flexDirection: "column"
-                }}
-              >
-                <Text style={STYLE.modalHeaderText}>Notes</Text>
-                <TextInput
-                  multiline
-                  maxLength={351}
-                  placeholder={"My workout notes..."}
-                  placeholderTextColor={COLORS.INACTIVECOLOR}
-                  onChangeText={this.editText}
-                  value={this.state.noteText}
-                  style={STYLE.noteText}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          </TouchableOpacity>
-        </Modal>
-      </View>
+      <Modal transparent visible={visible} onRequestClose={this.exit}>
+        <TouchableOpacity onPress={this.exit} style={STYLE.modalContainer}>
+          <TouchableWithoutFeedback>
+            <View
+              style={{
+                backgroundColor: COLORS.PRIMARYCOLOR,
+                padding: 12,
+                borderRadius: 5,
+                height: 350,
+                width: 350,
+                flexDirection: "column"
+              }}
+            >
+              <Text style={STYLE.modalHeaderText}>Notes</Text>
+              <TextInput
+                multiline
+                maxLength={351}
+                placeholder={"My workout notes..."}
+                placeholderTextColor={COLORS.INACTIVECOLOR}
+                onChangeText={this.editText}
+                value={this.state.noteText}
+                style={STYLE.noteText}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+        </TouchableOpacity>
+      </Modal>
     );
   }
 }

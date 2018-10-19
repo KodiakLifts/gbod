@@ -191,13 +191,14 @@ class ActiveWorkout extends Component {
       <ScreenTemplate
         headerContent={
           <View style={STYLE.headerContent}>
-            <TouchableOpacity>
-              <Text style={STYLE.headerText}>{title}</Text>
-            </TouchableOpacity>
             <NoteModal
               closeModal={this.closeModal}
               visible={noteModalVisible}
             />
+            <TouchableOpacity>
+              <Text style={STYLE.headerText}>{title}</Text>
+            </TouchableOpacity>
+
             <View style={STYLE.timerSettingsContainer}>
               <SetTimer />
               <NoteButton onPress={this._notePress} />
@@ -216,6 +217,7 @@ class ActiveWorkout extends Component {
               >
                 {createItems(days)}
               </Picker>
+
               <EditDayModal
                 closeModal={this.closeModal}
                 visible={editDayModalVisible}
