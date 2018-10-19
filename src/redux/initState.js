@@ -535,10 +535,9 @@ export const initState =
     measurementLogs: [
       {
         id: 0, date: "2018-10-16", measurements: [
-          { id: 0, measurementCategory: 0, ammount: 180 },
-          { id: 1, measurementCategory: 1, ammount: 20 },
-          { id: 2, measurementCategory: 2, ammount: 2000 },
-          { id: 3, measurementCategory: 3, ammount: 15 }
+          { id: 0, measurementCategory: 1, ammount: 180 },
+          { id: 1, measurementCategory: 2, ammount: 20 },
+          { id: 2, measurementCategory: 3, ammount: 2000 }
         ]
       }
     ],

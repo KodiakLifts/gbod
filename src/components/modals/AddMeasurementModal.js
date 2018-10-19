@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { addMeasurement } from "../../redux/actions/logsActions";
 
 const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
@@ -42,9 +43,9 @@ class AddMeasurementModal extends Component {
   };
 
   save = () => {
-    const { closeModal } = this.props;
-    const { tmpCategory } = this.state;
-
+    const { categories, addMeasurement, closeModal } = this.props;
+    const { tmpCategory, tmpAmmount } = this.state;
+    addMeasurement(categories[tmpCategory].id, tmpAmmount);
     closeModal();
   };
 
@@ -135,7 +136,8 @@ AddMeasurementModal.propTypes = {
   visible: PropTypes.bool,
   closeModal: PropTypes.func,
   categories: PropTypes.arrayOf(PropTypes.object),
-  units: PropTypes.arrayOf(PropTypes.object)
+  units: PropTypes.arrayOf(PropTypes.object),
+  addMeasurement: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -146,7 +148,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    addMeasurement: (measurementId, ammount, unitsId) => {
+      dispatch(addMeasurement(measurementId, ammount, unitsId));
+    }
+  };
 };
 
 export default connect(

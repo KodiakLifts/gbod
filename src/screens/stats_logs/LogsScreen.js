@@ -32,6 +32,7 @@ class Logs extends Component {
       calendarVisible: false,
       measurementModalVisible: false
     });
+    this.forceUpdate();
   };
 
   _showAddMeasurement = () => {
@@ -39,18 +40,19 @@ class Logs extends Component {
   };
 
   render() {
-    const { selectedDate } = this.props;
+    const { selectedDate, cards } = this.props;
+    const { calendarVisible, measurementModalVisible } = this.state;
     return (
       <SubScreenTemplate
         headerContent={
           <View style={STYLE.subHeader}>
             <CalendarModal
-              visible={this.state.calendarVisible}
+              visible={calendarVisible}
               closeModal={this.closeModal}
               selectedDate={selectedDate}
             />
             <AddMeasurementModal
-              visible={this.state.measurementModalVisible}
+              visible={measurementModalVisible}
               closeModal={this.closeModal}
             />
             <TouchableOpacity
@@ -69,7 +71,7 @@ class Logs extends Component {
             </TouchableOpacity>
           </View>
         }
-        scrollContent={this.props.cards}
+        scrollContent={cards}
         footer={<Fab onPress={this._showAddMeasurement} />}
       />
     );
