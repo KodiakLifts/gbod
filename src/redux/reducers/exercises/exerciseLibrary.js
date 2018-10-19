@@ -20,7 +20,8 @@ export const newExercise = (
     bodyPart: bodyPart,
     category: category,
     favorite: favorite,
-    repMaxes: newMaxes
+    repMaxes: newMaxes,
+    logs: []
   };
   const newState = {
     ...state,
