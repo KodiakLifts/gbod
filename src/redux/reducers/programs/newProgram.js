@@ -9,7 +9,7 @@ export const newProgram = (
 ) => {
   const newId = state.programs.length;
   const activeProgram = current ? newId : state.activeWorkout.program;
-  const template = state.programs[templateId];
+  const template = Object.assign({}, state.programs[templateId]);
   const newProgram = {
     id: newId,
     name: name,

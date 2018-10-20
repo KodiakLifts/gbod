@@ -6,7 +6,7 @@ export const newExercise = (
   bodyPart,
   favorite
 ) => {
-  const tempMaxes = state.exerciseLibrary[0].repMaxes;
+  const tempMaxes = Array.from(state.exerciseLibrary[0].repMaxes);
   const newMaxes = tempMaxes.map(max => {
     if (max.reps === 1) {
       max.weight = oneRepMax;

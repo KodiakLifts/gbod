@@ -553,6 +553,6 @@ export const initState =
       {
         id: 1, date: "2018-10-16", program: 1, day: 1, notes: "Had a good workout again.", libraryExercises: [1, 3, 4],
       }
-    ]
+    ],
   }
 };

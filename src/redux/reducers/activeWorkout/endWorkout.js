@@ -176,7 +176,6 @@ export const finishWorkout = state => {
     exerciseLibrary: newExerciseLibrary,
     workoutLogs: state.workoutLogs.concat([newWorkoutLog])
   };
-  console.log(newState);
 
   return newState;
 };
