@@ -20,6 +20,14 @@ class NotesItem extends Component {
     this.setState({ menuModalVisible: false });
   };
 
+  renderNotes = notes => {
+    if (notes !== "") {
+      return <Text style={STYLE.listItemDetails}>{notes}</Text>;
+    } else {
+      return null;
+    }
+  };
+
   render() {
     const { logId, notes } = this.props;
     const { menuModalVisible } = this.state;
@@ -57,7 +65,7 @@ class NotesItem extends Component {
               />
             </TouchableOpacity>
           </View>
-          <Text style={STYLE.listItemDetails}>{notes}</Text>
+          {this.renderNotes(notes)}
         </View>
       </View>
     );
