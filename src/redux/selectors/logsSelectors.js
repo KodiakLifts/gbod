@@ -120,7 +120,7 @@ export const getLogCards = createSelector(
       cards.unshift(
         <ListCard
           key={getNumber()}
-          headerTitle={date}
+          headerTitle={""}
           items={[measurementsItem]}
         />
       );
