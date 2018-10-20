@@ -5,12 +5,17 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  CheckBox,
   TextInput,
-  Picker
+  Picker,
+  Alert
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { addMeasurement } from "../../redux/actions/logsActions";
+import {
+  updateMeasurement,
+  deleteMeasurement
+} from "../../redux/actions/logsActions";
 
 const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
@@ -18,22 +23,38 @@ const COLORS = require("../../styles/Colors");
 const TEXT_ENTRY_WIDTH = 60;
 const PICKER_WIDTH = 150;
 
-class AddMeasurementModal extends Component {
+class EditMeasurementModal extends Component {
   state = {
-    tmpCategory: 0,
-    tmpAmmount: 0,
-    tmpUnits: 0
+    tmpCategory: this.props.measurements[0].measurementCategory,
+    tmpAmmount: this.props.measurements[0].ammount,
+    tmpPlaceHolder: this.props.measurements[0].ammount,
+    tmpUnits: this.props.categories[
+      this.props.measurements[0].measurementCategory
+    ].units,
+    tmpDelete: false
+  };
+
+  componentWillReceiveProps(newProps) {}
+
+  toggleRemove = checked => {
+    this.setState({ tmpDelete: checked });
   };
 
   updateTmpCategory = category => {
     this.setState({
       tmpCategory: category,
-      tmpUnits: this.props.categories[category - 1].units
+      tmpAmmount: this.props.measurements.find(m => {
+        return m.measurementCategory === category;
+      }).ammount,
+      tmpUnits: this.props.categories[category].units,
+      tmpPlaceHolder: this.props.measurements.find(m => {
+        return m.measurementCategory === category;
+      }).ammount
     });
   };
 
   updateTmpAmmount = ammount => {
-    this.setState({ tmpAmmount: ammount });
+    this.setState({ tmpAmmount: parseInt(ammount) });
   };
 
   cancel = () => {
@@ -41,22 +62,61 @@ class AddMeasurementModal extends Component {
   };
 
   save = () => {
-    const { categories, addMeasurement, closeModal } = this.props;
-    const { tmpCategory, tmpAmmount } = this.state;
-    addMeasurement(categories[tmpCategory].id, tmpAmmount);
+    const {
+      logId,
+      categories,
+      measurements,
+      closeModal,
+      updateMeasurement,
+      deleteMeasurement
+    } = this.props;
+    const { tmpCategory, tmpAmmount, tmpDelete } = this.state;
+    const measurementId = measurements.find(m => {
+      return m.measurementCategory === tmpCategory;
+    }).id;
+
+    if (tmpDelete) {
+      Alert.alert(
+        "Delete Measurement",
+        "Are you sure you want to delete " +
+          categories[tmpCategory].name +
+          " from this log?",
+        [
+          {
+            text: "CONFIRM",
+            onPress: () => deleteMeasurement(logId, measurementId)
+          },
+          {
+            text: "CANCEL",
+            onPress: () => this.setState({ tmpDelete: false }),
+            style: "cancel"
+          }
+        ],
+        { cancelable: false }
+      );
+    } else {
+      updateMeasurement(logId, measurementId, tmpAmmount);
+    }
+    this.setState({ tmpDelete: false });
     closeModal();
   };
 
   render() {
-    const { visible, categories, units } = this.props;
-    const { tmpCategory, tmpUnits } = this.state;
+    const { visible, categories, units, measurements } = this.props;
+    const {
+      tmpAmmount,
+      tmpCategory,
+      tmpUnits,
+      tmpDelete,
+      tmpPlaceHolder
+    } = this.state;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
           <TouchableWithoutFeedback>
             <View style={STYLE.modalCard}>
               <View style={STYLE.modalHeader}>
-                <Text style={STYLE.modalHeaderText}>Add Measurement</Text>
+                <Text style={STYLE.modalHeaderText}>Edit Measurement</Text>
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
@@ -65,6 +125,9 @@ class AddMeasurementModal extends Component {
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Ammount:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Delete:</Text>
                   </View>
                 </View>
 
@@ -80,7 +143,7 @@ class AddMeasurementModal extends Component {
                       selectedValue={tmpCategory}
                       onValueChange={this.updateTmpCategory}
                     >
-                      {createItems(categories)}
+                      {createItems(measurements, categories)}
                     </Picker>
                   </View>
                   <View style={[STYLE.rightItem, { marginRight: 50 }]}>
@@ -89,7 +152,7 @@ class AddMeasurementModal extends Component {
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
                         keyboardType="numeric"
-                        placeholder={"0"}
+                        placeholder={String(tmpPlaceHolder)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpAmmount}
                         maxLength={4}
@@ -104,6 +167,12 @@ class AddMeasurementModal extends Component {
                     >
                       {units[tmpUnits].name}
                     </Text>
+                  </View>
+                  <View style={[STYLE.rightItem, { marginRight: 78 }]}>
+                    <CheckBox
+                      value={tmpDelete}
+                      onValueChange={this.toggleRemove}
+                    />
                   </View>
                 </View>
               </View>
@@ -124,31 +193,44 @@ class AddMeasurementModal extends Component {
   }
 }
 
-const createItems = items => {
+const createItems = (items, categories) => {
   return items.map((item, index) => {
-    return <Picker.Item key={index} label={item.name} value={item.id} />;
+    return (
+      <Picker.Item
+        key={index}
+        label={categories[item.measurementCategory].name}
+        value={categories[item.measurementCategory].id}
+      />
+    );
   });
 };
 
-AddMeasurementModal.propTypes = {
+EditMeasurementModal.propTypes = {
   visible: PropTypes.bool,
   closeModal: PropTypes.func,
   categories: PropTypes.arrayOf(PropTypes.object),
   units: PropTypes.arrayOf(PropTypes.object),
-  addMeasurement: PropTypes.func
+  logId: PropTypes.number,
+  measurements: PropTypes.arrayOf(PropTypes.object),
+  updateMeasurement: PropTypes.func,
+  deleteMeasurement: PropTypes.func
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    categories: state.workoutData.measurementCategories.slice(1),
-    units: state.workoutData.units
+    categories: state.workoutData.measurementCategories,
+    units: state.workoutData.units,
+    measurements: state.workoutData.measurementLogs[ownProps.logId].measurements
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addMeasurement: (measurementId, ammount, unitsId) => {
-      dispatch(addMeasurement(measurementId, ammount, unitsId));
+    updateMeasurement: (logId, measurementId, ammount) => {
+      dispatch(updateMeasurement(logId, measurementId, ammount));
+    },
+    deleteMeasurement: (logId, measurementId) => {
+      dispatch(deleteMeasurement(logId, measurementId));
     }
   };
 };
@@ -156,4 +238,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddMeasurementModal);
+)(EditMeasurementModal);

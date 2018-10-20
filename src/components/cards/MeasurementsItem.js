@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import ExerciseSummaryModal from "../modals/ExerciseSummaryModal";
+import EditMeasurementModal from "../modals/EditMeasurementModal";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
@@ -52,7 +52,7 @@ class MeasurementsItem extends Component {
 
     return (
       <View>
-        <ExerciseSummaryModal
+        <EditMeasurementModal
           title={"Measurements"}
           visible={menuModalVisible}
           closeModal={this.closeMenuModal}
@@ -72,9 +72,8 @@ class MeasurementsItem extends Component {
               justifyContent: "space-between"
             }}
           >
-            <TouchableOpacity>
-              <Text style={STYLE.title}>Measurements</Text>
-            </TouchableOpacity>
+            <Text style={STYLE.title}>Measurements</Text>
+
             <TouchableOpacity onPress={this._onMenuPress}>
               <Icon
                 name={"ellipsis-h"}

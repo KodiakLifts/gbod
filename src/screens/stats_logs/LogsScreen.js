@@ -20,7 +20,7 @@ class Logs extends Component {
   };
 
   parseDate = dateString => {
-    return moment(dateString).format("dddd, MMMM Do YYYY");
+    return moment(dateString).format("MMM Do, YYYY");
   };
 
   _showCalendar = () => {

@@ -46,9 +46,8 @@ class NotesItem extends Component {
               justifyContent: "space-between"
             }}
           >
-            <TouchableOpacity>
-              <Text style={STYLE.title}>Notes</Text>
-            </TouchableOpacity>
+            <Text style={STYLE.title}>Notes</Text>
+
             <TouchableOpacity onPress={this._onMenuPress}>
               <Icon
                 name={"ellipsis-h"}
