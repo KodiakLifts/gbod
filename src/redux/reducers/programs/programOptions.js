@@ -34,7 +34,8 @@ export const updateProgramData = (
   programId,
   current,
   name,
-  categoryId
+  categoryId,
+  favorite
 ) => {
   let activeProgram;
   current
@@ -52,11 +53,13 @@ export const updateProgramData = (
         return {
           ...program,
           name: name,
-          category: categoryId
+          category: categoryId,
+          favorite: favorite
         };
       }
       return program;
     })
   };
+  console.log(newState.programs);
   return newState;
 };

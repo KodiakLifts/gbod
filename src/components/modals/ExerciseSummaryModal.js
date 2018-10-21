@@ -23,6 +23,7 @@ const COLORS = require("../../styles/Colors");
 const TEXT_ENTRY_WIDTH = 160;
 const PICKER_WIDTH = 160;
 
+//JUST A COPY OF EDITEXERCISEMODAL
 class ExerciseSummaryModal extends Component {
   state = {
     tmpName: this.props.title,

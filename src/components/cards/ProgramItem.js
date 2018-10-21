@@ -21,7 +21,7 @@ class ProgramItem extends Component {
   };
 
   render() {
-    const { name, programId, category } = this.props;
+    const { name, programId, category, favorite } = this.props;
     const { menuModalVisible } = this.state;
     return (
       <View>
@@ -30,6 +30,7 @@ class ProgramItem extends Component {
           visible={menuModalVisible}
           programId={programId}
           category={category}
+          favorite={favorite}
           closeModal={this.closeMenuModal}
         />
         <View style={STYLE.listItem}>
@@ -53,7 +54,8 @@ class ProgramItem extends Component {
 ProgramItem.propTypes = {
   name: PropTypes.string,
   programId: PropTypes.number,
-  category: PropTypes.number
+  category: PropTypes.number,
+  favorite: PropTypes.bool
 };
 
 export default ProgramItem;

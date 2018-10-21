@@ -42,6 +42,7 @@ export const getCategoryCards = createSelector(
                   name={name}
                   programId={program.id}
                   category={program.category}
+                  favorite={program.favorite}
                 />
               );
             }

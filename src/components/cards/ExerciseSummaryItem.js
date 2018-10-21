@@ -50,7 +50,7 @@ class ExerciseSummaryItem extends Component {
             <TouchableOpacity>
               <Text style={STYLE.title}>{name}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={this._onMenuPress}>
+            <TouchableOpacity>
               <Icon
                 name={"ellipsis-h"}
                 size={25}

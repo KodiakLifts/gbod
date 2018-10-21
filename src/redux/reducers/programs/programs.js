@@ -20,7 +20,8 @@ export default function programs(state = {}, action) {
         action.programId,
         action.current,
         action.name,
-        action.categoryId
+        action.categoryId,
+        action.favorite
       );
     case DELETE_PROGRAM:
       return deleteProgram(state, action.programId);

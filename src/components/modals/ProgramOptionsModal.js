@@ -28,6 +28,7 @@ class ProgramOptionsModal extends Component {
     tmpCurrentProgram: this.props.isCurrentProgram,
     tmpName: this.props.title,
     tmpCategory: this.props.category,
+    tmpFavorite: this.props.favorite,
     tmpDelete: false
   };
 
@@ -35,7 +36,14 @@ class ProgramOptionsModal extends Component {
     if (this.props.isCurrentProgram !== newProps.isCurrentProgram) {
       this.setState({ tmpCurrentProgram: newProps.isCurrentProgram });
     }
+    if (this.props.favorite !== newProps.favorite) {
+      this.setState({ tmpFavorite: newProps.tmpFavorite });
+    }
   }
+
+  toggleFavorite = checked => {
+    this.setState({ tmpFavorite: checked });
+  };
 
   updateTmpCategory = categoryId => {
     this.setState({ tmpCategory: categoryId });
@@ -69,7 +77,13 @@ class ProgramOptionsModal extends Component {
       closeModal,
       title
     } = this.props;
-    const { tmpCurrentProgram, tmpName, tmpDelete, tmpCategory } = this.state;
+    const {
+      tmpCurrentProgram,
+      tmpName,
+      tmpDelete,
+      tmpCategory,
+      tmpFavorite
+    } = this.state;
 
     if (tmpDelete) {
       Alert.alert(
@@ -88,14 +102,25 @@ class ProgramOptionsModal extends Component {
         { cancelable: false }
       );
     } else {
-      updateProgramData(programId, tmpCurrentProgram, tmpName, tmpCategory);
+      updateProgramData(
+        programId,
+        tmpCurrentProgram,
+        tmpName,
+        tmpCategory,
+        tmpFavorite
+      );
     }
     closeModal();
   };
 
   render() {
     const { visible, title, isCurrentProgram, categories } = this.props;
-    const { tmpCurrentProgram, tmpDelete, tmpCategory } = this.state;
+    const {
+      tmpCurrentProgram,
+      tmpDelete,
+      tmpCategory,
+      tmpFavorite
+    } = this.state;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
@@ -114,6 +139,9 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Category:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Favorite:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Delete Program:</Text>
@@ -157,6 +185,12 @@ class ProgramOptionsModal extends Component {
                   </View>
                   <View style={STYLE.rightItem}>
                     <CheckBox
+                      value={tmpFavorite}
+                      onValueChange={this.toggleFavorite}
+                    />
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
                       value={tmpDelete}
                       onValueChange={this.toggleDelete}
                     />
@@ -195,7 +229,8 @@ ProgramOptionsModal.propTypes = {
   closeModal: PropTypes.func,
   updateProgramData: PropTypes.func,
   deleteProgram: PropTypes.func,
-  categories: PropTypes.arrayOf(PropTypes.object)
+  categories: PropTypes.arrayOf(PropTypes.object),
+  favorite: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -208,8 +243,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateProgramData: (programId, current, name, category) => {
-      dispatch(updateProgram(programId, current, name, category));
+    updateProgramData: (programId, current, name, category, favorite) => {
+      dispatch(updateProgram(programId, current, name, category, favorite));
     },
     deleteProgram: programId => {
       dispatch(deleteProgram(programId));
