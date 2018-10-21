@@ -38,12 +38,12 @@ export const getLogCards = createSelector(
       return log.date === date;
     });
     if (selectedLogs !== undefined) {
-      selectedLogs.forEach(log => {
+      selectedLogs.forEach((log, i1) => {
         items = [];
         items.push(
-          <NotesItem key={getNumber} notes={log.notes} logId={log.id} />
+          <NotesItem key={getKey("n" + i1)} notes={log.notes} logId={log.id} />
         );
-        log.libraryExercises.forEach(libraryId => {
+        log.libraryExercises.forEach((libraryId, i2) => {
           const foundExercise = exerciseLibrary.find(exercise => {
             return exercise.id === libraryId;
           });
@@ -68,7 +68,7 @@ export const getLogCards = createSelector(
                 });
                 items.push(
                   <ExerciseSummaryItem
-                    key={getNumber()}
+                    key={getKey("e" + i2)}
                     libraryId={foundExercise.id}
                     name={foundExercise.name}
                     sets={fLog.sets}
@@ -85,7 +85,7 @@ export const getLogCards = createSelector(
           " - " +
           programs[log.program].days[log.day].name;
         cards.push(
-          <ListCard key={getNumber()} headerTitle={header} items={items} />
+          <ListCard key={getKey("c" + i1)} headerTitle={header} items={items} />
         );
       });
     }
@@ -112,7 +112,7 @@ export const getLogCards = createSelector(
 
       const measurementsItem = (
         <MeasurementsItem
-          key={getNumber()}
+          key={getKey("mItem")}
           logId={measurementLog.id}
           labels={labels}
           measurements={measurements}
@@ -121,7 +121,7 @@ export const getLogCards = createSelector(
 
       cards.unshift(
         <ListCard
-          key={getNumber()}
+          key={getKey("mCard")}
           headerTitle={""}
           items={[measurementsItem]}
         />
@@ -132,9 +132,6 @@ export const getLogCards = createSelector(
   }
 );
 
-const getNumber = () => {
-  return (getNumber.number = Math.floor(Math.random() * (1000 + 1))) ===
-    getNumber.lastNumber
-    ? getNumber()
-    : (getNumber.lastNumber = getNumber.number);
+const getKey = index => {
+  return "" + index + new Date().getTime();
 };
