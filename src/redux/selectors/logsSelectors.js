@@ -40,7 +40,9 @@ export const getLogCards = createSelector(
     if (selectedLogs !== undefined) {
       selectedLogs.forEach(log => {
         items = [];
-        items.push(<NotesItem key={getNumber} notes={log.notes} />);
+        items.push(
+          <NotesItem key={getNumber} notes={log.notes} logId={log.id} />
+        );
         log.libraryExercises.forEach(libraryId => {
           const foundExercise = exerciseLibrary.find(exercise => {
             return exercise.id === libraryId;

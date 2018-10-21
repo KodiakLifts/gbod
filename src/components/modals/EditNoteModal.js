@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { updateActiveNotes } from "../../redux/actions/activeWorkoutActions";
+import { editLogNotes } from "../../redux/actions/logsActions";
 
 const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
@@ -30,12 +30,14 @@ class NoteModal extends Component {
   };
 
   cancel = () => {
-    this.props.closeModal();
+    const { closeModal } = this.props;
+    closeModal();
   };
 
   save = () => {
-    const { updateActiveNotes, closeModal } = this.props;
-    updateActiveNotes(this.state.noteText);
+    const { closeModal, editLogNotes, logId } = this.props;
+    const { noteText } = this.state;
+    editLogNotes(logId, noteText);
     closeModal();
   };
 
@@ -88,19 +90,20 @@ NoteModal.propTypes = {
   visible: PropTypes.bool,
   closeModal: PropTypes.func,
   notes: PropTypes.string,
-  updateActiveNotes: PropTypes.func
+  editLogNotes: PropTypes.func,
+  logId: PropTypes.number
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    notes: state.workoutData.activeWorkout.notes
+    notes: state.workoutData.workoutLogs[ownProps.logId].notes
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateActiveNotes: notes => {
-      dispatch(updateActiveNotes(notes));
+    editLogNotes: (logId, noteText) => {
+      dispatch(editLogNotes(logId, noteText));
     }
   };
 };

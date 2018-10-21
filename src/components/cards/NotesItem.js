@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import ExerciseSummaryModal from "../modals/ExerciseSummaryModal";
+import EditNoteModal from "../modals/EditNoteModal";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
@@ -34,8 +34,7 @@ class NotesItem extends Component {
 
     return (
       <View>
-        <ExerciseSummaryModal
-          title={"Notes"}
+        <EditNoteModal
           visible={menuModalVisible}
           closeModal={this.closeMenuModal}
           logId={logId}
