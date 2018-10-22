@@ -78,8 +78,8 @@ class MeasurementsItem extends Component {
 
             <TouchableOpacity onPress={this._onMenuPress}>
               <Icon
-                name={"ellipsis-h"}
-                size={25}
+                name={"pen"}
+                size={22}
                 color={COLORS.SECONDARYCOLOR}
                 style={{ marginRight: 12 }}
               />
