@@ -39,6 +39,11 @@ export const finishWorkout = state => {
   const currentActiveDay = state.activeWorkout.day;
   const date = moment(new Date()).format("YYYY-MM-DD");
   const updatedSets = Array.from(state.programs[activeProgram].sets);
+  const logTitle =
+    "" +
+    state.programs[activeProgram].name +
+    " - " +
+    state.programs[activeProgram].days[currentActiveDay].name;
 
   const setsToLog = updatedSets.filter(set => {
     return set.day === currentActiveDay && set.complete;
@@ -88,8 +93,7 @@ export const finishWorkout = state => {
               {
                 id: state.exerciseLibrary[exercise.libraryId].logs.length,
                 date: date,
-                program: activeProgram,
-                day: currentActiveDay,
+                title: logTitle,
                 supersetNext: exercise.supersetNext,
                 includeWarmup: exercise.includeWarmup,
                 workoutsToIncrease: exercise.workoutsToIncrease,
@@ -123,8 +127,7 @@ export const finishWorkout = state => {
   const newWorkoutLog = {
     id: state.workoutLogs.length,
     date: date,
-    program: state.activeWorkout.program,
-    day: state.activeWorkout.day,
+    title: logTitle,
     notes: state.activeWorkout.notes,
     libraryExercises: exercisesToLog.map(exercise => {
       return exercise.libraryId;

@@ -235,7 +235,7 @@ export const initState =
           { reps: 20, weight: 0 },],
         logs: [
           {
-            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            id: 0, date: "2018-10-16", title: "GreySkull LP - A", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
             sets: [
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -243,7 +243,7 @@ export const initState =
             ]
           },
           {
-            id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            id: 0, date: "2018-10-16", title: "GreySkull LP - B", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
             sets: [
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -277,7 +277,7 @@ export const initState =
           { reps: 20, weight: 0 },],
         logs: [
           {
-            id: 0, date: "2018-10-16", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+            id: 0, date: "2018-10-16", title: "GreySkull LP - A", supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
             sets: [
               { reps: 5, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
               { reps: 5, weight: 150, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -310,7 +310,7 @@ export const initState =
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },],
         logs: [{
-          id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          id: 0, date: "2018-10-16", title: "GreySkull LP - B", supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -341,7 +341,7 @@ export const initState =
           { reps: 19, weight: 0 },
           { reps: 20, weight: 0 },],
         logs: [{
-          id: 0, date: "2018-10-16", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
+          id: 0, date: "2018-10-16", title: "GreySkull LP - B", supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0,
           sets: [
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
             { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50 },
@@ -539,10 +539,10 @@ export const initState =
     ],
     workoutLogs: [
       {
-        id: 0, date: "2018-10-16", program: 1, day: 0, notes: "Had a good workout. Made a lot of progress on bench press by tucking elbows more.", libraryExercises: [1, 2],
+        id: 0, date: "2018-10-16", title: "GreySkull LP - A", notes: "Had a good workout. Made a lot of progress on bench press by tucking elbows more.", libraryExercises: [1, 2],
       },
       {
-        id: 1, date: "2018-10-16", program: 1, day: 1, notes: "Had a good workout again.", libraryExercises: [1, 3, 4],
+        id: 1, date: "2018-10-16", title: "GreySkull LP - B", notes: "Had a good workout again.", libraryExercises: [1, 3, 4],
       }
     ],
   }

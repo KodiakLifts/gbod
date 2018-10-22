@@ -72,7 +72,9 @@ class MeasurementsItem extends Component {
               justifyContent: "space-between"
             }}
           >
-            <Text style={STYLE.title}>Measurements</Text>
+            <Text style={[STYLE.title, { color: COLORS.TEXTCOLOR }]}>
+              Measurements
+            </Text>
 
             <TouchableOpacity onPress={this._onMenuPress}>
               <Icon

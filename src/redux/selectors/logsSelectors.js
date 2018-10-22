@@ -4,11 +4,11 @@ import ListCard from "../../components/cards/ListCard";
 import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
 import NotesItem from "../../components/cards/NotesItem";
 import MeasurementsItem from "../../components/cards/MeasurementsItem";
+import LogItem from "../../components/cards/LogItem";
 
 const getExerciseLibrary = state => state.exerciseLibrary;
 const getSelectedLogDate = state => state.selectedLogDate;
 const getWorkoutLogs = state => state.workoutLogs;
-const getPrograms = state => state.programs;
 const getMeasurementLogs = state => state.measurementLogs;
 const getMeasurementCategories = state => state.measurementCategories;
 const getUnits = state => state.units;
@@ -18,7 +18,6 @@ export const getLogCards = createSelector(
     getSelectedLogDate,
     getWorkoutLogs,
     getExerciseLibrary,
-    getPrograms,
     getMeasurementLogs,
     getMeasurementCategories,
     getUnits
@@ -27,7 +26,6 @@ export const getLogCards = createSelector(
     date,
     workoutLogs,
     exerciseLibrary,
-    programs,
     measurementLogs,
     measurementCategories,
     units
@@ -49,11 +47,7 @@ export const getLogCards = createSelector(
           });
           if (foundExercise !== undefined) {
             const foundLogs = foundExercise.logs.filter(eLog => {
-              if (
-                eLog.date === date &&
-                eLog.program === log.program &&
-                eLog.day === log.day
-              ) {
+              if (eLog.date === date && eLog.title === log.title) {
                 return eLog;
               }
             });
@@ -79,13 +73,11 @@ export const getLogCards = createSelector(
             }
           }
         });
-        let header =
-          "" +
-          programs[log.program].name +
-          " - " +
-          programs[log.program].days[log.day].name;
+        items.unshift(
+          <LogItem key={getKey("l" + i1)} logId={log.id} logTitle={log.title} />
+        );
         cards.push(
-          <ListCard key={getKey("c" + i1)} headerTitle={header} items={items} />
+          <ListCard key={getKey("c" + i1)} headerTitle={""} items={items} />
         );
       });
     }
