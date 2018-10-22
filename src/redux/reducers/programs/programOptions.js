@@ -18,13 +18,47 @@ export const deleteProgram = (state, programId) => {
     activeProgram = newPrograms[0].id;
   }
 
+  let newWorkoutLogs = [];
+  if (state.workoutLogs.length !== 0) {
+    newWorkoutLogs = state.workoutLogs.filter(log => {
+      return log.program !== programId;
+    });
+    if (newWorkoutLogs.length !== 0) {
+      newWorkoutLogs.map((log, index) => {
+        log.id = index;
+        if (log.program >= programId) {
+          log.program--;
+        }
+      });
+    }
+  }
+
+  let newExerciseLibrary = [];
+  if (state.exerciseLibrary.length !== 0) {
+    newExerciseLibrary = state.exerciseLibrary.map(exercise => {
+      let newExercise = Object.assign({}, exercise);
+      newExercise.logs = newExercise.logs.filter(log => {
+        return log.program !== programId;
+      });
+      newExercise.logs.map((log, index) => {
+        log.id = index;
+        if (log.program >= programId) {
+          log.program--;
+        }
+      });
+      return newExercise;
+    });
+  }
+
   const newState = {
     ...state,
     activeWorkout: {
       ...state.activeWorkout,
       program: activeProgram
     },
-    programs: newPrograms
+    programs: newPrograms,
+    workoutLogs: newWorkoutLogs,
+    exerciseLibrary: newExerciseLibrary
   };
   return newState;
 };

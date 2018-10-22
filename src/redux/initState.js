@@ -23,18 +23,8 @@ export const initState =
         category: 0,
         description: "",
         favorite: false,
-        sets: [
-          {
-            id: 0, exercise: 0, day: 0, weight: 0, reps: 0, type: 1, complete: false, restMinutes: 0, restSeconds: 0, timerOn: true,
-            percentage: false, percent: 50}
-        ],
-        exercises: [
-          {
-            id: 0, libraryId: 0, day: 0, complete: false,
-            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
-            barType: "", units: 0
-          }
-        ],
+        sets: [],
+        exercises: [],
         days: [
           { id: 0, name: "Day 1" }
         ]
