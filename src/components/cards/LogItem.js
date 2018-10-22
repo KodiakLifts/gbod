@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import EditNoteModal from "../modals/EditNoteModal";
+import { withNavigation } from "react-navigation";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
 
 const LogItem = props => {
-  const { logTitle } = props;
+  const { logTitle, navigation } = props;
   return (
     <View>
       <View
@@ -29,7 +29,7 @@ const LogItem = props => {
             {logTitle}
           </Text>
 
-          <TouchableOpacity onPress={this._onMenuPress}>
+          <TouchableOpacity onPress={_edit(navigation)}>
             <Icon
               name={"pen"}
               size={22}
@@ -43,9 +43,14 @@ const LogItem = props => {
   );
 };
 
-LogItem.propTypes = {
-  logId: PropTypes.number,
-  logTitle: PropTypes.string
+const _edit = navigation => {
+  navigation.navigate("EditLog");
 };
 
-export default LogItem;
+LogItem.propTypes = {
+  logId: PropTypes.number,
+  logTitle: PropTypes.string,
+  navigation: PropTypes.object
+};
+
+export default withNavigation(LogItem);

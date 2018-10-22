@@ -35,12 +35,18 @@ export const getLogCards = createSelector(
     const selectedLogs = workoutLogs.filter(log => {
       return log.date === date;
     });
-    if (selectedLogs !== undefined) {
+    if (selectedLogs.length !== 0) {
       selectedLogs.forEach((log, i1) => {
         items = [];
-        items.push(
-          <NotesItem key={getKey("n" + i1)} notes={log.notes} logId={log.id} />
-        );
+        if (log.notes !== "") {
+          items.push(
+            <NotesItem
+              key={getKey("n" + i1)}
+              notes={log.notes}
+              logId={log.id}
+            />
+          );
+        }
         log.libraryExercises.forEach((libraryId, i2) => {
           const foundExercise = exerciseLibrary.find(exercise => {
             return exercise.id === libraryId;
@@ -73,12 +79,18 @@ export const getLogCards = createSelector(
             }
           }
         });
-        items.unshift(
-          <LogItem key={getKey("l" + i1)} logId={log.id} logTitle={log.title} />
-        );
-        cards.push(
-          <ListCard key={getKey("c" + i1)} headerTitle={""} items={items} />
-        );
+        if (items.length !== 0) {
+          items.unshift(
+            <LogItem
+              key={getKey("l" + i1)}
+              logId={log.id}
+              logTitle={log.title}
+            />
+          );
+          cards.push(
+            <ListCard key={getKey("c" + i1)} headerTitle={""} items={items} />
+          );
+        }
       });
     }
 
@@ -118,6 +130,9 @@ export const getLogCards = createSelector(
           items={[measurementsItem]}
         />
       );
+    }
+    if (cards.length === 0) {
+      cards = null;
     }
 
     return cards;
