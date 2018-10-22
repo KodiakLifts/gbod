@@ -9,7 +9,7 @@ const COLORS = require("../../styles/Colors");
 const Fab = props => {
   return (
     <TouchableOpacity
-      style={STYLE.fab}
+      style={[STYLE.fab, props.style]}
       activeOpacity={0.5}
       onPress={props.onPress}
     >
@@ -19,7 +19,8 @@ const Fab = props => {
 };
 
 Fab.propTypes = {
-  onPress: PropTypes.func
+  onPress: PropTypes.func,
+  style: PropTypes.object
 };
 
 export default Fab;
