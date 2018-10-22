@@ -537,6 +537,7 @@ export const initState =
       { id: 18, name: "Right Calf", units: 2 },
     ],
     selectedLogDate: "2018-10-16",
+    anyLogsSelectedDate: true,
     measurementLogs: [
       {
         id: 0, date: "2018-10-16", measurements: [

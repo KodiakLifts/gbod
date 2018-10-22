@@ -3,14 +3,23 @@ export const ADD_MEASUREMENT = "ADD_MEASUREMENT";
 export const UPDATE_MEASUREMENT = "UPDATE_MEASUREMENT";
 export const DELETE_MEASUREMENT = "DELETE_MEASUREMENT";
 export const EDIT_LOG_NOTES = "EDIT_LOG_NOTES";
+export const DELETE_LOG = "DELETE_LOG";
 
 export const LOGS_ACTIONS = [
   UPDATE_SELECTED_LOG_DATE,
   ADD_MEASUREMENT,
   UPDATE_MEASUREMENT,
   DELETE_MEASUREMENT,
-  EDIT_LOG_NOTES
+  EDIT_LOG_NOTES,
+  DELETE_LOG
 ];
+
+export const deleteLog = date => {
+  return {
+    type: DELETE_LOG,
+    date
+  };
+};
 
 export const editLogNotes = (logId, noteText) => {
   return {

@@ -146,7 +146,6 @@ export const finishWorkout = state => {
   if (nextExercises.length !== 0) {
     currentExercise = nextExercises[0].id;
   }
-
   updatedSets.forEach(set => {
     set.complete = false;
   });
@@ -173,6 +172,7 @@ export const finishWorkout = state => {
       }
       return program;
     }),
+    anyLogsSelectedDate: true,
     exerciseLibrary: newExerciseLibrary,
     workoutLogs: state.workoutLogs.concat([newWorkoutLog])
   };

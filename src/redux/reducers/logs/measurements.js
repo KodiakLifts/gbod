@@ -95,6 +95,7 @@ export const addMeasurement = (state, measurementId, ammount) => {
   const newState = {
     ...state,
     selectedLogDate: state.selectedLogDate,
+    anyLogsSelectedDate: true,
     measurementLogs: measurementLogs
   };
   return newState;

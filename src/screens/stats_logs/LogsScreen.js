@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import PropTypes from "prop-types";
 import SubScreenTemplate from "../templates/SubScreenTemplate";
 import { getLogCards } from "../../redux/selectors/logsSelectors";
@@ -9,6 +9,7 @@ import CalendarModal from "../../components/modals/CalendarModal";
 import moment from "moment";
 import Fab from "../../components/buttons/Fab";
 import AddMeasurementModal from "../../components/modals/AddMeasurementModal";
+import { deleteLog } from "../../redux/actions/logsActions";
 
 const STYLE = require("./SLStyle");
 const COLORS = require("../../styles/Colors");
@@ -39,13 +40,46 @@ class Logs extends Component {
     this.setState({ measurementModalVisible: true });
   };
 
+  _deleteLog = () => {
+    Alert.alert(
+      "Delete Log",
+      "Are you sure you want to delete all logs for this date?",
+      [
+        {
+          text: "CONFIRM",
+          onPress: () => this.props.deleteLog(this.props.selectedDate)
+        },
+        { text: "CANCEL", style: "cancel" }
+      ],
+      { cancelable: true }
+    );
+  };
+
   render() {
-    const { selectedDate, cards } = this.props;
+    const { selectedDate, cards, anyLogsSelectedDate } = this.props;
     const { calendarVisible, measurementModalVisible } = this.state;
     return (
       <SubScreenTemplate
         headerContent={
-          <View style={STYLE.subHeader}>
+          <View style={[STYLE.subHeader, { justifyContent: "space-between" }]}>
+            <TouchableOpacity
+              onPress={this._showCalendar}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginLeft: 12,
+                marginVertical: 6
+              }}
+            >
+              <Icon
+                name={"calendar-alt"}
+                size={22}
+                color={COLORS.SECONDARYCOLOR}
+              />
+              <Text style={STYLE.headerText}>
+                {this.parseDate(selectedDate)}
+              </Text>
+            </TouchableOpacity>
             <CalendarModal
               visible={calendarVisible}
               closeModal={this.closeModal}
@@ -56,18 +90,11 @@ class Logs extends Component {
               closeModal={this.closeModal}
             />
             <TouchableOpacity
-              onPress={this._showCalendar}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginLeft: 12,
-                marginVertical: 6
-              }}
+              disabled={!anyLogsSelectedDate}
+              onPress={this._deleteLog}
+              style={{ marginRight: 12 }}
             >
-              <Icon name={"calendar"} size={22} color={COLORS.SECONDARYCOLOR} />
-              <Text style={STYLE.headerText}>
-                {this.parseDate(selectedDate)}
-              </Text>
+              <Icon name={"trash"} size={22} color={COLORS.SECONDARYCOLOR} />
             </TouchableOpacity>
           </View>
         }
@@ -80,14 +107,28 @@ class Logs extends Component {
 
 Logs.propTypes = {
   cards: PropTypes.arrayOf(PropTypes.object),
-  selectedDate: PropTypes.string
+  selectedDate: PropTypes.string,
+  deleteLog: PropTypes.func,
+  anyLogsSelectedDate: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
     cards: getLogCards(state.workoutData),
-    selectedDate: state.workoutData.selectedLogDate
+    selectedDate: state.workoutData.selectedLogDate,
+    anyLogsSelectedDate: state.workoutData.anyLogsSelectedDate
   };
 };
 
-export default connect(mapStateToProps)(Logs);
+const mapDispatchToProps = dispatch => {
+  return {
+    deleteLog: date => {
+      dispatch(deleteLog(date));
+    }
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Logs);
