@@ -26,7 +26,7 @@ export const initState =
         sets: [],
         exercises: [],
         days: [
-          { id: 0, name: "FreeStyle" }
+          { id: 0, name: "Day 1" }
         ]
       },
       {

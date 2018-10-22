@@ -20,15 +20,17 @@ const TEXT_ENTRY_WIDTH = 70;
 class NewDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
-    placeHolder: "Day " + this.props.days.length,
-    tmpName: "Day " + this.props.days.length
+    placeHolder: "Day " + (this.props.days.length + 1),
+    tmpName: "Day " + (this.props.days.length + 1),
+    tmpDayNumber: this.props.days.length + 1
   };
 
   componentWillReceiveProps(newProps) {
-    if (this.state.placeHolder !== "Day " + newProps.days.length) {
+    if (this.state.tmpDayNumber !== newProps.days.length + 1) {
       this.setState({
-        placeHolder: "Day " + newProps.days.length,
-        tmpName: "Day " + newProps.days.length
+        tmpDayNumber: newProps.days.length + 1,
+        placeHolder: "Day " + (newProps.days.length + 1),
+        tmpName: "Day " + (newProps.days.length + 1)
       });
     }
   }

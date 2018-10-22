@@ -5,8 +5,8 @@ import { createSelector } from "reselect";
 
 const CARD_STYLE = require("../../components/cards/cardStyle");
 
-const PROGRAM_NAME_LENGTH = 15;
-const DAY_NAME_LENGTH = 9;
+const PROGRAM_NAME_LENGTH = 17;
+const DAY_NAME_LENGTH = 7;
 const EXERCISE_NAME_LENGTH = 24;
 
 const getActiveWorkoutName = state => {
