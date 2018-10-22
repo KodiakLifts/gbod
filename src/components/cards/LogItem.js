@@ -3,14 +3,17 @@ import { Text, View, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { withNavigation } from "react-navigation";
+import { connect } from "react-redux";
+import { setSelectedLogId } from "../../redux/actions/logsActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
 
 class LogItem extends Component {
   _edit = () => {
-    const { navigation, logId } = this.props;
-    navigation.navigate("EditLog", { logId });
+    const { navigation, setSelectedLogId, logId } = this.props;
+    setSelectedLogId(logId);
+    navigation.navigate("EditLog");
   };
   render() {
     const { logTitle } = this.props;
@@ -52,7 +55,21 @@ class LogItem extends Component {
 LogItem.propTypes = {
   logId: PropTypes.number,
   logTitle: PropTypes.string,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  setSelectedLogId: PropTypes.func
 };
 
-export default withNavigation(LogItem);
+const mapDispatchToProps = dispatch => {
+  return {
+    setSelectedLogId: logId => {
+      dispatch(setSelectedLogId(logId));
+    }
+  };
+};
+
+export default withNavigation(
+  connect(
+    null,
+    mapDispatchToProps
+  )(LogItem)
+);

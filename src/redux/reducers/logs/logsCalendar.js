@@ -1,3 +1,11 @@
+export const setSelectedLogId = (state, logId) => {
+  const newState = {
+    ...state,
+    selectedLogId: logId
+  };
+  return newState;
+};
+
 export const deleteLog = (state, date) => {
   let newMeasurementLogs = [];
   if (state.measurementLogs.length !== 0) {

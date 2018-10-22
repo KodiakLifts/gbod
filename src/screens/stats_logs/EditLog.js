@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Picker, Text, Dimensions } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -9,9 +9,6 @@ import {
 } from "../../redux/selectors/activeWorkoutSelectors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import FinishButton from "../../components/buttons/FinishButton";
-import SetTimer from "../../components/timers/SetTimer";
-import EditDayModal from "../../components/modals/EditDayModal";
-import NewDayModal from "../../components/modals/NewDayModal";
 import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
 import NoteModal from "../../components/modals/NoteModal";
 import Fab from "../../components/buttons/Fab";
@@ -22,18 +19,15 @@ import {
   shiftDayDown,
   shiftDayUp
 } from "../../redux/actions/activeWorkoutActions";
+import { getLogTitle } from "../../redux/selectors/logsSelectors";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./editLogStyle");
 
-let prevDay;
-let prevDays;
-
 class EditLog extends Component {
   state = {
     addExerciseModalVisible: false,
-    noteModalVisible: false,
-    day: this.props.activeDay
+    noteModalVisible: false
   };
 
   componentWillReceiveProps(newProps) {}
@@ -44,6 +38,10 @@ class EditLog extends Component {
 
   _notePress = () => {
     this.setState({ noteModalVisible: true });
+  };
+
+  _backArrow = () => {
+    this.props.navigation.goBack();
   };
 
   closeModal = () => {
@@ -66,10 +64,10 @@ class EditLog extends Component {
               closeModal={this.closeModal}
               visible={noteModalVisible}
             />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._backArrow}>
               <Icon
                 name={"arrow-left"}
-                size={22}
+                size={25}
                 color={COLORS.SECONDARYCOLOR}
               />
             </TouchableOpacity>
@@ -104,41 +102,18 @@ class EditLog extends Component {
 EditLog.propTypes = {
   title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
-  days: PropTypes.arrayOf(PropTypes.object),
-  activeDay: PropTypes.number,
-  updateActiveDay: PropTypes.func,
-  dayBarActive: PropTypes.bool,
-  dayBarPress: PropTypes.func,
-  shiftDayDown: PropTypes.func,
-  shiftDayUp: PropTypes.func
+  navigation: PropTypes.object
 };
 
 const mapStateToProps = state => {
   return {
-    title: getActiveWorkoutTitle(state.workoutData),
-    cards: getActiveWorkoutCards(state.workoutData),
-    activeDay: state.workoutData.activeWorkout.day,
-    dayBarActive: state.workoutData.activeWorkout.dayBarActive,
-    days:
-      state.workoutData.programs[state.workoutData.activeWorkout.program].days
+    title: getLogTitle(state.workoutData),
+    cards: getActiveWorkoutCards(state.workoutData)
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    updateActiveDay: dayId => {
-      dispatch(updateActiveDay(dayId));
-    },
-    dayBarPress: () => {
-      dispatch(dayBarPress());
-    },
-    shiftDayDown: dayId => {
-      dispatch(shiftDayDown(dayId));
-    },
-    shiftDayUp: dayId => {
-      dispatch(shiftDayUp(dayId));
-    }
-  };
+  return {};
 };
 
 export default connect(

@@ -13,6 +13,9 @@ const getMeasurementLogs = state => state.measurementLogs;
 const getMeasurementCategories = state => state.measurementCategories;
 const getUnits = state => state.units;
 
+export const getLogTitle = state =>
+  state.workoutLogs[state.selectedLogId].title;
+
 export const getLogCards = createSelector(
   [
     getSelectedLogDate,

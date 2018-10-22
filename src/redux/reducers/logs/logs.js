@@ -4,9 +4,14 @@ import {
   UPDATE_MEASUREMENT,
   DELETE_MEASUREMENT,
   EDIT_LOG_NOTES,
-  DELETE_LOG
+  DELETE_LOG,
+  SET_SELECTED_LOG_ID
 } from "../../actions/logsActions";
-import { updateSelectedLogDate, deleteLog } from "./logsCalendar";
+import {
+  updateSelectedLogDate,
+  deleteLog,
+  setSelectedLogId
+} from "./logsCalendar";
 import {
   addMeasurement,
   updateMeasurement,
@@ -16,6 +21,8 @@ import { editLogNotes } from "./notes";
 
 export default function logs(state = {}, action) {
   switch (action.type) {
+    case SET_SELECTED_LOG_ID:
+      return setSelectedLogId(state, action.logId);
     case DELETE_LOG:
       return deleteLog(state, action.date);
     case EDIT_LOG_NOTES:
