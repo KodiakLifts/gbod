@@ -10,7 +10,7 @@ export const initState =
       set: 0
     },
     activeWorkout: {
-      program: 1,
+      program: 0,
       day: 0,
       currentExercise: 0,
       dayBarActive: false,
@@ -19,14 +19,14 @@ export const initState =
     programs: [
       {
         id: 0,
-        name: "Blank Template",
+        name: "FreeStyle",
         category: 0,
         description: "",
-        favorite: false,
+        favorite: true,
         sets: [],
         exercises: [],
         days: [
-          { id: 0, name: "Day 1" }
+          { id: 0, name: "FreeStyle" }
         ]
       },
       {

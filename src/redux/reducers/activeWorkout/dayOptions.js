@@ -251,7 +251,6 @@ export const deleteDay = (state, dayId) => {
       return newExercise;
     });
   }
-  console.log(newExerciseLibrary);
 
   const newState = {
     ...state,

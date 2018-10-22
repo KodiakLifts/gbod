@@ -24,6 +24,15 @@ class NewDayModal extends Component {
     tmpName: "Day " + this.props.days.length
   };
 
+  componentWillReceiveProps(newProps) {
+    if (this.state.placeHolder !== "Day " + newProps.days.length) {
+      this.setState({
+        placeHolder: "Day " + newProps.days.length,
+        tmpName: "Day " + newProps.days.length
+      });
+    }
+  }
+
   updateTmpName = tmpName => {
     if (tmpName == null) {
       this.setState({ tmpName: this.props.days[this.state.currentDay].name });
