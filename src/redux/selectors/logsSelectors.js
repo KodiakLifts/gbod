@@ -14,7 +14,7 @@ const getMeasurementCategories = state => state.measurementCategories;
 const getUnits = state => state.units;
 
 export const getLogTitle = state =>
-  state.workoutLogs[state.selectedLogId].title;
+  state.workoutLogs[state.selectedWorkoutLogId].title;
 
 export const getLogCards = createSelector(
   [

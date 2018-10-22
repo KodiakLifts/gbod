@@ -1,7 +1,7 @@
-export const setSelectedLogId = (state, logId) => {
+export const setSelectedWorkoutLogId = (state, logId) => {
   const newState = {
     ...state,
-    selectedLogId: logId
+    selectedWorkoutLogId: logId
   };
   return newState;
 };

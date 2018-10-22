@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { withNavigation } from "react-navigation";
 import { connect } from "react-redux";
-import { setSelectedLogId } from "../../redux/actions/logsActions";
+import { setSelectedWorkoutLogId } from "../../redux/actions/logsActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
 
 class LogItem extends Component {
   _edit = () => {
-    const { navigation, setSelectedLogId, logId } = this.props;
-    setSelectedLogId(logId);
+    const { navigation, setSelectedWorkoutLogId, logId } = this.props;
+    setSelectedWorkoutLogId(logId);
     navigation.navigate("EditLog");
   };
   render() {
@@ -56,13 +56,13 @@ LogItem.propTypes = {
   logId: PropTypes.number,
   logTitle: PropTypes.string,
   navigation: PropTypes.object,
-  setSelectedLogId: PropTypes.func
+  setSelectedWorkoutLogId: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setSelectedLogId: logId => {
-      dispatch(setSelectedLogId(logId));
+    setSelectedWorkoutLogId: logId => {
+      dispatch(setSelectedWorkoutLogId(logId));
     }
   };
 };

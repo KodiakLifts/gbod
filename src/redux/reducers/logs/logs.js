@@ -5,12 +5,12 @@ import {
   DELETE_MEASUREMENT,
   EDIT_LOG_NOTES,
   DELETE_LOG,
-  SET_SELECTED_LOG_ID
+  SET_SELECTED_WORKOUT_LOG_ID
 } from "../../actions/logsActions";
 import {
   updateSelectedLogDate,
   deleteLog,
-  setSelectedLogId
+  setSelectedWorkoutLogId
 } from "./logsCalendar";
 import {
   addMeasurement,
@@ -21,8 +21,8 @@ import { editLogNotes } from "./notes";
 
 export default function logs(state = {}, action) {
   switch (action.type) {
-    case SET_SELECTED_LOG_ID:
-      return setSelectedLogId(state, action.logId);
+    case SET_SELECTED_WORKOUT_LOG_ID:
+      return setSelectedWorkoutLogId(state, action.logId);
     case DELETE_LOG:
       return deleteLog(state, action.date);
     case EDIT_LOG_NOTES:
