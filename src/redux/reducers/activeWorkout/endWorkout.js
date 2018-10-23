@@ -43,8 +43,8 @@ export const finishWorkout = state => {
 
     if (exercisesToLog.length !== 0) {
       exercisesToLog.forEach(exercise => {
-        newExerciseLibrary = state.exerciseLibrary.map(e => {
-          if (e.id === exercise.libraryId) {
+        newExerciseLibrary = state.exerciseLibrary.map(libraryExercise => {
+          if (libraryExercise.id === exercise.libraryId) {
             let workoutsTowardsIncrease = exercise.workoutsTowardsIncrease;
             if (exercise.complete) {
               workoutsTowardsIncrease++;
@@ -58,7 +58,7 @@ export const finishWorkout = state => {
               });
             }
             return {
-              ...e,
+              ...libraryExercise,
               logs: state.exerciseLibrary[exercise.libraryId].logs.concat([
                 {
                   id: state.exerciseLibrary[exercise.libraryId].logs.length,
@@ -89,7 +89,7 @@ export const finishWorkout = state => {
               ])
             };
           }
-          return e;
+          return libraryExercise;
         });
       });
     }

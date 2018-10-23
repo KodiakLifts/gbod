@@ -267,7 +267,7 @@ export const initState =
           { reps: 20, weight: 0 },],
         logs: [
           {
-            id: 0, date: "2018-10-16", title: "GreySkull LP - A", program: 1, day: 0, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0, complete: false,
+            id: 0, date: "2018-10-16", title: "GreySkull LP - A", supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0, complete: true,
             sets: [
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50, complete: true },
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50, complete: true },
@@ -275,7 +275,7 @@ export const initState =
             ]
           },
           {
-            id: 0, date: "2018-10-16", title: "GreySkull LP - B", program: 1, day: 1, supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0, complete: true,
+            id: 0, date: "2018-10-16", title: "GreySkull LP - B", supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0, barType: "", units: 0, complete: true,
             sets: [
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50, complete: true },
               { reps: 5, weight: 145, type: 1, restMinutes: 0, restSeconds: 0, timerOn: false, percentage: false, percent: 50, complete: true },

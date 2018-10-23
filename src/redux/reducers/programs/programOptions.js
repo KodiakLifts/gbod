@@ -111,6 +111,5 @@ export const updateProgramData = (
       return program;
     })
   };
-  console.log(newState);
   return newState;
 };

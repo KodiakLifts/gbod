@@ -68,7 +68,7 @@ export const finishLogEdit = state => {
   const exercisesToLog = [];
   let newExerciseLibrary = Array.from(state.exerciseLibrary);
   let anyLogsSelectedDate = true;
-  let newWorkoutLog = null;
+  let updatedWorkoutLog = null;
 
   const setsToLog = updatedSets.filter(set => {
     return set.day === currentActiveDay && set.complete;
@@ -97,36 +97,21 @@ export const finishLogEdit = state => {
 
     if (exercisesToLog.length !== 0) {
       exercisesToLog.forEach(exercise => {
-        newExerciseLibrary = state.exerciseLibrary.map(e => {
-          if (e.id === exercise.libraryId) {
-            let workoutsTowardsIncrease = exercise.workoutsTowardsIncrease;
-            if (exercise.complete) {
-              workoutsTowardsIncrease++;
-            }
-            if (workoutsTowardsIncrease === exercise.workoutsToIncrease) {
-              workoutsTowardsIncrease = 0;
-              updatedSets.forEach(set => {
-                if (set.exercise === exercise.id) {
-                  set.weight += exercise.increaseAmmount;
-                }
-              });
-            }
+        newExerciseLibrary = newExerciseLibrary.map(libraryExercise => {
+          if (libraryExercise.id === exercise.libraryId) {
             return {
-              ...e,
+              ...libraryExercise,
               logs: state.exerciseLibrary[exercise.libraryId].logs.map(log => {
-                if (log.title === logTitle && log.date === date)
+                if (log.title === logTitle && log.date === date) {
                   return {
-                    id: state.exerciseLibrary[exercise.libraryId].logs.length,
-                    date: date,
-                    title: logTitle,
+                    ...log,
                     supersetNext: exercise.supersetNext,
                     includeWarmup: exercise.includeWarmup,
                     workoutsToIncrease: exercise.workoutsToIncrease,
                     increaseAmmount: exercise.increaseAmmount,
-                    workoutsTowardsIncrease: workoutsTowardsIncrease,
                     barType: exercise.barType,
                     units: exercise.units,
-                    sets: setsToLog.map(set => {
+                    sets: setsToLog.filter(set => {
                       if (set.exercise === exercise.id) {
                         return {
                           reps: set.reps,
@@ -141,17 +126,19 @@ export const finishLogEdit = state => {
                       }
                     })
                   };
+                }
+                return log;
               })
             };
           }
-          return e;
+          return libraryExercise;
         });
+        console.log(newExerciseLibrary);
       });
     }
-    newWorkoutLog = {
-      id: state.selectedWorkoutLogId,
-      date: date,
-      title: logTitle,
+
+    updatedWorkoutLog = {
+      ...state.workoutLogs[state.selectedWorkoutLogId],
       notes: state.activeWorkout.notes,
       libraryExercises: exercisesToLog.map(exercise => {
         return exercise.libraryId;
@@ -160,19 +147,13 @@ export const finishLogEdit = state => {
   } else {
     anyLogsSelectedDate = false;
   }
-  console.log(newWorkoutLog.notes);
 
-  let newWorkoutLogs;
+  let newWorkoutLogs = Array.from(state.workoutLogs);
 
-  if (newWorkoutLog !== null) {
+  if (updatedWorkoutLog !== null) {
     newWorkoutLogs = state.workoutLogs.map(log => {
       if (log.id === state.selectedWorkoutLogId) {
-        return {
-          ...log,
-          title: logTitle,
-          notes: newWorkoutLog.notes,
-          libraryExercises: newWorkoutLog.libraryExercises
-        };
+        return updatedWorkoutLog;
       }
       return log;
     });
@@ -183,7 +164,7 @@ export const finishLogEdit = state => {
     activeWorkout: Object.assign({}, state.tmpActiveWorkout),
     anyLogsSelectedDate: anyLogsSelectedDate,
     exerciseLibrary: newExerciseLibrary,
-    workoutLogs: newWorkoutLog !== null ? newWorkoutLogs : state.workoutLogs
+    workoutLogs: newWorkoutLogs
   };
   console.log(newState);
   return newState;

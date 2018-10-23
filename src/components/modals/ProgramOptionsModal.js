@@ -235,8 +235,7 @@ ProgramOptionsModal.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    isCurrentProgram:
-      state.workoutData.activeWorkout.program === ownProps.programId,
+    isCurrentProgram: state.workoutData.activeProgramId === ownProps.programId,
     categories: state.workoutData.programCategories.slice(2)
   };
 };
