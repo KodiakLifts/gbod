@@ -125,7 +125,10 @@ class EditSetModal extends Component {
   };
 
   cancel = () => {
-    this.setState({ tmpType: this.state.prevType });
+    this.setState({
+      tmpType: this.state.prevType,
+      tmpTimerOn: this.props.timerOn
+    });
     this.props.closeModal();
   };
 
