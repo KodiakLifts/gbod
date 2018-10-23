@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, BackHandler } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -24,8 +24,20 @@ class EditLog extends Component {
     noteModalVisible: false
   };
 
-  componentWillReceiveProps(newProps) {}
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.handleBackPress);
+  }
 
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.handleBackPress);
+  }
+
+  handleBackPress = () => {
+    const { cancelLogEdit, navigation } = this.props;
+    cancelLogEdit();
+    navigation.goBack();
+    return true;
+  };
   _addExercisePress = () => {
     this.setState({ addExerciseModalVisible: true });
   };

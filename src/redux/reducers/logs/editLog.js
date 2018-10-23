@@ -44,7 +44,7 @@ export const generateEditLog = (state, logId) => {
       return program;
     })
   };
-  console.log(state.programs[0]);
+
   return newState;
 };
 
