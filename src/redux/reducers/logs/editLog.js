@@ -16,6 +16,7 @@ export const generateEditLog = (state, logId) => {
       exercise.libraryId = currentLibraryExercise.id;
       exercise.id = exercises.length;
       exercise.complete = false;
+      exercise.day = 0;
       exercises = exercises.concat([exercise]);
       let tmpSets = exercise.sets;
       tmpSets.forEach(set => {
@@ -54,7 +55,7 @@ export const cancelLogEdit = state => {
     editLogMode: false,
     activeWorkout: {
       ...state.activeWorkout,
-      program: state.previousActiveProgram
+      currentExercise: 0
     }
   };
   return newState;

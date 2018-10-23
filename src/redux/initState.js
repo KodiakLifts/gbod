@@ -10,7 +10,6 @@ export const initState =
       seconds: 0,
       set: 0
     },
-    previousActiveProgram: 2,
     editLogMode: false,
     activeWorkout: {
       program: 2,
