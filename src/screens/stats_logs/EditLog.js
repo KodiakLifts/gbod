@@ -92,7 +92,7 @@ class EditLog extends Component {
               <Text style={[STYLE.headerText, { fontSize: 18, padding: 6 }]}>
                 {title}
               </Text>
-              <FinishButton />
+              <FinishButton logEdit />
               <AddExerciseToWorkoutModal
                 closeModal={this.closeModal}
                 visible={addExerciseModalVisible}

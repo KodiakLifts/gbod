@@ -1,18 +1,34 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { finishWorkout } from "../../redux/actions/activeWorkoutActions";
+import { finishLogEdit } from "../../redux/actions/logsActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withNavigation } from "react-navigation";
 
 const STYLE = require("./buttonStyle");
 
 class FinishButton extends Component {
+  finishCase = () => {
+    const { finish, finishLogEdit, logEdit, navigation } = this.props;
+    if (logEdit) {
+      navigation.navigate("LOGS");
+      return finishLogEdit();
+    } else {
+      return finish();
+    }
+  };
+
   _onPress = () => {
+    const { finish, finishLogEdit, logEdit } = this.props;
     Alert.alert(
       "Finish Workout",
       "Finish and log workout?",
       [
-        { text: "CONFIRM", onPress: () => this.props.finish() },
+        {
+          text: "CONFIRM",
+          onPress: this.finishCase
+        },
         { text: "CANCEL", style: "cancel" }
       ],
       { cancelable: false }
@@ -29,18 +45,26 @@ class FinishButton extends Component {
 }
 
 FinishButton.propTypes = {
-  finish: PropTypes.func
+  finish: PropTypes.func,
+  finishLogEdit: PropTypes.func,
+  logEdit: PropTypes.bool,
+  navigation: PropTypes.object
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     finish: () => {
       dispatch(finishWorkout());
+    },
+    finishLogEdit: () => {
+      dispatch(finishLogEdit());
     }
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(FinishButton);
+export default withNavigation(
+  connect(
+    null,
+    mapDispatchToProps
+  )(FinishButton)
+);

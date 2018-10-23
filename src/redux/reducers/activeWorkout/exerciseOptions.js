@@ -104,7 +104,6 @@ export const makeCurrentExercise = (state, exerciseId) => {
 };
 
 export const addExercise = (state, libraryId) => {
-  console.log(state);
   const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   let exerciseId = state.programs[activeProgram].exercises.length;
   const day = state.editLogMode ? 0 : state.activeWorkout.day;

@@ -10,6 +10,7 @@ import {
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { updateActiveNotes } from "../../redux/actions/activeWorkoutActions";
+import { getCurrentNotes } from "../../redux/selectors/activeWorkoutSelectors";
 
 const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
@@ -93,7 +94,7 @@ NoteModal.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    notes: state.workoutData.activeWorkout.notes
+    notes: getCurrentNotes(state.workoutData)
   };
 };
 

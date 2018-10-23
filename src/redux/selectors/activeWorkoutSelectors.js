@@ -9,8 +9,20 @@ const PROGRAM_NAME_LENGTH = 17;
 const DAY_NAME_LENGTH = 7;
 const EXERCISE_NAME_LENGTH = 24;
 
+export const getCurrentNotes = state => {
+  if (state.editLogMode) {
+    return state.workoutLogs[state.selectedWorkoutLogId].notes;
+  } else {
+    return state.activeWorkout.notes;
+  }
+};
+
 export const getSetComplete = (state, setId) => {
-  if (state.programs[state.activeWorkout.program].sets[setId] !== undefined) {
+  if (state.editLogMode && state.programs[0].sets[setId] !== undefined) {
+    return state.programs[0].sets[setId].complete;
+  } else if (
+    state.programs[state.activeWorkout.program].sets[setId] !== undefined
+  ) {
     return state.programs[state.activeWorkout.program].sets[setId].complete;
   } else {
     return false;
@@ -95,7 +107,7 @@ export const getActiveWorkoutCards = createSelector(
         const setButtons = sets.map((set, i) => {
           return (
             <SetButton
-              key={i}
+              key={i + getKey()}
               exerciseId={exercise.id}
               setId={set.id}
               reps={set.reps}
@@ -124,7 +136,7 @@ export const getActiveWorkoutCards = createSelector(
 
         const card = (
           <ExerciseCard
-            key={index}
+            key={index + getKey()}
             exerciseId={exercise.id}
             borderStyle={borderStyle}
             active={exercise.id === currentExercise}
@@ -145,3 +157,7 @@ export const getActiveWorkoutCards = createSelector(
     }
   }
 );
+
+const getKey = index => {
+  return "" + index + new Date().getTime();
+};

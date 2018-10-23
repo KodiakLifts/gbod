@@ -6,6 +6,7 @@ export const EDIT_LOG_NOTES = "EDIT_LOG_NOTES";
 export const DELETE_LOG = "DELETE_LOG";
 export const GENERATE_EDIT_LOG = "GENERATE_EDIT_LOG";
 export const CANCEL_LOG_EDIT = "CANCEL_LOG_EDIT";
+export const FINISH_LOG_EDIT = "FINISH_LOG_EDIT";
 
 export const LOGS_ACTIONS = [
   UPDATE_SELECTED_LOG_DATE,
@@ -15,8 +16,15 @@ export const LOGS_ACTIONS = [
   EDIT_LOG_NOTES,
   DELETE_LOG,
   GENERATE_EDIT_LOG,
-  CANCEL_LOG_EDIT
+  CANCEL_LOG_EDIT,
+  FINISH_LOG_EDIT
 ];
+
+export const finishLogEdit = () => {
+  return {
+    type: FINISH_LOG_EDIT
+  };
+};
 
 export const cancelLogEdit = () => {
   return {
