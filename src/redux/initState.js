@@ -3,10 +3,7 @@ export const initState =
   {
   workoutData:
   {
-    editLogProgram: {
-      sets: [],
-      exercises: [],
-    },
+    
     timer: {
       started: false,
       minutes: 0,
@@ -14,7 +11,7 @@ export const initState =
       set: 0
     },
     activeWorkout: {
-      program: 0,
+      program: 2,
       day: 0,
       currentExercise: 0,
       dayBarActive: false,
@@ -23,6 +20,16 @@ export const initState =
     programs: [
       {
         id: 0,
+        name: "EditLogProgram",
+        category: -1,
+        description: "Template for editing logs.",
+        favorite: false,
+        sets: [],
+        exercises: [],
+        days: []
+      },
+      {
+        id: 1,
         name: "FreeStyle",
         category: 0,
         description: "",
@@ -34,7 +41,7 @@ export const initState =
         ]
       },
       {
-        id: 1,
+        id: 2,
         name: "GreySkull LP",
         category: 2,
         description: "Beginner strength program.",
@@ -135,7 +142,7 @@ export const initState =
         ]
       },
       {
-        id: 2,
+        id: 3,
         name: "5/3/1 Boring But Big",
         category: 2,
         description: "Another beginner strength program.",

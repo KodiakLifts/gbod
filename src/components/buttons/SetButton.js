@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  setPress,
-  updateWorkoutAndTimer
-} from "../../redux/actions/activeWorkoutActions";
+import { updateWorkoutAndTimer } from "../../redux/actions/activeWorkoutActions";
 import EditSetModal from "../modals/EditSetModal";
 import SetRepsModal from "../modals/SetRepsModal";
 
@@ -24,10 +21,12 @@ class SetButton extends Component {
       setId,
       exerciseId,
       type,
-      complete
+      complete,
+      min,
+      sec,
+      timerOn
     } = this.props;
-
-    updateWorkoutAndTimer(setId, exerciseId);
+    updateWorkoutAndTimer(setId, exerciseId, complete, min, sec, timerOn);
 
     if (type === AMRAP && complete !== true) {
       this.setState({ setRepsModalVisible: true });
@@ -54,7 +53,8 @@ class SetButton extends Component {
       type,
       min,
       sec,
-      complete
+      complete,
+      timerOn
     } = this.props;
 
     const { editSetModalVisible, setRepsModalVisible } = this.state;
@@ -70,6 +70,7 @@ class SetButton extends Component {
           type={type}
           min={min}
           sec={sec}
+          timerOn={timerOn}
           closeModal={this.closeModal}
         />
 
@@ -118,28 +119,26 @@ SetButton.propTypes = {
   min: PropTypes.number,
   sec: PropTypes.number,
   timerOn: PropTypes.bool,
-  updateActiveWorkoutUI: PropTypes.func,
+  setPressOnly: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
-  logSet: PropTypes.bool,
   complete: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    complete: ownProps.logSet
-      ? state.workoutData.editLogProgram.sets[ownProps.setId].complete
-      : state.workoutData.programs[state.workoutData.activeWorkout.program]
-          .sets[ownProps.setId].complete
+    complete:
+      state.workoutData.programs[state.workoutData.activeWorkout.program].sets[
+        ownProps.setId
+      ].complete
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateActiveWorkoutUI: (setId, exerciseId) => {
-      dispatch(setPress(setId, exerciseId));
-    },
-    updateWorkoutAndTimer: (setId, exerciseId, started, complete) => {
-      dispatch(updateWorkoutAndTimer(setId, exerciseId, started, complete));
+    updateWorkoutAndTimer: (setId, exerciseId, complete, min, sec, timerOn) => {
+      dispatch(
+        updateWorkoutAndTimer(setId, exerciseId, complete, min, sec, timerOn)
+      );
     }
   };
 };

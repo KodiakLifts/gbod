@@ -1,15 +1,13 @@
-export default (state, setId, exerciseId) => {
+export default (
+  state,
+  setId,
+  exerciseId,
+  setCompleteVal,
+  setRestMinutes,
+  setRestSeconds,
+  timerOn
+) => {
   const activeProgram = state.activeWorkout.program;
-  const setCompleteVal = state.programs[activeProgram].sets[setId].complete;
-  const setRestMinutes = state.programs[activeProgram].sets[setId].restMinutes;
-  const setRestSeconds = state.programs[activeProgram].sets[setId].restSeconds;
-
-  const newTimer = {
-    ...state.timer,
-    set: setId,
-    minutes: setRestMinutes,
-    seconds: setRestSeconds
-  };
 
   const newSets = state.programs[activeProgram].sets.map(set => {
     if (set.id === setId) {
@@ -85,7 +83,14 @@ export default (state, setId, exerciseId) => {
       currentExercise: updatedActiveExerciseId,
       dayBarActive: false
     },
-    timer: newTimer,
+    timer: timerOn
+      ? {
+          ...state.timer,
+          set: setId,
+          minutes: setRestMinutes,
+          seconds: setRestSeconds
+        }
+      : state.timer,
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {

@@ -33,6 +33,7 @@ class EditSetModal extends Component {
     tmpType: this.props.type,
     tmpMin: this.props.min,
     tmpSec: this.props.sec,
+    tmpTimerOn: this.props.timerOn,
     tmpRemoveSet: false
   };
 
@@ -41,6 +42,10 @@ class EditSetModal extends Component {
       this.setState({ tmpReps: newProps.reps });
     }
   }
+
+  toggleTimer = checked => {
+    this.setState({ tmpTimerOn: checked });
+  };
 
   toggleRemove = checked => {
     this.setState({ tmpRemoveSet: checked });
@@ -96,6 +101,7 @@ class EditSetModal extends Component {
       tmpType,
       tmpMin,
       tmpSec,
+      tmpTimerOn,
       tmpRemoveSet
     } = this.state;
     this.setState({ prevType: this.state.tmpType });
@@ -103,7 +109,15 @@ class EditSetModal extends Component {
     if (tmpRemoveSet) {
       removeSet(setId, exerciseId);
     } else {
-      updateSetData(setId, tmpWeight, tmpReps, tmpType, tmpMin, tmpSec);
+      updateSetData(
+        setId,
+        tmpWeight,
+        tmpReps,
+        tmpType,
+        tmpMin,
+        tmpSec,
+        tmpTimerOn
+      );
     }
 
     this.setState({ tmpRemoveSet: false });
@@ -117,7 +131,7 @@ class EditSetModal extends Component {
 
   render() {
     const { visible, weight, reps, min, sec, types } = this.props;
-    const { tmpType, tmpRemoveSet } = this.state;
+    const { tmpType, tmpRemoveSet, tmpTimerOn } = this.state;
 
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
@@ -143,6 +157,10 @@ class EditSetModal extends Component {
 
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Type:</Text>
+                  </View>
+
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Timer On:</Text>
                   </View>
 
                   <View style={STYLE.leftItem}>
@@ -221,6 +239,13 @@ class EditSetModal extends Component {
 
                   <View style={[STYLE.rightItem, { paddingLeft: 22 }]}>
                     <CheckBox
+                      value={tmpTimerOn}
+                      onValueChange={this.toggleTimer}
+                    />
+                  </View>
+
+                  <View style={[STYLE.rightItem, { paddingLeft: 22 }]}>
+                    <CheckBox
                       value={tmpRemoveSet}
                       onValueChange={this.toggleRemove}
                     />
@@ -263,7 +288,8 @@ EditSetModal.propTypes = {
   closeModal: PropTypes.func,
   updateSetData: PropTypes.func,
   removeSet: PropTypes.func,
-  currentSets: PropTypes.arrayOf(PropTypes.object)
+  currentSets: PropTypes.arrayOf(PropTypes.object),
+  timerOn: PropTypes.bool
 };
 
 const mapStateToProps = state => {
@@ -276,8 +302,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateSetData: (setId, weight, reps, setType, min, sec) => {
-      dispatch(updateSetData(setId, weight, reps, setType, min, sec));
+    updateSetData: (setId, weight, reps, setType, min, sec, timerOn) => {
+      dispatch(updateSetData(setId, weight, reps, setType, min, sec, timerOn));
     },
     removeSet: (setId, exerciseId, currentSets) => {
       dispatch(removeSet(setId, exerciseId, currentSets));

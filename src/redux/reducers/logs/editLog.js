@@ -36,10 +36,16 @@ export const generateEditLog = (state, logId) => {
   const newState = {
     ...state,
     selectedWorkoutLogId: logId,
-    editLogProgram: {
-      sets: sets,
-      exercises: exercises
-    }
+    programs: state.programs.map(program => {
+      if (program.name === "EditLogProgram") {
+        return {
+          ...program,
+          sets: sets,
+          exercises: exercises
+        };
+      }
+      return program;
+    })
   };
 
   return newState;

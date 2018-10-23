@@ -23,12 +23,10 @@ export const getLogTitle = state =>
   state.workoutLogs[state.selectedWorkoutLogId].title;
 
 const getEditLogSets = state => {
-  console.log(state.editLogProgram.sets);
-  return state.editLogProgram.sets;
+  return state.programs[0].sets;
 };
 const getEditLogExercises = state => {
-  console.log(state.editLogProgram.exercises);
-  return state.editLogProgram.exercises;
+  return state.programs[0].exercises;
 };
 
 export const getEditLogCards = createSelector(

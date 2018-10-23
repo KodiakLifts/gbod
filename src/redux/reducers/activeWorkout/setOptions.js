@@ -58,7 +58,8 @@ export const updateSetData = (
   reps,
   setType,
   min,
-  sec
+  sec,
+  timerOn
 ) => {
   const activeProgram = state.activeWorkout.program;
 
@@ -72,11 +73,12 @@ export const updateSetData = (
             if (set.id === setId) {
               return {
                 ...set,
-                ...{ weight: weight },
-                ...{ reps: reps },
-                ...{ type: setType },
-                ...{ restMinutes: min },
-                ...{ restSeconds: sec }
+                weight: weight,
+                reps: reps,
+                type: setType,
+                restMinutes: min,
+                restSeconds: sec,
+                timerOn: timerOn
               };
             }
             return set;

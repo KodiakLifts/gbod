@@ -185,13 +185,22 @@ export const updateDayData = (dayId, name, remove) => {
   };
 };
 
-export const updateWorkoutAndTimer = (setId, exerciseId) => {
+export const updateWorkoutAndTimer = (
+  setId,
+  exerciseId,
+  complete,
+  min,
+  sec,
+  timerOn
+) => {
   return (dispatch, getState) => {
-    dispatch(setPress(setId, exerciseId));
-    const setComplete = getState().workoutData.programs[
-      getState().workoutData.activeWorkout.program
-    ].sets[setId].complete;
-    dispatch(handleTimer(setComplete));
+    dispatch(setPress(setId, exerciseId, complete, min, sec, timerOn));
+    if (timerOn) {
+      const setComplete = getState().workoutData.programs[
+        getState().workoutData.activeWorkout.program
+      ].sets[setId].complete;
+      dispatch(handleTimer(setComplete));
+    }
   };
 };
 
@@ -234,11 +243,15 @@ export const stopTimer = () => {
   };
 };
 
-export const setPress = (setId, exerciseId) => {
+export const setPress = (setId, exerciseId, complete, min, sec, timerOn) => {
   return {
     type: SET_PRESS,
     setId,
-    exerciseId
+    exerciseId,
+    complete,
+    min,
+    sec,
+    timerOn
   };
 };
 
@@ -250,7 +263,15 @@ export const updateSetReps = (setId, reps) => {
   };
 };
 
-export const updateSetData = (setId, weight, reps, setType, min, sec) => {
+export const updateSetData = (
+  setId,
+  weight,
+  reps,
+  setType,
+  min,
+  sec,
+  timerOn
+) => {
   return {
     type: UPDATE_SET_DATA,
     setId,
@@ -258,7 +279,8 @@ export const updateSetData = (setId, weight, reps, setType, min, sec) => {
     reps,
     setType,
     min,
-    sec
+    sec,
+    timerOn
   };
 };
 

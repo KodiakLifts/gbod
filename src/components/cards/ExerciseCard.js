@@ -185,8 +185,7 @@ ExerciseCard.propTypes = {
   makeCurrentExercise: PropTypes.func,
   shiftExerciseDown: PropTypes.func,
   shiftExerciseUp: PropTypes.func,
-  deactivateDayBar: PropTypes.func,
-  logExercise: PropTypes.bool
+  deactivateDayBar: PropTypes.func
 };
 
 const mapDispatchToProps = dispatch => {
