@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { updateWorkoutAndTimer } from "../../redux/actions/activeWorkoutActions";
 import EditSetModal from "../modals/EditSetModal";
 import SetRepsModal from "../modals/SetRepsModal";
+import { getSetComplete } from "../../redux/selectors/activeWorkoutSelectors";
 
 const STYLE = require("./buttonStyle");
 const AMRAP = 2;
@@ -126,10 +127,7 @@ SetButton.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    complete:
-      state.workoutData.programs[state.workoutData.activeWorkout.program].sets[
-        ownProps.setId
-      ].complete
+    complete: getSetComplete(state.workoutData, ownProps.setId)
   };
 };
 

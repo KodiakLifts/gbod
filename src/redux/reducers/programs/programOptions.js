@@ -78,6 +78,7 @@ export const updateProgramData = (
 
   const newState = {
     ...state,
+    previousActiveProgram: activeProgram,
     activeWorkout: {
       ...state.activeWorkout,
       program: activeProgram
@@ -94,6 +95,6 @@ export const updateProgramData = (
       return program;
     })
   };
-  console.log(newState.programs);
+
   return newState;
 };

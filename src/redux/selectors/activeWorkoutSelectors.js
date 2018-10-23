@@ -9,6 +9,14 @@ const PROGRAM_NAME_LENGTH = 17;
 const DAY_NAME_LENGTH = 7;
 const EXERCISE_NAME_LENGTH = 24;
 
+export const getSetComplete = (state, setId) => {
+  if (state.programs[state.activeWorkout.program].sets[setId] !== undefined) {
+    return state.programs[state.activeWorkout.program].sets[setId].complete;
+  } else {
+    return false;
+  }
+};
+
 const getActiveWorkoutName = state => {
   return state.programs[state.activeWorkout.program].name;
 };
