@@ -1,5 +1,5 @@
 export const addSet = (state, exerciseId) => {
-  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
   const activeExercise = state.programs[activeProgram].exercises[exerciseId];
 
   let activeSets = state.programs[activeProgram].sets.filter(set => {

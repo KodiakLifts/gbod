@@ -7,7 +7,7 @@ export default (
   setRestSeconds,
   timerOn
 ) => {
-  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
 
   const newSets = state.programs[activeProgram].sets.map(set => {
     if (set.id === setId) {

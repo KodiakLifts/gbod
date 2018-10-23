@@ -20,7 +20,6 @@ class FinishButton extends Component {
   };
 
   _onPress = () => {
-    const { finish, finishLogEdit, logEdit } = this.props;
     Alert.alert(
       "Finish Workout",
       "Finish and log workout?",

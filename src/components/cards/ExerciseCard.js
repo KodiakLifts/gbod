@@ -54,8 +54,8 @@ class ExerciseCard extends Component {
   };
 
   renderControls = active => {
-    const { lastExercise, firstExercise, logExercise } = this.props;
-    if (active || logExercise) {
+    const { lastExercise, firstExercise } = this.props;
+    if (active) {
       return (
         <View style={STYLE.menuPlusContainer}>
           {this.renderShiftDown(lastExercise)}

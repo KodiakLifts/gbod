@@ -1,6 +1,10 @@
+const EDIT_LOG_PROGRAM_ID = 2;
+
 export const generateEditLog = (state, logId) => {
   const date = state.selectedLogDate;
   const title = state.workoutLogs[logId].title;
+  const tmpActiveWorkout = Object.assign({}, state.activeWorkout);
+
   let exercises = [];
   let sets = [];
   state.workoutLogs[logId].libraryExercises.map(libId => {
@@ -15,7 +19,6 @@ export const generateEditLog = (state, logId) => {
     if (exercise.title === title && exercise.date === date) {
       exercise.libraryId = currentLibraryExercise.id;
       exercise.id = exercises.length;
-      exercise.complete = false;
       exercise.day = 0;
       exercises = exercises.concat([exercise]);
       let tmpSets = exercise.sets;
@@ -27,15 +30,22 @@ export const generateEditLog = (state, logId) => {
   });
   sets.map((set, index) => {
     sets[index].id = index;
-    sets[index].complete = false;
+    sets[index].day = 0;
   });
 
   const newState = {
     ...state,
-    editLogMode: true,
+    tmpActiveWorkout: tmpActiveWorkout,
+    activeWorkout: {
+      program: EDIT_LOG_PROGRAM_ID,
+      day: 0,
+      currentExercise: 0,
+      dayBarActive: false,
+      notes: state.workoutLogs[logId].notes
+    },
     selectedWorkoutLogId: logId,
     programs: state.programs.map(program => {
-      if (program.name === "EditLogProgram") {
+      if (program.id === EDIT_LOG_PROGRAM_ID) {
         return {
           ...program,
           sets: sets,
@@ -50,8 +60,8 @@ export const generateEditLog = (state, logId) => {
 };
 
 export const finishLogEdit = state => {
-  const activeProgram = 0;
-  const currentActiveDay = 0;
+  const activeProgram = state.activeWorkout.program;
+  const currentActiveDay = state.activeWorkout.day;
   const date = state.selectedLogDate;
   const updatedSets = Array.from(state.programs[activeProgram].sets);
   const logTitle = state.workoutLogs[state.selectedWorkoutLogId].title;
@@ -139,10 +149,10 @@ export const finishLogEdit = state => {
       });
     }
     newWorkoutLog = {
-      id: state.workoutLogs.length,
+      id: state.selectedWorkoutLogId,
       date: date,
       title: logTitle,
-      notes: state.programs[0].notes,
+      notes: state.activeWorkout.notes,
       libraryExercises: exercisesToLog.map(exercise => {
         return exercise.libraryId;
       })
@@ -150,52 +160,39 @@ export const finishLogEdit = state => {
   } else {
     anyLogsSelectedDate = false;
   }
+  console.log(newWorkoutLog.notes);
 
   let newWorkoutLogs;
 
   if (newWorkoutLog !== null) {
     newWorkoutLogs = state.workoutLogs.map(log => {
-      if (log.title === logTitle && log.date === date) {
+      if (log.id === state.selectedWorkoutLogId) {
         return {
           ...log,
+          title: logTitle,
           notes: newWorkoutLog.notes,
           libraryExercises: newWorkoutLog.libraryExercises
         };
       }
+      return log;
     });
   }
 
   const newState = {
     ...state,
-    editLogMode: false,
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: 0
-    },
-    programs: state.programs.map(program => {
-      if (program.id === activeProgram) {
-        return {
-          ...program,
-          sets: updatedSets
-        };
-      }
-      return program;
-    }),
+    activeWorkout: Object.assign({}, state.tmpActiveWorkout),
     anyLogsSelectedDate: anyLogsSelectedDate,
     exerciseLibrary: newExerciseLibrary,
     workoutLogs: newWorkoutLog !== null ? newWorkoutLogs : state.workoutLogs
   };
+  console.log(newState);
   return newState;
 };
 
 export const cancelLogEdit = state => {
   const newState = {
     ...state,
-    editLogMode: false,
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: 0
-    }
+    activeWorkout: Object.assign({}, state.tmpActiveWorkout)
   };
   return newState;
 };

@@ -9,7 +9,7 @@ import SetButton from "../../components/buttons/SetButton";
 import ExerciseCard from "../../components/cards/ExerciseCard";
 
 const CARD_STYLE = require("../../components/cards/cardStyle");
-
+const EDIT_LOG_PROGRAM_ID = 2;
 const EXERCISE_NAME_LENGTH = 24;
 
 const getExerciseLibrary = state => state.exerciseLibrary;
@@ -23,10 +23,10 @@ export const getLogTitle = state =>
   state.workoutLogs[state.selectedWorkoutLogId].title;
 
 const getEditLogSets = state => {
-  return state.programs[0].sets;
+  return state.programs[EDIT_LOG_PROGRAM_ID].sets;
 };
 const getEditLogExercises = state => {
-  return state.programs[0].exercises;
+  return state.programs[EDIT_LOG_PROGRAM_ID].exercises;
 };
 
 export const getEditLogCards = createSelector(
@@ -57,7 +57,6 @@ export const getEditLogCards = createSelector(
               min={set.restMinutes}
               sec={set.restSeconds}
               timerOn={set.timerOn}
-              logSet
             />
           );
         });
@@ -83,7 +82,6 @@ export const getEditLogCards = createSelector(
             firstExercise={firstExercise}
             lastExercise={lastExercise}
             setButtons={setButtons}
-            logExercise
           />
         );
         cards.push(card);

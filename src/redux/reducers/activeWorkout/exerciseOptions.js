@@ -104,9 +104,9 @@ export const makeCurrentExercise = (state, exerciseId) => {
 };
 
 export const addExercise = (state, libraryId) => {
-  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
   let exerciseId = state.programs[activeProgram].exercises.length;
-  const day = state.editLogMode ? 0 : state.activeWorkout.day;
+  const day = state.activeWorkout.day;
   const newExercise = {
     id: exerciseId,
     libraryId: libraryId,
@@ -199,7 +199,7 @@ export const updateExerciseData = (
   supersetNext,
   includeWarmup
 ) => {
-  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
   const newState = {
     ...state,
     programs: state.programs.map(program => {
@@ -225,7 +225,7 @@ export const updateExerciseData = (
 };
 
 export const removeExercise = (state, exerciseId) => {
-  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const activeProgram = state.activeWorkout.program;
 
   let newSets = [];
   let currentSet = 0;

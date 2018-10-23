@@ -10,19 +10,11 @@ const DAY_NAME_LENGTH = 7;
 const EXERCISE_NAME_LENGTH = 24;
 
 export const getCurrentNotes = state => {
-  if (state.editLogMode) {
-    return state.workoutLogs[state.selectedWorkoutLogId].notes;
-  } else {
-    return state.activeWorkout.notes;
-  }
+  return state.activeWorkout.notes;
 };
 
 export const getSetComplete = (state, setId) => {
-  if (state.editLogMode && state.programs[0].sets[setId] !== undefined) {
-    return state.programs[0].sets[setId].complete;
-  } else if (
-    state.programs[state.activeWorkout.program].sets[setId] !== undefined
-  ) {
+  if (state.programs[state.activeWorkout.program].sets[setId] !== undefined) {
     return state.programs[state.activeWorkout.program].sets[setId].complete;
   } else {
     return false;
