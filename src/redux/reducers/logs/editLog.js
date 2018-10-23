@@ -133,7 +133,6 @@ export const finishLogEdit = state => {
           }
           return libraryExercise;
         });
-        console.log(newExerciseLibrary);
       });
     }
 
@@ -166,7 +165,6 @@ export const finishLogEdit = state => {
     exerciseLibrary: newExerciseLibrary,
     workoutLogs: newWorkoutLogs
   };
-  console.log(newState);
   return newState;
 };
 

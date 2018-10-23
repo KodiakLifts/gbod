@@ -17,7 +17,7 @@ export const initState =
       dayBarActive: false,
       notes: ""
     },
-    activeProgramId: 0,
+    activeProgramId: 3,
     activeWorkout: {
       program: 0,
       day: 0,
@@ -28,13 +28,13 @@ export const initState =
     programs: [
       {
         id: 0,
-        name: "ActiveProgram",
+        name: "Freestyle",
         category: -1,
         description: "Holds current active program.",
         favorite: false,
         sets: [],
         exercises: [],
-        days: [{id: 0, name: "active"}]
+        days: [{id: 0, name: "Day 1"}]
       },
       {
         id: 1,
@@ -58,7 +58,7 @@ export const initState =
       },
       {
         id: 3,
-        name: "FreeStyle",
+        name: "Freestyle",
         category: 0,
         description: "",
         favorite: true,
