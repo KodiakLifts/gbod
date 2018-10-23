@@ -84,10 +84,10 @@ export const getActiveWorkoutCards = createSelector(
           return set.exercise === exercise.id;
         });
 
-        const setButtons = sets.map((set, index) => {
+        const setButtons = sets.map((set, i) => {
           return (
             <SetButton
-              key={index}
+              key={i}
               exerciseId={exercise.id}
               setId={set.id}
               reps={set.reps}
@@ -114,7 +114,7 @@ export const getActiveWorkoutCards = createSelector(
           name = name.substring(0, EXERCISE_NAME_LENGTH) + "..";
         }
 
-        let card = (
+        const card = (
           <ExerciseCard
             key={index}
             exerciseId={exercise.id}

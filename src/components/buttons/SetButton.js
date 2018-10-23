@@ -120,16 +120,16 @@ SetButton.propTypes = {
   timerOn: PropTypes.bool,
   updateActiveWorkoutUI: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
-
+  logSet: PropTypes.bool,
   complete: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    complete:
-      state.workoutData.programs[state.workoutData.activeWorkout.program].sets[
-        ownProps.setId
-      ].complete
+    complete: ownProps.logSet
+      ? state.workoutData.editLogProgram.sets[ownProps.setId].complete
+      : state.workoutData.programs[state.workoutData.activeWorkout.program]
+          .sets[ownProps.setId].complete
   };
 };
 

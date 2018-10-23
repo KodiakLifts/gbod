@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { withNavigation } from "react-navigation";
 import { connect } from "react-redux";
-import { setSelectedWorkoutLogId } from "../../redux/actions/logsActions";
+import { generateEditLog } from "../../redux/actions/logsActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./cardStyle");
@@ -62,7 +62,7 @@ LogItem.propTypes = {
 const mapDispatchToProps = dispatch => {
   return {
     setSelectedWorkoutLogId: logId => {
-      dispatch(setSelectedWorkoutLogId(logId));
+      dispatch(generateEditLog(logId));
     }
   };
 };

@@ -4,22 +4,15 @@ import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  getActiveWorkoutCards,
-  getActiveWorkoutTitle
-} from "../../redux/selectors/activeWorkoutSelectors";
+  getEditLogCards,
+  getLogTitle
+} from "../../redux/selectors/logsSelectors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import FinishButton from "../../components/buttons/FinishButton";
 import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
 import NoteModal from "../../components/modals/NoteModal";
 import Fab from "../../components/buttons/Fab";
 import NoteButton from "../../components/buttons/NoteButton";
-import {
-  updateActiveDay,
-  dayBarPress,
-  shiftDayDown,
-  shiftDayUp
-} from "../../redux/actions/activeWorkoutActions";
-import { getLogTitle } from "../../redux/selectors/logsSelectors";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./editLogStyle");
@@ -108,7 +101,7 @@ EditLog.propTypes = {
 const mapStateToProps = state => {
   return {
     title: getLogTitle(state.workoutData),
-    cards: getActiveWorkoutCards(state.workoutData)
+    cards: getEditLogCards(state.workoutData)
   };
 };
 

@@ -4,7 +4,7 @@ export const UPDATE_MEASUREMENT = "UPDATE_MEASUREMENT";
 export const DELETE_MEASUREMENT = "DELETE_MEASUREMENT";
 export const EDIT_LOG_NOTES = "EDIT_LOG_NOTES";
 export const DELETE_LOG = "DELETE_LOG";
-export const SET_SELECTED_WORKOUT_LOG_ID = "SET_SELECTED_WORKOUT_LOG_ID";
+export const GENERATE_EDIT_LOG = "GENERATE_EDIT_LOG";
 
 export const LOGS_ACTIONS = [
   UPDATE_SELECTED_LOG_DATE,
@@ -13,12 +13,12 @@ export const LOGS_ACTIONS = [
   DELETE_MEASUREMENT,
   EDIT_LOG_NOTES,
   DELETE_LOG,
-  SET_SELECTED_WORKOUT_LOG_ID
+  GENERATE_EDIT_LOG
 ];
 
-export const setSelectedWorkoutLogId = logId => {
+export const generateEditLog = logId => {
   return {
-    type: SET_SELECTED_WORKOUT_LOG_ID,
+    type: GENERATE_EDIT_LOG,
     logId
   };
 };

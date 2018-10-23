@@ -54,8 +54,8 @@ class ExerciseCard extends Component {
   };
 
   renderControls = active => {
-    const { lastExercise, firstExercise } = this.props;
-    if (active) {
+    const { lastExercise, firstExercise, logExercise } = this.props;
+    if (active || logExercise) {
       return (
         <View style={STYLE.menuPlusContainer}>
           {this.renderShiftDown(lastExercise)}
@@ -185,7 +185,8 @@ ExerciseCard.propTypes = {
   makeCurrentExercise: PropTypes.func,
   shiftExerciseDown: PropTypes.func,
   shiftExerciseUp: PropTypes.func,
-  deactivateDayBar: PropTypes.func
+  deactivateDayBar: PropTypes.func,
+  logExercise: PropTypes.bool
 };
 
 const mapDispatchToProps = dispatch => {

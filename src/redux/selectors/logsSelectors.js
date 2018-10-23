@@ -5,6 +5,12 @@ import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
 import NotesItem from "../../components/cards/NotesItem";
 import MeasurementsItem from "../../components/cards/MeasurementsItem";
 import LogItem from "../../components/cards/LogItem";
+import SetButton from "../../components/buttons/SetButton";
+import ExerciseCard from "../../components/cards/ExerciseCard";
+
+const CARD_STYLE = require("../../components/cards/cardStyle");
+
+const EXERCISE_NAME_LENGTH = 24;
 
 const getExerciseLibrary = state => state.exerciseLibrary;
 const getSelectedLogDate = state => state.selectedLogDate;
@@ -15,6 +21,81 @@ const getUnits = state => state.units;
 
 export const getLogTitle = state =>
   state.workoutLogs[state.selectedWorkoutLogId].title;
+
+const getEditLogSets = state => {
+  console.log(state.editLogProgram.sets);
+  return state.editLogProgram.sets;
+};
+const getEditLogExercises = state => {
+  console.log(state.editLogProgram.exercises);
+  return state.editLogProgram.exercises;
+};
+
+export const getEditLogCards = createSelector(
+  [getEditLogSets, getEditLogExercises, getExerciseLibrary],
+  (logSets, logExercises, exerciseLibrary) => {
+    const cards = [];
+
+    if (logExercises.length !== 0) {
+      logExercises.map((exercise, index) => {
+        const includeWarmup = exercise.includeWarmup;
+
+        const sets = logSets.filter(set => {
+          if (!includeWarmup) {
+            return set.exercise === exercise.id && set.type !== 0;
+          }
+          return set.exercise === exercise.id;
+        });
+
+        const setButtons = sets.map((set, i) => {
+          return (
+            <SetButton
+              key={i}
+              exerciseId={exercise.id}
+              setId={set.id}
+              reps={set.reps}
+              weight={set.weight}
+              type={set.type}
+              min={set.restMinutes}
+              sec={set.restSeconds}
+              timerOn={set.timerOn}
+              logSet
+            />
+          );
+        });
+
+        const lastExercise = exercise.id === logExercises.length - 1;
+
+        const firstExercise = exercise.id === 0;
+
+        let name = exerciseLibrary[exercise.libraryId].name;
+        if (name.length > EXERCISE_NAME_LENGTH) {
+          name = name.substring(0, EXERCISE_NAME_LENGTH) + "..";
+        }
+
+        const card = (
+          <ExerciseCard
+            key={index}
+            exerciseId={exercise.id}
+            borderStyle={CARD_STYLE.card}
+            active={false}
+            name={name}
+            supersetNext={exercise.supersetNext}
+            includeWarmup={exercise.includeWarmup}
+            firstExercise={firstExercise}
+            lastExercise={lastExercise}
+            setButtons={setButtons}
+            logExercise
+          />
+        );
+        cards.push(card);
+      });
+      return cards;
+    } else {
+      return null;
+    }
+  }
+);
 
 export const getLogCards = createSelector(
   [
