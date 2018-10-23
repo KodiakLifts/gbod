@@ -5,10 +5,11 @@ import {
   DELETE_MEASUREMENT,
   EDIT_LOG_NOTES,
   DELETE_LOG,
-  GENERATE_EDIT_LOG
+  GENERATE_EDIT_LOG,
+  CANCEL_LOG_EDIT
 } from "../../actions/logsActions";
 import { updateSelectedLogDate, deleteLog } from "./logsCalendar";
-import { generateEditLog } from "./editLog";
+import { generateEditLog, cancelLogEdit } from "./editLog";
 import {
   addMeasurement,
   updateMeasurement,
@@ -18,6 +19,8 @@ import { editLogNotes } from "./notes";
 
 export default function logs(state = {}, action) {
   switch (action.type) {
+    case CANCEL_LOG_EDIT:
+      return cancelLogEdit(state);
     case GENERATE_EDIT_LOG:
       return generateEditLog(state, action.logId);
     case DELETE_LOG:

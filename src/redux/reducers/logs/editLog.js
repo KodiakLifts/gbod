@@ -3,7 +3,7 @@ export const generateEditLog = (state, logId) => {
   const title = state.workoutLogs[logId].title;
   let exercises = [];
   let sets = [];
-  state.workoutLogs[logId].libraryExercises.forEach(libId => {
+  state.workoutLogs[logId].libraryExercises.map(libId => {
     const currentLibraryExercise = state.exerciseLibrary.find(libExercise => {
       return libExercise.id === libId;
     });
@@ -13,8 +13,9 @@ export const generateEditLog = (state, logId) => {
     });
 
     if (exercise.title === title && exercise.date === date) {
-      exercise.libraryId = exercise.id;
+      exercise.libraryId = currentLibraryExercise.id;
       exercise.id = exercises.length;
+      exercise.complete = false;
       exercises = exercises.concat([exercise]);
       let tmpSets = exercise.sets;
       tmpSets.forEach(set => {
@@ -23,11 +24,6 @@ export const generateEditLog = (state, logId) => {
       sets = sets.concat(tmpSets);
     }
   });
-  exercises.map((exercise, index) => {
-    exercises[index].libraryId = exercise.id;
-    exercises[index].id = index;
-    exercises[index].complete = false;
-  });
   sets.map((set, index) => {
     sets[index].id = index;
     sets[index].complete = false;
@@ -35,6 +31,7 @@ export const generateEditLog = (state, logId) => {
 
   const newState = {
     ...state,
+    editLogMode: true,
     selectedWorkoutLogId: logId,
     programs: state.programs.map(program => {
       if (program.name === "EditLogProgram") {
@@ -47,6 +44,18 @@ export const generateEditLog = (state, logId) => {
       return program;
     })
   };
+  console.log(state.programs[0]);
+  return newState;
+};
 
+export const cancelLogEdit = state => {
+  const newState = {
+    ...state,
+    editLogMode: false,
+    activeWorkout: {
+      ...state.activeWorkout,
+      program: state.previousActiveProgram
+    }
+  };
   return newState;
 };

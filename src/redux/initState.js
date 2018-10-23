@@ -10,6 +10,8 @@ export const initState =
       seconds: 0,
       set: 0
     },
+    previousActiveProgram: 2,
+    editLogMode: false,
     activeWorkout: {
       program: 2,
       day: 0,
@@ -187,6 +189,32 @@ export const initState =
     modalSelectedExerciseCategory: 0,
     modalSelectedBodyPart: 0,
     exerciseLibrary: [
+      {
+        id: 0, name: "", bodyPart: 0, category: 0, favorite: true,
+        repMaxes: [
+          { reps: 0, weight: 0 },
+          { reps: 1, weight: 200 },
+          { reps: 2, weight: 0 },
+          { reps: 3, weight: 0 },
+          { reps: 4, weight: 0 },
+          { reps: 5, weight: 0 },
+          { reps: 6, weight: 0 },
+          { reps: 7, weight: 0 },
+          { reps: 8, weight: 0 },
+          { reps: 9, weight: 0 },
+          { reps: 10, weight: 0 },
+          { reps: 11, weight: 0 },
+          { reps: 12, weight: 0 },
+          { reps: 13, weight: 0 },
+          { reps: 14, weight: 0 },
+          { reps: 15, weight: 0 },
+          { reps: 16, weight: 0 },
+          { reps: 17, weight: 0 },
+          { reps: 18, weight: 0 },
+          { reps: 19, weight: 0 },
+          { reps: 20, weight: 0 },],
+        logs: []
+      },
       {
         id: 1, name: "Barbell Flat Bench Press", bodyPart: 4, category: 2, favorite: true,
         repMaxes: [

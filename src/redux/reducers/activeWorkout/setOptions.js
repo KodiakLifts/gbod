@@ -1,5 +1,5 @@
 export const addSet = (state, exerciseId) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   const activeExercise = state.programs[activeProgram].exercises[exerciseId];
 
   let activeSets = state.programs[activeProgram].sets.filter(set => {
@@ -61,7 +61,7 @@ export const updateSetData = (
   sec,
   timerOn
 ) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
 
   const newState = {
     ...state,
@@ -92,7 +92,7 @@ export const updateSetData = (
 };
 
 export const updateSetReps = (state, setId, reps) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   const newState = {
     ...state,
     programs: state.programs.map((program, index) => {
@@ -117,7 +117,7 @@ export const updateSetReps = (state, setId, reps) => {
 };
 
 export const removeSet = (state, setId, exerciseId) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   let currentExercise = state.activeWorkout.currentExercise;
   let newExercises = Array.from(state.programs[activeProgram].exercises);
 

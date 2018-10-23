@@ -13,6 +13,7 @@ import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWork
 import NoteModal from "../../components/modals/NoteModal";
 import Fab from "../../components/buttons/Fab";
 import NoteButton from "../../components/buttons/NoteButton";
+import { cancelLogEdit } from "../../redux/actions/logsActions";
 
 const COLORS = require("../../styles/Colors");
 const STYLE = require("./editLogStyle");
@@ -34,7 +35,9 @@ class EditLog extends Component {
   };
 
   _backArrow = () => {
-    this.props.navigation.goBack();
+    const { navigation, cancelLogEdit } = this.props;
+    cancelLogEdit();
+    navigation.goBack();
   };
 
   closeModal = () => {
@@ -95,7 +98,8 @@ class EditLog extends Component {
 EditLog.propTypes = {
   title: PropTypes.string,
   cards: PropTypes.arrayOf(PropTypes.object),
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  cancelLogEdit: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -106,7 +110,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    cancelLogEdit: () => {
+      dispatch(cancelLogEdit());
+    }
+  };
 };
 
 export default connect(
