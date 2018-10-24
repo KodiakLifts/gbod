@@ -34,7 +34,6 @@ class ExerciseCard extends Component {
 
   _onMenuPress = () => {
     this.setState({ menuModalVisible: true });
-    this.props.deactivateDayBar();
   };
 
   closeMenuModal = () => {

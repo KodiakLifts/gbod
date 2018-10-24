@@ -196,10 +196,7 @@ export const updateWorkoutAndTimer = (
   return (dispatch, getState) => {
     dispatch(setPress(setId, exerciseId, complete, min, sec, timerOn));
     if (timerOn) {
-      const setComplete = getState().workoutData.programs[
-        getState().workoutData.activeWorkout.program
-      ].sets[setId].complete;
-      dispatch(handleTimer(setComplete));
+      dispatch(handleTimer(!complete));
     }
   };
 };
