@@ -84,6 +84,7 @@ class SetButton extends Component {
 
         <TouchableOpacity
           onPress={this._onPress}
+          delayLongPress={200}
           onLongPress={this._onLongPress}
         >
           <View style={complete ? STYLE.activeButton : STYLE.inactiveButton}>

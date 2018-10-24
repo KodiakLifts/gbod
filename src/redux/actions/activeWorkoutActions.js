@@ -207,9 +207,6 @@ export const handleTimer = setComplete => {
     let started = getState().workoutData.timer.started;
 
     clearInterval(this.timer);
-    dispatch(stopTimer());
-
-    started = getState().workoutData.timer.started;
     if (setComplete && !started) {
       this.timer = setInterval(() => {
         dispatch(decrementTimer());

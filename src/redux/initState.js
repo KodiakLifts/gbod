@@ -17,7 +17,7 @@ export const initState =
       dayBarActive: false,
       notes: ""
     },
-    activeProgramId: 3,
+    activeProgramId: 4,
     activeWorkout: {
       program: 0,
       day: 0,
@@ -28,13 +28,121 @@ export const initState =
     programs: [
       {
         id: 0,
-        name: "Freestyle",
+        name: "GreySkull LP",
         category: -1,
         description: "Holds current active program.",
         favorite: false,
-        sets: [],
-        exercises: [],
-        days: [{id: 0, name: "Day 1"}]
+        sets: [
+          {
+            id: 0, exercise: 0, day: 0, weight: 125, reps: 5, type: 0, complete: false, restMinutes: 0, restSeconds: 3, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 1, exercise: 0, day: 0, weight: 125, reps: 5, type: 1, complete: false, restMinutes: 4, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 2, exercise: 0, day: 0, weight: 125, reps: 5, type: 2, complete: false, restMinutes: 5, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 3, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 4, exercise: 1, day: 0, weight: 150, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 5, exercise: 1, day: 0, weight: 150, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 6, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 7, exercise: 2, day: 0, weight: 180, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 8, exercise: 2, day: 0, weight: 180, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 9, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 10, exercise: 3, day: 1, weight: 135, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 11, exercise: 3, day: 1, weight: 135, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 12, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 13, exercise: 4, day: 1, weight: 155, reps: 5, type: 1, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 14, exercise: 4, day: 1, weight: 155, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 15, exercise: 5, day: 1, weight: 195, reps: 5, type: 0, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 16, exercise: 5, day: 1, weight: 195, reps: 5, type: 2, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+          {
+            id: 17, exercise: 5, day: 1, weight: 195, reps: 5, type: 3, complete: false, restMinutes: 3, restSeconds: 0, timerOn: true,
+            percentage: false, percent: 50
+          },
+        ],
+        exercises: [
+          {
+            id: 0, libraryId: 1, day: 0, complete: false,
+            supersetNext: true, includeWarmup: true, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+          {
+            id: 1, libraryId: 2, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+          {
+            id: 2, libraryId: 3, day: 0, complete: false,
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+          {
+            id: 3, libraryId: 4, day: 1, complete: false,
+            supersetNext: true, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+          {
+            id: 4, libraryId: 5, day: 1, complete: false,
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+          {
+            id: 5, libraryId: 6, day: 1, complete: false,
+            supersetNext: false, includeWarmup: false, workoutsToIncrease: 1, increaseAmmount: 5, workoutsTowardsIncrease: 0,
+            barType: "", units: 0
+          },
+        ],
+        days: [
+          { id: 0, name: "A" },
+          { id: 1, name: "B" },
+          { id: 2, name: "C" }
+        ]
       },
       {
         id: 1,

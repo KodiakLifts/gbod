@@ -99,7 +99,7 @@ export const getActiveWorkoutCards = createSelector(
         const setButtons = sets.map((set, i) => {
           return (
             <SetButton
-              key={i + getKey()}
+              key={i}
               exerciseId={exercise.id}
               setId={set.id}
               reps={set.reps}
@@ -128,7 +128,7 @@ export const getActiveWorkoutCards = createSelector(
 
         const card = (
           <ExerciseCard
-            key={index + getKey()}
+            key={index}
             exerciseId={exercise.id}
             borderStyle={borderStyle}
             active={exercise.id === currentExercise}
@@ -149,7 +149,3 @@ export const getActiveWorkoutCards = createSelector(
     }
   }
 );
-
-const getKey = index => {
-  return "" + index + new Date().getTime();
-};
