@@ -21,7 +21,7 @@ import { editLogNotes } from "./notes";
 export default function logs(state = {}, action) {
   switch (action.type) {
     case FINISH_LOG_EDIT:
-      return finishLogEdit(state);
+      return finishLogEdit(state, action.newTitle);
     case CANCEL_LOG_EDIT:
       return cancelLogEdit(state);
     case GENERATE_EDIT_LOG:

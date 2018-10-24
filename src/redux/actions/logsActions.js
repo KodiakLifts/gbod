@@ -20,9 +20,10 @@ export const LOGS_ACTIONS = [
   FINISH_LOG_EDIT
 ];
 
-export const finishLogEdit = () => {
+export const finishLogEdit = newTitle => {
   return {
-    type: FINISH_LOG_EDIT
+    type: FINISH_LOG_EDIT,
+    newTitle
   };
 };
 

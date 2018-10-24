@@ -59,7 +59,8 @@ export const generateEditLog = (state, logId) => {
   return newState;
 };
 
-export const finishLogEdit = state => {
+export const finishLogEdit = (state, newTitle) => {
+  console.log(newTitle);
   const activeProgram = state.activeWorkout.program;
   const currentActiveDay = state.activeWorkout.day;
   const date = state.selectedLogDate;
@@ -105,6 +106,7 @@ export const finishLogEdit = state => {
                 if (log.title === logTitle && log.date === date) {
                   return {
                     ...log,
+                    title: newTitle,
                     supersetNext: exercise.supersetNext,
                     includeWarmup: exercise.includeWarmup,
                     workoutsToIncrease: exercise.workoutsToIncrease,
@@ -138,6 +140,7 @@ export const finishLogEdit = state => {
 
     updatedWorkoutLog = {
       ...state.workoutLogs[state.selectedWorkoutLogId],
+      title: newTitle,
       notes: state.activeWorkout.notes,
       libraryExercises: exercisesToLog.map(exercise => {
         return exercise.libraryId;

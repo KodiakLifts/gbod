@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, TouchableOpacity, Text, BackHandler } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  BackHandler,
+  TextInput
+} from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -21,7 +27,8 @@ const STYLE = require("./editLogStyle");
 class EditLog extends Component {
   state = {
     addExerciseModalVisible: false,
-    noteModalVisible: false
+    noteModalVisible: false,
+    tmpTitle: this.props.title
   };
 
   componentDidMount() {
@@ -52,6 +59,10 @@ class EditLog extends Component {
     navigation.goBack();
   };
 
+  updateTmpTitle = title => {
+    this.setState({ tmpTitle: title });
+  };
+
   closeModal = () => {
     this.setState({
       editDayModalVisible: false,
@@ -63,7 +74,7 @@ class EditLog extends Component {
 
   render() {
     const { title, cards } = this.props;
-    const { addExerciseModalVisible, noteModalVisible } = this.state;
+    const { addExerciseModalVisible, noteModalVisible, tmpTitle } = this.state;
     return (
       <ScreenTemplate
         headerContent={
@@ -89,10 +100,17 @@ class EditLog extends Component {
         subHeaderContent={
           <TouchableOpacity activeOpacity={0.6} onPress={this._dayBarPress}>
             <View style={STYLE.subHeader}>
-              <Text style={[STYLE.headerText, { fontSize: 18, padding: 6 }]}>
-                {title}
-              </Text>
-              <FinishButton logEdit />
+              <TextInput
+                style={[STYLE.headerText, { fontSize: 18, padding: 6 }]}
+                keyboardAppearance="dark"
+                placeholder={title}
+                placeholderTextColor={"white"}
+                onChangeText={this.updateTmpTitle}
+                maxLength={30}
+                width={200}
+              />
+
+              <FinishButton logEdit newTitle={tmpTitle} />
               <AddExerciseToWorkoutModal
                 closeModal={this.closeModal}
                 visible={addExerciseModalVisible}

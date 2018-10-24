@@ -10,10 +10,10 @@ const STYLE = require("./buttonStyle");
 
 class FinishButton extends Component {
   finishCase = () => {
-    const { finish, finishLogEdit, logEdit, navigation } = this.props;
+    const { finish, finishLogEdit, logEdit, navigation, newTitle } = this.props;
     if (logEdit) {
       navigation.navigate("LOGS");
-      return finishLogEdit();
+      return finishLogEdit(newTitle);
     } else {
       return finish();
     }
@@ -47,7 +47,8 @@ FinishButton.propTypes = {
   finish: PropTypes.func,
   finishLogEdit: PropTypes.func,
   logEdit: PropTypes.bool,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  newTitle: PropTypes.string
 };
 
 const mapDispatchToProps = dispatch => {
@@ -55,8 +56,8 @@ const mapDispatchToProps = dispatch => {
     finish: () => {
       dispatch(finishWorkout());
     },
-    finishLogEdit: () => {
-      dispatch(finishLogEdit());
+    finishLogEdit: newTitle => {
+      dispatch(finishLogEdit(newTitle));
     }
   };
 };
