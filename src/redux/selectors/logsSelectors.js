@@ -18,6 +18,7 @@ const getWorkoutLogs = state => state.workoutLogs;
 const getMeasurementLogs = state => state.measurementLogs;
 const getMeasurementCategories = state => state.measurementCategories;
 const getUnits = state => state.units;
+const getCurrentExercise = state => state.activeWorkout.currentExercise;
 
 export const getLogTitle = state =>
   state.workoutLogs[state.selectedWorkoutLogId].title;
@@ -30,8 +31,8 @@ const getEditLogExercises = state => {
 };
 
 export const getEditLogCards = createSelector(
-  [getEditLogSets, getEditLogExercises, getExerciseLibrary],
-  (logSets, logExercises, exerciseLibrary) => {
+  [getEditLogSets, getEditLogExercises, getExerciseLibrary, getCurrentExercise],
+  (logSets, logExercises, exerciseLibrary, currentExercise) => {
     const cards = [];
 
     if (logExercises.length !== 0) {
@@ -56,10 +57,15 @@ export const getEditLogCards = createSelector(
               type={set.type}
               min={set.restMinutes}
               sec={set.restSeconds}
-              timerOn={set.timerOn}
+              timerOn={false}
             />
           );
         });
+
+        const borderStyle =
+          exercise.id === currentExercise
+            ? CARD_STYLE.activeCard
+            : CARD_STYLE.card;
 
         const lastExercise = exercise.id === logExercises.length - 1;
 
@@ -74,8 +80,8 @@ export const getEditLogCards = createSelector(
           <ExerciseCard
             key={index}
             exerciseId={exercise.id}
-            borderStyle={CARD_STYLE.card}
-            active={false}
+            borderStyle={borderStyle}
+            active={exercise.id === currentExercise}
             name={name}
             supersetNext={exercise.supersetNext}
             includeWarmup={exercise.includeWarmup}
