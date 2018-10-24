@@ -204,13 +204,11 @@ export const updateWorkoutAndTimer = (
 export const handleTimer = setComplete => {
   this.timer;
   return (dispatch, getState) => {
-    let started = getState().workoutData.timer.started;
-
     clearInterval(this.timer);
-    if (setComplete && !started) {
+    if (setComplete) {
       this.timer = setInterval(() => {
         dispatch(decrementTimer());
-        started = getState().workoutData.timer.started;
+        const started = getState().workoutData.timer.started;
         if (!started) {
           dispatch(stopTimer());
           clearInterval(this.timer);
