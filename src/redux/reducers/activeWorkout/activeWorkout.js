@@ -28,7 +28,7 @@ import {
 } from "../../actions/activeWorkoutActions";
 
 import setPress from "./setPress";
-import { finishWorkout, resetWorkout } from "./endWorkout";
+import { finishWorkout } from "./endWorkout";
 import { setTimer, stopTimer, decrementTimer } from "./timer";
 import { updateSetData, updateSetReps, removeSet, addSet } from "./setOptions";
 import {
@@ -85,8 +85,6 @@ export default function activeWorkout(state = {}, action) {
       );
     case FINISH_WORKOUT:
       return finishWorkout(state);
-    case RESET_WORKOUT:
-      return resetWorkout(state);
     case STOP_TIMER:
       return stopTimer(state);
     case DECREMENT_TIMER:
