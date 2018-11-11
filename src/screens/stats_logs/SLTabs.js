@@ -11,7 +11,7 @@ const PETabs = createMaterialTopTabNavigator(
     LOGS: Logs
   },
   {
-    initialRouteName: "LOGS",
+    initialRouteName: "STATS",
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,
