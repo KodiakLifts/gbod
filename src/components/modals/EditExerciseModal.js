@@ -65,67 +65,62 @@ class EditExerciseModal extends Component {
   render() {
     const { visible, lastExercise } = this.props;
     const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
-
     return (
-      <View>
-        <Modal transparent visible={visible} onRequestClose={this.cancel}>
-          <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View style={STYLE.modalCard}>
-                <View style={STYLE.modalHeader}>
-                  <Text style={STYLE.modalHeaderText}>Exercise Options</Text>
-                </View>
-                <View style={STYLE.cardColumnsContainer}>
-                  <View style={STYLE.leftColumn}>
-                    <View style={STYLE.leftItem}>
-                      <Text style={STYLE.modalText}>
-                        Superset Next Exercise:
-                      </Text>
-                    </View>
-                    <View style={STYLE.leftItem}>
-                      <Text style={STYLE.modalText}>Include Warmup Sets:</Text>
-                    </View>
-                    <View style={STYLE.leftItem}>
-                      <Text style={STYLE.modalText}>Remove Exercise:</Text>
-                    </View>
+      <Modal transparent visible={visible} onRequestClose={this.cancel}>
+        <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
+          <TouchableWithoutFeedback>
+            <View style={STYLE.modalCard}>
+              <View style={STYLE.modalHeader}>
+                <Text style={STYLE.modalHeaderText}>Exercise Options</Text>
+              </View>
+              <View style={STYLE.cardColumnsContainer}>
+                <View style={STYLE.leftColumn}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Superset Next Exercise:</Text>
                   </View>
-
-                  <View style={STYLE.rightColumn}>
-                    <View style={STYLE.rightItem}>
-                      <CheckBox
-                        disabled={lastExercise}
-                        value={tmpSupersetNext}
-                        onValueChange={this.supersetNextToggle}
-                      />
-                    </View>
-                    <View style={STYLE.rightItem}>
-                      <CheckBox
-                        value={tmpIncludeWarmup}
-                        onValueChange={this.includeWarmupToggle}
-                      />
-                    </View>
-                    <View style={STYLE.rightItem}>
-                      <CheckBox
-                        value={tmpRemove}
-                        onValueChange={this.toggleRemove}
-                      />
-                    </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Include Warmup Sets:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Remove Exercise:</Text>
                   </View>
                 </View>
 
-                <View style={STYLE.footer}>
-                  <TouchableOpacity onPress={this.cancel}>
-                    <Text style={STYLE.selectedTextButton}>CANCEL</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.save}>
-                    <Text style={STYLE.selectedTextButton}>SAVE</Text>
-                  </TouchableOpacity>
+                <View style={STYLE.rightColumn}>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      disabled={lastExercise}
+                      value={tmpSupersetNext}
+                      onValueChange={this.supersetNextToggle}
+                    />
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      value={tmpIncludeWarmup}
+                      onValueChange={this.includeWarmupToggle}
+                    />
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <CheckBox
+                      value={tmpRemove}
+                      onValueChange={this.toggleRemove}
+                    />
+                  </View>
                 </View>
               </View>
-            </TouchableWithoutFeedback>
-          </TouchableOpacity>
-        </Modal>
-      </View>
+
+              <View style={STYLE.footer}>
+                <TouchableOpacity onPress={this.cancel}>
+                  <Text style={STYLE.selectedTextButton}>CANCEL</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.save}>
+                  <Text style={STYLE.selectedTextButton}>SAVE</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </TouchableOpacity>
+      </Modal>
     );
   }
 }

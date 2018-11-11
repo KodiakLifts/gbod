@@ -1,39 +1,5 @@
 import moment from "moment";
 
-export const resetWorkout = state => {
-  const activeProgram = state.activeWorkout.program;
-  const activeDay = state.activeWorkout.day;
-  const exercises = state.programs[activeProgram].exercises.filter(exercise => {
-    return exercise.day === activeDay;
-  });
-
-  const currentExercise = exercises[0].id;
-
-  const newState = {
-    ...state,
-    timer: {
-      ...state.timer,
-      started: false
-    },
-    activeWorkout: {
-      ...state.activeWorkout,
-      currentExercise: currentExercise
-    },
-    programs: state.programs.map((program, index) => {
-      if (index === activeProgram) {
-        return {
-          ...program,
-          sets: state.programs[activeProgram].sets.map(set => {
-            return { ...set, ...{ complete: false } };
-          })
-        };
-      }
-      return program;
-    })
-  };
-  return newState;
-};
-
 export const finishWorkout = state => {
   const activeProgram = state.activeWorkout.program;
   const currentActiveDay = state.activeWorkout.day;
@@ -77,8 +43,8 @@ export const finishWorkout = state => {
 
     if (exercisesToLog.length !== 0) {
       exercisesToLog.forEach(exercise => {
-        newExerciseLibrary = state.exerciseLibrary.map(e => {
-          if (e.id === exercise.libraryId) {
+        newExerciseLibrary = state.exerciseLibrary.map(libraryExercise => {
+          if (libraryExercise.id === exercise.libraryId) {
             let workoutsTowardsIncrease = exercise.workoutsTowardsIncrease;
             if (exercise.complete) {
               workoutsTowardsIncrease++;
@@ -92,7 +58,7 @@ export const finishWorkout = state => {
               });
             }
             return {
-              ...e,
+              ...libraryExercise,
               logs: state.exerciseLibrary[exercise.libraryId].logs.concat([
                 {
                   id: state.exerciseLibrary[exercise.libraryId].logs.length,
@@ -123,7 +89,7 @@ export const finishWorkout = state => {
               ])
             };
           }
-          return e;
+          return libraryExercise;
         });
       });
     }

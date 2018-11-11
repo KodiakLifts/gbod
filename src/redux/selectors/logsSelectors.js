@@ -5,6 +5,12 @@ import ExerciseSummaryItem from "../../components/cards/ExerciseSummaryItem";
 import NotesItem from "../../components/cards/NotesItem";
 import MeasurementsItem from "../../components/cards/MeasurementsItem";
 import LogItem from "../../components/cards/LogItem";
+import SetButton from "../../components/buttons/SetButton";
+import ExerciseCard from "../../components/cards/ExerciseCard";
+
+const CARD_STYLE = require("../../components/cards/cardStyle");
+const EDIT_LOG_PROGRAM_ID = 2;
+const EXERCISE_NAME_LENGTH = 24;
 
 const getExerciseLibrary = state => state.exerciseLibrary;
 const getSelectedLogDate = state => state.selectedLogDate;
@@ -12,6 +18,86 @@ const getWorkoutLogs = state => state.workoutLogs;
 const getMeasurementLogs = state => state.measurementLogs;
 const getMeasurementCategories = state => state.measurementCategories;
 const getUnits = state => state.units;
+const getCurrentExercise = state => state.activeWorkout.currentExercise;
+
+export const getLogTitle = state =>
+  state.workoutLogs[state.selectedWorkoutLogId].title;
+
+const getEditLogSets = state => {
+  return state.programs[EDIT_LOG_PROGRAM_ID].sets;
+};
+const getEditLogExercises = state => {
+  return state.programs[EDIT_LOG_PROGRAM_ID].exercises;
+};
+
+export const getEditLogCards = createSelector(
+  [getEditLogSets, getEditLogExercises, getExerciseLibrary, getCurrentExercise],
+  (logSets, logExercises, exerciseLibrary, currentExercise) => {
+    const cards = [];
+
+    if (logExercises.length !== 0) {
+      logExercises.map((exercise, index) => {
+        const includeWarmup = exercise.includeWarmup;
+
+        const sets = logSets.filter(set => {
+          if (!includeWarmup) {
+            return set.exercise === exercise.id && set.type !== 0;
+          }
+          return set.exercise === exercise.id;
+        });
+
+        const setButtons = sets.map((set, i) => {
+          return (
+            <SetButton
+              key={i}
+              exerciseId={exercise.id}
+              setId={set.id}
+              reps={set.reps}
+              weight={set.weight}
+              type={set.type}
+              min={set.restMinutes}
+              sec={set.restSeconds}
+              timerOn={false}
+            />
+          );
+        });
+
+        const borderStyle =
+          exercise.id === currentExercise
+            ? CARD_STYLE.activeCard
+            : CARD_STYLE.card;
+
+        const lastExercise = exercise.id === logExercises.length - 1;
+
+        const firstExercise = exercise.id === 0;
+
+        let name = exerciseLibrary[exercise.libraryId].name;
+        if (name.length > EXERCISE_NAME_LENGTH) {
+          name = name.substring(0, EXERCISE_NAME_LENGTH) + "..";
+        }
+
+        const card = (
+          <ExerciseCard
+            key={index}
+            exerciseId={exercise.id}
+            borderStyle={borderStyle}
+            active={exercise.id === currentExercise}
+            name={name}
+            supersetNext={exercise.supersetNext}
+            includeWarmup={exercise.includeWarmup}
+            firstExercise={firstExercise}
+            lastExercise={lastExercise}
+            setButtons={setButtons}
+          />
+        );
+        cards.push(card);
+      });
+      return cards;
+    } else {
+      return null;
+    }
+  }
+);
 
 export const getLogCards = createSelector(
   [

@@ -1,3 +1,5 @@
+const ACTIVE_PROGRAM = 0;
+
 export const updateSelectedProgramCategory = (state, categoryId) => {
   const newState = {
     ...state,
@@ -71,18 +73,33 @@ export const updateProgramData = (
   categoryId,
   favorite
 ) => {
-  let activeProgram;
-  current
-    ? (activeProgram = programId)
-    : (activeProgram = state.activeWorkout.program);
+  let activeProgram = state.programs[ACTIVE_PROGRAM];
+  let activeWorkout = state.activeWorkout;
+  if (current && state.activeProgramId !== programId) {
+    activeProgram = {
+      ...activeProgram,
+      name: name,
+      sets: state.programs[programId].sets,
+      exercises: state.programs[programId].exercises,
+      days: state.programs[programId].days
+    };
+    activeWorkout = {
+      program: ACTIVE_PROGRAM,
+      day: 0,
+      currentExercise: 0,
+      dayBarActive: false,
+      notes: ""
+    };
+  }
 
   const newState = {
     ...state,
-    activeWorkout: {
-      ...state.activeWorkout,
-      program: activeProgram
-    },
+    activeProgramId: current ? programId : state.activeProgramId,
+    activeWorkout: activeWorkout,
     programs: state.programs.map(program => {
+      if (program.id === ACTIVE_PROGRAM) {
+        return activeProgram;
+      }
       if (program.id === programId) {
         return {
           ...program,
@@ -94,6 +111,5 @@ export const updateProgramData = (
       return program;
     })
   };
-  console.log(newState.programs);
   return newState;
 };

@@ -2,12 +2,10 @@ import React, { Component } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import {
-  setPress,
-  updateWorkoutAndTimer
-} from "../../redux/actions/activeWorkoutActions";
+import { updateWorkoutAndTimer } from "../../redux/actions/activeWorkoutActions";
 import EditSetModal from "../modals/EditSetModal";
 import SetRepsModal from "../modals/SetRepsModal";
+import { getSetComplete } from "../../redux/selectors/activeWorkoutSelectors";
 
 const STYLE = require("./buttonStyle");
 const AMRAP = 2;
@@ -24,10 +22,12 @@ class SetButton extends Component {
       setId,
       exerciseId,
       type,
-      complete
+      complete,
+      min,
+      sec,
+      timerOn
     } = this.props;
-
-    updateWorkoutAndTimer(setId, exerciseId);
+    updateWorkoutAndTimer(setId, exerciseId, complete, min, sec, timerOn);
 
     if (type === AMRAP && complete !== true) {
       this.setState({ setRepsModalVisible: true });
@@ -54,7 +54,8 @@ class SetButton extends Component {
       type,
       min,
       sec,
-      complete
+      complete,
+      timerOn
     } = this.props;
 
     const { editSetModalVisible, setRepsModalVisible } = this.state;
@@ -70,6 +71,7 @@ class SetButton extends Component {
           type={type}
           min={min}
           sec={sec}
+          timerOn={timerOn}
           closeModal={this.closeModal}
         />
 
@@ -82,6 +84,7 @@ class SetButton extends Component {
 
         <TouchableOpacity
           onPress={this._onPress}
+          delayLongPress={200}
           onLongPress={this._onLongPress}
         >
           <View style={complete ? STYLE.activeButton : STYLE.inactiveButton}>
@@ -118,28 +121,23 @@ SetButton.propTypes = {
   min: PropTypes.number,
   sec: PropTypes.number,
   timerOn: PropTypes.bool,
-  updateActiveWorkoutUI: PropTypes.func,
+  setPressOnly: PropTypes.func,
   updateWorkoutAndTimer: PropTypes.func,
-
   complete: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    complete:
-      state.workoutData.programs[state.workoutData.activeWorkout.program].sets[
-        ownProps.setId
-      ].complete
+    complete: getSetComplete(state.workoutData, ownProps.setId)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateActiveWorkoutUI: (setId, exerciseId) => {
-      dispatch(setPress(setId, exerciseId));
-    },
-    updateWorkoutAndTimer: (setId, exerciseId, started, complete) => {
-      dispatch(updateWorkoutAndTimer(setId, exerciseId, started, complete));
+    updateWorkoutAndTimer: (setId, exerciseId, complete, min, sec, timerOn) => {
+      dispatch(
+        updateWorkoutAndTimer(setId, exerciseId, complete, min, sec, timerOn)
+      );
     }
   };
 };

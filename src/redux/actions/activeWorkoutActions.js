@@ -185,29 +185,30 @@ export const updateDayData = (dayId, name, remove) => {
   };
 };
 
-export const updateWorkoutAndTimer = (setId, exerciseId) => {
+export const updateWorkoutAndTimer = (
+  setId,
+  exerciseId,
+  complete,
+  min,
+  sec,
+  timerOn
+) => {
   return (dispatch, getState) => {
-    dispatch(setPress(setId, exerciseId));
-    const setComplete = getState().workoutData.programs[
-      getState().workoutData.activeWorkout.program
-    ].sets[setId].complete;
-    dispatch(handleTimer(setComplete));
+    dispatch(setPress(setId, exerciseId, complete, min, sec, timerOn));
+    if (timerOn) {
+      dispatch(handleTimer(!complete));
+    }
   };
 };
 
 export const handleTimer = setComplete => {
   this.timer;
   return (dispatch, getState) => {
-    let started = getState().workoutData.timer.started;
-
     clearInterval(this.timer);
-    dispatch(stopTimer());
-
-    started = getState().workoutData.timer.started;
-    if (setComplete && !started) {
+    if (setComplete) {
       this.timer = setInterval(() => {
         dispatch(decrementTimer());
-        started = getState().workoutData.timer.started;
+        const started = getState().workoutData.timer.started;
         if (!started) {
           dispatch(stopTimer());
           clearInterval(this.timer);
@@ -234,11 +235,15 @@ export const stopTimer = () => {
   };
 };
 
-export const setPress = (setId, exerciseId) => {
+export const setPress = (setId, exerciseId, complete, min, sec, timerOn) => {
   return {
     type: SET_PRESS,
     setId,
-    exerciseId
+    exerciseId,
+    complete,
+    min,
+    sec,
+    timerOn
   };
 };
 
@@ -250,7 +255,15 @@ export const updateSetReps = (setId, reps) => {
   };
 };
 
-export const updateSetData = (setId, weight, reps, setType, min, sec) => {
+export const updateSetData = (
+  setId,
+  weight,
+  reps,
+  setType,
+  min,
+  sec,
+  timerOn
+) => {
   return {
     type: UPDATE_SET_DATA,
     setId,
@@ -258,7 +271,8 @@ export const updateSetData = (setId, weight, reps, setType, min, sec) => {
     reps,
     setType,
     min,
-    sec
+    sec,
+    timerOn
   };
 };
 

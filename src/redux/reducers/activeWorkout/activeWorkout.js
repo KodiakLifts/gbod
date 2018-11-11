@@ -27,8 +27,8 @@ import {
   UPDATE_ACTIVE_NOTES
 } from "../../actions/activeWorkoutActions";
 
-import setPress from "./_oldSetPress";
-import { finishWorkout, resetWorkout } from "./endWorkout";
+import setPress from "./setPress";
+import { finishWorkout } from "./endWorkout";
 import { setTimer, stopTimer, decrementTimer } from "./timer";
 import { updateSetData, updateSetReps, removeSet, addSet } from "./setOptions";
 import {
@@ -55,7 +55,15 @@ import { updateActiveNotes } from "./notes";
 export default function activeWorkout(state = {}, action) {
   switch (action.type) {
     case SET_PRESS:
-      return setPress(state, action.setId, action.exerciseId);
+      return setPress(
+        state,
+        action.setId,
+        action.exerciseId,
+        action.complete,
+        action.min,
+        action.sec,
+        action.timerOn
+      );
 
     case UPDATE_SET_DATA:
       return updateSetData(
@@ -65,7 +73,8 @@ export default function activeWorkout(state = {}, action) {
         action.reps,
         action.setType,
         action.min,
-        action.sec
+        action.sec,
+        action.timerOn
       );
     case UPDATE_EXERCISE_DATA:
       return updateExerciseData(
@@ -76,8 +85,6 @@ export default function activeWorkout(state = {}, action) {
       );
     case FINISH_WORKOUT:
       return finishWorkout(state);
-    case RESET_WORKOUT:
-      return resetWorkout(state);
     case STOP_TIMER:
       return stopTimer(state);
     case DECREMENT_TIMER:

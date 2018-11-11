@@ -22,7 +22,7 @@ const PICKER_WIDTH = 160;
 class NewProgramModal extends Component {
   state = {
     tmpCurrentProgram: true,
-    tmpName: "New Program " + this.props.programs.length,
+    tmpName: "New Program " + this.props.programs.length - 2,
     tmpTemplate: 0,
     tmpCategory: 0,
     tmpDescription: "",
@@ -90,7 +90,7 @@ class NewProgramModal extends Component {
       tmpCategory,
       tmpFavorite
     } = this.state;
-    const index = programs.length;
+    const index = programs.length - 2;
     const title = "New Program ";
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
