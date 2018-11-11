@@ -43,7 +43,7 @@ class AddMeasurementModal extends Component {
   save = () => {
     const { categories, addMeasurement, closeModal } = this.props;
     const { tmpCategory, tmpAmmount } = this.state;
-    addMeasurement(categories[tmpCategory].id, tmpAmmount);
+    addMeasurement(tmpCategory, tmpAmmount);
     closeModal();
   };
 
