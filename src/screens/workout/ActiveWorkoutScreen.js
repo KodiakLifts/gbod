@@ -13,7 +13,9 @@ import SetTimer from "../../components/timers/SetTimer";
 import EditDayModal from "../../components/modals/EditDayModal";
 import NewDayModal from "../../components/modals/NewDayModal";
 import AddExerciseToWorkoutModal from "../../components/modals/AddExerciseToWorkoutModal";
+import NoteModal from "../../components/modals/NoteModal";
 import Fab from "../../components/buttons/Fab";
+import NoteButton from "../../components/buttons/NoteButton";
 import {
   updateActiveDay,
   dayBarPress,
@@ -32,6 +34,7 @@ class ActiveWorkout extends Component {
     editDayModalVisible: false,
     newDayModalVisible: false,
     addExerciseModalVisible: false,
+    noteModalVisible: false,
     day: this.props.activeDay,
     days: this.props.days
   };
@@ -81,13 +84,16 @@ class ActiveWorkout extends Component {
     this.setState({ editDayModalVisible: true });
   };
 
-  _settingsOnPress = () => {};
+  _notePress = () => {
+    this.setState({ noteModalVisible: true });
+  };
 
   closeModal = () => {
     this.setState({
       editDayModalVisible: false,
       newDayModalVisible: false,
-      addExerciseModalVisible: false
+      addExerciseModalVisible: false,
+      noteModalVisible: false
     });
   };
 
@@ -177,6 +183,7 @@ class ActiveWorkout extends Component {
       editDayModalVisible,
       newDayModalVisible,
       addExerciseModalVisible,
+      noteModalVisible,
       day,
       days
     } = this.state;
@@ -184,19 +191,17 @@ class ActiveWorkout extends Component {
       <ScreenTemplate
         headerContent={
           <View style={STYLE.headerContent}>
+            <NoteModal
+              closeModal={this.closeModal}
+              visible={noteModalVisible}
+            />
             <TouchableOpacity>
               <Text style={STYLE.headerText}>{title}</Text>
             </TouchableOpacity>
 
             <View style={STYLE.timerSettingsContainer}>
               <SetTimer />
-              <TouchableOpacity onPress={this._settingsOnPress}>
-                <Icon
-                  name={"sticky-note"}
-                  size={25}
-                  color={COLORS.SECONDARYCOLOR}
-                />
-              </TouchableOpacity>
+              <NoteButton onPress={this._notePress} />
             </View>
           </View>
         }
@@ -212,6 +217,7 @@ class ActiveWorkout extends Component {
               >
                 {createItems(days)}
               </Picker>
+
               <EditDayModal
                 closeModal={this.closeModal}
                 visible={editDayModalVisible}

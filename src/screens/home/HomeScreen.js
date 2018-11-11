@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import ScreenTemplate from "../templates/ScreenTemplate";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
@@ -21,7 +21,9 @@ class Home extends Component {
             }}
           >
             <Text style={TEXTSTYLE.headerText}>Home</Text>
-            <Icon iconName="cog" iconSize={28} color={COLORS.SECONDARYCOLOR} />
+            <TouchableOpacity>
+              <Icon name="home" size={28} color={COLORS.SECONDARYCOLOR} />
+            </TouchableOpacity>
           </View>
         }
         scrollContent={scrollContent}

@@ -1,6 +1,6 @@
 export const shiftExerciseDown = (state, exerciseId) => {
-  const activeProgram = state.activeWorkout.program;
-  const newExercises = state.programs[activeProgram].exercises;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const newExercises = Array.from(state.programs[activeProgram].exercises);
 
   const exerciseToShift = newExercises[exerciseId];
   newExercises[exerciseId] = newExercises[exerciseId + 1];
@@ -46,8 +46,8 @@ export const shiftExerciseDown = (state, exerciseId) => {
 };
 
 export const shiftExerciseUp = (state, exerciseId) => {
-  const activeProgram = state.activeWorkout.program;
-  const newExercises = state.programs[activeProgram].exercises;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
+  const newExercises = Array.from(state.programs[activeProgram].exercises);
 
   const exerciseToShift = newExercises[exerciseId];
   newExercises[exerciseId] = newExercises[exerciseId - 1];
@@ -227,29 +227,36 @@ export const updateExerciseData = (
 export const removeExercise = (state, exerciseId) => {
   const activeProgram = state.activeWorkout.program;
 
-  let newSets = state.programs[activeProgram].sets.filter(set => {
+  let newSets = [];
+  let currentSet = 0;
+
+  newSets = state.programs[activeProgram].sets.filter(set => {
     return set.exercise !== exerciseId;
   });
-  newSets.map((set, index) => {
-    set.id = index;
-  });
-
-  let newExercises = state.programs[activeProgram].exercises.filter(
-    exercise => {
-      return exercise.id !== exerciseId;
-    }
-  );
-  newExercises.map((exercise, index) => {
-    newSets.map(set => {
-      if (set.exercise === exercise.id) {
-        set.exercise = index;
-      }
+  if (newSets.length !== 0) {
+    newSets.map((set, index) => {
+      set.id = index;
     });
-    exercise.id = index;
-  });
+    currentSet = newSets[0].id;
+  }
 
-  const currentSet = newSets[0].id;
-  const currentExercise = newSets[0].id;
+  let newExercises = [];
+  let currentExercise = 0;
+
+  newExercises = state.programs[activeProgram].exercises.filter(exercise => {
+    return exercise.id !== exerciseId;
+  });
+  if (newExercises.length !== 0) {
+    newExercises.map((exercise, index) => {
+      newSets.map(set => {
+        if (set.exercise === exercise.id) {
+          set.exercise = index;
+        }
+      });
+      exercise.id = index;
+    });
+    currentExercise = newSets[0].id;
+  }
 
   const newState = {
     ...state,

@@ -26,7 +26,7 @@ module.exports = StyleSheet.create({
     fontWeight: "bold",
     textAlignVertical: "center",
     includeFontPadding: false,
-    marginBottom: 15
+    marginBottom: 12
   },
   cardColumnsContainer: {
     flexDirection: "row",
@@ -135,5 +135,10 @@ module.exports = StyleSheet.create({
     flexGrow: 1,
     alignItems: "center",
     backgroundColor: COLORS.BACKCOLOR
+  },
+  noteText: {
+    color: COLORS.ACTIVECOLOR,
+    fontSize: 18,
+    padding: 0
   }
 });

@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  Picker,
   TextInput,
   CheckBox,
   Alert

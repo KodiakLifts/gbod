@@ -11,7 +11,7 @@ export const setCurrentDay = (state, dayId) => {
 
 export const shiftDayDown = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  const newDays = state.programs[activeProgram].days;
+  const newDays = Array.from(state.programs[activeProgram].days);
 
   const dayToShift = newDays[dayId];
   newDays[dayId] = newDays[dayId + 1];
@@ -66,7 +66,7 @@ export const shiftDayDown = (state, dayId) => {
 
 export const shiftDayUp = (state, dayId) => {
   const activeProgram = state.activeWorkout.program;
-  const newDays = state.programs[activeProgram].days;
+  const newDays = Array.from(state.programs[activeProgram].days);
 
   const dayToShift = newDays[dayId];
   newDays[dayId] = newDays[dayId - 1];
@@ -220,6 +220,38 @@ export const deleteDay = (state, dayId) => {
   const currentDay = newDays[0].id;
   const currentExercise = newExercises[0].id;
 
+  let newWorkoutLogs = [];
+  if (state.workoutLogs.length !== 0) {
+    newWorkoutLogs = state.workoutLogs.filter(log => {
+      return log.day !== dayId;
+    });
+    if (newWorkoutLogs.length !== 0) {
+      newWorkoutLogs.map((log, index) => {
+        log.id = index;
+        if (log.day >= dayId) {
+          log.day--;
+        }
+      });
+    }
+  }
+
+  let newExerciseLibrary = [];
+  if (state.exerciseLibrary.length !== 0) {
+    newExerciseLibrary = state.exerciseLibrary.map(exercise => {
+      let newExercise = Object.assign({}, exercise);
+      newExercise.logs = newExercise.logs.filter(log => {
+        return log.day !== dayId;
+      });
+      newExercise.logs.map((log, index) => {
+        log.id = index;
+        if (log.day >= dayId) {
+          log.day--;
+        }
+      });
+      return newExercise;
+    });
+  }
+
   const newState = {
     ...state,
     activeWorkout: {
@@ -227,6 +259,8 @@ export const deleteDay = (state, dayId) => {
       day: currentDay,
       currentExercise: currentExercise
     },
+    exerciseLibrary: newExerciseLibrary,
+    workoutLogs: newWorkoutLogs,
     programs: state.programs.map(program => {
       if (program.id === activeProgram) {
         return {

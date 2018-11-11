@@ -22,7 +22,7 @@ export const addSet = (state, exerciseId) => {
     timerOn: true
   };
 
-  const oldSets = state.programs[activeProgram].sets;
+  const oldSets = Array.from(state.programs[activeProgram].sets);
   const newSets = [
     ...oldSets.slice(0, newSetId),
     newSet,
@@ -58,9 +58,10 @@ export const updateSetData = (
   reps,
   setType,
   min,
-  sec
+  sec,
+  timerOn
 ) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
 
   const newState = {
     ...state,
@@ -72,11 +73,12 @@ export const updateSetData = (
             if (set.id === setId) {
               return {
                 ...set,
-                ...{ weight: weight },
-                ...{ reps: reps },
-                ...{ type: setType },
-                ...{ restMinutes: min },
-                ...{ restSeconds: sec }
+                weight: weight,
+                reps: reps,
+                type: setType,
+                restMinutes: min,
+                restSeconds: sec,
+                timerOn: timerOn
               };
             }
             return set;
@@ -90,7 +92,7 @@ export const updateSetData = (
 };
 
 export const updateSetReps = (state, setId, reps) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   const newState = {
     ...state,
     programs: state.programs.map((program, index) => {
@@ -115,9 +117,9 @@ export const updateSetReps = (state, setId, reps) => {
 };
 
 export const removeSet = (state, setId, exerciseId) => {
-  const activeProgram = state.activeWorkout.program;
+  const activeProgram = state.editLogMode ? 0 : state.activeWorkout.program;
   let currentExercise = state.activeWorkout.currentExercise;
-  let newExercises = state.programs[activeProgram].exercises;
+  let newExercises = Array.from(state.programs[activeProgram].exercises);
 
   let newSets = state.programs[activeProgram].sets.filter(
     set => set.id !== setId

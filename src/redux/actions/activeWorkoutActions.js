@@ -23,6 +23,7 @@ export const DEACTIVATE_DAY_BAR = "DEACTIVATE_DAY_BAR";
 export const SHIFT_DAY_DOWN = "SHIFT_DAY_DOWN";
 export const SHIFT_DAY_UP = "SHIFT_DAY_UP";
 export const SET_CURRENT_DAY = "SET_CURRENT_DAY";
+export const UPDATE_ACTIVE_NOTES = "UPDATE_ACTIVE_NOTES";
 
 export const ACTIVE_WORKOUT_ACTIONS = [
   SET_PRESS,
@@ -49,8 +50,16 @@ export const ACTIVE_WORKOUT_ACTIONS = [
   DEACTIVATE_DAY_BAR,
   SHIFT_DAY_DOWN,
   SHIFT_DAY_UP,
-  SET_CURRENT_DAY
+  SET_CURRENT_DAY,
+  UPDATE_ACTIVE_NOTES
 ];
+
+export const updateActiveNotes = notes => {
+  return {
+    type: UPDATE_ACTIVE_NOTES,
+    notes
+  };
+};
 
 export const setCurrentDay = dayId => {
   return {
@@ -176,29 +185,30 @@ export const updateDayData = (dayId, name, remove) => {
   };
 };
 
-export const updateWorkoutAndTimer = (setId, exerciseId) => {
+export const updateWorkoutAndTimer = (
+  setId,
+  exerciseId,
+  complete,
+  min,
+  sec,
+  timerOn
+) => {
   return (dispatch, getState) => {
-    dispatch(setPress(setId, exerciseId));
-    const setComplete = getState().workoutData.programs[
-      getState().workoutData.activeWorkout.program
-    ].sets[setId].complete;
-    dispatch(handleTimer(setComplete));
+    dispatch(setPress(setId, exerciseId, complete, min, sec, timerOn));
+    if (timerOn) {
+      dispatch(handleTimer(!complete));
+    }
   };
 };
 
 export const handleTimer = setComplete => {
   this.timer;
   return (dispatch, getState) => {
-    let started = getState().workoutData.timer.started;
-
     clearInterval(this.timer);
-    dispatch(stopTimer());
-
-    started = getState().workoutData.timer.started;
-    if (setComplete && !started) {
+    if (setComplete) {
       this.timer = setInterval(() => {
         dispatch(decrementTimer());
-        started = getState().workoutData.timer.started;
+        const started = getState().workoutData.timer.started;
         if (!started) {
           dispatch(stopTimer());
           clearInterval(this.timer);
@@ -225,11 +235,15 @@ export const stopTimer = () => {
   };
 };
 
-export const setPress = (setId, exerciseId) => {
+export const setPress = (setId, exerciseId, complete, min, sec, timerOn) => {
   return {
     type: SET_PRESS,
     setId,
-    exerciseId
+    exerciseId,
+    complete,
+    min,
+    sec,
+    timerOn
   };
 };
 
@@ -241,7 +255,15 @@ export const updateSetReps = (setId, reps) => {
   };
 };
 
-export const updateSetData = (setId, weight, reps, setType, min, sec) => {
+export const updateSetData = (
+  setId,
+  weight,
+  reps,
+  setType,
+  min,
+  sec,
+  timerOn
+) => {
   return {
     type: UPDATE_SET_DATA,
     setId,
@@ -249,7 +271,8 @@ export const updateSetData = (setId, weight, reps, setType, min, sec) => {
     reps,
     setType,
     min,
-    sec
+    sec,
+    timerOn
   };
 };
 

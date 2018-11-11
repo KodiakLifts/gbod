@@ -7,15 +7,15 @@ import {
   View,
   CheckBox,
   TextInput,
-  Alert,
-  Picker
+  Picker,
+  Alert
 } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
-  updateProgram,
-  deleteProgram
-} from "../../redux/actions/programsActions";
+  updateExerciseData,
+  deleteExercise
+} from "../../redux/actions/exercisesActions";
 
 const STYLE = require("./modalStyle");
 const COLORS = require("../../styles/Colors");
@@ -23,66 +23,68 @@ const COLORS = require("../../styles/Colors");
 const TEXT_ENTRY_WIDTH = 160;
 const PICKER_WIDTH = 160;
 
-class ProgramOptionsModal extends Component {
+//JUST A COPY OF EDITEXERCISEMODAL
+class ExerciseSummaryModal extends Component {
   state = {
-    tmpCurrentProgram: this.props.isCurrentProgram,
     tmpName: this.props.title,
+    tmpOneRepMax: this.props.oneRepMax,
     tmpCategory: this.props.category,
+    tmpBodyPart: this.props.bodyPart,
     tmpFavorite: this.props.favorite,
     tmpDelete: false
   };
 
-  componentWillReceiveProps(newProps) {
-    if (this.props.isCurrentProgram !== newProps.isCurrentProgram) {
-      this.setState({ tmpCurrentProgram: newProps.isCurrentProgram });
+  updateTmpOneRepMax = weight => {
+    if (weight == null) {
+      this.setState({ tmpOneRepMax: this.props.oneRepMax });
+    } else {
+      this.setState({ tmpOneRepMax: parseInt(weight) });
     }
-    if (this.props.favorite !== newProps.favorite) {
-      this.setState({ tmpFavorite: newProps.tmpFavorite });
+  };
+
+  updateTmpName = name => {
+    if (name == null) {
+      this.setState({ tmpName: this.props.title });
+    } else {
+      this.setState({ tmpName: name });
     }
-  }
+  };
+
+  updateTmpCategory = category => {
+    this.setState({ tmpCategory: category });
+  };
+
+  updateTmpBodyPart = bodyPart => {
+    this.setState({ tmpBodyPart: bodyPart });
+  };
 
   toggleFavorite = checked => {
     this.setState({ tmpFavorite: checked });
-  };
-
-  updateTmpCategory = categoryId => {
-    this.setState({ tmpCategory: categoryId });
-  };
-
-  updateTmpName = tmpName => {
-    if (tmpName == null) {
-      this.setState({ tmpName: this.props.title });
-    } else {
-      this.setState({ tmpName: tmpName });
-    }
-  };
-
-  cancel = () => {
-    this.props.closeModal();
-  };
-
-  toggleCurrentProgram = checked => {
-    this.setState({ tmpCurrentProgram: checked });
   };
 
   toggleDelete = checked => {
     this.setState({ tmpDelete: checked });
   };
 
+  cancel = () => {
+    this.props.closeModal();
+  };
+
   save = () => {
     const {
-      updateProgramData,
-      deleteProgram,
-      programId,
+      libraryId,
       closeModal,
+      deleteExercise,
+      updateExerciseData,
       title
     } = this.props;
     const {
-      tmpCurrentProgram,
+      tmpOneRepMax,
       tmpName,
-      tmpDelete,
       tmpCategory,
-      tmpFavorite
+      tmpBodyPart,
+      tmpFavorite,
+      tmpDelete
     } = this.state;
 
     if (tmpDelete) {
@@ -90,9 +92,9 @@ class ProgramOptionsModal extends Component {
         "Delete Exercise",
         "Are you sure you want to delete " +
           title +
-          " from the programs library?",
+          " from the exercise library?",
         [
-          { text: "CONFIRM", onPress: () => deleteProgram(programId) },
+          { text: "CONFIRM", onPress: () => deleteExercise(libraryId) },
           {
             text: "CANCEL",
             onPress: () => this.setState({ tmpDelete: false }),
@@ -102,25 +104,22 @@ class ProgramOptionsModal extends Component {
         { cancelable: false }
       );
     } else {
-      updateProgramData(
-        programId,
-        tmpCurrentProgram,
+      updateExerciseData(
+        libraryId,
+        tmpOneRepMax,
         tmpName,
         tmpCategory,
+        tmpBodyPart,
         tmpFavorite
       );
     }
+    this.setState({ tmpDelete: false });
     closeModal();
   };
 
   render() {
-    const { visible, title, isCurrentProgram, categories } = this.props;
-    const {
-      tmpCurrentProgram,
-      tmpDelete,
-      tmpCategory,
-      tmpFavorite
-    } = this.state;
+    const { visible, title, oneRepMax, categories, bodyParts } = this.props;
+    const { tmpBodyPart, tmpCategory, tmpFavorite, tmpDelete } = this.state;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
@@ -132,7 +131,7 @@ class ProgramOptionsModal extends Component {
               <View style={STYLE.cardColumnsContainer}>
                 <View style={[STYLE.leftColumn, { marginLeft: 6 }]}>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>Current Program:</Text>
+                    <Text style={STYLE.modalText}>One Rep max:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Rename:</Text>
@@ -141,10 +140,13 @@ class ProgramOptionsModal extends Component {
                     <Text style={STYLE.modalText}>Category:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Body Part:</Text>
+                  </View>
+                  <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Favorite:</Text>
                   </View>
                   <View style={STYLE.leftItem}>
-                    <Text style={STYLE.modalText}>Delete Program:</Text>
+                    <Text style={STYLE.modalText}>Delete:</Text>
                   </View>
                 </View>
 
@@ -155,11 +157,18 @@ class ProgramOptionsModal extends Component {
                   ]}
                 >
                   <View style={STYLE.rightItem}>
-                    <CheckBox
-                      disabled={isCurrentProgram}
-                      value={tmpCurrentProgram}
-                      onValueChange={this.toggleCurrentProgram}
-                    />
+                    <View style={STYLE.textInputContainer}>
+                      <TextInput
+                        style={STYLE.modalTextInput}
+                        keyboardAppearance="dark"
+                        keyboardType="numeric"
+                        placeholder={String(oneRepMax)}
+                        placeholderTextColor={COLORS.INACTIVECOLOR}
+                        onChangeText={this.updateTmpOneRepMax}
+                        maxLength={4}
+                        width={TEXT_ENTRY_WIDTH}
+                      />
+                    </View>
                   </View>
                   <View style={STYLE.rightItem}>
                     <View style={STYLE.textInputContainer}>
@@ -181,6 +190,15 @@ class ProgramOptionsModal extends Component {
                       onValueChange={this.updateTmpCategory}
                     >
                       {createItems(categories)}
+                    </Picker>
+                  </View>
+                  <View style={STYLE.rightItem}>
+                    <Picker
+                      style={[STYLE.picker, { width: PICKER_WIDTH }]}
+                      selectedValue={tmpBodyPart}
+                      onValueChange={this.updateTmpBodyPart}
+                    >
+                      {createItems(bodyParts)}
                     </Picker>
                   </View>
                   <View style={STYLE.rightItem}>
@@ -220,33 +238,51 @@ const createItems = items => {
   });
 };
 
-ProgramOptionsModal.propTypes = {
+ExerciseSummaryModal.propTypes = {
   title: PropTypes.string,
   visible: PropTypes.bool,
-  isCurrentProgram: PropTypes.bool,
-  programId: PropTypes.number,
-  category: PropTypes.number,
   closeModal: PropTypes.func,
-  updateProgramData: PropTypes.func,
-  deleteProgram: PropTypes.func,
+  libraryId: PropTypes.number,
+  category: PropTypes.number,
+  bodyPart: PropTypes.number,
+  favorite: PropTypes.bool,
+  oneRepMax: PropTypes.number,
   categories: PropTypes.arrayOf(PropTypes.object),
-  favorite: PropTypes.bool
+  bodyParts: PropTypes.arrayOf(PropTypes.object),
+  deleteExercise: PropTypes.func,
+  updateExerciseData: PropTypes.func
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
-    isCurrentProgram: state.workoutData.activeProgramId === ownProps.programId,
-    categories: state.workoutData.programCategories.slice(2)
+    categories: state.workoutData.exerciseCategories.slice(1),
+    bodyParts: state.workoutData.bodyParts.slice(1)
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateProgramData: (programId, current, name, category, favorite) => {
-      dispatch(updateProgram(programId, current, name, category, favorite));
+    deleteExercise: libraryId => {
+      dispatch(deleteExercise(libraryId));
     },
-    deleteProgram: programId => {
-      dispatch(deleteProgram(programId));
+    updateExerciseData: (
+      libraryId,
+      oneRepMax,
+      name,
+      category,
+      bodyPart,
+      favorite
+    ) => {
+      dispatch(
+        updateExerciseData(
+          libraryId,
+          oneRepMax,
+          name,
+          category,
+          bodyPart,
+          favorite
+        )
+      );
     }
   };
 };
@@ -254,4 +290,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ProgramOptionsModal);
+)(ExerciseSummaryModal);

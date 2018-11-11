@@ -20,9 +20,20 @@ const TEXT_ENTRY_WIDTH = 70;
 class NewDayModal extends Component {
   state = {
     prevDayId: this.props.currentDay,
-    placeHolder: "Day " + this.props.days.length,
-    tmpName: "Day " + this.props.days.length
+    placeHolder: "Day " + (this.props.days.length + 1),
+    tmpName: "Day " + (this.props.days.length + 1),
+    tmpDayNumber: this.props.days.length + 1
   };
+
+  componentWillReceiveProps(newProps) {
+    if (this.state.tmpDayNumber !== newProps.days.length + 1) {
+      this.setState({
+        tmpDayNumber: newProps.days.length + 1,
+        placeHolder: "Day " + (newProps.days.length + 1),
+        tmpName: "Day " + (newProps.days.length + 1)
+      });
+    }
+  }
 
   updateTmpName = tmpName => {
     if (tmpName == null) {
@@ -71,7 +82,7 @@ class NewDayModal extends Component {
                         placeholder={placeHolder}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpName}
-                        maxLength={20}
+                        maxLength={10}
                         width={TEXT_ENTRY_WIDTH}
                       />
                     </View>

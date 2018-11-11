@@ -3,7 +3,7 @@ import { createSelector } from "reselect";
 import ListCard from "../../components/cards/ListCard";
 import ProgramItem from "../../components/cards/ProgramItem";
 
-const NAME_LENGTH = 31;
+const NAME_LENGTH = 23;
 const ALL_CATEGORIES = 0;
 const FAVORITES = 1;
 
@@ -42,6 +42,7 @@ export const getCategoryCards = createSelector(
                   name={name}
                   programId={program.id}
                   category={program.category}
+                  favorite={program.favorite}
                 />
               );
             }
