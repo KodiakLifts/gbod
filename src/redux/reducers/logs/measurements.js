@@ -1,7 +1,7 @@
 export const deleteMeasurement = (state, logId, measurementId) => {
   let measurementLogs = Array.from(state.measurementLogs);
   let currentLog = Object.assign({}, state.measurementLogs[logId]);
-  let updatedMeasurements = currentLog.measurements.slice(0, logId);
+  let updatedMeasurements = currentLog.measurements.slice(0, measurementId);
 
   updatedMeasurements = updatedMeasurements.concat(
     currentLog.measurements.slice(
