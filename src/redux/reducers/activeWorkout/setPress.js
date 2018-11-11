@@ -37,9 +37,7 @@ export default (
     return exercise;
   });
 
-  let currentExerciseIndex = newExercises.findIndex(exercise => {
-    return exercise.id === exerciseId;
-  });
+  let currentExerciseIndex = exerciseId;
 
   let updatedActiveExerciseId = exerciseId;
 

@@ -50,33 +50,45 @@ export const getActiveWorkoutTitle = createSelector(
   }
 );
 
-const getActiveSets = state => {
-  if (state.programs[state.activeWorkout.program].sets.length !== 0) {
-    return state.programs[state.activeWorkout.program].sets.filter(set => {
-      return set.day === state.activeWorkout.day;
-    });
-  } else {
-    return null;
+const getSets = state => state.programs[state.activeWorkout.program].sets;
+const getDay = state => state.activeWorkout.day;
+
+const getActiveSets = createSelector(
+  [getSets, getDay],
+  (sets, day) => {
+    if (sets.length !== 0) {
+      return sets.filter(set => {
+        return set.day === day;
+      });
+    } else {
+      return null;
+    }
   }
-};
+);
 
-const getActiveExercises = state => {
-  if (state.programs[state.activeWorkout.program].exercises.length !== 0) {
-    let exercises = state.programs[
-      state.activeWorkout.program
-    ].exercises.filter(exercise => {
-      return exercise.day === state.activeWorkout.day;
-    });
+const getExercises = state =>
+  state.programs[state.activeWorkout.program].exercises;
 
-    exercises.map(exercise => {
-      exercise.name = state.exerciseLibrary[exercise.libraryId].name;
-    });
+const getExerciseLibrary = state => state.exerciseLibrary;
 
-    return exercises;
-  } else {
-    return null;
+const getActiveExercises = createSelector(
+  [getExercises, getDay, getExerciseLibrary],
+  (exercises, day, library) => {
+    if (exercises.length !== 0) {
+      let activeExercises = exercises.filter(exercise => {
+        return exercise.day === day;
+      });
+
+      activeExercises.map(exercise => {
+        exercise.name = library[exercise.libraryId].name;
+      });
+
+      return activeExercises;
+    } else {
+      return null;
+    }
   }
-};
+);
 
 const getCurrentExercise = state => state.activeWorkout.currentExercise;
 
