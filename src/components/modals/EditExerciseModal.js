@@ -5,7 +5,8 @@ import {
   CheckBox,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
+  Picker
 } from "react-native";
 import PropTypes from "prop-types";
 import {
@@ -18,9 +19,14 @@ const STYLE = require("./modalStyle");
 
 class EditExerciseModal extends Component {
   state = {
+    tmpWeightChange: 0,
     tmpSupersetNext: this.props.supersetNext,
     tmpIncludeWarmup: this.props.includeWarmup,
     tmpRemove: false
+  };
+
+  updateTmpWeightChange = value => {
+    this.setState({ tmpWeightChange: value });
   };
 
   supersetNextToggle = checked => {
@@ -42,14 +48,24 @@ class EditExerciseModal extends Component {
       closeModal,
       removeExercise
     } = this.props;
-    const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
+    const {
+      tmpWeightChange,
+      tmpSupersetNext,
+      tmpIncludeWarmup,
+      tmpRemove
+    } = this.state;
     if (tmpRemove) {
       removeExercise(exerciseId);
     } else {
-      updateExerciseData(exerciseId, tmpSupersetNext, tmpIncludeWarmup);
+      updateExerciseData(
+        exerciseId,
+        tmpWeightChange,
+        tmpSupersetNext,
+        tmpIncludeWarmup
+      );
     }
 
-    this.setState({ tmpRemove: false });
+    this.setState({ tmpRemove: false, tmpWeightChange: 0 });
     closeModal();
   };
 
@@ -64,7 +80,12 @@ class EditExerciseModal extends Component {
 
   render() {
     const { visible, lastExercise } = this.props;
-    const { tmpSupersetNext, tmpIncludeWarmup, tmpRemove } = this.state;
+    const {
+      tmpWeightChange,
+      tmpSupersetNext,
+      tmpIncludeWarmup,
+      tmpRemove
+    } = this.state;
     return (
       <Modal transparent visible={visible} onRequestClose={this.cancel}>
         <TouchableOpacity onPress={this.cancel} style={STYLE.modalContainer}>
@@ -75,6 +96,9 @@ class EditExerciseModal extends Component {
               </View>
               <View style={STYLE.cardColumnsContainer}>
                 <View style={STYLE.leftColumn}>
+                  <View style={STYLE.leftItem}>
+                    <Text style={STYLE.modalText}>Adjust Weight:</Text>
+                  </View>
                   <View style={STYLE.leftItem}>
                     <Text style={STYLE.modalText}>Superset Next Exercise:</Text>
                   </View>
@@ -87,6 +111,27 @@ class EditExerciseModal extends Component {
                 </View>
 
                 <View style={STYLE.rightColumn}>
+                  <View style={STYLE.rightItem}>
+                    <Picker
+                      style={STYLE.picker}
+                      selectedValue={tmpWeightChange}
+                      onValueChange={this.updateTmpWeightChange}
+                    >
+                      {createTypeItems([
+                        -20,
+                        -15,
+                        -10,
+                        -5,
+                        -2.5,
+                        0,
+                        2.5,
+                        5,
+                        10,
+                        15,
+                        20
+                      ])}
+                    </Picker>
+                  </View>
                   <View style={STYLE.rightItem}>
                     <CheckBox
                       disabled={lastExercise}
@@ -125,6 +170,12 @@ class EditExerciseModal extends Component {
   }
 }
 
+const createTypeItems = values => {
+  return values.map((value, index) => {
+    return <Picker.Item key={index} label={String(value)} value={value} />;
+  });
+};
+
 EditExerciseModal.propTypes = {
   visible: PropTypes.bool,
   exerciseId: PropTypes.number,
@@ -138,8 +189,20 @@ EditExerciseModal.propTypes = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateExerciseData: (exerciseId, supersetNext, includeWarmup) => {
-      dispatch(updateExerciseData(exerciseId, supersetNext, includeWarmup));
+    updateExerciseData: (
+      exerciseId,
+      weightChange,
+      supersetNext,
+      includeWarmup
+    ) => {
+      dispatch(
+        updateExerciseData(
+          exerciseId,
+          weightChange,
+          supersetNext,
+          includeWarmup
+        )
+      );
     },
     removeExercise: exerciseId => {
       dispatch(removeExercise(exerciseId));

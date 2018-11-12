@@ -17,8 +17,15 @@ const COLORS = require("../../styles/Colors");
 class Logs extends Component {
   state = {
     calendarVisible: false,
-    measurementModalVisible: false
+    measurementModalVisible: false,
+    anyLogsSelectedDate: this.props.anyLogsSelectedDate
   };
+
+  componentWillReceiveProps(newProps) {
+    if (this.state.anyLogsSelectedDate !== newProps.anyLogsSelectedDate) {
+      this.setState({ anyLogsSelectedDate: newProps.anyLogsSelectedDate });
+    }
+  }
 
   parseDate = dateString => {
     return moment(dateString).format("MMM Do, YYYY");
@@ -55,9 +62,25 @@ class Logs extends Component {
     );
   };
 
+  renderDeleteIcon = anyLogsSelectedDate => {
+    if (anyLogsSelectedDate) {
+      return (
+        <TouchableOpacity onPress={this._deleteLog} style={{ marginRight: 12 }}>
+          <Icon name={"minus-circle"} size={22} color={COLORS.SECONDARYCOLOR} />
+        </TouchableOpacity>
+      );
+    } else {
+      return null;
+    }
+  };
+
   render() {
-    const { selectedDate, cards, anyLogsSelectedDate } = this.props;
-    const { calendarVisible, measurementModalVisible } = this.state;
+    const { selectedDate, cards } = this.props;
+    const {
+      calendarVisible,
+      measurementModalVisible,
+      anyLogsSelectedDate
+    } = this.state;
     return (
       <SubScreenTemplate
         headerContent={
@@ -66,16 +89,10 @@ class Logs extends Component {
               onPress={this._showCalendar}
               style={{
                 flexDirection: "row",
-                alignItems: "center",
-                marginLeft: 12,
+                marginLeft: 4,
                 marginVertical: 6
               }}
             >
-              <Icon
-                name={"calendar-alt"}
-                size={22}
-                color={COLORS.SECONDARYCOLOR}
-              />
               <Text style={STYLE.headerText}>
                 {this.parseDate(selectedDate)}
               </Text>
@@ -89,13 +106,7 @@ class Logs extends Component {
               visible={measurementModalVisible}
               closeModal={this.closeModal}
             />
-            <TouchableOpacity
-              disabled={!anyLogsSelectedDate}
-              onPress={this._deleteLog}
-              style={{ marginRight: 12 }}
-            >
-              <Icon name={"trash"} size={22} color={COLORS.SECONDARYCOLOR} />
-            </TouchableOpacity>
+            {this.renderDeleteIcon(anyLogsSelectedDate)}
           </View>
         }
         scrollContent={cards}

@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "react-navigation";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import Home from "./home/HomeScreen";
+import Settings from "./settings/SettingsScreen";
 import Workout from "./workout/WorkoutTabs";
 import ProgramsExercises from "./programs_exercises/PETabs";
 import StatsLogs from "./stats_logs/SLTabs";
@@ -10,10 +10,10 @@ const COLORS = require("../styles/Colors");
 
 const MainTabs = createBottomTabNavigator(
   {
-    Home,
     Workout,
     ProgramsExercises,
-    StatsLogs
+    StatsLogs,
+    Settings
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -21,19 +21,19 @@ const MainTabs = createBottomTabNavigator(
       tabBarIcon: ({ tintColor }) => {// eslint-disable-line react/prop-types
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === "Home") {
-          iconName = "home";
+        if (routeName === "Settings") {
+          iconName = "cog";
         } else if (routeName === "Workout") {
-          iconName = "skull";
+          iconName = "home";
         } else if (routeName === "ProgramsExercises") {
           iconName = "dumbbell";
         } else if (routeName === "StatsLogs") {
-          iconName = "chart-line";
+          iconName = "calendar-check";
         }
         return <Icon name={iconName} size={25} color={tintColor} />;
       }
     }),
-    initialRouteName: "StatsLogs",
+    initialRouteName: "Workout",
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,

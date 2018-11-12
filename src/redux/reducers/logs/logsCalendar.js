@@ -57,9 +57,17 @@ export const deleteLog = (state, date) => {
 };
 
 export const updateSelectedLogDate = (state, date) => {
+  let anyLogsSelectedDate = false;
+  if (
+    state.measurementLogs.find(log => log.date === date) !== undefined ||
+    state.workoutLogs.find(log => log.date === date) !== undefined
+  ) {
+    anyLogsSelectedDate = true;
+  }
   const newState = {
     ...state,
-    selectedLogDate: date
+    selectedLogDate: date,
+    anyLogsSelectedDate: anyLogsSelectedDate
   };
   return newState;
 };

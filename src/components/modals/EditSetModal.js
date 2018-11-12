@@ -20,7 +20,7 @@ const COLORS = require("../../styles/Colors");
 const STYLE = require("./modalStyle");
 
 const MAX_REPS_LENGTH = 4;
-const MAX_WEIGHT_LENGTH = 4;
+const MAX_WEIGHT_LENGTH = 5;
 const MAX_TIME_LENGTH = 4;
 const TEXT_ENTRY_WIDTH = 60;
 const TIME_ENTRY_WIDTH = 30;
@@ -55,7 +55,7 @@ class EditSetModal extends Component {
     if (tmpWeight == null) {
       this.setState({ tmpWeight: this.props.weight });
     } else {
-      this.setState({ tmpWeight: parseInt(tmpWeight) });
+      this.setState({ tmpWeight: Number(parseFloat(tmpWeight).toFixed(1)) });
     }
   };
 

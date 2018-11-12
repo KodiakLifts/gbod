@@ -276,10 +276,16 @@ export const updateSetData = (
   };
 };
 
-export const updateExerciseData = (exerciseId, supersetNext, includeWarmup) => {
+export const updateExerciseData = (
+  exerciseId,
+  weightChange,
+  supersetNext,
+  includeWarmup
+) => {
   return {
     type: UPDATE_EXERCISE_DATA,
     exerciseId,
+    weightChange,
     supersetNext,
     includeWarmup
   };
