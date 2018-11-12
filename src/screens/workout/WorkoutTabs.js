@@ -8,9 +8,7 @@ const TEXTSTYLE = require("../../styles/TextStyle");
 
 const WorkoutTabs = createMaterialTopTabNavigator(
   {
-    PreviousWorkout,
-    ActiveWorkout,
-    NextWorkout
+    ActiveWorkout
   },
   {
     initialRouteName: "ActiveWorkout",

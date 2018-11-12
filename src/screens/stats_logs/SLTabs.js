@@ -7,11 +7,10 @@ const TEXTSTYLE = require("../../styles/TextStyle");
 
 const PETabs = createMaterialTopTabNavigator(
   {
-    STATS: Stats,
     LOGS: Logs
   },
   {
-    initialRouteName: "STATS",
+    initialRouteName: "LOGS",
     tabBarOptions: {
       activeTintColor: COLORS.ACTIVECOLOR,
       inactiveTintColor: COLORS.INACTIVECOLOR,

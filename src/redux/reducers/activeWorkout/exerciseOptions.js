@@ -196,6 +196,7 @@ export const addExercise = (state, libraryId) => {
 export const updateExerciseData = (
   state,
   exerciseId,
+  weightChange,
   supersetNext,
   includeWarmup
 ) => {
@@ -206,12 +207,21 @@ export const updateExerciseData = (
       if (program.id === activeProgram) {
         return {
           ...program,
+          sets: state.programs[activeProgram].sets.map(set => {
+            if (set.exercise === exerciseId) {
+              return {
+                ...set,
+                weight: set.weight + weightChange
+              };
+            }
+            return set;
+          }),
           exercises: state.programs[activeProgram].exercises.map(exercise => {
             if (exercise.id === exerciseId) {
               return {
                 ...exercise,
-                ...{ supersetNext: supersetNext },
-                ...{ includeWarmup: includeWarmup }
+                supersetNext: supersetNext,
+                includeWarmup: includeWarmup
               };
             }
             return exercise;

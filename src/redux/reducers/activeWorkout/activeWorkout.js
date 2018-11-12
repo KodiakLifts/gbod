@@ -2,7 +2,6 @@ import {
   SET_PRESS,
   UPDATE_SET_DATA,
   FINISH_WORKOUT,
-  RESET_WORKOUT,
   UPDATE_EXERCISE_DATA,
   STOP_TIMER,
   DECREMENT_TIMER,
@@ -80,6 +79,7 @@ export default function activeWorkout(state = {}, action) {
       return updateExerciseData(
         state,
         action.exerciseId,
+        action.weightChange,
         action.supersetNext,
         action.includeWarmup
       );
