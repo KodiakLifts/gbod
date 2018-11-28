@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "856320409984",
+    "firebase_url": "https://gbod-db.firebaseio.com",
+    "project_id": "gbod-db",
+    "storage_bucket": "gbod-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856320409984:android:3534b3b0f2a79e7b",
+        "android_client_info": {
+          "package_name": "com.gbod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856320409984-lq486qfg99uvmlgk99v7qjvieneuuneu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gbod",
+            "certificate_hash": "dd32d20889dc04cfe09874a2e3d7c245a838c914"
+          }
+        },
+        {
+          "client_id": "856320409984-ktr9pjvpd641hef6s9bthrsf0i7ha7v0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gbod",
+            "certificate_hash": "879083a265b6f2f6c5d0cc6f34aa46c83158fbe3"
+          }
+        },
+        {
+          "client_id": "856320409984-8ijbfpnbvno4k9saol7h0flhj8amtq04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOlxqFIv89ws6w6wGmO8km2_YFkbnr2jQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856320409984-8ijbfpnbvno4k9saol7h0flhj8amtq04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
