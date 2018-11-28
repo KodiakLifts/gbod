@@ -2,7 +2,6 @@ import React from "react";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import logger from "redux-logger";
 
 import Main from "./src/Main";
 import { workoutData } from "./src/redux/reducers";
