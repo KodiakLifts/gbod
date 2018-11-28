@@ -47,7 +47,7 @@ module.exports = StyleSheet.create({
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     borderColor: COLORS.SECONDARYCOLOR,
-    borderWidth: 1,
+    borderWidth: 2,
     elevation: 2
   },
   listHeaderText: {
