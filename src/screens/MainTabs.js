@@ -12,8 +12,7 @@ const MainTabs = createBottomTabNavigator(
   {
     Workout,
     ProgramsExercises,
-    StatsLogs,
-    Settings
+    StatsLogs
   },
   {
     navigationOptions: ({ navigation }) => ({
