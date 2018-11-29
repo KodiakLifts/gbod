@@ -11,6 +11,16 @@ import { firebaseState } from "./src/redux/firebaseState";
 import moment from "moment";
 import LoadingScreen from "./src/screens/LoadingScreen";
 
+const db = firebase.firestore();
+
+db.enablePersistence().catch(error => {
+  if (error.code == "failed-precondition") {
+    ("Only one instance can be open at a time. Failed to persist.");
+  } else if (error.code == "unimplemented") {
+    ("Device does not support enabling persistence.");
+  }
+});
+
 const rootReducer = combineReducers({
   workoutData
 });
@@ -41,10 +51,7 @@ export default class App extends Component {
             console.log("User is signed in.");
             uid = user.uid;
             console.log("UID => " + uid);
-            userData = firebase
-              .firestore()
-              .collection("users")
-              .doc(uid);
+            userData = db.collection("users").doc(uid);
             userData
               .get()
               .then(doc => {
