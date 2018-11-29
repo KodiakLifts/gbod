@@ -7,9 +7,9 @@ export const newExercise = (
   favorite
 ) => {
   const tempMaxes = Array.from(state.exerciseLibrary[0].repMaxes);
-  const newMaxes = tempMaxes.map(max => {
-    if (max.reps === 1) {
-      max.weight = oneRepMax;
+  const newMaxes = tempMaxes.map((max, index) => {
+    if (index === 1) {
+      max = oneRepMax;
     }
     return max;
   });
@@ -71,12 +71,14 @@ export const updateExerciseData = (
   bodyPart,
   favorite
 ) => {
-  const newMaxes = state.exerciseLibrary[libraryId].repMaxes.map(max => {
-    if (max.reps === 1) {
-      max.weight = oneRepMax;
-    }
-    return max;
-  });
+  const newMaxes = Array.from(
+    state.exerciseLibrary[libraryId].repMaxes.map((max, index) => {
+      if (index === 1) {
+        max = oneRepMax;
+      }
+      return max;
+    })
+  );
   const newState = {
     ...state,
     exerciseLibrary: state.exerciseLibrary.map(exercise => {
@@ -87,7 +89,7 @@ export const updateExerciseData = (
           category,
           bodyPart,
           favorite,
-          newMaxes
+          repMaxes: newMaxes
         };
       }
       return exercise;
