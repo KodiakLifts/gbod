@@ -8,3 +8,5 @@ export default function user(state = {}, action) {
       return state;
   }
 }
+
+const initializeUserDate = (state, data) => {};

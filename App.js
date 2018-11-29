@@ -7,6 +7,7 @@ import { workoutData } from "./src/redux/reducers";
 import { initState } from "./src/redux/initState";
 import firebase from "react-native-firebase";
 import { firebaseState } from "./src/redux/firebaseState";
+import moment from "moment";
 
 const db = firebase.firestore();
 
@@ -20,6 +21,7 @@ userData
     if (doc.exists) {
       console.log("Document data: ", doc.data());
       const data = doc.data();
+
       startState = {
         workoutData: {
           ...firebaseState.workoutData,
@@ -31,7 +33,8 @@ userData
           tmpActiveWorkout: data.tmpActiveWorkout,
           exerciseLibrary: data.userExercises,
           username: data.username,
-          weightUnits: data.weightUnits
+          weightUnits: data.weightUnits,
+          selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
         }
       };
 
