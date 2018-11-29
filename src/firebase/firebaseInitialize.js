@@ -1,27 +1,41 @@
 import firebase from "react-native-firebase";
 import { firebaseState } from "../redux/firebaseState";
+import moment from "moment";
 
 const db = firebase.firestore();
 
-const userData = db.collection("users").where("name", "==", "DEFAULT");
+const userData = db.collection("users").doc("3kJAX2XCe1Akg7Prgpg7");
 
-const data = {
-  ...firebaseState.workoutData,
-  activeProgramId: userData.activeProgramId,
-  activeWorkout: userData.activeWorkout,
-  lengthUnits: userData.lengthUnits,
-  measurementLogs: userData.measurementLogs,
-  programs: userData.programs,
-  tmpActiveWorkout: userData.tmpActiveWorkout,
-  exerciseLibrary: userData.userExercises,
-  username: userData.username,
-  weightUnits: userData.weightUnits
-};
+let startState = null;
 
-const startState = {
-  workoutData: {
-    ...data
-  }
-};
+userData
+  .get()
+  .then(function(doc) {
+    if (doc.exists) {
+      console.log("Document data: ", doc.data());
+      const data = doc.data();
+
+      startState = {
+        workoutData: {
+          ...firebaseState.workoutData,
+          activeProgramId: data.activeProgramId,
+          activeWorkout: data.activeWorkout,
+          lengthUnits: data.lengthUnits,
+          measurementLogs: data.measurementLogs,
+          programs: data.programs,
+          tmpActiveWorkout: data.tmpActiveWorkout,
+          exerciseLibrary: data.userExercises,
+          username: data.username,
+          weightUnits: data.weightUnits,
+          selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
+        }
+      };
+    } else {
+      console.log("No document.");
+    }
+  })
+  .catch(function(error) {
+    console.log("Error getting document: ", error);
+  });
 
 export default startState;
