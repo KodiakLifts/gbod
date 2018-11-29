@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   workoutData
 });
 
-let store = createStore(rootReducer, initState, applyMiddleware(thunk));
+let store = null;
 
 export default class App extends Component {
   state = {
