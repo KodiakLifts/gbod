@@ -1,6 +1,5 @@
 export const firebaseState = {
   workoutData: {
-    userId: "",
     timer: { started: false, minutes: 0, seconds: 0, set: 0 },
     tmpActiveWorkout: {
       program: 0,
@@ -138,7 +137,7 @@ export const firebaseState = {
       { id: 17, name: "Left Calf", units: 2 },
       { id: 18, name: "Right Calf", units: 2 }
     ],
-    selectedLogDate: "",
+    selectedLogDate: "2018-01-01",
     selectedWorkoutLogId: -1,
     anyLogsSelectedDate: false,
     measurementLogs: [],
