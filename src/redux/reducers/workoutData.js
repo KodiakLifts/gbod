@@ -6,6 +6,8 @@ import { EXERCISES_ACTIONS } from "../actions/exercisesActions";
 import exercises from "./exercises/exercises";
 import { LOGS_ACTIONS } from "../actions/logsActions";
 import logs from "./logs/logs";
+import { USER_ACTIONS } from "../actions/userActions";
+import user from "./user/user";
 
 export default function workoutData(state = {}, action) {
   if (ACTIVE_WORKOUT_ACTIONS.includes(action.type)) {
@@ -16,6 +18,8 @@ export default function workoutData(state = {}, action) {
     return exercises(state, action);
   } else if (LOGS_ACTIONS.includes(action.type)) {
     return logs(state, action);
+  } else if (USER_ACTIONS.includes(action.type)) {
+    return user(state, action);
   } else {
     return state;
   }
