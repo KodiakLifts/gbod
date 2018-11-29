@@ -1,3 +1,5 @@
+import { addUserExercise } from "../../firebase/setFirebase";
+
 export const UPDATE_SELECTED_EXERCISE_CATEGORY =
   "UPDATE_SELECTED_EXERCISE_CATEGORY";
 export const UPDATE_SELECTED_BODY_PART = "UPDATE_SELECTED_BODY_PART";
@@ -20,13 +22,16 @@ export const EXERCISES_ACTIONS = [
 ];
 
 export const newExercise = (name, oneRepMax, category, bodyPart, favorite) => {
-  return {
-    type: NEW_LIBRARY_EXERCISE,
-    name,
-    oneRepMax,
-    category,
-    bodyPart,
-    favorite
+  return (dispatch, getState) => {
+    dispatch({
+      type: NEW_LIBRARY_EXERCISE,
+      name,
+      oneRepMax,
+      category,
+      bodyPart,
+      favorite
+    });
+    addUserExercise(getState().workoutData.exerciseLibrary);
   };
 };
 

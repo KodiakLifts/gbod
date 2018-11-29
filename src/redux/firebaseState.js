@@ -1,10 +1,64 @@
 export const firebaseState = {
   workoutData: {
+    userId: "",
     timer: { started: false, minutes: 0, seconds: 0, set: 0 },
-    tmpActiveWorkout: {},
-    activeProgramId: 0,
-    activeWorkout: {},
-    programs: [],
+    tmpActiveWorkout: {
+      program: 0,
+      day: 0,
+      currentExercise: 0,
+      dayBarActive: false,
+      notes: ""
+    },
+    activeProgramId: 3,
+    activeWorkout: {
+      program: 0,
+      day: 0,
+      currentExercise: 0,
+      dayBarActive: false,
+      notes: ""
+    },
+    programs: [
+      {
+        id: 0,
+        name: "Freestyle",
+        category: -1,
+        description: "Holds current active program.",
+        favorite: false,
+        sets: [],
+        exercises: [],
+        days: [{ id: 0, name: "Day 1" }]
+      },
+      {
+        id: 1,
+        name: "EditProgram",
+        category: -1,
+        description: "Holds program to edit.",
+        favorite: false,
+        sets: [],
+        exercises: [],
+        days: [{ id: 0, name: "edit" }]
+      },
+      {
+        id: 2,
+        name: "EditLog",
+        category: -1,
+        description: "Holds log to edit.",
+        favorite: false,
+        sets: [],
+        exercises: [],
+        days: [{ id: 0, name: "Log" }]
+      },
+      {
+        id: 3,
+        name: "Freestyle",
+        category: 0,
+        description: "",
+        favorite: true,
+        sets: [],
+        exercises: [],
+        days: [{ id: 0, name: "Day 1" }]
+      }
+    ],
     programCategories: [
       { id: 0, name: "All Categories" },
       { id: 1, name: "Favorites" },

@@ -31,6 +31,15 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    // userData
+    //   .set(firebaseState.workoutData)
+    //   .then(() => {
+    //     console.log("Successfully written to database.");
+    //   })
+    //   .catch(error => {
+    //     console.error("Error writing to database.", error);
+    //   });
+
     let promise = userData.get();
 
     promise
@@ -42,6 +51,7 @@ export default class App extends Component {
           startState = {
             workoutData: {
               ...firebaseState.workoutData,
+              userId: "3kJAX2XCe1Akg7Prgpg7",
               activeProgramId: data.activeProgramId,
               activeWorkout: data.activeWorkout,
               lengthUnits: data.lengthUnits,
@@ -54,7 +64,11 @@ export default class App extends Component {
               selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
             }
           };
-          store = createStore(rootReducer, startState, applyMiddleware(thunk));
+          store = createStore(
+            rootReducer,
+            firebaseState,
+            applyMiddleware(thunk)
+          );
           this.setState({ loading: false, loaded: true });
         } else {
           console.log("No document.");
