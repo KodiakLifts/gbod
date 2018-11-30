@@ -10,16 +10,7 @@ import firebase from "react-native-firebase";
 import { firebaseState } from "./src/redux/firebaseState";
 import moment from "moment";
 import LoadingScreen from "./src/screens/LoadingScreen";
-
-const db = firebase.firestore();
-
-db.enablePersistence().catch(error => {
-  if (error.code == "failed-precondition") {
-    ("Only one instance can be open at a time. Failed to persist.");
-  } else if (error.code == "unimplemented") {
-    ("Device does not support enabling persistence.");
-  }
-});
+import db from "./src/firebase/connectFirebase";
 
 const rootReducer = combineReducers({
   workoutData
@@ -72,7 +63,7 @@ export default class App extends Component {
                 } else {
                   console.log("No document. Writing new document.");
                   userData
-                    .set(firebaseState.workoutData)
+                    .set({ ...firebaseState.workoutData, uid: uid })
                     .then(() => {
                       console.log("Successfully written to database.");
                       this.setState({ loading: false, loaded: true });

@@ -8,19 +8,39 @@ import { LOGS_ACTIONS } from "../actions/logsActions";
 import logs from "./logs/logs";
 import { USER_ACTIONS } from "../actions/userActions";
 import user from "./user/user";
+import db from "../../firebase/connectFirebase";
 
 export default function workoutData(state = {}, action) {
+  let newState = state;
   if (ACTIVE_WORKOUT_ACTIONS.includes(action.type)) {
-    return activeWorkout(state, action);
+    newState = activeWorkout(state, action);
+    updateDatabase(newState);
   } else if (PROGRAMS_ACTIONS.includes(action.type)) {
-    return programs(state, action);
+    newState = programs(state, action);
+    updateDatabase(newState);
   } else if (EXERCISES_ACTIONS.includes(action.type)) {
-    return exercises(state, action);
+    newState = exercises(state, action);
+    updateDatabase(newState);
   } else if (LOGS_ACTIONS.includes(action.type)) {
-    return logs(state, action);
+    newState = logs(state, action);
+    updateDatabase(newState);
   } else if (USER_ACTIONS.includes(action.type)) {
-    return user(state, action);
-  } else {
-    return state;
+    newState = user(state, action);
+    updateDatabase(newState);
   }
+  return newState;
 }
+
+const updateDatabase = state => {
+  console.log(state);
+  const userData = db.collection("users").doc(state.uid);
+
+  userData
+    .set(state)
+    .then(() => {
+      console.log("Successfully updated user database.");
+    })
+    .catch(error => {
+      console.error("Error writing to database.", error);
+    });
+};
