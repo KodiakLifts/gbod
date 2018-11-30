@@ -78,7 +78,6 @@ export default class App extends Component {
                       });
                     })
                     .catch(error => {
-                      console.log("Error writing to database: ", error);
                       this.setState({
                         error: true,
                         loaded: false
@@ -87,17 +86,12 @@ export default class App extends Component {
                 }
               })
               .catch(function(error) {
-                console.log("Error getting document: ", error);
                 this.setState({ error: true, loaded: false });
               });
-          } else {
-            console.log("User is signed out.");
           }
         })
       )
-      .catch(error => {
-        console.log("Error signing in anonymously.", error);
-      });
+      .catch(error => {});
   }
 
   _loaded = () => {

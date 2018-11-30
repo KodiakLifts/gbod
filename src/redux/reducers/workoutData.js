@@ -39,11 +39,9 @@ export default function workoutData(state = {}, action) {
 
 const updateDatabase = state => {
   const userData = db.collection("users").doc(state.uid);
-  console.log(state.uid);
+
   userData
     .set(state)
     .then(() => {})
-    .catch(error => {
-      console.error("Error writing to database.", error);
-    });
+    .catch(error => {});
 };
