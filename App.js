@@ -37,15 +37,12 @@ export default class App extends Component {
       .then(
         firebase.auth().onAuthStateChanged(user => {
           if (user) {
-            console.log("User is signed in.");
             uid = user.uid;
-            console.log("UID => " + uid);
             userData = db.collection("users").doc(uid);
             userData
               .get()
               .then(doc => {
                 if (doc.exists) {
-                  console.log("Document data: ", doc.data());
                   const data = doc.data();
                   const startState = {
                     workoutData: {
@@ -59,15 +56,13 @@ export default class App extends Component {
                   );
                   this.setState({ loading: false, loaded: true });
                 } else {
-                  console.log("No document. Writing new document.");
                   userData
                     .set({ ...firebaseState.workoutData, uid: uid })
                     .then(() => {
-                      console.log("Successfully written to database.");
                       this.setState({ loading: false, loaded: true });
                     })
                     .catch(error => {
-                      console.error("Error writing to database.", error);
+                      console.log("Error writing to database: ", error);
                       this.setState({
                         error: true,
                         loading: false,
@@ -88,8 +83,6 @@ export default class App extends Component {
       .catch(error => {
         console.log("Error signing in anonymously.", error);
       });
-
-    console.log(store.getState());
   }
 
   _loaded = () => {

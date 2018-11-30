@@ -42,9 +42,7 @@ const updateDatabase = state => {
 
   userData
     .set(state)
-    .then(() => {
-      console.log("Successfully updated user database.");
-    })
+    .then(() => {})
     .catch(error => {
       console.error("Error writing to database.", error);
     });

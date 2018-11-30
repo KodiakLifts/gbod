@@ -117,15 +117,20 @@ export const addExercise = (state, libraryId) => {
     increaseRule: "",
     barType: "",
     units: "",
-    note: ""
+    note: "",
+    isNew: true
   };
   const exercises = Array.from(state.programs[activeProgram].exercises);
-  let exerciseInsertIndex;
-  exercises.map((exercise, index) => {
-    if (exercise.day === day) {
-      exerciseInsertIndex = index;
-    }
+  let exerciseInsertIndex = exercises.length - 1;
+
+  const lastIndexOfDay = exercises.lastIndexOf(exercise => {
+    exercise.day === day;
   });
+
+  if (lastIndexOfDay !== -1) {
+    exerciseInsertIndex = lastIndexOfDay;
+  }
+
   const newExercises = [
     ...exercises.slice(0, exerciseInsertIndex + 1),
     newExercise,
@@ -133,11 +138,13 @@ export const addExercise = (state, libraryId) => {
   ];
 
   newExercises.map((exercise, index) => {
-    if (exercise.day === day) {
+    if (exercise.isNew) {
       exerciseId = index;
     }
     exercise.id = index;
+    delete exercise.isNew;
   });
+
   const newSetId = state.programs[activeProgram].sets.length;
   const newSet = {
     id: newSetId,
