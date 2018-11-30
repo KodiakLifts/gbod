@@ -1,4 +1,8 @@
-import { ACTIVE_WORKOUT_ACTIONS } from "../actions/activeWorkoutActions";
+import {
+  ACTIVE_WORKOUT_ACTIONS,
+  DECREMENT_TIMER,
+  STOP_TIMER
+} from "../actions/activeWorkoutActions";
 import activeWorkout from "./activeWorkout/activeWorkout";
 import { PROGRAMS_ACTIONS } from "../actions/programsActions";
 import programs from "./programs/programs";
@@ -14,7 +18,9 @@ export default function workoutData(state = {}, action) {
   let newState = state;
   if (ACTIVE_WORKOUT_ACTIONS.includes(action.type)) {
     newState = activeWorkout(state, action);
-    updateDatabase(newState);
+    if (action.type !== DECREMENT_TIMER && action.type !== STOP_TIMER) {
+      updateDatabase(newState);
+    }
   } else if (PROGRAMS_ACTIONS.includes(action.type)) {
     newState = programs(state, action);
     updateDatabase(newState);
