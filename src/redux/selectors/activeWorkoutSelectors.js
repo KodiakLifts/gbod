@@ -129,7 +129,8 @@ export const getActiveWorkoutCards = createSelector(
             ? CARD_STYLE.activeCard
             : CARD_STYLE.card;
 
-        const lastExercise = exercise.id === activeExercises.length - 1;
+        const lastExercise =
+          exercise.id === activeExercises[activeExercises.length - 1].id;
 
         const firstExercise = exercise.id === 0;
 

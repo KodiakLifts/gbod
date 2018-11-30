@@ -9,6 +9,7 @@ import firebase from "react-native-firebase";
 import { firebaseState } from "./src/redux/firebaseState";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import db from "./src/firebase/connectFirebase";
+import moment from "moment";
 
 const rootReducer = combineReducers({
   workoutData
@@ -46,7 +47,8 @@ export default class App extends Component {
                   const data = doc.data();
                   const startState = {
                     workoutData: {
-                      ...data
+                      ...data,
+                      selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
                     }
                   };
                   store = createStore(
@@ -57,9 +59,16 @@ export default class App extends Component {
                   this.setState({ loading: false, loaded: true });
                 } else {
                   userData
-                    .set({ ...firebaseState.workoutData, uid: uid })
+                    .set({
+                      ...firebaseState.workoutData,
+                      uid: uid,
+                      selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
+                    })
                     .then(() => {
-                      this.setState({ loading: false, loaded: true });
+                      this.setState({
+                        loading: false,
+                        loaded: true
+                      });
                     })
                     .catch(error => {
                       console.log("Error writing to database: ", error);

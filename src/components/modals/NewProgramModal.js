@@ -150,7 +150,7 @@ class NewProgramModal extends Component {
                       selectedValue={tmpTemplate}
                       onValueChange={this.updateTmpTemplate}
                     >
-                      {createItems(programs)}
+                      {createItems(programs.slice(3))}
                     </Picker>
                   </View>
                   <View style={STYLE.rightItem}>
