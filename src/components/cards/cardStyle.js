@@ -42,12 +42,12 @@ module.exports = StyleSheet.create({
   },
   activeCard: {
     flexDirection: "column",
-    width: Dimensions.get("window").width - 24,
+    width: Dimensions.get("window").width - 23,
     alignSelf: "flex-start",
     backgroundColor: COLORS.PRIMARYCOLOR,
     borderRadius: 5,
     borderColor: COLORS.SECONDARYCOLOR,
-    borderWidth: 1,
+    borderWidth: 2,
     elevation: 2
   },
   listHeaderText: {

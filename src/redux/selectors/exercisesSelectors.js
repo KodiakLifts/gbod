@@ -55,7 +55,7 @@ export const getLibraryCards = createSelector(
                 category={exercise.category}
                 bodyPart={exercise.bodyPart}
                 favorite={exercise.favorite}
-                oneRepMax={exercise.repMaxes[1].weight}
+                oneRepMax={exercise.repMaxes[1]}
               />
             );
           }
@@ -123,7 +123,7 @@ export const getModalLibraryCards = createSelector(
                 category={exercise.category}
                 bodyPart={exercise.bodyPart}
                 favorite={exercise.favorite}
-                oneRepMax={exercise.repMaxes[1].weight}
+                oneRepMax={exercise.repMaxes[1]}
                 closeModal={null}
               />
             );
