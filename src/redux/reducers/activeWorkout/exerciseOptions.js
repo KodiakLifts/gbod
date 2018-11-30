@@ -114,10 +114,12 @@ export const addExercise = (state, libraryId) => {
     complete: false,
     supersetNext: false,
     includeWarmup: false,
-    increaseRule: "",
     barType: "",
-    units: "",
     note: "",
+    units: state.weightUnits,
+    workoutsToIncrease: 1,
+    workoutsTowardsIncrease: 0,
+    increaseAmmount: 5,
     isNew: true
   };
   const exercises = Array.from(state.programs[activeProgram].exercises);
@@ -156,7 +158,9 @@ export const addExercise = (state, libraryId) => {
     complete: false,
     restMinutes: 0,
     restSeconds: 0,
-    timerOn: true
+    timerOn: true,
+    percentage: false,
+    percent: 50
   };
   const sets = Array.from(state.programs[activeProgram].sets);
   let setInsertIndex;

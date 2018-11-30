@@ -15,11 +15,11 @@ const rootReducer = combineReducers({
   workoutData
 });
 
-let store = createStore(rootReducer, firebaseState, applyMiddleware(thunk));
+let store = null;
+let startState = null;
 
 export default class App extends Component {
   state = {
-    loading: true,
     loaded: false,
     error: false,
     isAuthenticated: false
@@ -45,7 +45,7 @@ export default class App extends Component {
               .then(doc => {
                 if (doc.exists) {
                   const data = doc.data();
-                  const startState = {
+                  startState = {
                     workoutData: {
                       ...data,
                       selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
@@ -56,17 +56,24 @@ export default class App extends Component {
                     startState,
                     applyMiddleware(thunk)
                   );
-                  this.setState({ loading: false, loaded: true });
+                  this.setState({ loaded: true });
                 } else {
-                  userData
-                    .set({
+                  startState = {
+                    workoutData: {
                       ...firebaseState.workoutData,
                       uid: uid,
                       selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
-                    })
+                    }
+                  };
+                  store = createStore(
+                    rootReducer,
+                    startState,
+                    applyMiddleware(thunk)
+                  );
+                  userData
+                    .set(startState)
                     .then(() => {
                       this.setState({
-                        loading: false,
                         loaded: true
                       });
                     })
@@ -74,7 +81,6 @@ export default class App extends Component {
                       console.log("Error writing to database: ", error);
                       this.setState({
                         error: true,
-                        loading: false,
                         loaded: false
                       });
                     });
@@ -82,7 +88,7 @@ export default class App extends Component {
               })
               .catch(function(error) {
                 console.log("Error getting document: ", error);
-                this.setState({ error: true, loading: false, loaded: false });
+                this.setState({ error: true, loaded: false });
               });
           } else {
             console.log("User is signed out.");
@@ -99,7 +105,7 @@ export default class App extends Component {
   };
 
   render() {
-    if (this.state.loading) {
+    if (!this.state.loaded) {
       return <LoadingScreen />;
     } else if (this.state.loaded) {
       return (

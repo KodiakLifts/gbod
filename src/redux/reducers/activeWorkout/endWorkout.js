@@ -93,6 +93,7 @@ export const finishWorkout = state => {
         });
       });
     }
+    console.log(newExerciseLibrary);
     newWorkoutLog = {
       id: state.workoutLogs.length,
       date: date,
