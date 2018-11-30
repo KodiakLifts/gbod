@@ -5,10 +5,8 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import Main from "./src/Main";
 import { workoutData } from "./src/redux/reducers";
-import { initState } from "./src/redux/initState";
 import firebase from "react-native-firebase";
 import { firebaseState } from "./src/redux/firebaseState";
-import moment from "moment";
 import LoadingScreen from "./src/screens/LoadingScreen";
 import db from "./src/firebase/connectFirebase";
 

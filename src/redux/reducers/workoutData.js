@@ -38,7 +38,6 @@ export default function workoutData(state = {}, action) {
 }
 
 const updateDatabase = state => {
-  console.log(state);
   const userData = db.collection("users").doc(state.uid);
 
   userData
