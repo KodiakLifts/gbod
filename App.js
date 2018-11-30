@@ -5,80 +5,91 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import Main from "./src/Main";
 import { workoutData } from "./src/redux/reducers";
-import { initState } from "./src/redux/initState";
 import firebase from "react-native-firebase";
 import { firebaseState } from "./src/redux/firebaseState";
-import moment from "moment";
 import LoadingScreen from "./src/screens/LoadingScreen";
-
-const db = firebase.firestore();
-
-const userData = db.collection("users").doc("3kJAX2XCe1Akg7Prgpg7");
-
-let startState = null;
+import db from "./src/firebase/connectFirebase";
 
 const rootReducer = combineReducers({
   workoutData
 });
 
-let store = null;
+let store = createStore(rootReducer, firebaseState, applyMiddleware(thunk));
 
 export default class App extends Component {
   state = {
     loading: true,
     loaded: false,
-    error: false
+    error: false,
+    isAuthenticated: false
   };
 
   componentDidMount() {
-    // userData
-    //   .set(firebaseState.workoutData)
-    //   .then(() => {
-    //     console.log("Successfully written to database.");
-    //   })
-    //   .catch(error => {
-    //     console.error("Error writing to database.", error);
-    //   });
+    let uid;
+    let userData;
 
-    let promise = userData.get();
-
-    promise
-      .then(doc => {
-        if (doc.exists) {
-          console.log("Document data: ", doc.data());
-          const data = doc.data();
-
-          startState = {
-            workoutData: {
-              ...firebaseState.workoutData,
-              userId: "3kJAX2XCe1Akg7Prgpg7",
-              activeProgramId: data.activeProgramId,
-              activeWorkout: data.activeWorkout,
-              lengthUnits: data.lengthUnits,
-              measurementLogs: data.measurementLogs,
-              programs: data.programs,
-              tmpActiveWorkout: data.tmpActiveWorkout,
-              exerciseLibrary: data.userExercises,
-              username: data.username,
-              weightUnits: data.weightUnits,
-              selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
-            }
-          };
-          store = createStore(
-            rootReducer,
-            firebaseState,
-            applyMiddleware(thunk)
-          );
-          this.setState({ loading: false, loaded: true });
-        } else {
-          console.log("No document.");
-          this.setState({ loading: false, loaded: false });
-        }
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(() => {
+        this.setState({ isAuthenticated: true });
       })
-      .catch(function(error) {
-        console.log("Error getting document: ", error);
-        this.setState({ error: true, loading: false, loaded: false });
+      .then(
+        firebase.auth().onAuthStateChanged(user => {
+          if (user) {
+            console.log("User is signed in.");
+            uid = user.uid;
+            console.log("UID => " + uid);
+            userData = db.collection("users").doc(uid);
+            userData
+              .get()
+              .then(doc => {
+                if (doc.exists) {
+                  console.log("Document data: ", doc.data());
+                  const data = doc.data();
+                  const startState = {
+                    workoutData: {
+                      ...data
+                    }
+                  };
+                  store = createStore(
+                    rootReducer,
+                    startState,
+                    applyMiddleware(thunk)
+                  );
+                  this.setState({ loading: false, loaded: true });
+                } else {
+                  console.log("No document. Writing new document.");
+                  userData
+                    .set({ ...firebaseState.workoutData, uid: uid })
+                    .then(() => {
+                      console.log("Successfully written to database.");
+                      this.setState({ loading: false, loaded: true });
+                    })
+                    .catch(error => {
+                      console.error("Error writing to database.", error);
+                      this.setState({
+                        error: true,
+                        loading: false,
+                        loaded: false
+                      });
+                    });
+                }
+              })
+              .catch(function(error) {
+                console.log("Error getting document: ", error);
+                this.setState({ error: true, loading: false, loaded: false });
+              });
+          } else {
+            console.log("User is signed out.");
+          }
+        })
+      )
+      .catch(error => {
+        console.log("Error signing in anonymously.", error);
       });
+
+    console.log(store.getState());
   }
 
   _loaded = () => {
@@ -95,7 +106,7 @@ export default class App extends Component {
         </Provider>
       );
     } else if (this.state.error) {
-      Alert.alert("Error", "Failed to load data from database.");
+      Alert.alert("Error", "Failed to initialize.");
     }
   }
 }

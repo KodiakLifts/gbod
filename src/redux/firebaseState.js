@@ -1,6 +1,6 @@
 export const firebaseState = {
   workoutData: {
-    userId: "",
+    uid: "",
     timer: { started: false, minutes: 0, seconds: 0, set: 0 },
     tmpActiveWorkout: {
       program: 0,
@@ -81,7 +81,17 @@ export const firebaseState = {
     selectedBodyPart: 0,
     modalSelectedExerciseCategory: 0,
     modalSelectedBodyPart: 0,
-    exerciseLibrary: [],
+    exerciseLibrary: [
+      {
+        id: 0,
+        name: "",
+        bodyPart: 0,
+        category: 0,
+        favorite: true,
+        repMaxes: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        logs: []
+      }
+    ],
     bodyParts: [
       { id: 0, name: "All Body Parts" },
       { id: 1, name: "Arms" },
@@ -138,7 +148,7 @@ export const firebaseState = {
       { id: 17, name: "Left Calf", units: 2 },
       { id: 18, name: "Right Calf", units: 2 }
     ],
-    selectedLogDate: "",
+    selectedLogDate: "2018-01-01",
     selectedWorkoutLogId: -1,
     anyLogsSelectedDate: false,
     measurementLogs: [],

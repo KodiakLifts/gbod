@@ -146,7 +146,7 @@ class NewExerciseModal extends Component {
                         style={STYLE.modalTextInput}
                         keyboardAppearance="dark"
                         keyboardType="numeric"
-                        placeholder={String(tmpOneRepMax)}
+                        placeholder={String(0)}
                         placeholderTextColor={COLORS.INACTIVECOLOR}
                         onChangeText={this.updateTmpOneRepMax}
                         maxLength={4}
