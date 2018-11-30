@@ -218,7 +218,10 @@ export const deleteDay = (state, dayId) => {
   });
 
   const currentDay = newDays[0].id;
-  const currentExercise = newExercises[0].id;
+  let currentExercise = 0;
+  if (newExercises.length !== 0) {
+    currentExercise = newExercises[0].id;
+  }
 
   let newWorkoutLogs = [];
   if (state.workoutLogs.length !== 0) {
@@ -239,15 +242,18 @@ export const deleteDay = (state, dayId) => {
   if (state.exerciseLibrary.length !== 0) {
     newExerciseLibrary = state.exerciseLibrary.map(exercise => {
       let newExercise = Object.assign({}, exercise);
-      newExercise.logs = newExercise.logs.filter(log => {
-        return log.day !== dayId;
-      });
-      newExercise.logs.map((log, index) => {
-        log.id = index;
-        if (log.day >= dayId) {
-          log.day--;
-        }
-      });
+      if (newExercise.logs.length !== 0) {
+        newExercise.logs = newExercise.logs.filter(log => {
+          return log.day !== dayId;
+        });
+        newExercise.logs.map((log, index) => {
+          log.id = index;
+          if (log.day >= dayId) {
+            log.day--;
+          }
+        });
+      }
+
       return newExercise;
     });
   }
