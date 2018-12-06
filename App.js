@@ -47,7 +47,7 @@ export default class App extends Component {
                   const data = doc.data();
                   startState = {
                     workoutData: {
-                      ...data,
+                      ...data.workoutData,
                       selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
                     }
                   };
@@ -91,7 +91,9 @@ export default class App extends Component {
           }
         })
       )
-      .catch(error => {});
+      .catch(error => {
+        Alert.alert("Error", "Failed to load or create new data.");
+      });
   }
 
   _loaded = () => {
