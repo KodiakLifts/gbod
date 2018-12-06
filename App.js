@@ -78,6 +78,7 @@ export default class App extends Component {
                       });
                     })
                     .catch(error => {
+                      Alert.alert("Error", error);
                       this.setState({
                         error: true,
                         loaded: false
@@ -86,19 +87,17 @@ export default class App extends Component {
                 }
               })
               .catch(function(error) {
+                Alert.alert("Error", error);
                 this.setState({ error: true, loaded: false });
               });
           }
         })
       )
       .catch(error => {
-        Alert.alert("Error", "Failed to load or create new data.");
+        Alert.alert("Error", error);
+        this.setState({ error: true, loaded: false });
       });
   }
-
-  _loaded = () => {
-    this.setState({ loading: false });
-  };
 
   render() {
     if (!this.state.loaded) {
