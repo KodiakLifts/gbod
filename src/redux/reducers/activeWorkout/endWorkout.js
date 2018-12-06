@@ -73,7 +73,6 @@ export const finishWorkout = state => {
                   units: exercise.units,
                   sets: setsToLog.map(set => {
                     if (set.exercise === exercise.id) {
-                      console.log(set);
                       return {
                         id: set.id,
                         exercise: set.id,
