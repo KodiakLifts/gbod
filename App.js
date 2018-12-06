@@ -47,7 +47,7 @@ export default class App extends Component {
                   const data = doc.data();
                   startState = {
                     workoutData: {
-                      ...data.workoutData,
+                      ...data,
                       selectedLogDate: moment(new Date()).format("YYYY-MM-DD")
                     }
                   };
@@ -71,7 +71,7 @@ export default class App extends Component {
                     applyMiddleware(thunk)
                   );
                   userData
-                    .set(startState)
+                    .set(startState.workoutData)
                     .then(() => {
                       this.setState({
                         loaded: true
