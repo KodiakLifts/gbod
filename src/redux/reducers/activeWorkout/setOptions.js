@@ -19,7 +19,9 @@ export const addSet = (state, exerciseId) => {
     complete: false,
     restMinutes: lastSet.restMinutes,
     restSeconds: lastSet.restSeconds,
-    timerOn: true
+    timerOn: true,
+    percent: lastSet.percent,
+    percentage: lastSet.percentage
   };
 
   const oldSets = Array.from(state.programs[activeProgram].sets);

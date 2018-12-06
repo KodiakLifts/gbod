@@ -147,9 +147,11 @@ export const getLogCards = createSelector(
               foundLogs.forEach(fLog => {
                 let summary = "";
                 fLog.sets.forEach((set, index) => {
-                  summary += "" + set.weight + "x" + set.reps;
-                  if (index !== fLog.sets.length - 1) {
-                    summary += ", ";
+                  if (set != null) {
+                    summary += "" + set.weight + "x" + set.reps;
+                    if (index !== fLog.sets.length - 1) {
+                      summary += ", ";
+                    }
                   }
                 });
                 items.push(

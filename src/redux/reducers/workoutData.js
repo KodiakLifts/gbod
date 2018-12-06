@@ -13,6 +13,7 @@ import logs from "./logs/logs";
 import { USER_ACTIONS } from "../actions/userActions";
 import user from "./user/user";
 import db from "../../firebase/connectFirebase";
+import { Alert } from "react-native";
 
 export default function workoutData(state = {}, action) {
   let newState = state;
@@ -39,9 +40,10 @@ export default function workoutData(state = {}, action) {
 
 const updateDatabase = state => {
   const userData = db.collection("users").doc(state.uid);
-
   userData
     .set(state)
     .then(() => {})
-    .catch(error => {});
+    .catch(error => {
+      Alert.alert("Error", "Failed to update database. => " + error);
+    });
 };
